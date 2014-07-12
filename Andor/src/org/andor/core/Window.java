@@ -81,4 +81,18 @@ public class Window {
 		}
 	}
 	
+	/* The static method used to update the display */
+	public static void updateDisplay() {
+		//Update the display
+		Display.update();
+		//Sync the display with the maximum FPS
+		Display.sync(Settings.Video.MaxFPS);
+	}
+	
+	/* The static method used to determine whether this window should close */
+	public static boolean shouldClose() {
+		//Return whether close is requested
+		return Display.isCloseRequested();
+	}
+	
 }
