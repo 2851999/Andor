@@ -1,0 +1,9 @@
+------------------------------------------------------
+Release 0 | Beta 0 | Development 0 | Experimental 1
+
+* Added Settings
+* Added Window
+* Added WindowTest
+
+* Created the package org.andor.core
+* Created the package org.andor.tests
