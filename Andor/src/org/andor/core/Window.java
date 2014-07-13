@@ -11,6 +11,8 @@ package org.andor.core;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
+import org.andor.core.logger.Log;
+import org.andor.core.logger.Logger;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
@@ -28,6 +30,8 @@ public class Window {
 			//Create the display
 			Display.create();
 		} catch (LWJGLException e) {
+			//Log an error
+			Logger.log("Andor - Window", "An exception has occurred when creating the display", Log.ERROR);
 			e.printStackTrace();
 		}
 	}
@@ -77,6 +81,8 @@ public class Window {
 			//Make the display fullscreen if necessary
 			Display.setFullscreen(Settings.Window.Fullscreen);
 		} catch (LWJGLException e) {
+			//Log an error
+			Logger.log("Andor - Window", "An exception has occurred when setting the display mode", Log.ERROR);
 			e.printStackTrace();
 		}
 	}
