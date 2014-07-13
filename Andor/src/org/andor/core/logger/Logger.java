@@ -27,6 +27,12 @@ public class Logger {
 	public static boolean recordWarning = false;
 	public static boolean recordError = false;
 	
+	/* The booleans that state whether each part of a
+	 * log should be enabled */
+	public static boolean timeEnabled = true;
+	public static boolean sourceEnabled = true;
+	public static boolean typeEnabled = true;
+	
 	/* The lists that record each type of log */
 	public static List<String> logs = new ArrayList<String>();
 	public static List<String> debugLogs = new ArrayList<String>();
@@ -38,7 +44,7 @@ public class Logger {
 	 * assumes the log is supposed to be a debug */
 	public static void log(String source, String message) {
 		//Log the log
-		log(new Log(source, message, Log.DEBUG));
+		log(new Log(source, message));
 	}
 	
 	/* The static method used to log something */

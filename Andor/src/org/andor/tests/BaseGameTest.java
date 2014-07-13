@@ -9,6 +9,7 @@
 package org.andor.tests;
 
 import org.andor.core.BaseGame;
+import org.andor.core.logger.Logger;
 
 public class BaseGameTest extends BaseGame {
 	
@@ -19,32 +20,32 @@ public class BaseGameTest extends BaseGame {
 	
 	/* The method called when the loop has been created */
 	public void create() {
-		System.out.println("GameLoop Created");
+		Logger.log("BaseGameTest", "GameLoop Created");
 	}
 	
 	/* The method called when the game loop has started */
 	public void start() {
-		System.out.println("GameLoop Started");
+		Logger.log("BaseGameTest", "GameLoop Started");
 	}
 	
 	/* The method called when the game loop is updated */
 	public void update() {
-		System.out.println("GameLoop Updated");
+		Logger.log("BaseGameTest", "GameLoop Updated");
 	}
 	
 	/* The method called when the game loop is rendered */
 	public void render() {
-		System.out.println("GameLoop Rendered");
+		Logger.log("BaseGameTest", "GameLoop Rendered");
 	}
 	
 	/* The method called when the game loop is stopped */
 	public void stop() {
-		System.out.println("GameLoop Stopped");
+		Logger.log("BaseGameTest", "GameLoop Stopped");
 	}
 	
 	/* The method called when the game loop is closing */
 	public void close() {
-		System.out.println("GameLoop Closing");
+		Logger.log("BaseGameTest", "GameLoop Closing");
 	}
 	
 	/* The main method */
