@@ -1,4 +1,15 @@
 ------------------------------------------------------
+Release 0 | Beta 0 | Development 0 | Experimental 4
+
+* Added Time
+* Added time to a log
+* Added variables in Logger to allow for certain parts of the log such as time to be disabled
+
+* Changed over the Source and Log Type when outputting Logs
+
+* Created the package org.andor.utils
+
+------------------------------------------------------
 Release 0 | Beta 0 | Development 0 | Experimental 3
 
 * Added Log
