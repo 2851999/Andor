@@ -1,4 +1,32 @@
 ------------------------------------------------------
+Release 0 | Beta 0 | Development 1 | Experimental 1
+
+* Added FileUtils
+* Added FileUtilsTest
+* Added ThreadUtils
+* Added ArrayUtils
+
+------------------------------------------------------
+Release 0 | Beta 0 | Development 1 | Experimental 0
+
+* Added Settings
+* Added Window
+* Added WindowTest
+* Added GameLoopInterface
+* Added GameLoop
+* Added BaseGame
+* Added BaseGameTest
+* Added Log
+* Added Logger
+* Added Time
+
+* Created the package org.andor.core
+* Created the package org.andor.core.logger
+* Created the package org.andor.utils
+* Created the package org.andor.tests
+
+
+------------------------------------------------------
 Release 0 | Beta 0 | Development 0 | Experimental 4
 
 * Added Time
