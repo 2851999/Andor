@@ -35,7 +35,7 @@ public class BaseGameTest extends BaseGame {
 	
 	/* The method called when the game loop is rendered */
 	public void render() {
-		Logger.log("BaseGameTest", "GameLoop Rendered");
+		Logger.log("BaseGameTest", "GameLoop Rendered FPS: " + getFPS());
 	}
 	
 	/* The method called when the game loop is stopped */

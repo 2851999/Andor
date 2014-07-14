@@ -11,6 +11,8 @@ package org.andor.core.logger;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.andor.utils.Console;
+
 public class Logger {
 	
 	/* The booleans that state whether each type of
@@ -60,7 +62,7 @@ public class Logger {
 		//Check to see whether the log type is enabled
 		if (isEnabled(log.type))
 			//Print the message
-			System.out.println(message);
+			Console.println(message);
 		//Check to see whether the log should be recorded
 		if (shouldRecord(log.type)) {
 			//Add the message to the logs
