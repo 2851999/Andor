@@ -1,4 +1,17 @@
 ------------------------------------------------------
+Release 0 | Beta 0 | Development 1 | Experimental 4
+
+* Added Renderer
+* Added BufferUtils
+* Added RenderableObject3D
+
+------------------------------------------------------
+Release 0 | Beta 0 | Development 1 | Experimental 3
+
+* Added Vector3D
+* Added Object3D
+
+------------------------------------------------------
 Release 0 | Beta 0 | Development 1 | Experimental 2
 
 * Added Timer
