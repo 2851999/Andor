@@ -90,7 +90,7 @@ public class Vector3D {
 	}
 	
 	/* The method used to create a new vector with the same values as
-	 * this one and then return it */
+	 * this one and then return it (Clones this vector) */
 	public Vector3D clone() {
 		return new Vector3D(this);
 	}

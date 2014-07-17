@@ -1,4 +1,32 @@
 ------------------------------------------------------
+Release 0 | Beta 0 | Development 2 | Experimental 1
+
+* Added Colour
+* Added Camera3D
+* Added the method link(Object3D object) to Object3D
+* Added a hierarchy to objects, so child objects will
+  now base their position and rotation of parent objects
+
+------------------------------------------------------
+Release 0 | Beta 0 | Development 2 | Experimental 0
+
+* Added FileUtils
+* Added FileUtilsTest
+* Added ThreadUtils
+* Added ArrayUtils
+* Added Timer
+* Added TimerTest
+* Added Console
+* Added FPSCalculator
+* Added Vector3D
+* Added Object3D
+* Added Renderer
+* Added BufferUtils
+* Added RenderableObject3D
+* Added the method getDelta() to GameLoop
+* Added the method getFPS() to GameLoop
+
+------------------------------------------------------
 Release 0 | Beta 0 | Development 1 | Experimental 4
 
 * Added Renderer
