@@ -1,4 +1,54 @@
 ------------------------------------------------------
+Release 0 | Beta 0 | Development 2 | Experimental 0
+
+* Added FileUtils
+* Added FileUtilsTest
+* Added ThreadUtils
+* Added ArrayUtils
+* Added Timer
+* Added TimerTest
+* Added Console
+* Added FPSCalculator
+* Added Vector3D
+* Added Object3D
+* Added Renderer
+* Added BufferUtils
+* Added RenderableObject3D
+* Added the method getDelta() to GameLoop
+* Added the method getFPS() to GameLoop
+
+------------------------------------------------------
+Release 0 | Beta 0 | Development 1 | Experimental 4
+
+* Added Renderer
+* Added BufferUtils
+* Added RenderableObject3D
+
+------------------------------------------------------
+Release 0 | Beta 0 | Development 1 | Experimental 3
+
+* Added Vector3D
+* Added Object3D
+
+------------------------------------------------------
+Release 0 | Beta 0 | Development 1 | Experimental 2
+
+* Added Timer
+* Added TimerTest
+* Added Console
+* Added FPSCalculator
+* Added the method getDelta() to GameLoop
+* Added the method getFPS() to GameLoop
+
+------------------------------------------------------
+Release 0 | Beta 0 | Development 1 | Experimental 1
+
+* Added FileUtils
+* Added FileUtilsTest
+* Added ThreadUtils
+* Added ArrayUtils
+
+------------------------------------------------------
 Release 0 | Beta 0 | Development 1 | Experimental 0
 
 * Added Settings
@@ -16,6 +66,7 @@ Release 0 | Beta 0 | Development 1 | Experimental 0
 * Created the package org.andor.core.logger
 * Created the package org.andor.utils
 * Created the package org.andor.tests
+
 
 ------------------------------------------------------
 Release 0 | Beta 0 | Development 0 | Experimental 4

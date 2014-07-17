@@ -8,10 +8,17 @@
 
 package org.andor.core;
 
-public class GameLoop implements GameLoopInterface{
+import org.andor.utils.FPSCalculator;
+
+public class GameLoop implements GameLoopInterface {
+	
+	/* The FPS calculator */
+	public FPSCalculator fpsCalculator;
 	
 	/* The default constructor */
 	public GameLoop() {
+		//Create the FPS calculator
+		this.fpsCalculator = new FPSCalculator();
 		//Create the window
 		Window.create();
 		//Call the create method
@@ -26,6 +33,8 @@ public class GameLoop implements GameLoopInterface{
 		this.start();
 		//Keep going until the window closes
 		while (! Window.shouldClose()) {
+			//Update the FPS calculator
+			this.fpsCalculator.update();
 			//Call the update method
 			this.update();
 			//Call the render method
@@ -68,5 +77,11 @@ public class GameLoop implements GameLoopInterface{
 	public void close() {
 		
 	}
+	
+	/* The method used to get the current delta */
+	public long getDelta() { return this.fpsCalculator.currentDeltaTime; }
+	
+	/* The method used to get the current FPS */
+	public float getFPS() { return this.fpsCalculator.currentFPS; }
 	
 }
