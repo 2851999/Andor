@@ -74,12 +74,15 @@ public class Window {
 				}
 			} else {
 				//Set the target display mode
-				target = new DisplayMode(Settings.Window.Width, Settings.Window.Height);
+				target = new DisplayMode((int) Settings.Window.Width, (int) Settings.Window.Height);
 			}
 			//Set the display mode to the target
 			Display.setDisplayMode(target);
 			//Make the display fullscreen if necessary
 			Display.setFullscreen(Settings.Window.Fullscreen);
+			//Set the windows width and height values
+			Settings.Window.Width = Display.getWidth();
+			Settings.Window.Height = Display.getHeight();
 		} catch (LWJGLException e) {
 			//Log an error
 			Logger.log("Andor - Window", "An exception has occurred when setting the display mode", Log.ERROR);

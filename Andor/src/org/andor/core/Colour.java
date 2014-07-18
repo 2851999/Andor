@@ -81,6 +81,11 @@ public class Colour {
 		this.a = a;
 	}
 	
+	/* The method used to return a float array containing the rgb values */
+	public float[] getValuesRGB() { return new float[] { this.r, this.g, this.b }; }
+	/* The method used to return a float array containing the rgba values */
+	public float[] getValuesRGBA() { return new float[] { this.r, this.g, this.b, this.a }; }
+	
 	/* The methods used to set the values */
 	public void setR(float r) { this.r = r; }
 	public void setG(float g) { this.g = g; }

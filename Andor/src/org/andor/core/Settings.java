@@ -25,8 +25,8 @@ public class Settings {
 		/* The title of the window */
 		public static String Title = "Andor";
 		/* The width and height of the window */
-		public static int Width = 800;
-		public static int Height = 600;
+		public static float Width = 800;
+		public static float Height = 600;
 		/* The boolean that states whether the window is fullscreen */
 		public static boolean Fullscreen = false;
 	}

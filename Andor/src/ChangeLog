@@ -1,11 +1,27 @@
 ------------------------------------------------------
+Release 0 | Beta 0 | Development 2 | Experimental 2
+
+* Added Object3DBuilder
+* Added Quad3DTest
+* Added OpenGLUtils
+
+* Changed the type of Settings.Window.Width, and
+  Settings.Window.Height to float instead of
+  int
+
+* Window now sets the size of the window after it
+  has been created so fullscreen windows will also
+  set the width and height properly
+
+------------------------------------------------------
 Release 0 | Beta 0 | Development 2 | Experimental 1
 
 * Added Colour
 * Added Camera3D
 * Added the method link(Object3D object) to Object3D
 * Added a hierarchy to objects, so child objects will
-  now base their position and rotation of parent objects
+  now base their position and rotation of parent
+  objects
 
 ------------------------------------------------------
 Release 0 | Beta 0 | Development 2 | Experimental 0
