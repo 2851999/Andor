@@ -81,8 +81,8 @@ public class Window {
 			//Make the display fullscreen if necessary
 			Display.setFullscreen(Settings.Window.Fullscreen);
 			//Set the windows width and height values
-			Settings.Window.Width = Display.getWidth();
-			Settings.Window.Height = Display.getHeight();
+			Settings.Window.Width = target.getWidth();
+			Settings.Window.Height = target.getHeight();
 		} catch (LWJGLException e) {
 			//Log an error
 			Logger.log("Andor - Window", "An exception has occurred when setting the display mode", Log.ERROR);
