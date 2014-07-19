@@ -25,6 +25,12 @@ public class Image {
 	/* The number of components e.g. RGB = 3, RGBA = 4 */
 	public int numberOfColourComponents;
 	
+	/* The texture coordinates of this image */
+	public float top;
+	public float bottom;
+	public float left;
+	public float right;
+	
 	/* The texture ID */
 	public int textureId;
 	
@@ -35,6 +41,10 @@ public class Image {
 		this.width = width;
 		this.height = height;
 		this.numberOfColourComponents = numberOfColourComponents;
+		this.top = 0f;
+		this.bottom = 1f;
+		this.left = 0f;
+		this.right = 1f;
 		
 		//Setup the texture ID
 		this.textureId = GL11.glGenTextures();
@@ -79,5 +89,9 @@ public class Image {
 	public ByteBuffer getTexture() { return texture; }
 	public int getWidth() { return this.width; }
 	public int getHeight() { return this.height; }
+	
+	public float[] getTextureCoordinates() {
+		return new float[] { this.top, this.bottom, this.left, this.right };
+	}
 	
 }

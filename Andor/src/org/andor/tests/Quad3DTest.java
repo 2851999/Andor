@@ -12,7 +12,7 @@ import org.andor.core.BaseGame;
 import org.andor.core.Camera3D;
 import org.andor.core.Colour;
 import org.andor.core.Image;
-import org.andor.core.ImageLoader;
+import org.andor.core.ImageSet;
 import org.andor.core.Object3DBuilder;
 import org.andor.core.RenderableObject3D;
 import org.andor.core.Settings;
@@ -29,7 +29,7 @@ public class Quad3DTest extends BaseGame {
 	public Camera3D camera;
 	
 	/* The 3D Object */
-	public RenderableObject3D quad;
+	public RenderableObject3D cube;
 	
 	/* The texture */
 	public Image texture;
@@ -45,13 +45,21 @@ public class Quad3DTest extends BaseGame {
 		this.camera = new Camera3D();
 		this.camera.position.z = -2;
 		this.camera.flying = true;
-		//Create the quad and change its position
-		quad = Object3DBuilder.createTexturedCube(1, 1, 1, Colour.WHITE);
-		quad.position.z = -2;
 		//Load the texture and bind it
-		String texturePath = "C:/Grass_Side.png";
-		this.texture = ImageLoader.loadImage(texturePath, true);
+		String texturePath = "C:/";
+		//Create the images
+		ImageSet images = new ImageSet();
+		Image grassSide = images.loadImage(texturePath + "Grass_Side.png", true);
+		Image grass = images.loadImage(texturePath + "Grass.png", true);
+		Image dirt = images.loadImage(texturePath + "Dirt.png", true);
+		this.texture = images.joinImages();
 		this.texture.bind();
+		//Create the cube and change its position
+		cube = Object3DBuilder.createCube(new Image[] {
+				grassSide, grassSide, grassSide, grassSide,
+				grass, dirt
+		}, 1, 1, 1, Colour.WHITE);
+		cube.position.z = -2;
 		//Lock the mouse
 		Mouse.lock();
 	}
@@ -94,7 +102,7 @@ public class Quad3DTest extends BaseGame {
 		this.camera.useView();
 		
 		//Render the quad
-		this.quad.render();
+		this.cube.render();
 	}
 	
 	/* The method called when the game loop is stopped */

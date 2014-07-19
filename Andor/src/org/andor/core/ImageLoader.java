@@ -22,20 +22,20 @@ import org.andor.utils.FileUtils;
 public class ImageLoader {
 	
 	/* The static method used to load an image given the file path, and
-	 * the inFolder variables */
-	public static Image loadImage(String filePath, boolean inFolder) {
-		return loadImage(loadBufferedImage(filePath, inFolder));
+	 * the external variables */
+	public static Image loadImage(String filePath, boolean external) {
+		return loadImage(loadBufferedImage(filePath, external));
 	}
 	
 	/* The static method used to load a buffered image given the file path,
-	 * and the inFolder variables */
-	public static BufferedImage loadBufferedImage(String filePath, boolean inFolder) {
+	 * and the external variables */
+	public static BufferedImage loadBufferedImage(String filePath, boolean external) {
 		//The buffered image
 		BufferedImage image = null;
 		//Try and catch any errors
 		try {
 			//Check to see whether the file is in a folder
-			if (inFolder)
+			if (external)
 				//Return the image
 				image = ImageIO.read(new FileInputStream(FileUtils.getPath(filePath)));
 			else
@@ -53,7 +53,7 @@ public class ImageLoader {
 	/* The static method used to create an image from a buffered image */
 	public static Image loadImage(BufferedImage image) {
 		//Get the number of colour components
-		int numberOfColourComponents = image.getColorModel().getNumColorComponents();
+		int numberOfColourComponents = image.getColorModel().getNumComponents();
 		//Create the image
 		Image outImage = new Image(loadByteBuffer(image, numberOfColourComponents), image.getWidth(), image.getHeight(), numberOfColourComponents);
 		//Return the image
