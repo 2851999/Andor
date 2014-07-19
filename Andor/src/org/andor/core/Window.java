@@ -98,6 +98,12 @@ public class Window {
 		Display.sync(Settings.Video.MaxFPS);
 	}
 	
+	/* The static method used to close this window */
+	public static void close() {
+		//Destroy the display
+		Display.destroy();
+	}
+	
 	/* The static method used to determine whether this window should close */
 	public static boolean shouldClose() {
 		//Return whether close is requested

@@ -1,4 +1,20 @@
 ------------------------------------------------------
+Release 0 | Beta 0 | Development 2 | Experimental 4
+
+* Added Event
+* Added Input
+* Added InputListener
+* Added InputManager
+* Added Keyboard
+* Added KeyboardEvent
+* Added Mouse
+* Added MouseEvent
+* Added MouseMotionEvent
+* Added ScrollEvent
+
+* Created the package org.andor.core.input
+
+------------------------------------------------------
 Release 0 | Beta 0 | Development 2 | Experimental 3
 
 * Added Image
