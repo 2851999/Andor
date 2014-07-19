@@ -13,11 +13,11 @@ public class Settings {
 	/* The static class containing all of the information about Andor */
 	public static class Information {
 		/* The version of Andor */
-		public static final String VERSION = "V0.0.0.2";
+		public static final String VERSION = "V0.0.0.3";
 		/* The build of Andor */
 		public static final String BUILD = "Development";
 		/* The date this build started development */
-		public static final String DATE = "17/07/2014";
+		public static final String DATE = "19/07/2014";
 	}
 	
 	/* The static class containing all of the settings required for the window */
@@ -25,8 +25,8 @@ public class Settings {
 		/* The title of the window */
 		public static String Title = "Andor";
 		/* The width and height of the window */
-		public static int Width = 800;
-		public static int Height = 600;
+		public static float Width = 800;
+		public static float Height = 600;
 		/* The boolean that states whether the window is fullscreen */
 		public static boolean Fullscreen = false;
 	}

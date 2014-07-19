@@ -94,7 +94,7 @@ public class Renderer {
 			//Bind the texture coordinates buffer and give OpenGL the data
 			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.texturesHandle);
 			GL15.glBufferData(GL15.GL_ARRAY_BUFFER, this.texturesBuffer, GL15.GL_STATIC_DRAW);
-			GL11.glTexCoordPointer(this.texturesHandle, GL11.GL_FLOAT, 0, 0L);
+			GL11.glTexCoordPointer(this.textureValuesCount, GL11.GL_FLOAT, 0, 0L);
 		}
 	}
 	

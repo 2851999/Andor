@@ -8,9 +8,16 @@
 
 package org.andor.core;
 
+import org.andor.core.input.Input;
+import org.andor.core.input.InputListener;
+import org.andor.core.input.InputManager;
+import org.andor.core.input.KeyboardEvent;
+import org.andor.core.input.MouseEvent;
+import org.andor.core.input.MouseMotionEvent;
+import org.andor.core.input.ScrollEvent;
 import org.andor.utils.FPSCalculator;
 
-public class GameLoop implements GameLoopInterface {
+public class GameLoop implements GameLoopInterface, InputListener {
 	
 	/* The FPS calculator */
 	public FPSCalculator fpsCalculator;
@@ -21,6 +28,10 @@ public class GameLoop implements GameLoopInterface {
 		this.fpsCalculator = new FPSCalculator();
 		//Create the window
 		Window.create();
+		//Create the input
+		InputManager.create();
+		//Add this input listener
+		Input.addListener(this);
 		//Call the create method
 		this.create();
 		//Start the game loop
@@ -35,6 +46,8 @@ public class GameLoop implements GameLoopInterface {
 		while (! Window.shouldClose()) {
 			//Update the FPS calculator
 			this.fpsCalculator.update();
+			//Check the input
+			InputManager.checkInput();
 			//Call the update method
 			this.update();
 			//Call the render method
@@ -42,6 +55,10 @@ public class GameLoop implements GameLoopInterface {
 			//Update the display
 			Window.updateDisplay();
 		}
+		//Destroy the input
+		InputManager.destroy();
+		//Close the window
+		Window.close();
 		//Call the stop method
 		this.stop();
 		//Call the close method
@@ -75,6 +92,46 @@ public class GameLoop implements GameLoopInterface {
 	
 	/* The method called when the game loop is closing */
 	public void close() {
+		
+	}
+	
+	/* The method called when a button on the mouse is pressed */
+	public void onMousePressed(MouseEvent e) {
+		
+	}
+	
+	/* The method called when a button on the mouse is released */
+	public void onMouseReleased(MouseEvent e)  {
+		
+	}
+	
+	/* The method called when a button on the mouse is clicked */
+	public void onMouseClicked(MouseEvent e) {
+		
+	}
+	
+	/* The method called when the mouse moves */
+	public void onMouseMoved(MouseMotionEvent e) {
+		
+	}
+	
+	/* The method called when a key on the keyboard is pressed */
+	public void onKeyPressed(KeyboardEvent e) {
+		
+	}
+	
+	/* The method called when a key on the keyboard is released */
+	public void onKeyReleased(KeyboardEvent e) {
+		
+	}
+	
+	/* The method called when a key on the keyboard is typed */
+	public void onKeyTyped(KeyboardEvent e) {
+		
+	}
+	
+	/* The method called when the mouse scrolls */
+	public void onScroll(ScrollEvent e) {
 		
 	}
 	

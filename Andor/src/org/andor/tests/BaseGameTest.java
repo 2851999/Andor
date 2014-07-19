@@ -9,6 +9,10 @@
 package org.andor.tests;
 
 import org.andor.core.BaseGame;
+import org.andor.core.input.KeyboardEvent;
+import org.andor.core.input.MouseEvent;
+import org.andor.core.input.MouseMotionEvent;
+import org.andor.core.input.ScrollEvent;
 import org.andor.core.logger.Logger;
 
 public class BaseGameTest extends BaseGame {
@@ -46,6 +50,46 @@ public class BaseGameTest extends BaseGame {
 	/* The method called when the game loop is closing */
 	public void close() {
 		Logger.log("BaseGameTest", "GameLoop Closing");
+	}
+	
+	/* The method called when a button on the mouse is pressed */
+	public void onMousePressed(MouseEvent e) {
+		Logger.log("BaseGameTest", "The mouse was pressed");
+	}
+	
+	/* The method called when a button on the mouse is released */
+	public void onMouseReleased(MouseEvent e)  {
+		Logger.log("BaseGameTest", "The mouse was released");
+	}
+	
+	/* The method called when a button on the mouse is clicked */
+	public void onMouseClicked(MouseEvent e) {
+		Logger.log("BaseGameTest", "The mouse was clicked");
+	}
+	
+	/* The method called when the mouse moves */
+	public void onMouseMoved(MouseMotionEvent e) {
+		Logger.log("BaseGameTest", "The mouse was moved (" + e.dx + "," + e.dy + ")");
+	}
+	
+	/* The method called when a key on the keyboard is pressed */
+	public void onKeyPressed(KeyboardEvent e) {
+		Logger.log("BaseGameTest", "A key was pressed " + e.keyChatacter);
+	}
+	
+	/* The method called when a key on the keyboard is released */
+	public void onKeyReleased(KeyboardEvent e) {
+		Logger.log("BaseGameTest", "A key was released " + e.keyChatacter);
+	}
+	
+	/* The method called when a key on the keyboard is typed */
+	public void onKeyTyped(KeyboardEvent e) {
+		Logger.log("BaseGameTest", "A key was typed " + e.keyChatacter);
+	}
+	
+	/* The method called when the mouse scrolls */
+	public void onScroll(ScrollEvent e) {
+		Logger.log("BaseGameTest", "The scroll wheel moved " + e.distance);
 	}
 	
 	/* The main method */

@@ -1,4 +1,94 @@
 ------------------------------------------------------
+Release 0 | Beta 0 | Development 3 | Experimental 0
+
+* Added Colour
+* Added Camera3D
+* Added Object3DBuilder
+* Added Quad3DTest
+* Added OpenGLUtils
+* Added Image
+* Added ImageLoader
+* Added Event
+* Added Input
+* Added InputListener
+* Added InputManager
+* Added Keyboard
+* Added KeyboardEvent
+* Added Mouse
+* Added MouseEvent
+* Added MouseMotionEvent
+* Added ScrollEvent
+
+* Added a hierarchy to objects, so child objects will
+  now base their position and rotation of parent
+  objects
+  
+* Created the package org.andor.core.input
+  
+* Changed the type of Settings.Window.Width, and
+  Settings.Window.Height to float instead of
+  int
+  
+* Fixed bug: The width and height of the window was
+  set to 0 when not fullscreen, causing things not
+  to render
+
+* Window now sets the size of the window after it
+  has been created so fullscreen windows will also
+  set the width and height properly
+
+------------------------------------------------------
+Release 0 | Beta 0 | Development 2 | Experimental 4
+
+* Added Event
+* Added Input
+* Added InputListener
+* Added InputManager
+* Added Keyboard
+* Added KeyboardEvent
+* Added Mouse
+* Added MouseEvent
+* Added MouseMotionEvent
+* Added ScrollEvent
+
+* Created the package org.andor.core.input
+
+------------------------------------------------------
+Release 0 | Beta 0 | Development 2 | Experimental 3
+
+* Added Image
+* Added ImageLoader
+
+* Fixed bug: The width and height of the window was
+  set to 0 when not fullscreen, causing things not
+  to render
+
+------------------------------------------------------
+Release 0 | Beta 0 | Development 2 | Experimental 2
+
+* Added Object3DBuilder
+* Added Quad3DTest
+* Added OpenGLUtils
+
+* Changed the type of Settings.Window.Width, and
+  Settings.Window.Height to float instead of
+  int
+
+* Window now sets the size of the window after it
+  has been created so fullscreen windows will also
+  set the width and height properly
+
+------------------------------------------------------
+Release 0 | Beta 0 | Development 2 | Experimental 1
+
+* Added Colour
+* Added Camera3D
+* Added the method link(Object3D object) to Object3D
+* Added a hierarchy to objects, so child objects will
+  now base their position and rotation of parent
+  objects
+
+------------------------------------------------------
 Release 0 | Beta 0 | Development 2 | Experimental 0
 
 * Added FileUtils
