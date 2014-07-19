@@ -19,6 +19,9 @@ import org.andor.utils.FPSCalculator;
 
 public class GameLoop implements GameLoopInterface, InputListener {
 	
+	/* The boolean that states whether a close is requested */
+	private boolean closeRequested;
+	
 	/* The FPS calculator */
 	public FPSCalculator fpsCalculator;
 	
@@ -40,10 +43,12 @@ public class GameLoop implements GameLoopInterface, InputListener {
 	
 	/* The method used to start the game loop */
 	private void startGameLoop() {
+		//Set close requested to false
+		this.closeRequested = false;
 		//Call the start method
 		this.start();
 		//Keep going until the window closes
-		while (! Window.shouldClose()) {
+		while (! Window.shouldClose() && ! this.closeRequested) {
 			//Update the FPS calculator
 			this.fpsCalculator.update();
 			//Check the input
@@ -63,6 +68,12 @@ public class GameLoop implements GameLoopInterface, InputListener {
 		this.stop();
 		//Call the close method
 		this.close();
+	}
+	
+	/* The method called to request the program to close  */
+	public void requestClose() {
+		//Set close requested to true
+		this.closeRequested = true;
 	}
 	
 	/* The method called when the loop has been created */

@@ -8,57 +8,76 @@
 
 package org.andor.core;
 
+import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 
-import org.andor.core.logger.Log;
-import org.andor.core.logger.Logger;
+import javax.imageio.ImageIO;
+
+import org.andor.utils.BufferUtils;
 import org.andor.utils.FileUtils;
-import org.newdawn.slick.opengl.TextureLoader;
 
 public class ImageLoader {
 	
 	/* The static method used to load an image given the file path, and
-	 * the external variables */
-	public static Image loadImage(String filePath, boolean external) {
-		//Work out the file type
-		if (filePath.contains(".")) {
-			//Get the file extension
-			String fileExtension = filePath.substring(filePath.lastIndexOf('.')).toUpperCase();
-			//Return the image
-			return loadImage(filePath, fileExtension, external);
-		} else {
-			//Log an error
-			Logger.log("Andor - ImageLoader", "No file extension found in the file path " + filePath, Log.ERROR);
-			//Return nothing
-			return null;
-		}
+	 * the inFolder variables */
+	public static Image loadImage(String filePath, boolean inFolder) {
+		return loadImage(loadBufferedImage(filePath, inFolder));
 	}
 	
-	/* The static method used to load an image given the file path, file extension
-	 * and the external variables */
-	public static Image loadImage(String filePath, String fileExtension, boolean external) {
+	/* The static method used to load a buffered image given the file path,
+	 * and the inFolder variables */
+	public static BufferedImage loadBufferedImage(String filePath, boolean inFolder) {
+		//The buffered image
+		BufferedImage image = null;
 		//Try and catch any errors
 		try {
 			//Check to see whether the file is in a folder
-			if (external)
+			if (inFolder)
 				//Return the image
-				return new Image(TextureLoader.getTexture(fileExtension, new FileInputStream(FileUtils.getPath(filePath))));
+				image = ImageIO.read(new FileInputStream(FileUtils.getPath(filePath)));
 			else
 				//Return the image
-				return new Image(TextureLoader.getTexture(fileExtension, ImageLoader.class.getResourceAsStream(filePath)));
+				image = ImageIO.read(ImageLoader.class.getResourceAsStream(filePath));
 		} catch (FileNotFoundException e) {
-			//Log an error
-			Logger.log("Andor - ImageLoader", "Error loading the file " + filePath + " with the format " + fileExtension, Log.ERROR);
 			e.printStackTrace();
 		} catch (IOException e) {
-			//Log an error
-			Logger.log("Andor - ImageLoader", "Error loading the file " + filePath + " with the format " + fileExtension, Log.ERROR);
 			e.printStackTrace();
 		}
-		//Return null if there was a problem
-		return null;
+		//Return the image
+		return image;
+	}
+	
+	/* The static method used to create an image from a buffered image */
+	public static Image loadImage(BufferedImage image) {
+		//Get the number of colour components
+		int numberOfColourComponents = image.getColorModel().getNumColorComponents();
+		//Create the image
+		Image outImage = new Image(loadByteBuffer(image, numberOfColourComponents), image.getWidth(), image.getHeight(), numberOfColourComponents);
+		//Return the image
+		return outImage;
+	}
+	
+	/* The static method used to create a byte buffer from a buffered image */
+	public static ByteBuffer loadByteBuffer(BufferedImage image, int numberOfColourComponents) {
+		//Get the image's width and height
+		int imageWidth = image.getWidth();
+		int imageHeight = image.getHeight();
+		
+		//Get the number of colour components 3 = RGB 4 = RGBA
+		int components = numberOfColourComponents;
+		
+		//Create the array
+		byte[] data = new byte[components * imageWidth * imageHeight];
+		//Put the data into the data array
+		image.getRaster().getDataElements(0, 0, imageWidth, imageHeight, data);
+		//Create the byte buffer for each pixel
+		ByteBuffer pixels = BufferUtils.createFlippedBuffer(data);
+		
+		//Return the byte buffer
+		return pixels;
 	}
 	
 }

@@ -12,6 +12,118 @@ import org.lwjgl.opengl.GL11;
 
 public class Object3DBuilder {
 	
+	/* The static method used to create a textured cube renderable object array given the
+	 * width, height and colours */
+	public static RenderableObject3D createTexturedCube(float width, float height, float depth, Colour[] colours) {
+		return new RenderableObject3D(GL11.GL_QUADS, createCubeV(width, height, depth), createColourArray(24, colours), createCubeT());
+	}
+	
+	/* The static method used to create a cube quad renderable object array given the
+	 * width, height and colour */
+	public static RenderableObject3D createTexturedCube(float width, float height, float depth, Colour colour) {
+		return new RenderableObject3D(GL11.GL_QUADS, createCubeV(width, height, depth), createColourArray(24, colour), createCubeT());
+	}
+	
+	/* The static method used to create a cube renderable object array given the
+	 * width, height and colours */
+	public static RenderableObject3D createCube(float width, float height, float depth, Colour[] colours) {
+		return new RenderableObject3D(GL11.GL_QUADS, createCubeV(width, height, depth), createColourArray(24, colours));
+	}
+	
+	/* The static method used to create a cube renderable object array given the
+	 * width, height and colour */
+	public static RenderableObject3D createCube(float width, float height, float depth, Colour colour) {
+		return new RenderableObject3D(GL11.GL_QUADS, createCubeV(width, height, depth), createColourArray(24, colour));
+	}
+	
+	/* The static method used to create a cube renderable object array given the
+	 * width and height */
+	public static RenderableObject3D createCube(float width, float height, float depth) {
+		return new RenderableObject3D(GL11.GL_QUADS, createCubeV(width, height, depth));
+	}
+	
+	/* The static method used to create a cube's texture coordinates */
+	public static float[] createCubeT() {
+		return new float[] {
+				//Front face
+				0, 0,
+				1, 0,
+				1, 1,
+				0, 1,
+				
+				//Left face
+				1, 1,
+				0, 1,
+				0, 0,
+				1, 0,
+				
+				//Back face
+				1, 0,
+				0, 0,
+				0, 1,
+				1, 1,
+				
+				//Bottom face
+				1, 0,
+				1, 1,
+				0, 1,
+				0, 0,
+				
+				//Right face
+				1, 1,
+				0, 1,
+				0, 0,
+				1, 0,
+				
+				//Top face
+				1, 0,
+				1, 1,
+				0, 1,
+				0, 0
+		};
+	}
+	
+	/* The static method used to create a cube's vertices array given the width, height and depth */
+	public static float[] createCubeV(float width, float height, float depth) {
+		return new float[] {
+				//Front face
+				-width, height, depth,
+				width, height, depth,
+				width, -height, depth,
+				-width, -height, depth,
+				
+				//Left face
+				-width, -height, depth,
+				-width, -height, -depth,
+				-width, height, -depth,
+				-width, height, depth,
+				
+				//Back face
+				-width, height, -depth,
+				width, height, -depth,
+				width, -height, -depth,
+				-width, -height, -depth,
+				
+				//Bottom face
+				width, -height, -depth,
+				width, -height, depth,
+				-width, -height, depth,
+				-width, -height, -depth,
+				
+				//Right face
+				width, -height, -depth,
+				width, -height, depth,
+				width, height, depth,
+				width, height, -depth,
+				
+				//Top face
+				-width, height, -depth,
+				-width, height, depth,
+				width, height, depth,
+				width, height, -depth
+			};
+	}
+	
 	/* The static method used to create a textured quad renderable object array given the
 	 * width, height and colours */
 	public static RenderableObject3D createTexturedQuad(float width, float height, Colour[] colours) {
