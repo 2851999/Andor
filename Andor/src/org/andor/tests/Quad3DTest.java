@@ -11,16 +11,19 @@ package org.andor.tests;
 import org.andor.core.BaseGame;
 import org.andor.core.Camera3D;
 import org.andor.core.Colour;
+import org.andor.core.Font;
 import org.andor.core.Image;
 import org.andor.core.ImageSet;
 import org.andor.core.Object3DBuilder;
 import org.andor.core.RenderableObject3D;
 import org.andor.core.Settings;
+import org.andor.core.SkyBox;
 import org.andor.core.Vector3D;
 import org.andor.core.input.Keyboard;
 import org.andor.core.input.KeyboardEvent;
 import org.andor.core.input.Mouse;
 import org.andor.core.input.MouseMotionEvent;
+import org.andor.utils.FontUtils;
 import org.andor.utils.OpenGLUtils;
 
 public class Quad3DTest extends BaseGame {
@@ -34,6 +37,9 @@ public class Quad3DTest extends BaseGame {
 	/* The texture */
 	public Image texture;
 	
+	/* The font */
+	public Font font;
+	
 	/* The constructor */
 	public Quad3DTest() {
 		
@@ -45,15 +51,27 @@ public class Quad3DTest extends BaseGame {
 		this.camera = new Camera3D();
 		this.camera.position.z = -2;
 		this.camera.flying = true;
+		//Load the font
+		this.font = FontUtils.createFont("Arial", 12);
 		//Load the texture and bind it
 		String texturePath = "C:/";
+		//Create a skybox
+		SkyBox skybox = new SkyBox(texturePath, new String[] {
+				"sky-texture.png",
+				"sky-texture.png",
+				"sky-texture.png",
+				"sky-texture.png",
+				"sky-texture.png",
+				"sky-texture.png"
+		}, true);
+		this.camera.setSkyBox(skybox);
 		//Create the images
 		ImageSet images = new ImageSet();
 		Image grassSide = images.loadImage(texturePath + "Grass_Side.png", true);
 		Image grass = images.loadImage(texturePath + "Grass.png", true);
 		Image dirt = images.loadImage(texturePath + "Dirt.png", true);
 		this.texture = images.joinImages();
-		this.texture.bind();
+		//this.texture.bind();
 		//Create the cube and change its position
 		cube = Object3DBuilder.createCube(new Image[] {
 				grassSide, grassSide, grassSide, grassSide,
@@ -93,13 +111,22 @@ public class Quad3DTest extends BaseGame {
 	/* The method called when the game loop is rendered */
 	public void render() {
 		//Setup OpenGL
-		OpenGLUtils.setupPerspective(70f, 1f, 1000f);
 		OpenGLUtils.clearColourBuffer();
 		OpenGLUtils.clearDepthBuffer();
 		OpenGLUtils.enableDepthTest();
+		OpenGLUtils.setupRemoveAlpha();
+		OpenGLUtils.setupOrtho(1, -1);
+		
+		//Render the FPS
+		this.font.render("Current FPS: " + this.getFPS(), 10, 10);
+		
+		OpenGLUtils.setupPerspective(70f, 1f, 1000f);
 		
 		//Use the camera's view on the world
 		this.camera.useView();
+		
+		//Bind the texture
+		this.texture.bind();
 		
 		//Render the quad
 		this.cube.render();

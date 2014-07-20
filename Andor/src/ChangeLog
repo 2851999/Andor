@@ -1,4 +1,18 @@
 ------------------------------------------------------
+Release 0 | Beta 0 | Development 3 | Experimental 3
+
+* Added Font
+* Added FontUtils
+* Added SkyBox
+
+* Fixed bug: Problems when having more than one
+  RenderableObject3D
+* Fixed bug: Bottom textures of cubes were not
+  rendering properly
+  
+* Linked objects no longer share rotation
+
+------------------------------------------------------
 Release 0 | Beta 0 | Development 3 | Experimental 2
 
 * Added ImageSet

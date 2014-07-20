@@ -76,8 +76,8 @@ public class Object3DBuilder {
 				t[1].right, t[1].bottom,
 				
 				//Bottom face
-				t[5].right, t[5].top,
 				t[5].right, t[5].bottom,
+				t[5].right, t[5].top,
 				t[5].left, t[5].top,
 				t[5].left, t[5].bottom,
 				
@@ -117,8 +117,8 @@ public class Object3DBuilder {
 				t.right, t.bottom,
 				
 				//Bottom face
-				t.right, t.top,
 				t.right, t.bottom,
+				t.right, t.top,
 				t.left, t.top,
 				t.left, t.bottom,
 				

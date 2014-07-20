@@ -102,10 +102,18 @@ public class Renderer {
 	public void render() {
 		//Enable the arrays as needed
 		GL11.glEnableClientState(GL11.GL_VERTEX_ARRAY);
-		if (this.colourData != null)
+		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.verticesHandle);
+		GL11.glVertexPointer(this.vertexValuesCount, GL11.GL_FLOAT, 0, 0L);
+		if (this.colourData != null) {
 			GL11.glEnableClientState(GL11.GL_COLOR_ARRAY);
-		if (this.textureData != null)
+			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.coloursHandle);
+			GL11.glColorPointer(this.colourValuesCount, GL11.GL_FLOAT, 0, 0L);
+		}
+		if (this.textureData != null) {
 			GL11.glEnableClientState(GL11.GL_TEXTURE_COORD_ARRAY);
+			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.texturesHandle);
+			GL11.glTexCoordPointer(this.textureValuesCount, GL11.GL_FLOAT, 0, 0L);
+		}
 		//Draw the arrays
 		GL11.glDrawArrays(this.renderMode, 0, this.verticesData.length / this.vertexValuesCount);
 		//Disable the arrays as needed
