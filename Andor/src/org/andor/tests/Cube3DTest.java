@@ -8,31 +8,20 @@
 
 package org.andor.tests;
 
-import org.andor.core.BaseGame;
-import org.andor.core.Camera3D;
-import org.andor.core.Colour;
-import org.andor.core.Font;
-import org.andor.core.Image;
-import org.andor.core.ImageSet;
-import org.andor.core.Object3DBuilder;
-import org.andor.core.RenderableObject3D;
-import org.andor.core.Settings;
-import org.andor.core.SkyBox;
-import org.andor.core.Vector3D;
-import org.andor.core.input.Keyboard;
-import org.andor.core.input.KeyboardEvent;
-import org.andor.core.input.Mouse;
-import org.andor.core.input.MouseMotionEvent;
-import org.andor.utils.FontUtils;
-import org.andor.utils.OpenGLUtils;
+import org.andor.core.*;
+import org.andor.core.input.*;
+import org.andor.utils.*;
 
-public class Quad3DTest extends BaseGame {
+public class Cube3DTest extends BaseGame {
 	
 	/* The camera */
 	public Camera3D camera;
 	
 	/* The 3D Object */
 	public RenderableObject3D cube;
+	
+	/* The 3D Object */
+	public RenderableObject3D bigCube;
 	
 	/* The texture */
 	public Image texture;
@@ -41,15 +30,14 @@ public class Quad3DTest extends BaseGame {
 	public Font font;
 	
 	/* The constructor */
-	public Quad3DTest() {
+	public Cube3DTest() {
 		
 	}
 	
 	/* The method called when the loop has been created */
 	public void create() {
-		//Create the camera and change its position
+		//Create the camera
 		this.camera = new Camera3D();
-		this.camera.position.z = -2;
 		this.camera.flying = true;
 		//Load the font
 		this.font = FontUtils.createFont("Arial", 12);
@@ -71,13 +59,12 @@ public class Quad3DTest extends BaseGame {
 		Image grass = images.loadImage(texturePath + "Grass.png", true);
 		Image dirt = images.loadImage(texturePath + "Dirt.png", true);
 		this.texture = images.joinImages();
-		//this.texture.bind();
-		//Create the cube and change its position
+		//Create the cube
 		cube = Object3DBuilder.createCube(new Image[] {
 				grassSide, grassSide, grassSide, grassSide,
 				grass, dirt
 		}, 1, 1, 1, Colour.WHITE);
-		cube.position.z = -2;
+		bigCube = Object3DBuilder.createCube(10, 10, 10, new Colour(130f / 255f, 176f / 255f, 255f / 255f, 0.8f));
 		//Lock the mouse
 		Mouse.lock();
 	}
@@ -93,13 +80,13 @@ public class Quad3DTest extends BaseGame {
 		if (Keyboard.KEY_W)
 			//Move the camera forwards
 			camera.moveForward(0.01f * getDelta());
-		else if (Keyboard.KEY_S)
+		if (Keyboard.KEY_S)
 			//Move the camera forwards
 			camera.moveBackward(0.01f * getDelta());
-		else if (Keyboard.KEY_A)
+		if (Keyboard.KEY_A)
 			//Move the camera forwards
 			camera.moveLeft(0.01f * getDelta());
-		else if (Keyboard.KEY_D)
+		if (Keyboard.KEY_D)
 			//Move the camera forwards
 			camera.moveRight(0.01f * getDelta());
 		
@@ -120,7 +107,8 @@ public class Quad3DTest extends BaseGame {
 		//Render the FPS
 		this.font.render("Current FPS: " + this.getFPS(), 10, 10);
 		
-		OpenGLUtils.setupPerspective(70f, 1f, 1000f);
+		OpenGLUtils.setupPerspective(70f, 0.1f, 1000f);
+		OpenGLUtils.enableTexture2D();
 		
 		//Use the camera's view on the world
 		this.camera.useView();
@@ -128,8 +116,11 @@ public class Quad3DTest extends BaseGame {
 		//Bind the texture
 		this.texture.bind();
 		
-		//Render the quad
+		//Render the cube
 		this.cube.render();
+		
+		OpenGLUtils.disableTexture2D();
+		this.bigCube.render();
 	}
 	
 	/* The method called when the game loop is stopped */
@@ -148,6 +139,9 @@ public class Quad3DTest extends BaseGame {
 		if (e.getCode() == Keyboard.KEY_F3_CODE)
 			//Toggle the mouse locked
 			Mouse.setLocked(! Mouse.isLocked());
+		else if (e.getCode() == Keyboard.KEY_R_CODE)
+			//Reset the players position
+			this.camera.position = new Vector3D(0, -2, 0);
 	}
 	
 	/* The method called when the mouse moves */
@@ -166,7 +160,7 @@ public class Quad3DTest extends BaseGame {
 		//Enable VSync
 		Settings.Video.VSync = true;
 		//Create a new instance of this test
-		new Quad3DTest();
+		new Cube3DTest();
 	}
 	
 }

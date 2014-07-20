@@ -67,7 +67,6 @@ public class Renderer {
 		//Bind the vertices buffer and give OpenGL the data
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.verticesHandle);
 		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, this.verticesBuffer, GL15.GL_STATIC_DRAW);
-		GL11.glVertexPointer(this.vertexValuesCount, GL11.GL_FLOAT, 0, 0L);
 		
 		//Check to see whether the colours have been set
 		if (this.colourData!= null) {
@@ -80,7 +79,6 @@ public class Renderer {
 			//Bind the colours buffer and give OpenGL the data
 			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.coloursHandle);
 			GL15.glBufferData(GL15.GL_ARRAY_BUFFER, this.coloursBuffer, GL15.GL_STATIC_DRAW);
-			GL11.glColorPointer(this.colourValuesCount, GL11.GL_FLOAT, 0, 0L);
 		}
 		
 		//Check to see whether the texture coordinates have been set
@@ -94,7 +92,6 @@ public class Renderer {
 			//Bind the texture coordinates buffer and give OpenGL the data
 			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.texturesHandle);
 			GL15.glBufferData(GL15.GL_ARRAY_BUFFER, this.texturesBuffer, GL15.GL_STATIC_DRAW);
-			GL11.glTexCoordPointer(this.textureValuesCount, GL11.GL_FLOAT, 0, 0L);
 		}
 	}
 	
@@ -122,6 +119,39 @@ public class Renderer {
 		if (this.colourData != null)
 			GL11.glDisableClientState(GL11.GL_COLOR_ARRAY);
 		GL11.glDisableClientState(GL11.GL_VERTEX_ARRAY);
+	}
+	
+	/* The method used to update the vertices */
+	public void updateVertices(float[] verticesData) {
+		//Set the vertices data
+		this.verticesData = verticesData;
+		//Create the vertices buffer
+		this.verticesBuffer = BufferUtils.createFlippedBuffer(this.verticesData);
+		//Bind the vertices buffer and give OpenGL the data
+		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.verticesHandle);
+		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, this.verticesBuffer, GL15.GL_STATIC_DRAW);
+	}
+	
+	/* The method used to update the colours */
+	public void updateColours(float[] colourData) {
+		//Set the colour data
+		this.colourData = colourData;
+		//Create the colour buffer
+		this.coloursBuffer = BufferUtils.createFlippedBuffer(this.colourData);
+		//Bind the colours buffer and give OpenGL the data
+		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.coloursHandle);
+		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, this.coloursBuffer, GL15.GL_STATIC_DRAW);
+	}
+	
+	/* The method used to update the texture coordinates */
+	public void updateTextures(float[] textureData) {
+		//Set the texture data
+		this.textureData = textureData;
+		//Create the colour buffer
+		this.texturesBuffer = BufferUtils.createFlippedBuffer(this.textureData);
+		//Bind the texture coordinates buffer and give OpenGL the data
+		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.texturesHandle);
+		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, this.texturesBuffer, GL15.GL_STATIC_DRAW);
 	}
 	
 	/* The method used to set the vertices */
