@@ -35,6 +35,6 @@ public class KeyboardEvent extends Event {
 	
 	/* The methods used to return the key's character and code */
 	public char getCharacter() { return this.keyChatacter; }
-	public int getCoode() { return this.keyCode; }
+	public int getCode() { return this.keyCode; }
 	
 }

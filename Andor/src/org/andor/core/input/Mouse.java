@@ -8,6 +8,8 @@
 
 package org.andor.core.input;
 
+import org.andor.core.Settings;
+
 public class Mouse {
 	
 	/* The integer representations of each button on the mouse */
@@ -47,6 +49,73 @@ public class Mouse {
 			return middleButton;
 		else
 			return false;
+	}
+	
+	/* The static method used to lock the mouse */
+	public static void lock() {
+		//Hide the cursor
+		org.lwjgl.input.Mouse.setGrabbed(true);
+		//Stop clipping the cursor within the window
+		org.lwjgl.input.Mouse.setClipMouseCoordinatesToWindow(false);
+		//Reset the mouse x and y, to make sure the InputManager doesn't
+		//call mouse moved for this
+		Mouse.x = (float) org.lwjgl.input.Mouse.getX();
+		Mouse.y = (float) (Settings.Window.Height - org.lwjgl.input.Mouse.getY());
+		Mouse.lastX = x;
+		Mouse.lastY = y;
+		//Call a mouse moved event (Prevent future issues with GUI's not updating)
+		Input.callMouseMoved(new MouseMotionEvent(Mouse.x, Mouse.y, Mouse.x, Mouse.y));
+	}
+	
+	/* The static method used to unlock the mouse */
+	public static void unlock() {
+		//Hide the cursor
+		org.lwjgl.input.Mouse.setGrabbed(false);
+		//Stop clipping the cursor within the window
+		org.lwjgl.input.Mouse.setClipMouseCoordinatesToWindow(true);
+		//Move the mouse into the centre
+		centre();
+		//Reset the mouse x and y, to make sure the InputManager doesn't
+		//call mouse moved for this
+		Mouse.x = (float) org.lwjgl.input.Mouse.getX();
+		Mouse.y = (float) (Settings.Window.Height - org.lwjgl.input.Mouse.getY());
+		Mouse.lastX = x;
+		Mouse.lastY = y;
+		//Call a mouse moved event (Prevent future issues with GUI's not updating)
+		Input.callMouseMoved(new MouseMotionEvent(Mouse.x, Mouse.y, Mouse.x, Mouse.y));
+	}
+	
+	/* The static method used to set the mouse locked or unlocked */
+	public static void setLocked(boolean locked) {
+		if (locked)
+			lock();
+		else
+			unlock();
+	}
+	
+	/* The static method used to determine whether the mouse is locked */
+	public static boolean isLocked() {
+		return org.lwjgl.input.Mouse.isGrabbed() && ! org.lwjgl.input.Mouse.isClipMouseCoordinatesToWindow();
+	}
+	
+	/* The static method used to set the position of the mouse */
+	public static void setPosition(float x, float y) {
+		//Move the mouse
+		org.lwjgl.input.Mouse.setCursorPosition((int) x, (int) y);
+		//Reset the mouse x and y, to make sure the InputManager doesn't
+		//call mouse moved for this
+		Mouse.x = (float) org.lwjgl.input.Mouse.getX();
+		Mouse.y = (float) (Settings.Window.Height - org.lwjgl.input.Mouse.getY());
+		Mouse.lastX = x;
+		Mouse.lastY = y;
+		//Call a mouse moved event (Prevent future issues with GUI's not updating)
+		Input.callMouseMoved(new MouseMotionEvent(Mouse.x, Mouse.y, Mouse.x, Mouse.y));
+	}
+	
+	/* The static method used to set centre the mouse */
+	public static void centre() {
+		//Set the position into the middle of the screen
+		setPosition(Settings.Window.Width / 2, Settings.Window.Height / 2);
 	}
 	
 }

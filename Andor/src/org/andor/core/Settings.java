@@ -13,11 +13,11 @@ public class Settings {
 	/* The static class containing all of the information about Andor */
 	public static class Information {
 		/* The version of Andor */
-		public static final String VERSION = "V0.0.0.3";
+		public static final String VERSION = "V0.0.0.4";
 		/* The build of Andor */
 		public static final String BUILD = "Development";
 		/* The date this build started development */
-		public static final String DATE = "19/07/2014";
+		public static final String DATE = "20/07/2014";
 	}
 	
 	/* The static class containing all of the settings required for the window */
@@ -35,6 +35,8 @@ public class Settings {
 	public static class Video {
 		/* The boolean that states whether VSync should be enabled */
 		public static boolean VSync = false;
+		/* The boolean that states whether anti aliasing should be used */
+		public static boolean AntiAliasing = false;
 		/* The maximum FPS */
 		public static int MaxFPS = 60;
 	}

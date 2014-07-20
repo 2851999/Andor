@@ -21,6 +21,9 @@ public class FPSCalculator {
 	/* The time of the last frame (Milliseconds) */
 	public long lastFrameTime;
 	
+	/* The time of the last frame (Milliseconds) used for calculating the delta time */
+	public long lastDeltaFrameTime;
+	
 	/* The current delta time */
 	public long currentDeltaTime;
 	
@@ -33,8 +36,9 @@ public class FPSCalculator {
 	/* The constructor */
 	public FPSCalculator() {
 		//Assign the variables
-		this.mode = MODE_FPS_PER_FRAME;
+		this.mode = MODE_FPS_PER_SECOND;
 		this.lastFrameTime = Time.getMiliseconds();
+		this.lastDeltaFrameTime = this.lastFrameTime;
 		this.currentDeltaTime = 0;
 		this.currentFPS = 0;
 	}
@@ -46,18 +50,22 @@ public class FPSCalculator {
 			//Check the mode
 			if (this.mode == MODE_FPS_PER_FRAME) {
 				//Recalculate the current delta
-				this.currentDeltaTime = Time.getMiliseconds() - this.lastFrameTime;
+				this.currentDeltaTime = Time.getMiliseconds() - this.lastDeltaFrameTime;
 				//Set the time this update occurred
-				this.lastFrameTime = Time.getMiliseconds();
+				this.lastDeltaFrameTime = Time.getMiliseconds();
 				//Make sure the current delta is not 0 (Prevents DivideByZero Exception)
 				if (this.currentDeltaTime != 0)
 					//Calculate the current FPS
 					this.currentFPS = 1000 / this.currentDeltaTime;
 			} else if (this.mode == MODE_FPS_PER_SECOND) {
+				//Recalculate the current delta
+				this.currentDeltaTime = Time.getMiliseconds() - this.lastDeltaFrameTime;
+				//Set the time this update occurred
+				this.lastDeltaFrameTime = Time.getMiliseconds();
 				//Add 1 to the current FPS count
 				this.fpsCount++;
 				//Check to see whether the require amount of time has passed
-				if ((Time.getMiliseconds()- this.lastFrameTime) >= 1000) {
+				if ((Time.getMiliseconds() - this.lastFrameTime) >= 1000) {
 					//Set the time this update occurred
 					this.lastFrameTime = Time.getMiliseconds();
 					//Set the current FPS

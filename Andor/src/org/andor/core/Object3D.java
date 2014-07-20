@@ -75,6 +75,8 @@ public class Object3D {
 		else {
 			//Get the position of the parent object
 			Vector3D parentPosition = this.parent.getPosition().clone();
+			//Multiply by -1 (Invert the parent's position
+			parentPosition.multiply(-1f);
 			//Add this position onto the parent position
 			parentPosition.add(this.position);
 			//Return the new position
@@ -83,17 +85,7 @@ public class Object3D {
 	}
 	
 	public Vector3D getRotation() {
-		//Make sure this isn't linked to another object
-		if (! this.linked)
-			return this.rotation;
-		else {
-			//Get the rotation of the parent object
-			Vector3D parentRotation = this.parent.getRotation().clone();
-			//Add this rotation onto the parent rotation
-			parentRotation.add(this.rotation);
-			//Return the new rotation
-			return parentRotation;
-		}
+		return this.rotation;
 	}
 	
 }

@@ -47,7 +47,7 @@ public class RenderableObject3D extends Object3D {
 		GL11.glPushMatrix();
 		
 		//Move to the correct position
-		GL11.glTranslated(this.position.x, this.position.y, this.position.z);
+		GL11.glTranslated(this.getPosition().x, this.getPosition().y, this.getPosition().z);
 		
 		//Rotate by the specified amount
 		GL11.glRotated(this.rotation.x, 1, 0, 0);

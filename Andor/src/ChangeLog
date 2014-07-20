@@ -1,4 +1,57 @@
 ------------------------------------------------------
+Release 0 | Beta 0 | Development 4 | Experimental 0
+
+* Added Vector2D
+* Added ImageSet
+* Added Font
+* Added FontUtils
+* Added SkyBox
+
+* Added the methods lock and unlock in Mouse
+
+* Fixed bug: Problems when having more than one
+  RenderableObject3D
+* Fixed bug: Bottom textures of cubes were not
+  rendering properly
+
+* Fixed spelling: Changed the method getCoode() to
+  getCode() in KeyboardEvent
+  
+* Linked objects no longer share rotation
+* Now using a custom Image and ImageLoader method
+
+------------------------------------------------------
+Release 0 | Beta 0 | Development 3 | Experimental 3
+
+* Added Font
+* Added FontUtils
+* Added SkyBox
+
+* Fixed bug: Problems when having more than one
+  RenderableObject3D
+* Fixed bug: Bottom textures of cubes were not
+  rendering properly
+  
+* Linked objects no longer share rotation
+
+------------------------------------------------------
+Release 0 | Beta 0 | Development 3 | Experimental 2
+
+* Added ImageSet
+
+------------------------------------------------------
+Release 0 | Beta 0 | Development 3 | Experimental 1
+
+* Added Vector2D
+
+* Added the methods lock and unlock in Mouse
+
+* Fixed spelling: Changed the method getCoode() to
+  getCode() in KeyboardEvent
+  
+* Now using a custom Image and ImageLoader method
+
+------------------------------------------------------
 Release 0 | Beta 0 | Development 3 | Experimental 0
 
 * Added Colour
