@@ -1,4 +1,100 @@
 ------------------------------------------------------
+Release 0 | Beta 1 | Development 0 | Experimental 2
+
+* Added the method unbind() in Image
+
+* Fixed bug: VSync wasn't being used
+
+* Hopefully decreased loading time and memory usage,
+  ImageSet.loadImage() doesn't return an Image with
+  anything inside, it only contains the texture
+  coordinates and the size of the texture.
+
+------------------------------------------------------
+Release 0 | Beta 1 | Development 0 | Experimental 1
+
+* Added methods in Renderer to update certain data
+
+* Renamed Quad3DTest to Cube3DTest
+
+------------------------------------------------------
+Release 0 | Beta 1 | Development 0 | Experimental 0
+
+* Added Settings
+* Added Window
+* Added WindowTest
+* Added GameLoopInterface
+* Added GameLoop
+* Added BaseGame
+* Added BaseGameTest
+* Added Log
+* Added Logger
+* Added Time
+* Added FileUtils
+* Added FileUtilsTest
+* Added ThreadUtils
+* Added ArrayUtils
+* Added Timer
+* Added TimerTest
+* Added Console
+* Added FPSCalculator
+* Added Vector3D
+* Added Object3D
+* Added Renderer
+* Added BufferUtils
+* Added RenderableObject3D
+* Added Colour
+* Added Camera3D
+* Added Object3DBuilder
+* Added Quad3DTest
+* Added OpenGLUtils
+* Added Image
+* Added ImageLoader
+* Added Event
+* Added Input
+* Added InputListener
+* Added InputManager
+* Added Keyboard
+* Added KeyboardEvent
+* Added Mouse
+* Added MouseEvent
+* Added MouseMotionEvent
+* Added ScrollEvent
+* Added Vector2D
+* Added ImageSet
+* Added Font
+* Added FontUtils
+* Added SkyBox
+
+* Created the package org.andor.core
+* Created the package org.andor.core.logger
+* Created the package org.andor.core.input
+* Created the package org.andor.utils
+* Created the package org.andor.tests
+
+------------------------------------------------------
+Release 0 | Beta 0 | Development 4 | Experimental 0
+
+* Added Vector2D
+* Added ImageSet
+* Added Font
+* Added FontUtils
+* Added SkyBox
+
+* Added the methods lock and unlock in Mouse
+
+* Fixed bug: Problems when having more than one
+  RenderableObject3D
+* Fixed bug: Bottom textures of cubes were not
+  rendering properly
+
+* Fixed spelling: Changed the method getCoode() to
+  getCode() in KeyboardEvent
+  
+* Linked objects no longer share rotation
+* Now using a custom Image and ImageLoader method
+
+------------------------------------------------------
 Release 0 | Beta 0 | Development 3 | Experimental 3
 
 * Added Font

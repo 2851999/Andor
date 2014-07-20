@@ -67,6 +67,7 @@ public class Renderer {
 		//Bind the vertices buffer and give OpenGL the data
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.verticesHandle);
 		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, this.verticesBuffer, GL15.GL_STATIC_DRAW);
+		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
 		
 		//Check to see whether the colours have been set
 		if (this.colourData!= null) {
@@ -79,6 +80,7 @@ public class Renderer {
 			//Bind the colours buffer and give OpenGL the data
 			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.coloursHandle);
 			GL15.glBufferData(GL15.GL_ARRAY_BUFFER, this.coloursBuffer, GL15.GL_STATIC_DRAW);
+			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
 		}
 		
 		//Check to see whether the texture coordinates have been set
@@ -92,6 +94,7 @@ public class Renderer {
 			//Bind the texture coordinates buffer and give OpenGL the data
 			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.texturesHandle);
 			GL15.glBufferData(GL15.GL_ARRAY_BUFFER, this.texturesBuffer, GL15.GL_STATIC_DRAW);
+			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
 		}
 	}
 	
@@ -101,15 +104,18 @@ public class Renderer {
 		GL11.glEnableClientState(GL11.GL_VERTEX_ARRAY);
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.verticesHandle);
 		GL11.glVertexPointer(this.vertexValuesCount, GL11.GL_FLOAT, 0, 0L);
+		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
 		if (this.colourData != null) {
 			GL11.glEnableClientState(GL11.GL_COLOR_ARRAY);
 			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.coloursHandle);
 			GL11.glColorPointer(this.colourValuesCount, GL11.GL_FLOAT, 0, 0L);
+			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
 		}
 		if (this.textureData != null) {
 			GL11.glEnableClientState(GL11.GL_TEXTURE_COORD_ARRAY);
 			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.texturesHandle);
 			GL11.glTexCoordPointer(this.textureValuesCount, GL11.GL_FLOAT, 0, 0L);
+			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
 		}
 		//Draw the arrays
 		GL11.glDrawArrays(this.renderMode, 0, this.verticesData.length / this.vertexValuesCount);

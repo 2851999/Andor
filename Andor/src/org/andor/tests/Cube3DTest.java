@@ -100,14 +100,10 @@ public class Cube3DTest extends BaseGame {
 		//Setup OpenGL
 		OpenGLUtils.clearColourBuffer();
 		OpenGLUtils.clearDepthBuffer();
-		OpenGLUtils.enableDepthTest();
 		OpenGLUtils.setupRemoveAlpha();
-		OpenGLUtils.setupOrtho(1, -1);
-		
-		//Render the FPS
-		this.font.render("Current FPS: " + this.getFPS(), 10, 10);
 		
 		OpenGLUtils.setupPerspective(70f, 0.1f, 1000f);
+		OpenGLUtils.enableDepthTest();
 		OpenGLUtils.enableTexture2D();
 		
 		//Use the camera's view on the world
@@ -121,6 +117,13 @@ public class Cube3DTest extends BaseGame {
 		
 		OpenGLUtils.disableTexture2D();
 		this.bigCube.render();
+		
+		OpenGLUtils.setupOrtho(-1, 1);
+		
+		this.texture.unbind();
+		
+		//Render the FPS
+		this.font.render("Current FPS: " + this.getFPS(), 10, 10);
 	}
 	
 	/* The method called when the game loop is stopped */
@@ -142,6 +145,24 @@ public class Cube3DTest extends BaseGame {
 		else if (e.getCode() == Keyboard.KEY_R_CODE)
 			//Reset the players position
 			this.camera.position = new Vector3D(0, -2, 0);
+		else if (e.getCode() == Keyboard.KEY_1_CODE)
+			this.cube.renderer.updateColours(Object3DBuilder.createColourArray(24, Colour.WHITE));
+		else if (e.getCode() == Keyboard.KEY_2_CODE)
+			this.cube.renderer.updateColours(Object3DBuilder.createColourArray(24, Colour.RED));
+		else if (e.getCode() == Keyboard.KEY_3_CODE)
+			this.cube.renderer.updateColours(Object3DBuilder.createColourArray(24, Colour.GREEN));
+		else if (e.getCode() == Keyboard.KEY_4_CODE)
+			this.cube.renderer.updateColours(Object3DBuilder.createColourArray(24, Colour.BLUE));
+		else if (e.getCode() == Keyboard.KEY_5_CODE)
+			this.cube.renderer.updateColours(Object3DBuilder.createColourArray(24, new Colour(1f, 1f, 1f, 0.95f)));
+		else if (e.getCode() == Keyboard.KEY_6_CODE)
+			this.cube.renderer.updateColours(Object3DBuilder.createColourArray(24, new Colour(1f, 1f, 1f, 0.8f)));
+		else if (e.getCode() == Keyboard.KEY_7_CODE)
+			this.cube.renderer.updateColours(Object3DBuilder.createColourArray(24, new Colour(1f, 1f, 1f, 0.5f)));
+		else if (e.getCode() == Keyboard.KEY_8_CODE)
+			this.cube.renderer.updateColours(Object3DBuilder.createColourArray(24, new Colour(1f, 1f, 1f, 0.1f)));
+		else if (e.getCode() == Keyboard.KEY_9_CODE)
+			this.cube.renderer.updateColours(Object3DBuilder.createColourArray(24, new Colour(1f, 1f, 1f, 0.0f)));
 	}
 	
 	/* The method called when the mouse moves */
@@ -159,6 +180,7 @@ public class Cube3DTest extends BaseGame {
 		Settings.Window.Fullscreen = true;
 		//Enable VSync
 		Settings.Video.VSync = true;
+		Settings.Video.MaxFPS = 60;
 		//Create a new instance of this test
 		new Cube3DTest();
 	}

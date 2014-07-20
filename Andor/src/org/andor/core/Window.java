@@ -83,6 +83,8 @@ public class Window {
 			//Set the windows width and height values
 			Settings.Window.Width = target.getWidth();
 			Settings.Window.Height = target.getHeight();
+			//Set VSync if needed
+			Display.setVSyncEnabled(Settings.Video.VSync);
 		} catch (LWJGLException e) {
 			//Log an error
 			Logger.log("Andor - Window", "An exception has occurred when setting the display mode", Log.ERROR);
