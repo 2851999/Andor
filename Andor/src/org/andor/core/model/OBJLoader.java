@@ -82,12 +82,12 @@ public class OBJLoader {
 			bufferedReader.close();
 		} catch (FileNotFoundException e) {
 			//Log an error message
-			Logger.log("OBJLoader loadModel()", "Error loading file (FileNotFoundExeption) " + filePath, Log.ERROR);
+			Logger.log("OBJLoader loadModel()", "Error loading file (FileNotFoundExeption): " + filePath, Log.ERROR);
 			//Print the error
 			e.printStackTrace();
 		} catch (IOException e) {
 			//Log an error message
-			Logger.log("OBJLoader loadModel()", "Error loading file (IOException) " + filePath, Log.ERROR);
+			Logger.log("Andor - OBJLoader loadModel()", "Error loading file (IOException): " + filePath, Log.ERROR);
 			//Print the error
 			e.printStackTrace();
 		}
