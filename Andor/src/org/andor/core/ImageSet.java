@@ -69,7 +69,7 @@ public class ImageSet {
 		//Add the image to the list of loaded images
 		loadedImages.add(bufferedImage);
 		//Create the image instance
-		Image image = ImageLoader.loadImage(bufferedImage);
+		Image image = new Image(bufferedImage.getWidth(), bufferedImage.getHeight());
 		//Add the image to the list of images
 		this.images.add(image);
 		//Return the image

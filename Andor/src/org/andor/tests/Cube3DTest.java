@@ -23,10 +23,12 @@ import org.andor.core.input.Keyboard;
 import org.andor.core.input.KeyboardEvent;
 import org.andor.core.input.Mouse;
 import org.andor.core.input.MouseMotionEvent;
+import org.andor.core.model.Model;
+import org.andor.core.model.OBJLoader;
 import org.andor.utils.FontUtils;
 import org.andor.utils.OpenGLUtils;
 
-public class Quad3DTest extends BaseGame {
+public class Cube3DTest extends BaseGame {
 	
 	/* The camera */
 	public Camera3D camera;
@@ -34,29 +36,37 @@ public class Quad3DTest extends BaseGame {
 	/* The 3D Object */
 	public RenderableObject3D cube;
 	
+	/* The 3D Object */
+	public RenderableObject3D bigCube;
+	
+	/* The model */
+	public Model model;
+	
 	/* The texture */
 	public Image texture;
 	
 	/* The font */
 	public Font font;
 	
+	/* The boolean that determine whether wireframe is on or off */
+	public boolean wireframe;
+	
 	/* The constructor */
-	public Quad3DTest() {
+	public Cube3DTest() {
 		
 	}
 	
 	/* The method called when the loop has been created */
 	public void create() {
-		//Create the camera and change its position
+		//Create the camera
 		this.camera = new Camera3D();
-		this.camera.position.z = -2;
 		this.camera.flying = true;
 		//Load the font
 		this.font = FontUtils.createFont("Arial", 12);
 		//Load the texture and bind it
-		String texturePath = "C:/";
+		String path = "C:/";
 		//Create a skybox
-		SkyBox skybox = new SkyBox(texturePath, new String[] {
+		SkyBox skybox = new SkyBox(path, new String[] {
 				"sky-texture.png",
 				"sky-texture.png",
 				"sky-texture.png",
@@ -67,17 +77,21 @@ public class Quad3DTest extends BaseGame {
 		this.camera.setSkyBox(skybox);
 		//Create the images
 		ImageSet images = new ImageSet();
-		Image grassSide = images.loadImage(texturePath + "Grass_Side.png", true);
-		Image grass = images.loadImage(texturePath + "Grass.png", true);
-		Image dirt = images.loadImage(texturePath + "Dirt.png", true);
+		Image grassSide = images.loadImage(path + "Grass_Side.png", true);
+		Image grass = images.loadImage(path + "Grass.png", true);
+		Image dirt = images.loadImage(path + "Dirt.png", true);
 		this.texture = images.joinImages();
-		//this.texture.bind();
-		//Create the cube and change its position
+		//Create the cube
 		cube = Object3DBuilder.createCube(new Image[] {
 				grassSide, grassSide, grassSide, grassSide,
 				grass, dirt
 		}, 1, 1, 1, Colour.WHITE);
-		cube.position.z = -2;
+		bigCube = Object3DBuilder.createCube(10, 10, 10, new Colour(130f / 255f, 176f / 255f, 255f / 255f, 0.8f));
+		//Load the model
+		this.model = OBJLoader.loadModel(path + "monkey.obj", true);
+		this.model.prepare();
+		this.model.position.z = -20;
+		wireframe = false;
 		//Lock the mouse
 		Mouse.lock();
 	}
@@ -93,13 +107,13 @@ public class Quad3DTest extends BaseGame {
 		if (Keyboard.KEY_W)
 			//Move the camera forwards
 			camera.moveForward(0.01f * getDelta());
-		else if (Keyboard.KEY_S)
+		if (Keyboard.KEY_S)
 			//Move the camera forwards
 			camera.moveBackward(0.01f * getDelta());
-		else if (Keyboard.KEY_A)
+		if (Keyboard.KEY_A)
 			//Move the camera forwards
 			camera.moveLeft(0.01f * getDelta());
-		else if (Keyboard.KEY_D)
+		if (Keyboard.KEY_D)
 			//Move the camera forwards
 			camera.moveRight(0.01f * getDelta());
 		
@@ -113,14 +127,11 @@ public class Quad3DTest extends BaseGame {
 		//Setup OpenGL
 		OpenGLUtils.clearColourBuffer();
 		OpenGLUtils.clearDepthBuffer();
-		OpenGLUtils.enableDepthTest();
 		OpenGLUtils.setupRemoveAlpha();
-		OpenGLUtils.setupOrtho(1, -1);
 		
-		//Render the FPS
-		this.font.render("Current FPS: " + this.getFPS(), 10, 10);
-		
-		OpenGLUtils.setupPerspective(70f, 1f, 1000f);
+		OpenGLUtils.setupPerspective(70f, 0.1f, 1000f);
+		OpenGLUtils.enableDepthTest();
+		OpenGLUtils.enableTexture2D();
 		
 		//Use the camera's view on the world
 		this.camera.useView();
@@ -128,8 +139,19 @@ public class Quad3DTest extends BaseGame {
 		//Bind the texture
 		this.texture.bind();
 		
-		//Render the quad
+		//Render the cube
 		this.cube.render();
+		
+		OpenGLUtils.disableTexture2D();
+		this.bigCube.render();
+		this.model.render();
+		
+		OpenGLUtils.setupOrtho(-1, 1);
+		
+		this.texture.unbind();
+		
+		//Render the FPS
+		this.font.render("Current FPS: " + this.getFPS(), 10, 10);
 	}
 	
 	/* The method called when the game loop is stopped */
@@ -148,6 +170,34 @@ public class Quad3DTest extends BaseGame {
 		if (e.getCode() == Keyboard.KEY_F3_CODE)
 			//Toggle the mouse locked
 			Mouse.setLocked(! Mouse.isLocked());
+		else if (e.getCode() == Keyboard.KEY_R_CODE)
+			//Reset the players position
+			this.camera.position = new Vector3D(0, -2, 0);
+		else if (e.getCode() == Keyboard.KEY_1_CODE)
+			this.cube.renderer.updateColours(Object3DBuilder.createColourArray(24, Colour.WHITE));
+		else if (e.getCode() == Keyboard.KEY_2_CODE)
+			this.cube.renderer.updateColours(Object3DBuilder.createColourArray(24, Colour.RED));
+		else if (e.getCode() == Keyboard.KEY_3_CODE)
+			this.cube.renderer.updateColours(Object3DBuilder.createColourArray(24, Colour.GREEN));
+		else if (e.getCode() == Keyboard.KEY_4_CODE)
+			this.cube.renderer.updateColours(Object3DBuilder.createColourArray(24, Colour.BLUE));
+		else if (e.getCode() == Keyboard.KEY_5_CODE)
+			this.cube.renderer.updateColours(Object3DBuilder.createColourArray(24, new Colour(1f, 1f, 1f, 0.95f)));
+		else if (e.getCode() == Keyboard.KEY_6_CODE)
+			this.cube.renderer.updateColours(Object3DBuilder.createColourArray(24, new Colour(1f, 1f, 1f, 0.8f)));
+		else if (e.getCode() == Keyboard.KEY_7_CODE)
+			this.cube.renderer.updateColours(Object3DBuilder.createColourArray(24, new Colour(1f, 1f, 1f, 0.5f)));
+		else if (e.getCode() == Keyboard.KEY_8_CODE)
+			this.cube.renderer.updateColours(Object3DBuilder.createColourArray(24, new Colour(1f, 1f, 1f, 0.1f)));
+		else if (e.getCode() == Keyboard.KEY_9_CODE)
+			this.cube.renderer.updateColours(Object3DBuilder.createColourArray(24, new Colour(1f, 1f, 1f, 0.0f)));
+		else if (e.getCode() == Keyboard.KEY_M_CODE) {
+			wireframe = !wireframe;
+			if (wireframe)
+				OpenGLUtils.enableWireframeMode();
+			else
+				OpenGLUtils.disableWireframeMode();
+		}
 	}
 	
 	/* The method called when the mouse moves */
@@ -165,8 +215,9 @@ public class Quad3DTest extends BaseGame {
 		Settings.Window.Fullscreen = true;
 		//Enable VSync
 		Settings.Video.VSync = true;
+		Settings.Video.MaxFPS = 60;
 		//Create a new instance of this test
-		new Quad3DTest();
+		new Cube3DTest();
 	}
 	
 }
