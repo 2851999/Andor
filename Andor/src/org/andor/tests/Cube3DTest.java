@@ -8,9 +8,25 @@
 
 package org.andor.tests;
 
-import org.andor.core.*;
-import org.andor.core.input.*;
-import org.andor.utils.*;
+import org.andor.core.BaseGame;
+import org.andor.core.Camera3D;
+import org.andor.core.Colour;
+import org.andor.core.Font;
+import org.andor.core.Image;
+import org.andor.core.ImageSet;
+import org.andor.core.Object3DBuilder;
+import org.andor.core.RenderableObject3D;
+import org.andor.core.Settings;
+import org.andor.core.SkyBox;
+import org.andor.core.Vector3D;
+import org.andor.core.input.Keyboard;
+import org.andor.core.input.KeyboardEvent;
+import org.andor.core.input.Mouse;
+import org.andor.core.input.MouseMotionEvent;
+import org.andor.core.model.Model;
+import org.andor.core.model.OBJLoader;
+import org.andor.utils.FontUtils;
+import org.andor.utils.OpenGLUtils;
 
 public class Cube3DTest extends BaseGame {
 	
@@ -23,11 +39,17 @@ public class Cube3DTest extends BaseGame {
 	/* The 3D Object */
 	public RenderableObject3D bigCube;
 	
+	/* The model */
+	public Model model;
+	
 	/* The texture */
 	public Image texture;
 	
 	/* The font */
 	public Font font;
+	
+	/* The boolean that determine whether wireframe is on or off */
+	public boolean wireframe;
 	
 	/* The constructor */
 	public Cube3DTest() {
@@ -42,9 +64,9 @@ public class Cube3DTest extends BaseGame {
 		//Load the font
 		this.font = FontUtils.createFont("Arial", 12);
 		//Load the texture and bind it
-		String texturePath = "C:/";
+		String path = "C:/";
 		//Create a skybox
-		SkyBox skybox = new SkyBox(texturePath, new String[] {
+		SkyBox skybox = new SkyBox(path, new String[] {
 				"sky-texture.png",
 				"sky-texture.png",
 				"sky-texture.png",
@@ -55,9 +77,9 @@ public class Cube3DTest extends BaseGame {
 		this.camera.setSkyBox(skybox);
 		//Create the images
 		ImageSet images = new ImageSet();
-		Image grassSide = images.loadImage(texturePath + "Grass_Side.png", true);
-		Image grass = images.loadImage(texturePath + "Grass.png", true);
-		Image dirt = images.loadImage(texturePath + "Dirt.png", true);
+		Image grassSide = images.loadImage(path + "Grass_Side.png", true);
+		Image grass = images.loadImage(path + "Grass.png", true);
+		Image dirt = images.loadImage(path + "Dirt.png", true);
 		this.texture = images.joinImages();
 		//Create the cube
 		cube = Object3DBuilder.createCube(new Image[] {
@@ -65,6 +87,11 @@ public class Cube3DTest extends BaseGame {
 				grass, dirt
 		}, 1, 1, 1, Colour.WHITE);
 		bigCube = Object3DBuilder.createCube(10, 10, 10, new Colour(130f / 255f, 176f / 255f, 255f / 255f, 0.8f));
+		//Load the model
+		this.model = OBJLoader.loadModel(path + "monkey.obj", true);
+		this.model.prepare();
+		this.model.position.z = -20;
+		wireframe = false;
 		//Lock the mouse
 		Mouse.lock();
 	}
@@ -117,6 +144,7 @@ public class Cube3DTest extends BaseGame {
 		
 		OpenGLUtils.disableTexture2D();
 		this.bigCube.render();
+		this.model.render();
 		
 		OpenGLUtils.setupOrtho(-1, 1);
 		
@@ -163,6 +191,13 @@ public class Cube3DTest extends BaseGame {
 			this.cube.renderer.updateColours(Object3DBuilder.createColourArray(24, new Colour(1f, 1f, 1f, 0.1f)));
 		else if (e.getCode() == Keyboard.KEY_9_CODE)
 			this.cube.renderer.updateColours(Object3DBuilder.createColourArray(24, new Colour(1f, 1f, 1f, 0.0f)));
+		else if (e.getCode() == Keyboard.KEY_M_CODE) {
+			wireframe = !wireframe;
+			if (wireframe)
+				OpenGLUtils.enableWireframeMode();
+			else
+				OpenGLUtils.disableWireframeMode();
+		}
 	}
 	
 	/* The method called when the mouse moves */

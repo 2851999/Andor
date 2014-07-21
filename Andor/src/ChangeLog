@@ -1,4 +1,16 @@
 ------------------------------------------------------
+Release 0 | Beta 1 | Development 0 | Experimental 3
+
+* Added Face
+* Added Material
+* Added MaterialLoader
+* Added Model
+* Added ModelParserUtils
+* Added OBJLoader
+
+* Created the package org.andor.core.model
+
+------------------------------------------------------
 Release 0 | Beta 1 | Development 0 | Experimental 2
 
 * Added the method unbind() in Image
