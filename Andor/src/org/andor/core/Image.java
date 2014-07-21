@@ -101,6 +101,12 @@ public class Image {
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
 	}
 	
+	/* The method used to delete this image */
+	public void delete() {
+		//Delete this texture
+		GL11.glDeleteTextures(this.textureId);
+	}
+	
 	/* The 'get' methods */
 	public ByteBuffer getTexture() { return texture; }
 	public int getWidth() { return this.width; }

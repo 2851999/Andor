@@ -17,6 +17,7 @@ import org.andor.core.ImageSet;
 import org.andor.core.Object3DBuilder;
 import org.andor.core.RenderableObject3D;
 import org.andor.core.Settings;
+import org.andor.core.Shader;
 import org.andor.core.SkyBox;
 import org.andor.core.Vector3D;
 import org.andor.core.input.Keyboard;
@@ -47,6 +48,8 @@ public class Cube3DTest extends BaseGame {
 	
 	/* The font */
 	public Font font;
+	
+	public Shader test;
 	
 	/* The boolean that determine whether wireframe is on or off */
 	public boolean wireframe;
@@ -91,7 +94,10 @@ public class Cube3DTest extends BaseGame {
 		this.model = OBJLoader.loadModel(path + "monkey.obj", true);
 		this.model.prepare();
 		this.model.position.z = -20;
+		//Set wireframe to false
 		wireframe = false;
+		test = new Shader();
+		test.load("C:/shaderprogram", true);
 		//Lock the mouse
 		Mouse.lock();
 	}
@@ -146,12 +152,13 @@ public class Cube3DTest extends BaseGame {
 		this.bigCube.render();
 		this.model.render();
 		
-		OpenGLUtils.setupOrtho(-1, 1);
-		
 		this.texture.unbind();
+		
+		OpenGLUtils.setupOrtho(-1, 1);
 		
 		//Render the FPS
 		this.font.render("Current FPS: " + this.getFPS(), 10, 10);
+		this.font.render("Object Face Count: " + this.model.faces.size(), 10, 26);
 	}
 	
 	/* The method called when the game loop is stopped */
@@ -212,7 +219,7 @@ public class Cube3DTest extends BaseGame {
 	/* The main method */
 	public static void main(String[] args) {
 		//Make the game fullscreen
-		Settings.Window.Fullscreen = true;
+		Settings.Window.Fullscreen = false;
 		//Enable VSync
 		Settings.Video.VSync = true;
 		Settings.Video.MaxFPS = 60;

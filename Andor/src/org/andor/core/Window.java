@@ -10,12 +10,14 @@ package org.andor.core;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.nio.ByteBuffer;
 
 import org.andor.core.logger.Log;
 import org.andor.core.logger.Logger;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
+import org.lwjgl.opengl.GL11;
 
 public class Window {
 	
@@ -80,16 +82,25 @@ public class Window {
 			Display.setDisplayMode(target);
 			//Make the display fullscreen if necessary
 			Display.setFullscreen(Settings.Window.Fullscreen);
+			//Set VSync if needed
+			Display.setVSyncEnabled(Settings.Video.VSync);
 			//Set the windows width and height values
 			Settings.Window.Width = target.getWidth();
 			Settings.Window.Height = target.getHeight();
-			//Set VSync if needed
-			Display.setVSyncEnabled(Settings.Video.VSync);
 		} catch (LWJGLException e) {
 			//Log an error
 			Logger.log("Andor - Window", "An exception has occurred when setting the display mode", Log.ERROR);
 			e.printStackTrace();
 		}
+	}
+	
+	/* The static method used to update the display's settings */
+	public static void updateDisplaySettings() {
+		//Reset the display mode
+		setDisplayMode();
+		//Update OpenGL's resolution
+		GL11.glScissor(0 , 0 , (int) Settings.Window.Width, (int) Settings.Window.Height);
+		GL11.glViewport(0, 0, (int) Settings.Window.Width, (int) Settings.Window.Height);
 	}
 	
 	/* The static method used to update the display */
@@ -100,16 +111,37 @@ public class Window {
 		Display.sync(Settings.Video.MaxFPS);
 	}
 	
-	/* The static method used to close this window */
-	public static void close() {
-		//Destroy the display
-		Display.destroy();
+	/* The static method to centre the window */
+	public static void centre() {
+		//Get the screen size
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		//Set the position of the window
+		setPosition((screenSize.width / 2) - (Settings.Window.Width / 2), (screenSize.height / 2) - (Settings.Window.Height / 2));
+	}
+	
+	/* The static method used to set the position of this window */
+	public static void setPosition(float x, float y) {
+		//Set the position of the window
+		Display.setLocation((int) x, (int) y);
+	}
+	
+	/* The static method used to set the window icon given a list of images */
+	public static void setIcon(Image[] images) {
+		ByteBuffer buffer1 = images[0].texture;
+		ByteBuffer buffer2 = images[1].texture;
+		System.out.println(Display.setIcon(new ByteBuffer[] { buffer1 , buffer2 }));
 	}
 	
 	/* The static method used to determine whether this window should close */
 	public static boolean shouldClose() {
 		//Return whether close is requested
 		return Display.isCloseRequested();
+	}
+	
+	/* The static method used to close this window */
+	public static void close() {
+		//Destroy the display
+		Display.destroy();
 	}
 	
 }
