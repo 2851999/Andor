@@ -54,6 +54,8 @@ public class RenderableObject3D extends Object3D {
 		GL11.glRotated(this.rotation.y, 0, 1, 0);
 		GL11.glRotated(this.rotation.z, 0, 0, 1);
 		
+		GL11.glScalef(this.scale.x, this.scale.y, this.scale.z);
+		
 		//Render the object using the renderer
 		this.renderer.render();
 		
