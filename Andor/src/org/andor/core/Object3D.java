@@ -19,6 +19,9 @@ public class Object3D {
 	/* The rotation of this object */
 	public Vector3D rotation;
 	
+	/* The scale of this object */
+	public Vector3D scale;
+	
 	/* The boolean value that represents whether this
 	 * object is linked to another, by default this
 	 * should be false */
@@ -35,6 +38,7 @@ public class Object3D {
 		//Assign the variables
 		this.position = new Vector3D();
 		this.rotation = new Vector3D();
+		this.scale = new Vector3D(1, 1, 1);
 		this.linkedObjects = new ArrayList<Object3D>();
 	}
 	
@@ -43,6 +47,7 @@ public class Object3D {
 		//Assign the variables
 		this.position = position;
 		this.rotation = new Vector3D();
+		this.scale = new Vector3D();
 		this.linkedObjects = new ArrayList<Object3D>();
 	}
 	
@@ -51,6 +56,7 @@ public class Object3D {
 		//Assign the variables
 		this.position = position;
 		this.rotation = rotation;
+		this.scale = new Vector3D();
 		this.linkedObjects = new ArrayList<Object3D>();
 	}
 	
@@ -64,9 +70,10 @@ public class Object3D {
 		this.linkedObjects.add(object);
 	}
 	
-	/* The methods used to set and return the position and rotation */
+	/* The methods used to set and return the position, rotation and scale */
 	public void setPosition(Vector3D position) { this.position = position; }
 	public void setRotation(Vector3D rotation) { this.rotation = rotation; }
+	public void setScale(Vector3D scale) { this.scale = scale; }
 	
 	public Vector3D getPosition() {
 		//Make sure this isn't linked to another object
@@ -86,6 +93,10 @@ public class Object3D {
 	
 	public Vector3D getRotation() {
 		return this.rotation;
+	}
+	
+	public Vector3D getScale() {
+		return this.scale;
 	}
 	
 }

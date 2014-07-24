@@ -99,7 +99,7 @@ public class Window {
 		//Reset the display mode
 		setDisplayMode();
 		//Update OpenGL's resolution
-		GL11.glScissor(0 , 0 , (int) Settings.Window.Width, (int) Settings.Window.Height);
+		GL11.glScissor(0, 0, (int) Settings.Window.Width, (int) Settings.Window.Height);
 		GL11.glViewport(0, 0, (int) Settings.Window.Width, (int) Settings.Window.Height);
 	}
 	
@@ -129,7 +129,7 @@ public class Window {
 	public static void setIcon(Image[] images) {
 		ByteBuffer buffer1 = images[0].texture;
 		ByteBuffer buffer2 = images[1].texture;
-		System.out.println(Display.setIcon(new ByteBuffer[] { buffer1 , buffer2 }));
+		Display.setIcon(new ByteBuffer[] { buffer1 , buffer2 });
 	}
 	
 	/* The static method used to determine whether this window should close */

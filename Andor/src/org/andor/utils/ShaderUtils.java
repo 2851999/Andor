@@ -35,7 +35,6 @@ public class ShaderUtils {
 			for (int a = 0; a < shaderCode.size(); a++)
 				//Add onto the shader source
 				shaderSource.append(shaderCode.get(a)).append('\n');
-			System.out.println(shader);
 			//Load the shader file
 			GL20.glShaderSource(shader , shaderSource);
 			//Compile the shader

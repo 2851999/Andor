@@ -88,10 +88,10 @@ public class Object3DBuilder {
 				t[3].right, t[3].top,
 				
 				//Top face
-				t[4].right, t[4].top,
-				t[4].right, t[4].bottom,
+				t[4].left, t[4].top,
 				t[4].left, t[4].bottom,
-				t[4].left, t[4].top
+				t[4].right, t[4].bottom,
+				t[4].right, t[4].top
 		};
 	}
 	

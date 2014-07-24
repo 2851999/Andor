@@ -20,6 +20,7 @@ import org.andor.core.Settings;
 import org.andor.core.Shader;
 import org.andor.core.SkyBox;
 import org.andor.core.Vector3D;
+import org.andor.core.Window;
 import org.andor.core.input.Keyboard;
 import org.andor.core.input.KeyboardEvent;
 import org.andor.core.input.Mouse;
@@ -70,12 +71,12 @@ public class Cube3DTest extends BaseGame {
 		String path = "C:/";
 		//Create a skybox
 		SkyBox skybox = new SkyBox(path, new String[] {
-				"sky-texture.png",
-				"sky-texture.png",
-				"sky-texture.png",
-				"sky-texture.png",
-				"sky-texture.png",
-				"sky-texture.png"
+				"front.png",
+				"back.png",
+				"left.png",
+				"right.png",
+				"top.png",
+				"bottom.png"
 		}, true);
 		this.camera.setSkyBox(skybox);
 		//Create the images
@@ -97,7 +98,8 @@ public class Cube3DTest extends BaseGame {
 		//Set wireframe to false
 		wireframe = false;
 		test = new Shader();
-		test.load("C:/shaderprogram", true);
+		test.load("C:/light", true);
+		test.create();
 		//Lock the mouse
 		Mouse.lock();
 	}
@@ -126,6 +128,10 @@ public class Cube3DTest extends BaseGame {
 		if (Keyboard.KEY_ESCAPE)
 			//Request to end the program
 			requestClose();
+		
+		Vector3D change = new Vector3D(0.1f, 0.1f, 0.1f);
+		change.multiply(getDelta());
+		this.model.rotation.add(change);
 	}
 	
 	/* The method called when the game loop is rendered */
@@ -150,7 +156,9 @@ public class Cube3DTest extends BaseGame {
 		
 		OpenGLUtils.disableTexture2D();
 		this.bigCube.render();
+		test.use();
 		this.model.render();
+		test.stopUsing();
 		
 		this.texture.unbind();
 		
@@ -204,6 +212,9 @@ public class Cube3DTest extends BaseGame {
 				OpenGLUtils.enableWireframeMode();
 			else
 				OpenGLUtils.disableWireframeMode();
+		} else if (e.getCode() == Keyboard.KEY_F11_CODE) {
+			Settings.Window.Fullscreen = ! Settings.Window.Fullscreen;
+			Window.updateDisplaySettings();
 		}
 	}
 	

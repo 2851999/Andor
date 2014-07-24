@@ -1,4 +1,46 @@
 ------------------------------------------------------
+Release 0 | Beta 1 | Development 2 | Experimental 0
+
+* Added Shader
+* Added ShaderUtils
+* Added Client
+* Added ClientInputThread
+* Added Server
+* Added ServerClient
+* Added ServerClientInputThread
+* Added ServerConnectionThread
+* Added ServerListener
+* Added ClientListener
+* Added NetworkingTest
+
+* Added object scaling
+
+* Created the package org.andor.core.networking
+
+------------------------------------------------------
+Release 0 | Beta 1 | Development 1 | Experimental 3
+
+* Added ServerListener
+* Added ClientListener
+
+------------------------------------------------------
+Release 0 | Beta 1 | Development 1 | Experimental 2
+
+* Added Client
+* Added ClientInputThread
+* Added Server
+* Added ServerClient
+* Added ServerClientInputThread
+* Added ServerConnectionThread
+* Added NetworkingTest
+
+* Added object scaling
+
+* Created the package org.andor.core.networking
+
+* NOTE: Networking is a work in progress
+
+------------------------------------------------------
 Release 0 | Beta 1 | Development 1 | Experimental 1
 
 * Added Shader
