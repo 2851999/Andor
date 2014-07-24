@@ -10,22 +10,19 @@ package org.andor.core.networking;
 
 import java.io.IOException;
 
-import org.andor.core.logger.Log;
-import org.andor.core.logger.Logger;
-
-public class ServerClientInputThread implements Runnable {
+public class ServerClientInputThread extends Thread {
 	
 	/* The client */
 	public ServerClient client;
 	
-	/* The boolean that states whether this is running */
-	public boolean running;
+	/* The boolean that states whether this is closing */
+	public boolean closing;
 	
 	/* The constructor */
 	public ServerClientInputThread(ServerClient client) {
 		//Assign the variables
 		this.client = client;
-		this.running = true;
+		this.closing = false;
 	}
 	
 	/* The method called to run this thread */
@@ -33,18 +30,20 @@ public class ServerClientInputThread implements Runnable {
 		//Catch any errors
 		try {
 			//Keep going until the client disconnects
-			while (this.running) {
+			while (this.isAlive() && ! this.closing) {
 				//Get any input from the client
 				String input = this.client.in.readUTF();
-				//Print out the output
-				System.out.println(input);
+				//Call messageRecieved() in the listeners
+				this.client.server.callMessageRecieved(this.client, input);
 			}
-			//Disconnect the client
-			this.client.disconnect();
 		} catch (IOException e) {
-			//Log an error
-			Logger.log("Andor - ServerClientInputThread", "Failed to recieve input from the client with the address of " + this.client.inetAddress.getHostAddress(), Log.ERROR);
-			e.printStackTrace();
+			//There was an error receiving input from the client, so assume they lost connection /
+			//disconnected from the server
+			
+			//Call clientDisconnecting() in the listeners
+			this.client.server.callClientDisconnected(this.client);
+			//Disconnect this client
+			this.client.disconnect();
 		}
 	}
 	

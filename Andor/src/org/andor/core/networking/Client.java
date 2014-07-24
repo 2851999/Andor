@@ -12,6 +12,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.andor.core.logger.Log;
 import org.andor.core.logger.Logger;
@@ -28,10 +30,19 @@ public class Client {
 	public DataOutputStream out;
 	
 	/* The client's input thread */
-	public Thread inputThread;
+	public ClientInputThread inputThread;
 	
-	/* The constructor */
-	public Client(String ip, int port) {
+	/* The client listeners */
+	public List<ClientListener> listeners;
+	
+	/* The default constructor */
+	public Client() {
+		//Assign the variables
+		this.listeners = new ArrayList<ClientListener>();
+	}
+	
+	/* The method used to connect to a server given its ip and port */
+	public void connect(String ip, int port) {
 		//Catch any errors
 		try {
 			//Connect to the server
@@ -39,8 +50,10 @@ public class Client {
 			//Assign the variables
 			this.in = new DataInputStream(this.socket.getInputStream());
 			this.out = new DataOutputStream(this.socket.getOutputStream());
+			//Call connected() in the listeners
+			this.callConnected(ip, port);
 			//Start the input thread
-			this.inputThread = new Thread(new ClientInputThread(this));
+			this.inputThread = new ClientInputThread(this);
 			this.inputThread.start();
 		} catch (IOException e) {
 			//Log an error
@@ -66,12 +79,16 @@ public class Client {
 	public void disconnect() {
 		//Catch any errors
 		try {
-			//Stop the input thread
-			this.inputThread.join();
+			//Call disconnecting() in the listeners
+			this.callDisconnecting();
+			//Set 'closing' to true
+			this.inputThread.closing = true;
 			//Close all of the streams and sockets
 			this.in.close();
 			this.out.close();
 			this.socket.close();
+			//Wait for the thread to close
+			this.inputThread.join();
 		} catch (IOException e) {
 			//Log an error
 			Logger.log("Andor - Client disconnect()", "Failed to disconnect the client", Log.ERROR);
@@ -81,6 +98,36 @@ public class Client {
 			Logger.log("Andor - Client disconnect()", "Failed to stop the input thread for the client", Log.ERROR);
 			e.printStackTrace();
 		}
+	}
+	
+	/* The method used to add a listener */
+	public void addListener(ClientListener listener) {
+		//Add the listener to the list of listeners
+		this.listeners.add(listener);
+	}
+	
+	/* The method used to call connected() in all of the listeners */
+	public void callConnected(String ip, int port) {
+		//Go through all of the listeners
+		for (int a = 0; a < this.listeners.size(); a++)
+			//Call the method
+			this.listeners.get(a).connected(ip, port);
+	}
+	
+	/* The method used to call messageRecieved() in all of the listeners */
+	public void callMessageRecieved(String message) {
+		//Go through all of the listeners
+		for (int a = 0; a < this.listeners.size(); a++)
+			//Call the method
+			this.listeners.get(a).messageReceived(message);
+	}
+	
+	/* The method used to call disconnecting() in all of the listeners */
+	public void callDisconnecting() {
+		//Go through all of the listeners
+		for (int a = 0; a < this.listeners.size(); a++)
+			//Call the method
+			this.listeners.get(a).disconnecting();
 	}
 	
 }

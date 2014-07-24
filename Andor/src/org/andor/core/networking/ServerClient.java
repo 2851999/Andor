@@ -35,7 +35,7 @@ public class ServerClient {
 	public Server server;
 	
 	/* The client's input thread */
-	public Thread inputThread;
+	public ServerClientInputThread inputThread;
 	
 	/* The constructor */
 	public ServerClient(Server server, Socket socket) {
@@ -48,7 +48,7 @@ public class ServerClient {
 			this.in = new DataInputStream(socket.getInputStream());
 			this.out = new DataOutputStream(socket.getOutputStream());
 			//Start the client's input thread
-			this.inputThread = new Thread(new ServerClientInputThread(this));
+			this.inputThread = new ServerClientInputThread(this);
 			this.inputThread.start();
 		} catch (IOException e) {
 			//Log an error
@@ -74,8 +74,12 @@ public class ServerClient {
 	public void disconnect() {
 		//Catch any errors
 		try {
-			//Stop the input thread
-			this.inputThread.join();
+			//Prevent errors
+			this.inputThread.closing = true;
+			
+			//Remove this client
+			server.clients.remove(this);
+			
 			//Close all of the streams and sockets
 			this.in.close();
 			this.out.close();
@@ -83,10 +87,6 @@ public class ServerClient {
 		} catch (IOException e) {
 			//Log an error
 			Logger.log("Andor - ServerClient disconnect()", "Failed to disconnect the client with the address of " + inetAddress.getHostAddress(), Log.ERROR);
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			//Log an error
-			Logger.log("Andor - ServerClient disconnect()", "Failed to stop the input thread for the client with the address of " + inetAddress.getHostAddress(), Log.ERROR);
 			e.printStackTrace();
 		}
 	}

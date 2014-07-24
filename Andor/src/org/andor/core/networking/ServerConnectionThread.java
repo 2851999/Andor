@@ -14,36 +14,45 @@ import java.net.Socket;
 import org.andor.core.logger.Log;
 import org.andor.core.logger.Logger;
 
-public class ServerConnectionThread implements Runnable {
+public class ServerConnectionThread extends Thread {
 	
 	/* The server instance */
 	public Server server;
 	
-	/* The boolean that states whether this is running */
-	public boolean running;
+	/* The boolean that states whether this is closing */
+	public boolean closing;
 	
 	/* The constructor */
 	public ServerConnectionThread(Server server) {
 		//Assign the variables
 		this.server = server;
-		this.running = true;
+		this.closing = false;
 	}
 	
 	/* The method called to run this thread */
 	public void run() {
+		//Call serverStarted() in the listeners
+		this.server.callServerStarted();
 		//Catch any errors
 		try {
 			//Keep going until this thread stops running
-			while (this.running) {
+			while (this.isAlive() && ! this.closing) {
 				//Accept any sockets
 				Socket socket = this.server.socket.accept();
-				//Add a new client
-				this.server.clients.add(new ServerClient(this.server, socket));
+				//Create the client instance
+				ServerClient client = new ServerClient(this.server, socket);
+				//Add the new client
+				this.server.clients.add(client);
+				//Call clientConnected() in the listeners
+				this.server.callClientConnected(client);
 			}
 		} catch (IOException e) {
-			//Log an error
-			Logger.log("Andor - ServerConnectionThread", "Failed to accept a socket", Log.ERROR);
-			e.printStackTrace();
+			//Make sure this error isn't caused just because the server is closing
+			if (! this.closing) {
+				//Log an error
+				Logger.log("Andor - ServerConnectionThread", "Failed to accept a socket", Log.ERROR);
+				e.printStackTrace();
+			}
 		}
 	}
 	

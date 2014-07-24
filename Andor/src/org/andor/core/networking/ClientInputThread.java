@@ -13,19 +13,18 @@ import java.io.IOException;
 import org.andor.core.logger.Log;
 import org.andor.core.logger.Logger;
 
-public class ClientInputThread implements Runnable {
+public class ClientInputThread extends Thread {
 	
 	/* The client */
 	public Client client;
 	
-	/* The boolean that states whether this is running */
-	public boolean running;
+	/* The boolean that states whether this is closing */
+	public boolean closing;
 	
 	/* The constructor */
 	public ClientInputThread(Client client) {
 		//Assign the variables
 		this.client = client;
-		this.running = true;
 	}
 	
 	/* The method called to run this thread */
@@ -33,18 +32,19 @@ public class ClientInputThread implements Runnable {
 		//Catch any errors
 		try {
 			//Keep going until the client disconnects
-			while (this.running) {
+			while (this.isAlive() && ! this.closing) {
 				//Get any input from the client
 				String input = this.client.in.readUTF();
-				//Print out the output
-				System.out.println(input);
+				//Call messageReceived() in the listeners
+				this.client.callMessageRecieved(input);
 			}
-			//Disconnect the client
-			this.client.disconnect();
 		} catch (IOException e) {
-			//Log an error
-			Logger.log("Andor - ClientInputThread", "Failed to recieve input from the server", Log.ERROR);
-			e.printStackTrace();
+			//Make sure this error isn't caused just because the server is closing
+			if (! this.closing) {
+				//Log an error
+				Logger.log("Andor - ClientInputThread", "Failed to recieve input from the server", Log.ERROR);
+				e.printStackTrace();
+			}
 		}
 	}
 	
