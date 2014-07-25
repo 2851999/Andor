@@ -94,7 +94,7 @@ public class Cube3DTest extends BaseGame {
 		//Load the model
 		this.model = OBJLoader.loadModel(path + "monkey.obj", true);
 		this.model.prepare();
-		this.model.position.z = -20;
+		this.model.position.z = -10;
 		//Set wireframe to false
 		wireframe = false;
 		test = new Shader();
@@ -156,9 +156,9 @@ public class Cube3DTest extends BaseGame {
 		
 		OpenGLUtils.disableTexture2D();
 		this.bigCube.render();
-		test.use();
+		//test.use();
 		this.model.render();
-		test.stopUsing();
+		//test.stopUsing();
 		
 		this.texture.unbind();
 		

@@ -1,4 +1,35 @@
 ------------------------------------------------------
+Release 0 | Beta 1 | Development 2 | Experimental 1
+
+* Added Object2D
+* Added Object2DBuilder
+* Added RenderableObject2D
+* Added ObjectBuilderUtils
+* Added Quad2DTest
+
+* Fixed bug: Sizes of objects made using
+  Object3DBuilder were not strictly the correct size
+
+------------------------------------------------------
+Release 0 | Beta 1 | Development 2 | Experimental 0
+
+* Added Shader
+* Added ShaderUtils
+* Added Client
+* Added ClientInputThread
+* Added Server
+* Added ServerClient
+* Added ServerClientInputThread
+* Added ServerConnectionThread
+* Added ServerListener
+* Added ClientListener
+* Added NetworkingTest
+
+* Added object scaling
+
+* Created the package org.andor.core.networking
+
+------------------------------------------------------
 Release 0 | Beta 1 | Development 1 | Experimental 3
 
 * Added ServerListener
