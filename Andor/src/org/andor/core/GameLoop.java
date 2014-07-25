@@ -9,7 +9,7 @@
 package org.andor.core;
 
 import org.andor.core.input.Input;
-import org.andor.core.input.InputListener;
+import org.andor.core.input.InputListenerInterface;
 import org.andor.core.input.InputManager;
 import org.andor.core.input.KeyboardEvent;
 import org.andor.core.input.MouseEvent;
@@ -17,7 +17,7 @@ import org.andor.core.input.MouseMotionEvent;
 import org.andor.core.input.ScrollEvent;
 import org.andor.utils.FPSCalculator;
 
-public class GameLoop implements GameLoopInterface, InputListener {
+public class GameLoop implements GameLoopInterface, InputListenerInterface {
 	
 	/* The boolean that states whether a close is requested */
 	private boolean closeRequested;

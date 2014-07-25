@@ -1,4 +1,19 @@
 ------------------------------------------------------
+Release 0 | Beta 1 | Development 2 | Experimental 2
+
+* Added Rectangle
+* Added InputListener
+* Added GUIComponent
+* Added GUIComponentListener
+* Added GUIRenderer
+* Added GUIButton
+* Added GUIButtonTest
+
+* Created the package org.andor.gui
+
+* Renamed InputListener to InputListenerInterface
+
+------------------------------------------------------
 Release 0 | Beta 1 | Development 2 | Experimental 1
 
 * Added Object2D

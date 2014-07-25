@@ -14,10 +14,10 @@ import java.util.List;
 public class Input {
 	
 	/* The input listeners */
-	public static List<InputListener> listeners = new ArrayList<InputListener>();
+	public static List<InputListenerInterface> listeners = new ArrayList<InputListenerInterface>();
 	
 	/* The static method used to add an input listener */
-	public static void addListener(InputListener listener) {
+	public static void addListener(InputListenerInterface listener) {
 		//Add the listener to the list of listeners
 		listeners.add(listener);
 	}

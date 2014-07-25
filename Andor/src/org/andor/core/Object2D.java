@@ -91,7 +91,7 @@ public class Object2D {
 		this.linkedObjects.add(object);
 	}
 	
-	/* The methods used to set and return the position, rotation, scale, width and height */
+	/* The methods used to set and return the position, rotation, scale, width, height and bounds */
 	public void setPosition(Vector2D position) { this.position = position; }
 	public void setRotation(float rotation) { this.rotation = rotation; }
 	public void setScale(Vector2D scale) { this.scale = scale; }
@@ -128,6 +128,10 @@ public class Object2D {
 	
 	public float getHeight() {
 		return this.height;
+	}
+	
+	public Rectangle getBounds() {
+		return new Rectangle(this.position.x, this.position.y, this.width, this.height);
 	}
 	
 }

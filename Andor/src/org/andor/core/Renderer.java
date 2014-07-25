@@ -24,6 +24,12 @@ public class Renderer {
 	public static final int DEFAULT_COLOUR_VALUES_COUNT = 4;
 	public static final int DEFAULT_TEXTURE_VALUES_COUNT = 2;
 	
+	/* The default usage type of the buffers */
+	public static final int DEFAULT_USAGE = GL15.GL_STATIC_DRAW;
+	
+	/* The usage type of the buffers */
+	public int usage = DEFAULT_USAGE;
+	
 	/* The number of values for each piece of data */
 	public int vertexValuesCount = 0;
 	public int colourValuesCount = DEFAULT_COLOUR_VALUES_COUNT;
@@ -69,7 +75,7 @@ public class Renderer {
 		
 		//Bind the vertices buffer and give OpenGL the data
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.verticesHandle);
-		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, this.verticesBuffer, GL15.GL_STATIC_DRAW);
+		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, this.verticesBuffer, this.usage);
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
 		
 		//Check to see whether the normals have been set
@@ -82,7 +88,7 @@ public class Renderer {
 			
 			//Bind the normals buffer and give OpenGL the data
 			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.normalsHandle);
-			GL15.glBufferData(GL15.GL_ARRAY_BUFFER, this.normalsBuffer, GL15.GL_STATIC_DRAW);
+			GL15.glBufferData(GL15.GL_ARRAY_BUFFER, this.normalsBuffer, this.usage);
 			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
 		}
 		
@@ -96,7 +102,7 @@ public class Renderer {
 			
 			//Bind the colours buffer and give OpenGL the data
 			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.coloursHandle);
-			GL15.glBufferData(GL15.GL_ARRAY_BUFFER, this.coloursBuffer, GL15.GL_STATIC_DRAW);
+			GL15.glBufferData(GL15.GL_ARRAY_BUFFER, this.coloursBuffer, this.usage);
 			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
 		}
 		
@@ -110,7 +116,7 @@ public class Renderer {
 			
 			//Bind the texture coordinates buffer and give OpenGL the data
 			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.texturesHandle);
-			GL15.glBufferData(GL15.GL_ARRAY_BUFFER, this.texturesBuffer, GL15.GL_STATIC_DRAW);
+			GL15.glBufferData(GL15.GL_ARRAY_BUFFER, this.texturesBuffer, this.usage);
 			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
 		}
 	}
@@ -160,7 +166,7 @@ public class Renderer {
 		this.verticesBuffer = BufferUtils.createFlippedBuffer(this.verticesData);
 		//Bind the vertices buffer and give OpenGL the data
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.verticesHandle);
-		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, this.verticesBuffer, GL15.GL_STATIC_DRAW);
+		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, this.verticesBuffer, this.usage);
 	}
 	
 	/* The method used to update the normals */
@@ -171,7 +177,7 @@ public class Renderer {
 		this.normalsBuffer = BufferUtils.createFlippedBuffer(this.normalsData);
 		//Bind the normals buffer and give OpenGL the data
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.normalsHandle);
-		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, this.normalsBuffer, GL15.GL_STATIC_DRAW);
+		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, this.normalsBuffer, this.usage);
 	}
 	
 	/* The method used to update the colours */
@@ -182,7 +188,7 @@ public class Renderer {
 		this.coloursBuffer = BufferUtils.createFlippedBuffer(this.colourData);
 		//Bind the colours buffer and give OpenGL the data
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.coloursHandle);
-		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, this.coloursBuffer, GL15.GL_STATIC_DRAW);
+		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, this.coloursBuffer, this.usage);
 	}
 	
 	/* The method used to update the texture coordinates */
@@ -193,7 +199,7 @@ public class Renderer {
 		this.texturesBuffer = BufferUtils.createFlippedBuffer(this.textureData);
 		//Bind the texture coordinates buffer and give OpenGL the data
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.texturesHandle);
-		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, this.texturesBuffer, GL15.GL_STATIC_DRAW);
+		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, this.texturesBuffer, this.usage);
 	}
 	
 	/* The method used to set the vertices */
