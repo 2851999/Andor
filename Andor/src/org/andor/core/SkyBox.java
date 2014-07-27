@@ -44,6 +44,8 @@ public class SkyBox {
 		this.texture.bind();
 		//Render this
 		this.box.render();
+		//Unbind the texture
+		this.texture.unbind();
 	}
 	
 }

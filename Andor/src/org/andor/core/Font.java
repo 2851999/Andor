@@ -25,7 +25,7 @@ public class Font {
 	public Font(TrueTypeFont font) {
 		//Assign the variables
 		this.font = font;
-		this.colour = new Colour(1.0f, 1.0f, 1.0f, 1.0f);
+		this.colour = Colour.WHITE;
 	}
 	
 	/* The constructor with the font and colour given */
@@ -43,6 +43,7 @@ public class Font {
 		//Render the font
 		this.font.drawString(x, y, text, new Color(this.colour.r, this.colour.g, this.colour.b, this.colour.a));
 		TextureImpl.unbind();
+		GL11.glDisable(GL11.GL_TEXTURE_2D);
 		GL11.glPopAttrib();
 	}
 	

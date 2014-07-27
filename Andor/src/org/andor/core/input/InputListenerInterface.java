@@ -8,36 +8,30 @@
 
 package org.andor.core.input;
 
-public class InputListener implements InputListenerInterface {
-	
-	/* The constructor */
-	public InputListener() {
-		//Add this input listener interface
-		Input.addListener(this);
-	}
+public interface InputListenerInterface {
 	
 	/* The method called when a button on the mouse is pressed */
-	public void onMousePressed(MouseEvent e) { }
+	public void onMousePressed(MouseEvent e);
 	
 	/* The method called when a button on the mouse is released */
-	public void onMouseReleased(MouseEvent e) { }
+	public void onMouseReleased(MouseEvent e);
 	
 	/* The method called when a button on the mouse is clicked */
-	public void onMouseClicked(MouseEvent e) { }
+	public void onMouseClicked(MouseEvent e);
 	
 	/* The method called when the mouse moves */
-	public void onMouseMoved(MouseMotionEvent e) { }
+	public void onMouseMoved(MouseMotionEvent e);
 	
 	/* The method called when a key on the keyboard is pressed */
-	public void onKeyPressed(KeyboardEvent e) { }
+	public void onKeyPressed(KeyboardEvent e);
 	
 	/* The method called when a key on the keyboard is released */
-	public void onKeyReleased(KeyboardEvent e) { }
+	public void onKeyReleased(KeyboardEvent e);
 	
 	/* The method called when a key on the keyboard is typed */
-	public void onKeyTyped(KeyboardEvent e) { }
+	public void onKeyTyped(KeyboardEvent e);
 	
 	/* The method called when the mouse scrolls */
-	public void onScroll(ScrollEvent e) { }
+	public void onScroll(ScrollEvent e);
 	
 }

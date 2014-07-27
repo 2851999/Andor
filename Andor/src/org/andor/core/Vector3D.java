@@ -8,6 +8,8 @@
 
 package org.andor.core;
 
+import org.lwjgl.util.vector.Vector3f;
+
 public class Vector3D {
 	
 	/* The different values (x, y, z) */
@@ -87,6 +89,18 @@ public class Vector3D {
 		this.x /= amount;
 		this.y /= amount;
 		this.z /= amount;
+	}
+	
+	/* The method used to return a normalised version of this vector */
+	public Vector3D normalise() {
+		//The Vector
+		Vector3f out = new Vector3f();
+		//This vector
+		Vector3f in = new Vector3f(this.x, this.y, this.z);
+		//Normalise the vector
+		in.normalise(out);
+		//Return the result
+		return new Vector3D(out.x, out.y, out.z);
 	}
 	
 	/* The method used to create a new vector with the same values as

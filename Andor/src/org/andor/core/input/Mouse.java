@@ -95,7 +95,7 @@ public class Mouse {
 	
 	/* The static method used to determine whether the mouse is locked */
 	public static boolean isLocked() {
-		return org.lwjgl.input.Mouse.isGrabbed() && ! org.lwjgl.input.Mouse.isClipMouseCoordinatesToWindow();
+		return org.lwjgl.input.Mouse.isGrabbed() && ! org.lwjgl.input.Mouse.isClipMouseCoordinatesToWindow() && org.lwjgl.input.Mouse.isInsideWindow();
 	}
 	
 	/* The static method used to set the position of the mouse */

@@ -9,7 +9,6 @@
 package org.andor.core;
 
 import java.nio.ByteBuffer;
-
 import org.andor.core.logger.Logger;
 import org.lwjgl.opengl.GL11;
 
@@ -33,6 +32,17 @@ public class Image {
 	
 	/* The texture ID */
 	public int textureId;
+	
+	/* The constructor with only the width and height given */
+	public Image(int width, int height) {
+		//Assign the variables
+		this.width = width;
+		this.height = height;
+		this.top = 0f;
+		this.bottom = 1f;
+		this.left = 0f;
+		this.right = 1f;
+	}
 	
 	/* The constructor */
 	public Image(ByteBuffer texture, int width, int height, int numberOfColourComponents) {
@@ -83,6 +93,18 @@ public class Image {
 	public void bind() {
 		//Bind the texture
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.textureId);
+	}
+	
+	/* The method used to unbind this image */
+	public void unbind() {
+		//Unbind this texture
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
+	}
+	
+	/* The method used to delete this image */
+	public void delete() {
+		//Delete this texture
+		GL11.glDeleteTextures(this.textureId);
 	}
 	
 	/* The 'get' methods */
