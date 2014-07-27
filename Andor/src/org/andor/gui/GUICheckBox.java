@@ -12,36 +12,35 @@ import org.andor.core.Colour;
 import org.andor.core.Image;
 import org.andor.core.Object2DBuilder;
 
-public class GUIButton extends GUIComponent {
+public class GUICheckBox extends GUIComponent {
 	
-	/* The text */
-	public String text;
+	/* The boolean that represents whether this is checked or not */
+	public boolean checked;
 	
 	/* The constructor */
-	public GUIButton(Colour[] colours, float width, float height) {
+	public GUICheckBox(Colour[] colours, float width, float height) {
 		//Call the super constructor
-		//If using a colour, the colour must be used to colour VBO setup properly (Same for images)
 		super(Object2DBuilder.createQuad(width, height, Colour.WHITE));
 		//Set the values
 		this.renderer.colours = colours;
 		this.width = width;
 		this.height = height;
-		this.text = "";
+		this.checked = false;
 	}
 	
 	/* The constructor */
-	public GUIButton(Image[] images, float width, float height) {
+	public GUICheckBox(Image[] images, float width, float height) {
 		//Call the super constructor
 		super(Object2DBuilder.createQuad(images[0], width, height, Colour.WHITE));
 		//Set the values
 		this.renderer.images = images;
 		this.width = width;
 		this.height = height;
-		this.text = "";
+		this.checked = false;
 	}
 	
 	/* The constructor */
-	public GUIButton(Image[] images, Colour[] colours, float width, float height) {
+	public GUICheckBox(Image[] images, Colour[] colours, float width, float height) {
 		//Call the super constructor
 		super(Object2DBuilder.createQuad(images[0], width, height, colours));
 		//Set the values
@@ -49,42 +48,7 @@ public class GUIButton extends GUIComponent {
 		this.renderer.colours = colours;
 		this.width = width;
 		this.height = height;
-		this.text = "";
-	}
-	
-	/* The constructor */
-	public GUIButton(String text, Colour[] colours, float width, float height) {
-		//Call the super constructor
-		//If using a colour, the colour must be used to colour VBO setup properly (Same for images)
-		super(Object2DBuilder.createQuad(width, height, Colour.WHITE));
-		//Set the values
-		this.renderer.colours = colours;
-		this.width = width;
-		this.height = height;
-		this.text = text;
-	}
-	
-	/* The constructor */
-	public GUIButton(String text, Image[] images, float width, float height) {
-		//Call the super constructor
-		super(Object2DBuilder.createQuad(images[0], width, height, Colour.WHITE));
-		//Set the values
-		this.renderer.images = images;
-		this.width = width;
-		this.height = height;
-		this.text = text;
-	}
-	
-	/* The constructor */
-	public GUIButton(String text, Image[] images, Colour[] colours, float width, float height) {
-		//Call the super constructor
-		super(Object2DBuilder.createQuad(images[0], width, height, colours));
-		//Set the values
-		this.renderer.images = images;
-		this.renderer.colours = colours;
-		this.width = width;
-		this.height = height;
-		this.text = text;
+		this.checked = false;
 	}
 	
 	/* The method used to update this component */
@@ -92,7 +56,7 @@ public class GUIButton extends GUIComponent {
 		//Get the number of components to the images/colours
 		int components = this.renderer.getTotalComponents();
 		//Check to see the state of this button
-		if (this.clicked) {
+		if (this.checked) {
 			if (components == 1)
 				this.renderer.componentIndex = 0;
 			else if (components == 2)
@@ -116,14 +80,15 @@ public class GUIButton extends GUIComponent {
 		}
 	}
 	
-	/* The method used to render this component */
-	protected void renderComponent() {
-		//Render the text
-		this.renderTextAtCenter(this.text);
+	/* The method called when the component is clicked */
+	protected void componentOnClicked() {
+		//Toggle checked
+		this.checked = ! this.checked;
 	}
 	
-	/* The methods used to set/return values */
-	public void setText(String text) { this.text = text; }
-	public String getText() { return this.text; }
+	/* The methods used to set/toggle/return some values */
+	public void setChecked(boolean checked) { this.checked = checked; }
+	public void toggleChecked() { this.checked = ! this.checked; }
+	public boolean isChecked() { return this.checked; }
 	
 }

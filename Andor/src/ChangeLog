@@ -1,4 +1,14 @@
 ------------------------------------------------------
+Release 0 | Beta 1 | Development 2 | Experimental 3
+
+* Added GUICheckBox
+* Added GUIDropDownMenu
+* Added GUIDropDownList
+
+* Renamed GUIButtonTest to GUITest
+* Renamed GUIRenderer to GUIComponentRenderer
+
+------------------------------------------------------
 Release 0 | Beta 1 | Development 2 | Experimental 2
 
 * Added Rectangle

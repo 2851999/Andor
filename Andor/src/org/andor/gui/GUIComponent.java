@@ -18,7 +18,7 @@ import org.andor.core.input.Mouse;
 public class GUIComponent extends Object2D {
 	
 	/* The GUIRenderer instance */
-	public GUIRenderer renderer;
+	public GUIComponentRenderer renderer;
 	
 	/* The name of this component */
 	public String name;
@@ -47,7 +47,7 @@ public class GUIComponent extends Object2D {
 	/* The constructor */
 	public GUIComponent(RenderableObject2D object) {
 		//Assign the variables
-		this.renderer = new GUIRenderer(object);
+		this.renderer = new GUIComponentRenderer(object);
 		this.name = "";
 		this.visible = true;
 		this.active = true;
@@ -61,11 +61,16 @@ public class GUIComponent extends Object2D {
 	/* The method used to update this component */
 	public void update() {
 		//Make sure this component is active
-		if (this.active) {
+		if (this.visible && this.active) {
 			//Check to see whether the mouse is inside this component
 			if (this.getBounds().contains(Mouse.x, Mouse.y)) {
-				//The mouse is hovering inside of this component
-				this.mouseHoveringInside = true;
+				//Check to see whether the mouse is already hovering
+				if (! this.mouseHoveringInside) {
+					//The mouse is hovering inside of this component
+					this.mouseHoveringInside = true;
+					//Call an onMouseEnter event
+					this.callOnMouseEnterEvent();
+				}
 				//Check to see whether the left mouse button is down
 				if (Mouse.leftButton) {
 					//Check to see whether repeat click events are enabled
@@ -73,8 +78,8 @@ public class GUIComponent extends Object2D {
 						//Set clicked to true
 						this.clicked = true;
 						this.hasBeenClickedEvent = true;
-						//Call a clicked event
-						this.callClickedEvent();
+						//Call an onClicked event
+						this.callOnClickedEvent();
 					}
 				} else {
 					//Not clicked since the left mouse button is not down
@@ -82,8 +87,13 @@ public class GUIComponent extends Object2D {
 					this.hasBeenClickedEvent = false;
 				}
 			} else {
-				//The mouse is not hovering inside of this component
-				this.mouseHoveringInside = false;
+				//Check to see whether the mouse is already not hovering
+				if (this.mouseHoveringInside) {
+					//The mouse is not hovering inside of this component
+					this.mouseHoveringInside = false;
+					//Call an onMouseLeave event
+					this.callOnMouseLeaveEvent();
+				}
 				//Not clicked, because the mouse isn't even within the bounds of this component
 				this.clicked = false;
 				this.hasBeenClickedEvent = false;
@@ -93,25 +103,30 @@ public class GUIComponent extends Object2D {
 		}
 	}
 	
-	/* The method used to update this component */
-	public void updateComponent() {
-		
-	}
-	
 	/* The method used to render this component */
 	public void render() {
 		//Make sure this component is visible
 		if (this.visible) {
 			//Render this component
-			this.renderer.render(this);
+			this.renderer.render(this, this.active);
 			this.renderComponent();
 		}
 	}
 	
+	/* The method used to update this component */
+	protected void updateComponent() { }
+	
 	/* The method used to render this component */
-	public void renderComponent() {
-		
-	}
+	protected void renderComponent() { }
+	
+	/* The method called when the mouse enter's this component */
+	protected void componentOnMouseEnter() { }
+	
+	/* The method called when the mouse leave's this component */
+	protected void componentOnMouseLeave() { }
+	
+	/* The method called when the component is clicked */
+	protected void componentOnClicked() { }
 	
 	/* The method used to render some text */
 	public void renderText(String text, float x, float y) { this.renderer.font.render(text, x, y); }
@@ -131,12 +146,34 @@ public class GUIComponent extends Object2D {
 		this.componentListeners.add(listener);
 	}
 	
-	/* The method used to call a clicked event from this component */
-	public void callClickedEvent() {
+	/* The method used to call an onMouseEnter event from this component */
+	public void callOnMouseEnterEvent() {
+		//Call the method
+		this.componentOnMouseEnter();
 		//Go through the listeners
 		for (int a = 0; a < this.componentListeners.size(); a++)
 			//Call the event in the current listener
-			this.componentListeners.get(a).clicked(this);
+			this.componentListeners.get(a).onMouseEnter(this);
+	}
+	
+	/* The method used to call an onMouseLeave event from this component */
+	public void callOnMouseLeaveEvent() {
+		//Call the method
+		this.componentOnMouseLeave();
+		//Go through the listeners
+		for (int a = 0; a < this.componentListeners.size(); a++)
+			//Call the event in the current listener
+			this.componentListeners.get(a).onMouseLeave(this);
+	}
+	
+	/* The method used to call an onClicked event from this component */
+	public void callOnClickedEvent() {
+		//Call the method
+		this.componentOnClicked();
+		//Go through the listeners
+		for (int a = 0; a < this.componentListeners.size(); a++)
+			//Call the event in the current listener
+			this.componentListeners.get(a).onClicked(this);
 	}
 	
 	/* The methods used to set/toggle/return some values */
