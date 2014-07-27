@@ -1,4 +1,67 @@
 ------------------------------------------------------
+Release 0 | Beta 1 | Development 3 | Experimental 0
+
+* Added Object2D
+* Added Object2DBuilder
+* Added RenderableObject2D
+* Added ObjectBuilderUtils
+* Added Quad2DTest
+* Added Rectangle
+* Added InputListener
+* Added GUIComponent
+* Added GUIComponentListener
+* Added GUIRenderer
+* Added GUIButton
+* Added GUIButtonTest
+* Added GUICheckBox
+* Added GUIDropDownMenu
+* Added GUIDropDownList
+
+* Created the package org.andor.gui
+
+* Renamed InputListener to InputListenerInterface
+
+* Fixed bug: Sizes of objects made using
+  Object3DBuilder were not strictly the correct size
+
+------------------------------------------------------
+Release 0 | Beta 1 | Development 2 | Experimental 3
+
+* Added GUICheckBox
+* Added GUIDropDownMenu
+* Added GUIDropDownList
+
+* Renamed GUIButtonTest to GUITest
+* Renamed GUIRenderer to GUIComponentRenderer
+
+------------------------------------------------------
+Release 0 | Beta 1 | Development 2 | Experimental 2
+
+* Added Rectangle
+* Added InputListener
+* Added GUIComponent
+* Added GUIComponentListener
+* Added GUIRenderer
+* Added GUIButton
+* Added GUIButtonTest
+
+* Created the package org.andor.gui
+
+* Renamed InputListener to InputListenerInterface
+
+------------------------------------------------------
+Release 0 | Beta 1 | Development 2 | Experimental 1
+
+* Added Object2D
+* Added Object2DBuilder
+* Added RenderableObject2D
+* Added ObjectBuilderUtils
+* Added Quad2DTest
+
+* Fixed bug: Sizes of objects made using
+  Object3DBuilder were not strictly the correct size
+
+------------------------------------------------------
 Release 0 | Beta 1 | Development 2 | Experimental 0
 
 * Added Shader

@@ -22,6 +22,11 @@ public class Object3D {
 	/* The scale of this object */
 	public Vector3D scale;
 	
+	/* The width, height adn depth of this object */
+	public float width;
+	public float height;
+	public float depth;
+	
 	/* The boolean value that represents whether this
 	 * object is linked to another, by default this
 	 * should be false */
@@ -39,24 +44,45 @@ public class Object3D {
 		this.position = new Vector3D();
 		this.rotation = new Vector3D();
 		this.scale = new Vector3D(1, 1, 1);
+		this.width = 0;
+		this.height = 0;
+		this.depth = 0;
 		this.linkedObjects = new ArrayList<Object3D>();
 	}
 	
-	/* The constructor with the position given */
-	public Object3D(Vector3D position) {
+	/* The constructor with the width, height and depth given */
+	public Object3D(float width, float height, float depth) {
+		//Assign the variables
+		this.position = new Vector3D();
+		this.rotation = new Vector3D();
+		this.scale = new Vector3D(1, 1, 1);
+		this.width = width;
+		this.height = height;
+		this.depth = depth;
+		this.linkedObjects = new ArrayList<Object3D>();
+	}
+	
+	/* The constructor with the position, width, height and depth given */
+	public Object3D(Vector3D position, float width, float height, float depth) {
 		//Assign the variables
 		this.position = position;
 		this.rotation = new Vector3D();
-		this.scale = new Vector3D();
+		this.scale = new Vector3D(1, 1, 1);
+		this.width = width;
+		this.height = height;
+		this.depth = depth;
 		this.linkedObjects = new ArrayList<Object3D>();
 	}
 	
-	/* The constructor with the position and rotation given */
-	public Object3D(Vector3D position, Vector3D rotation) {
+	/* The constructor with the position, rotation, width, height and depth given */
+	public Object3D(Vector3D position, Vector3D rotation, float width, float height, float depth) {
 		//Assign the variables
 		this.position = position;
 		this.rotation = rotation;
-		this.scale = new Vector3D();
+		this.scale = new Vector3D(1, 1, 1);
+		this.width = width;
+		this.height = height;
+		this.depth = depth;
 		this.linkedObjects = new ArrayList<Object3D>();
 	}
 	

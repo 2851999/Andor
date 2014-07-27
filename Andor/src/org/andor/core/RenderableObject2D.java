@@ -10,39 +10,39 @@ package org.andor.core;
 
 import org.lwjgl.opengl.GL11;
 
-public class RenderableObject3D extends Object3D {
+public class RenderableObject2D extends Object2D {
 	
 	/* The renderer used to render this object */
 	public Renderer renderer;
 	
 	/* The default constructor */
-	public RenderableObject3D() {
+	public RenderableObject2D() {
 		
 	}
 	
 	/* The constructor with the render mode,
-	 * the vertices data, width, height and depth given */
-	public RenderableObject3D(int renderMode, float[] verticesData, float width, float height, float depth) {
+	 * the vertices data, width and height given */
+	public RenderableObject2D(int renderMode, float[] verticesData, float width, float height) {
 		//Call the super constructor
-		super(width, height, depth);
+		super(width, height);
 		//Setup this object
 		this.setup(renderMode, verticesData);
 	}
 	
 	/* The constructor with the render mode,
-	 * the vertices data, the colour data, width, height and depth given */
-	public RenderableObject3D(int renderMode, float[] verticesData, float[] colourData, float width, float height, float depth) {
+	 * the vertices data, the colour data, width and height given */
+	public RenderableObject2D(int renderMode, float[] verticesData, float[] colourData, float width, float height) {
 		//Call the super constructor
-		super(width, height, depth);
+		super(width, height);
 		//Setup this object
 		this.setup(renderMode, verticesData, colourData);
 	}
 	
 	/* The constructor with the render mode,
-	 * the vertices data, the colour data, the texture data, width, height and depth given */
-	public RenderableObject3D(int renderMode, float[] verticesData, float[] colourData, float[] textureData, float width, float height, float depth) {
+	 * the vertices data, the colour data, the texture data width and height given */
+	public RenderableObject2D(int renderMode, float[] verticesData, float[] colourData, float[] textureData, float width, float height) {
 		//Call the super constructor
-		super(width, height, depth);
+		super(width, height);
 		//Setup this object
 		this.setup(renderMode, verticesData, colourData, textureData);
 	}
@@ -52,15 +52,17 @@ public class RenderableObject3D extends Object3D {
 		//Push the current matrix
 		GL11.glPushMatrix();
 		
-		//Move to the correct position
-		GL11.glTranslatef(this.getPosition().x, this.getPosition().y, this.getPosition().z);
+		//Move to the correct position (For rotating)
+		GL11.glTranslatef(this.getPosition().x + this.width / 2, this.getPosition().y + this.height / 2, 0);
 		
 		//Rotate by the specified amount
-		GL11.glRotatef(this.rotation.x, 1, 0, 0);
-		GL11.glRotatef(this.rotation.y, 0, 1, 0);
-		GL11.glRotatef(this.rotation.z, 0, 0, 1);
+		GL11.glRotatef(this.rotation, 0, 0, 1);
 		
-		GL11.glScalef(this.scale.x, this.scale.y, this.scale.z);
+		//Scale the object
+		GL11.glScalef(this.scale.x, this.scale.y, 1);
+		
+		//Move to the correct position (For rendering)
+		GL11.glTranslatef(-this.width / 2, -this.height / 2, 0);
 		
 		//Render the object using the renderer
 		this.renderer.render();
@@ -73,7 +75,7 @@ public class RenderableObject3D extends Object3D {
 	 * and the vertices data */
 	public void setup(int renderMode, float[] verticesData) {
 		//Create the renderer
-		this.renderer = new Renderer(renderMode, Renderer.VERTEX_VALUES_COUNT_3D);
+		this.renderer = new Renderer(renderMode, Renderer.VERTEX_VALUES_COUNT_2D);
 		//Set the correct values
 		this.renderer.setValues(verticesData);
 		//Setup the buffers
@@ -84,7 +86,7 @@ public class RenderableObject3D extends Object3D {
 	 * the vertices data and the colour data */
 	public void setup(int renderMode, float[] verticesData, float[] colourData) {
 		//Create the renderer
-		this.renderer = new Renderer(renderMode, Renderer.VERTEX_VALUES_COUNT_3D);
+		this.renderer = new Renderer(renderMode, Renderer.VERTEX_VALUES_COUNT_2D);
 		//Set the correct values
 		this.renderer.setValues(verticesData, colourData);
 		//Setup the buffers
@@ -95,7 +97,7 @@ public class RenderableObject3D extends Object3D {
 	 * the vertices data, the colour data and the texture data */
 	public void setup(int renderMode, float[] verticesData, float[] colourData, float[] textureData) {
 		//Create the renderer
-		this.renderer = new Renderer(renderMode, Renderer.VERTEX_VALUES_COUNT_3D);
+		this.renderer = new Renderer(renderMode, Renderer.VERTEX_VALUES_COUNT_2D);
 		//Set the correct values
 		this.renderer.setValues(verticesData, colourData, textureData);
 		//Setup the buffers
