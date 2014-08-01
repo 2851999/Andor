@@ -26,11 +26,6 @@ public class Object2D {
 	public float width;
 	public float height;
 	
-	/* The boolean value that represents whether this
-	 * object is linked to another, by default this
-	 * should be false */
-	public boolean linked = false;
-	
 	/* The object this is linked to (if any) */
 	public Object2D parent = null;
 	
@@ -83,9 +78,7 @@ public class Object2D {
 	
 	/* The method used to link an object to this one */
 	public void link(Object2D object) {
-		//Set the linked value in the object to true
-		object.linked = true;
-		//Set this object as the 
+		//Set this object as this
 		object.parent = this;
 		//Add the object to the list of linked objects
 		this.linkedObjects.add(object);
@@ -100,13 +93,11 @@ public class Object2D {
 	
 	public Vector2D getPosition() {
 		//Make sure this isn't linked to another object
-		if (! this.linked)
+		if (! this.isLinked())
 			return this.position;
 		else {
 			//Get the position of the parent object
 			Vector2D parentPosition = this.parent.getPosition().clone();
-			//Multiply by -1 (Invert the parent's position
-			parentPosition.multiply(-1f);
 			//Add this position onto the parent position
 			parentPosition.add(this.position);
 			//Return the new position
@@ -115,11 +106,31 @@ public class Object2D {
 	}
 	
 	public float getRotation() {
-		return this.rotation;
+		//Make sure this isn't linked to another object
+		if (! this.isLinked())
+			return this.rotation;
+		else {
+			//Get the rotation of the parent object
+			float parentRotation = this.parent.getRotation();
+			//Add this rotation onto the parent rotation
+			parentRotation += this.rotation;
+			//Return the new position
+			return parentRotation;
+		}
 	}
 	
 	public Vector2D getScale() {
-		return this.scale;
+		//Make sure this isn't linked to another object
+		if (! this.isLinked())
+			return this.scale;
+		else {
+			//Get the scale of the parent object
+			Vector2D parentScale = this.parent.getScale().clone();
+			//Multiply this scale by the parent scale
+			parentScale.multiply(this.scale);
+			//Return the new scale
+			return parentScale;
+		}
 	}
 	
 	public float getWidth() {
@@ -131,7 +142,11 @@ public class Object2D {
 	}
 	
 	public Rectangle getBounds() {
-		return new Rectangle(this.position.x, this.position.y, this.width, this.height);
+		//Get the position
+		Vector2D p = this.getPosition();
+		return new Rectangle(p.x, p.y, this.width, this.height);
 	}
+	
+	public boolean isLinked() { return this.parent != null; }
 	
 }

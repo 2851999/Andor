@@ -11,11 +11,15 @@ package org.andor.gui;
 import org.andor.core.Colour;
 import org.andor.core.Image;
 import org.andor.core.Object2DBuilder;
+import org.andor.core.Vector2D;
 
 public class GUICheckBox extends GUIComponent {
 	
 	/* The boolean that represents whether this is checked or not */
 	public boolean checked;
+	
+	/* The text */
+	public String text;
 	
 	/* The constructor */
 	public GUICheckBox(Colour[] colours, float width, float height) {
@@ -78,6 +82,14 @@ public class GUICheckBox extends GUIComponent {
 			else if (components == 3)
 				this.renderer.componentIndex = 0;
 		}
+	}
+	
+	/* The method used to render this component */
+	protected void renderComponent() {
+		//Make sure there is text to be rendered
+		if (this.text != null)
+			//Render the text
+			this.renderTextAtCenter(this.text, new Vector2D(((this.renderer.font.getWidth(this.text) / 2) + (this.width / 2)) + 4, 0));
 	}
 	
 	/* The method called when the component is clicked */

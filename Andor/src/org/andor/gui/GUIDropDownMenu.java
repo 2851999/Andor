@@ -11,9 +11,16 @@ package org.andor.gui;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.andor.core.Rectangle;
 import org.andor.core.Vector2D;
+import org.andor.core.input.Input;
+import org.andor.core.input.InputListenerInterface;
+import org.andor.core.input.KeyboardEvent;
+import org.andor.core.input.MouseEvent;
+import org.andor.core.input.MouseMotionEvent;
+import org.andor.core.input.ScrollEvent;
 
-public class GUIDropDownMenu extends GUIComponent implements GUIComponentListener {
+public class GUIDropDownMenu extends GUIComponent implements GUIComponentListener, InputListenerInterface {
 	
 	/* The menu button */
 	public GUIButton menuButton;
@@ -34,6 +41,8 @@ public class GUIDropDownMenu extends GUIComponent implements GUIComponentListene
 		this.menuOpen = false;
 		//Add this component listener to the menu button
 		this.menuButton.addListener(this);
+		//Add this input listener interface
+		Input.addListener(this);
 	}
 	
 	/* The method used to update this component */
@@ -91,6 +100,35 @@ public class GUIDropDownMenu extends GUIComponent implements GUIComponentListene
 		this.menuOpen = ! this.menuOpen;
 	}
 	
+	/* The method called when a button on the mouse is pressed */
+	public void onMousePressed(MouseEvent e) { }
+	
+	/* The method called when a button on the mouse is released */
+	public void onMouseReleased(MouseEvent e) { }
+	
+	/* The method called when a button on the mouse is clicked */
+	public void onMouseClicked(MouseEvent e) {
+		//Check to see whether the mouse was clicked within this menu
+		if (! this.getMenuBounds().contains(e.x, e.y) && this.menuOpen)
+			//Hide this menu
+			this.menuOpen = false;
+	}
+	
+	/* The method called when the mouse moves */
+	public void onMouseMoved(MouseMotionEvent e) { }
+	
+	/* The method called when a key on the keyboard is pressed */
+	public void onKeyPressed(KeyboardEvent e) { }
+	
+	/* The method called when a key on the keyboard is released */
+	public void onKeyReleased(KeyboardEvent e) { }
+	
+	/* The method called when a key on the keyboard is typed */
+	public void onKeyTyped(KeyboardEvent e) { }
+	
+	/* The method called when the mouse scrolls */
+	public void onScroll(ScrollEvent e) { }
+	
 	/* The methods used to add/set/toggle/return values */
 	public void addButton(GUIButton button) {
 		//Add this to the buttons component listeners
@@ -103,5 +141,25 @@ public class GUIDropDownMenu extends GUIComponent implements GUIComponentListene
 	public void toggleOpen() { this.menuOpen = ! this.menuOpen; }
 	public boolean isOpen() { return this.menuOpen; }
 	public List<GUIButton> getButtons() { return this.getButtons(); }
+	
+	public Rectangle getMenuBounds() {
+		//The positions
+		float x = this.position.x;
+		float y = this.position.y;
+		//Get the maximum width and total height
+		float width = this.menuButton.width;
+		float height = this.menuButton.height;
+		for (int a = 0; a < this.buttons.size(); a++) {
+			//The current button
+			GUIButton button = this.buttons.get(a);
+			//Add onto the height
+			height += button.height;
+			//Check the width of the current button
+			if (button.width > width)
+				this.width = button.width;
+		}
+		//Return the rectangle
+		return new Rectangle(x, y, width, height);
+	}
 	
 }

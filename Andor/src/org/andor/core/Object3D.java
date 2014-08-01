@@ -22,15 +22,10 @@ public class Object3D {
 	/* The scale of this object */
 	public Vector3D scale;
 	
-	/* The width, height adn depth of this object */
+	/* The width, height and depth of this object */
 	public float width;
 	public float height;
 	public float depth;
-	
-	/* The boolean value that represents whether this
-	 * object is linked to another, by default this
-	 * should be false */
-	public boolean linked = false;
 	
 	/* The object this is linked to (if any) */
 	public Object3D parent = null;
@@ -88,9 +83,7 @@ public class Object3D {
 	
 	/* The method used to link an object to this one */
 	public void link(Object3D object) {
-		//Set the linked value in the object to true
-		object.linked = true;
-		//Set this object as the 
+		//Set this object as this
 		object.parent = this;
 		//Add the object to the list of linked objects
 		this.linkedObjects.add(object);
@@ -103,13 +96,11 @@ public class Object3D {
 	
 	public Vector3D getPosition() {
 		//Make sure this isn't linked to another object
-		if (! this.linked)
+		if (! this.isLinked())
 			return this.position;
 		else {
 			//Get the position of the parent object
 			Vector3D parentPosition = this.parent.getPosition().clone();
-			//Multiply by -1 (Invert the parent's position
-			parentPosition.multiply(-1f);
 			//Add this position onto the parent position
 			parentPosition.add(this.position);
 			//Return the new position
@@ -118,11 +109,33 @@ public class Object3D {
 	}
 	
 	public Vector3D getRotation() {
-		return this.rotation;
+		//Make sure this isn't linked to another object
+		if (! this.isLinked())
+			return this.rotation;
+		else {
+			//Get the rotation of the parent object
+			Vector3D parentRotation = this.parent.getRotation().clone();
+			//Add this rotation onto the parent rotation
+			parentRotation.add(this.rotation);
+			//Return the new position
+			return parentRotation;
+		}
 	}
 	
 	public Vector3D getScale() {
-		return this.scale;
+		//Make sure this isn't linked to another object
+		if (! this.isLinked())
+			return this.scale;
+		else {
+			//Get the scale of the parent object
+			Vector3D parentScale = this.parent.getScale().clone();
+			//Multiply this scale by the parent scale
+			parentScale.multiply(this.scale);
+			//Return the new scale
+			return parentScale;
+		}
 	}
+	
+	public boolean isLinked() { return this.parent != null; }
 	
 }

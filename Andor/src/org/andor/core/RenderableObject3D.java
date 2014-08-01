@@ -52,15 +52,24 @@ public class RenderableObject3D extends Object3D {
 		//Push the current matrix
 		GL11.glPushMatrix();
 		
+		//Get the position
+		Vector3D p = this.getPosition();
+		
 		//Move to the correct position
-		GL11.glTranslatef(this.getPosition().x, this.getPosition().y, this.getPosition().z);
+		GL11.glTranslatef(p.x, p.y, p.z);
+		
+		//Get the rotation
+		Vector3D r = this.getRotation();
 		
 		//Rotate by the specified amount
-		GL11.glRotatef(this.rotation.x, 1, 0, 0);
-		GL11.glRotatef(this.rotation.y, 0, 1, 0);
-		GL11.glRotatef(this.rotation.z, 0, 0, 1);
+		GL11.glRotatef(r.x, 1, 0, 0);
+		GL11.glRotatef(r.y, 0, 1, 0);
+		GL11.glRotatef(r.z, 0, 0, 1);
 		
-		GL11.glScalef(this.scale.x, this.scale.y, this.scale.z);
+		//Get the scale
+		Vector3D s = this.getScale();
+		
+		GL11.glScalef(s.x, s.y, s.z);
 		
 		//Render the object using the renderer
 		this.renderer.render();

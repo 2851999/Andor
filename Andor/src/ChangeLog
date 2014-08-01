@@ -1,4 +1,107 @@
 ------------------------------------------------------
+Release 0 | Beta 2 | Development 1 | Experimental 0
+
+* Added Camera2D
+* Added GUIRadioCheckBox
+* Added GUILabel
+* Added the variable 'text' in GUICheckBox
+* Added rotation and scaling when linking Objects
+  (2D + 3D)
+
+* Increased performance (Hopefully): Linked Objects
+
+* Fixed bug: GUIDropDownMenu and GUIDropDownList
+		 	 stayed open when the mouse clicked
+		 	 outside of the menu/list
+* Fixed bug: Linked object scaling was wrong
+* Fixed bug: GUI components didn't fully work with
+ 			 object linking
+
+------------------------------------------------------
+Release 0 | Beta 2 | Development 0 | Experimental 3
+
+* Added Camera2D
+
+------------------------------------------------------
+Release 0 | Beta 2 | Development 0 | Experimental 2
+
+* Added GUIGroup
+* Added GUIRadioCheckBox
+* Added GUILabel
+* Added the variable 'text' in GUICheckBox
+
+* Fixed bug: Linked object scaling was wrong
+* Fixed bug: GUI components didn't fully work with
+ 			 object linking
+ 
+------------------------------------------------------
+Release 0 | Beta 2 | Development 0 | Experimental 1
+
+* Added rotation and scaling when linking Objects
+  (2D + 3D)
+
+* Increased performance (Hopefully): Linked Objects
+
+* Fixed bug: GUIDropDownMenu and GUIDropDownList
+		 	 stayed open when the mouse clicked
+		 	 outside of the menu/list
+
+------------------------------------------------------
+Release 0 | Beta 2 | Development 0 | Experimental 0
+
+* Added Face
+* Added Material
+* Added MaterialLoader
+* Added Model
+* Added ModelParserUtils
+* Added OBJLoader
+* Added Shader
+* Added ShaderUtils
+* Added Client
+* Added ClientInputThread
+* Added Server
+* Added ServerClient
+* Added ServerClientInputThread
+* Added ServerConnectionThread
+* Added ServerListener
+* Added ClientListener
+* Added NetworkingTest
+* Added Object2D
+* Added Object2DBuilder
+* Added RenderableObject2D
+* Added ObjectBuilderUtils
+* Added Quad2DTest
+* Added Rectangle
+* Added InputListener
+* Added GUIComponent
+* Added GUIComponentListener
+* Added GUIRenderer
+* Added GUIButton
+* Added GUIButtonTest
+* Added GUICheckBox
+* Added GUIDropDownMenu
+* Added GUIDropDownList
+* Added methods in Renderer to update certain data
+* Added the method unbind() in Image
+* Added object scaling
+
+* Created the package org.andor.core.model
+* Created the package org.andor.core.networking
+* Created the package org.andor.gui
+
+* Renamed Quad3DTest to Cube3DTest
+* Renamed InputListener to InputListenerInterface
+
+* Fixed bug: VSync wasn't being used
+* Fixed bug: Sizes of objects made using
+  Object3DBuilder were not strictly the correct size
+
+* Hopefully decreased loading time and memory usage,
+  ImageSet.loadImage() doesn't return an Image with
+  anything inside, it only contains the texture
+  coordinates and the size of the texture.
+
+------------------------------------------------------
 Release 0 | Beta 1 | Development 3 | Experimental 0
 
 * Added Object2D

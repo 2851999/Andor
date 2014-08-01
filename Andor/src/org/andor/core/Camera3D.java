@@ -42,6 +42,7 @@ public class Camera3D extends Object3D {
 	public Camera3D(float x, float y, float z, float rx, float ry, float rz) {
 		//Assign the variables
 		this.position = new Vector3D(x, y, z);
+		this.rotation = new Vector3D(rx, ry, rz);
 		this.flying = false;
 		this.skyBox = null;
 		this.useSkyBoxIfAvailable = true;
@@ -68,19 +69,36 @@ public class Camera3D extends Object3D {
 	
 	/* The method used to use this camera's view */
 	public void useView() {
-		//Rotate the view
-		GL11.glRotatef(this.getRotation().x, 1, 0, 0);
-		GL11.glRotatef(this.getRotation().y, 0, 1, 0);
-		GL11.glRotatef(this.getRotation().z, 0, 0, 1);
+		//Get the rotation
+		Vector3D r = this.getRotation();
 		
-		//Translate afterwards otherwise it wont look like the camera is rotating
-		//it would instead look like everything else is rotating
-		GL11.glTranslatef(this.getPosition().x, this.getPosition().y, this.getPosition().z);
+		//Rotate by the specified amount
+		GL11.glRotatef(r.x, 1, 0, 0);
+		GL11.glRotatef(r.y, 0, 1, 0);
+		GL11.glRotatef(r.z, 0, 0, 1);
+		
+		//Get the position
+		Vector3D p = this.getPosition();
+		
+		//Move to the correct position
+		GL11.glTranslatef(p.x, p.y, p.z);
+		
+		//Get the scale
+		Vector3D s = this.getScale();
+		
+		GL11.glScalef(s.x, s.y, s.z);
 		
 		//Check to see whether the skybox should be used
-		if (this.skyBox != null && this.useSkyBoxIfAvailable)
+		if (this.skyBox != null && this.useSkyBoxIfAvailable) {
+			//Get the position
+			Vector3D pos = this.getPosition().clone();
+			//Multiply the position by -1
+			pos.multiply(-1f);
+			//Set the sky box's position
+			this.skyBox.box.position = pos;
 			//Render the skybox based on this camera's position
 			this.skyBox.renderSkybox();
+		}
 	}
 	
 	/* The method used to move the camera forwards relative to its rotation */
@@ -121,8 +139,6 @@ public class Camera3D extends Object3D {
 	public void setSkyBox(SkyBox skyBox) {
 		//Assign the skybox
 		this.skyBox = skyBox;
-		//Link the skybox to this camera's position
-		this.link(this.skyBox.box);
 	}
 	
 }
