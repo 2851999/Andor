@@ -1,4 +1,16 @@
 ------------------------------------------------------
+Release 0 | Beta 2 | Development 0 | Experimental 2
+
+* Added GUIGroup
+* Added GUIRadioCheckBox
+* Added GUILabel
+* Added the variable 'text' in GUICheckBox
+
+* Fixed bug: Linked object scaling was wrong
+* Fixed bug: GUI components didn't fully work with
+ 			 object linking
+
+------------------------------------------------------
 Release 0 | Beta 2 | Development 0 | Experimental 1
 
 * Added rotation and scaling when linking Objects

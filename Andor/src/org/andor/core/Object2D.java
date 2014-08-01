@@ -133,8 +133,8 @@ public class Object2D {
 		else {
 			//Get the scale of the parent object
 			Vector2D parentScale = this.parent.getScale().clone();
-			//Add this scale onto the parent scale
-			parentScale.add(this.scale);
+			//Multiply this scale by the parent scale
+			parentScale.multiply(this.scale);
 			//Return the new scale
 			return parentScale;
 		}
@@ -149,7 +149,9 @@ public class Object2D {
 	}
 	
 	public Rectangle getBounds() {
-		return new Rectangle(this.position.x, this.position.y, this.width, this.height);
+		//Get the position
+		Vector2D p = this.getPosition();
+		return new Rectangle(p.x, p.y, this.width, this.height);
 	}
 	
 }

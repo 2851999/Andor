@@ -55,14 +55,15 @@ public class GUIComponentRenderer {
 		}
 	}
 	
-	/* The method used to render the entity given a Object2D to base its position off of */
+	/* The method used to render the entity given an Object2D to base its position off of and the active value
+	 * (Whether the component is active when  it is rendered) */
 	public void render(Object2D object, boolean active) {
 		//Make sure the entity has been set
 		if (this.entity != null) {
 			//Assign the entities values
-			this.entity.position = object.position;
-			this.entity.rotation = object.rotation;
-			this.entity.scale = object.scale;
+			this.entity.position = object.getPosition();
+			this.entity.rotation = object.getRotation();
+			this.entity.scale = object.getScale();
 			this.entity.width = object.width;
 			this.entity.height = object.height;
 			

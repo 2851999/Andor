@@ -13,6 +13,7 @@ import java.util.List;
 
 import org.andor.core.Object2D;
 import org.andor.core.RenderableObject2D;
+import org.andor.core.Vector2D;
 import org.andor.core.input.Mouse;
 
 public class GUIComponent extends Object2D {
@@ -43,6 +44,9 @@ public class GUIComponent extends Object2D {
 	
 	/* The component listeners */
 	private List<GUIComponentListener> componentListeners;
+	
+	/* The group */
+	public GUIGroup group;
 	
 	/* The constructor */
 	public GUIComponent(RenderableObject2D object) {
@@ -129,14 +133,37 @@ public class GUIComponent extends Object2D {
 	protected void componentOnClicked() { }
 	
 	/* The method used to render some text */
+	public void renderText(String text) {
+		//Get the position
+		Vector2D p = this.getPosition();
+		this.renderer.font.render(text, p.x, p.y);
+	}
 	public void renderText(String text, float x, float y) { this.renderer.font.render(text, x, y); }
 	public void renderTextAtCenter(String text) {
 		//Get the width and height of the text
 		float textWidth = this.renderer.font.getWidth(text);
 		float textHeight = this.renderer.font.getHeight(text);
+		//Get the position
+		Vector2D p = this.getPosition();
 		//Calculate the position to render the text
-		float textX = (this.position.x + (this.width / 2)) - (textWidth / 2);
-		float textY = (this.position.y + (this.height / 2)) - (textHeight / 2);
+		float textX = (p.x + (this.width / 2)) - (textWidth / 2);
+		float textY = (p.y + (this.height / 2)) - (textHeight / 2);
+		//Render the text
+		this.renderText(text, textX, textY);
+	}
+	
+	public void renderTextAtCenter(String text, Vector2D offset) {
+		//Get the width and height of the text
+		float textWidth = this.renderer.font.getWidth(text);
+		float textHeight = this.renderer.font.getHeight(text);
+		//Get the position
+		Vector2D p = this.getPosition();
+		//Calculate the position to render the text
+		float textX = (p.x + (this.width / 2)) - (textWidth / 2);
+		float textY = (p.y + (this.height / 2)) - (textHeight / 2);
+		//Add the offset
+		textX += offset.x;
+		textY += offset.y;
 		//Render the text
 		this.renderText(text, textX, textY);
 	}
@@ -181,11 +208,14 @@ public class GUIComponent extends Object2D {
 	public void setVisible(boolean visible) { this.visible = visible; }
 	public void setActive(boolean active) { this.active = active; }
 	public void setRepeatClickedEvents(boolean repeatClickedEvents) { this.repeatClickedEvents = repeatClickedEvents; }
+	public void setGroup(GUIGroup group) { this.group = group; }
 	public void toggleVisible() { this.visible = ! this.visible; }
 	public void toggleActive() { this.active = ! this.active; }
 	public String getName() { return this.name; }
 	public boolean isVisible() { return this.visible; }
 	public boolean isActive() { return this.active; }
 	public boolean isRepeatClickedEventsEnabled() { return this.repeatClickedEvents; }
+	public GUIGroup getGroup() { return this.group; }
+	public boolean belongsToGroup() { return this.group != null; }
 	
 }

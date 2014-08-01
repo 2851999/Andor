@@ -22,7 +22,7 @@ public class Object3D {
 	/* The scale of this object */
 	public Vector3D scale;
 	
-	/* The width, height adn depth of this object */
+	/* The width, height and depth of this object */
 	public float width;
 	public float height;
 	public float depth;
@@ -136,8 +136,8 @@ public class Object3D {
 		else {
 			//Get the scale of the parent object
 			Vector3D parentScale = this.parent.getScale().clone();
-			//Add this scale onto the parent scale
-			parentScale.add(this.scale);
+			//Multiply this scale by the parent scale
+			parentScale.multiply(this.scale);
 			//Return the new scale
 			return parentScale;
 		}
