@@ -105,8 +105,6 @@ public class Object2D {
 		else {
 			//Get the position of the parent object
 			Vector2D parentPosition = this.parent.getPosition().clone();
-			//Multiply by -1 (Invert the parent's position
-			parentPosition.multiply(-1f);
 			//Add this position onto the parent position
 			parentPosition.add(this.position);
 			//Return the new position
@@ -115,11 +113,31 @@ public class Object2D {
 	}
 	
 	public float getRotation() {
-		return this.rotation;
+		//Make sure this isn't linked to another object
+		if (! this.linked)
+			return this.rotation;
+		else {
+			//Get the rotation of the parent object
+			float parentRotation = this.parent.getRotation();
+			//Add this rotation onto the parent rotation
+			parentRotation += this.rotation;
+			//Return the new position
+			return parentRotation;
+		}
 	}
 	
 	public Vector2D getScale() {
-		return this.scale;
+		//Make sure this isn't linked to another object
+		if (! this.linked)
+			return this.scale;
+		else {
+			//Get the scale of the parent object
+			Vector2D parentScale = this.parent.getScale().clone();
+			//Add this scale onto the parent scale
+			parentScale.add(this.scale);
+			//Return the new scale
+			return parentScale;
+		}
 	}
 	
 	public float getWidth() {
