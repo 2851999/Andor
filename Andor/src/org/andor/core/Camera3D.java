@@ -42,6 +42,7 @@ public class Camera3D extends Object3D {
 	public Camera3D(float x, float y, float z, float rx, float ry, float rz) {
 		//Assign the variables
 		this.position = new Vector3D(x, y, z);
+		this.rotation = new Vector3D(rx, ry, rz);
 		this.flying = false;
 		this.skyBox = null;
 		this.useSkyBoxIfAvailable = true;

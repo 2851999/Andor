@@ -26,11 +26,6 @@ public class Object2D {
 	public float width;
 	public float height;
 	
-	/* The boolean value that represents whether this
-	 * object is linked to another, by default this
-	 * should be false */
-	public boolean linked = false;
-	
 	/* The object this is linked to (if any) */
 	public Object2D parent = null;
 	
@@ -83,9 +78,7 @@ public class Object2D {
 	
 	/* The method used to link an object to this one */
 	public void link(Object2D object) {
-		//Set the linked value in the object to true
-		object.linked = true;
-		//Set this object as the 
+		//Set this object as this
 		object.parent = this;
 		//Add the object to the list of linked objects
 		this.linkedObjects.add(object);
@@ -100,7 +93,7 @@ public class Object2D {
 	
 	public Vector2D getPosition() {
 		//Make sure this isn't linked to another object
-		if (! this.linked)
+		if (! this.isLinked())
 			return this.position;
 		else {
 			//Get the position of the parent object
@@ -114,7 +107,7 @@ public class Object2D {
 	
 	public float getRotation() {
 		//Make sure this isn't linked to another object
-		if (! this.linked)
+		if (! this.isLinked())
 			return this.rotation;
 		else {
 			//Get the rotation of the parent object
@@ -128,7 +121,7 @@ public class Object2D {
 	
 	public Vector2D getScale() {
 		//Make sure this isn't linked to another object
-		if (! this.linked)
+		if (! this.isLinked())
 			return this.scale;
 		else {
 			//Get the scale of the parent object
@@ -153,5 +146,7 @@ public class Object2D {
 		Vector2D p = this.getPosition();
 		return new Rectangle(p.x, p.y, this.width, this.height);
 	}
+	
+	public boolean isLinked() { return this.parent != null; }
 	
 }
