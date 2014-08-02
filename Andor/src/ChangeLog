@@ -1,4 +1,35 @@
 ------------------------------------------------------
+Release 0 | Beta 2 | Development 1 | Experimental 1
+
+* Added GUIBorder
+* Added GUIPosition
+
+* Fixed bug: GUIComponents - Mouse could click
+             components when dragging the mouse
+             over them
+* Fixed spelling: Center should have been Centre in
+                  GUIComponent
+
+------------------------------------------------------
+Release 0 | Beta 2 | Development 1 | Experimental 0
+
+* Added Camera2D
+* Added GUIRadioCheckBox
+* Added GUILabel
+* Added the variable 'text' in GUICheckBox
+* Added rotation and scaling when linking Objects
+  (2D + 3D)
+
+* Increased performance (Hopefully): Linked Objects
+
+* Fixed bug: GUIDropDownMenu and GUIDropDownList
+		 	 stayed open when the mouse clicked
+		 	 outside of the menu/list
+* Fixed bug: Linked object scaling was wrong
+* Fixed bug: GUI components didn't fully work with
+ 			 object linking
+
+------------------------------------------------------
 Release 0 | Beta 2 | Development 0 | Experimental 3
 
 * Added Camera2D

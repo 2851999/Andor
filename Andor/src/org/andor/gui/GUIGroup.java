@@ -19,7 +19,7 @@ public class GUIGroup extends GUIComponent {
 	/* The constructor */
 	public GUIGroup(String name) {
 		//Call the super constructor
-		super(null);
+		super(null, 0, 0);
 		//Assign the variables
 		this.name = name;
 		this.components = new ArrayList<GUIComponent>();

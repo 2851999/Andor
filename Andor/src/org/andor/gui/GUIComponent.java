@@ -48,8 +48,26 @@ public class GUIComponent extends Object2D {
 	/* The group */
 	public GUIGroup group;
 	
+	/* The border */
+	public GUIBorder border;
+	
+	/* The boolean that states whether the border should be shown (If the border exists) */
+	public boolean borderEnabled;
+	
 	/* The constructor */
 	public GUIComponent(RenderableObject2D object) {
+		this.setup(object);
+	}
+	
+	/* The constructor */
+	public GUIComponent(RenderableObject2D object, float width, float height) {
+		this.width = width;
+		this.height = height;
+		this.setup(object);
+	}
+	
+	/* The method used to setup this */
+	public void setup(RenderableObject2D object) {
 		//Assign the variables
 		this.renderer = new GUIComponentRenderer(object);
 		this.name = "";
@@ -60,6 +78,7 @@ public class GUIComponent extends Object2D {
 		this.repeatClickedEvents = false;
 		this.hasBeenClickedEvent = false;
 		this.componentListeners = new ArrayList<GUIComponentListener>();
+		this.borderEnabled = true;
 	}
 	
 	/* The method used to update this component */
@@ -69,14 +88,14 @@ public class GUIComponent extends Object2D {
 			//Check to see whether the mouse is inside this component
 			if (this.getBounds().contains(Mouse.x, Mouse.y)) {
 				//Check to see whether the mouse is already hovering
-				if (! this.mouseHoveringInside) {
+				if (! this.mouseHoveringInside && ! Mouse.leftButton) {
 					//The mouse is hovering inside of this component
 					this.mouseHoveringInside = true;
 					//Call an onMouseEnter event
 					this.callOnMouseEnterEvent();
 				}
 				//Check to see whether the left mouse button is down
-				if (Mouse.leftButton) {
+				if (Mouse.leftButton && this.mouseHoveringInside) {
 					//Check to see whether repeat click events are enabled
 					if (this.repeatClickedEvents || (! this.repeatClickedEvents && ! this.hasBeenClickedEvent)) {
 						//Set clicked to true
@@ -112,6 +131,8 @@ public class GUIComponent extends Object2D {
 		//Make sure this component is visible
 		if (this.visible) {
 			//Render this component
+			if (this.hasBorder() && this.borderEnabled)
+				this.border.render();
 			this.renderer.render(this, this.active);
 			this.renderComponent();
 		}
@@ -139,34 +160,8 @@ public class GUIComponent extends Object2D {
 		this.renderer.font.render(text, p.x, p.y);
 	}
 	public void renderText(String text, float x, float y) { this.renderer.font.render(text, x, y); }
-	public void renderTextAtCenter(String text) {
-		//Get the width and height of the text
-		float textWidth = this.renderer.font.getWidth(text);
-		float textHeight = this.renderer.font.getHeight(text);
-		//Get the position
-		Vector2D p = this.getPosition();
-		//Calculate the position to render the text
-		float textX = (p.x + (this.width / 2)) - (textWidth / 2);
-		float textY = (p.y + (this.height / 2)) - (textHeight / 2);
-		//Render the text
-		this.renderText(text, textX, textY);
-	}
-	
-	public void renderTextAtCenter(String text, Vector2D offset) {
-		//Get the width and height of the text
-		float textWidth = this.renderer.font.getWidth(text);
-		float textHeight = this.renderer.font.getHeight(text);
-		//Get the position
-		Vector2D p = this.getPosition();
-		//Calculate the position to render the text
-		float textX = (p.x + (this.width / 2)) - (textWidth / 2);
-		float textY = (p.y + (this.height / 2)) - (textHeight / 2);
-		//Add the offset
-		textX += offset.x;
-		textY += offset.y;
-		//Render the text
-		this.renderText(text, textX, textY);
-	}
+	public void renderTextAtCentre(String text) { this.renderer.font.renderAtCentre(text, this); }
+	public void renderTextAtCentre(String text, Vector2D offset) { this.renderer.font.renderAtCentre(text, this, offset); }
 	
 	/* The method used to add a GUIComponent listener */
 	public void addListener(GUIComponentListener listener) {
@@ -209,13 +204,19 @@ public class GUIComponent extends Object2D {
 	public void setActive(boolean active) { this.active = active; }
 	public void setRepeatClickedEvents(boolean repeatClickedEvents) { this.repeatClickedEvents = repeatClickedEvents; }
 	public void setGroup(GUIGroup group) { this.group = group; }
+	public void setBorder(GUIBorder border) { this.border = border; }
+	public void setBorderEnabled(boolean borderEnabled) { this.borderEnabled = borderEnabled; }
 	public void toggleVisible() { this.visible = ! this.visible; }
 	public void toggleActive() { this.active = ! this.active; }
+	public void toggleBorder() { this.borderEnabled = ! this.borderEnabled; }
 	public String getName() { return this.name; }
 	public boolean isVisible() { return this.visible; }
 	public boolean isActive() { return this.active; }
 	public boolean isRepeatClickedEventsEnabled() { return this.repeatClickedEvents; }
 	public GUIGroup getGroup() { return this.group; }
 	public boolean belongsToGroup() { return this.group != null; }
+	public GUIBorder getBorder() { return this.border; }
+	public boolean hasBorder() { return this.border != null; }
+	public boolean isBorderEnabled() { return this.borderEnabled; }
 	
 }

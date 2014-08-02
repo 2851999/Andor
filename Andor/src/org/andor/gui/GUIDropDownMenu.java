@@ -37,6 +37,8 @@ public class GUIDropDownMenu extends GUIComponent implements GUIComponentListene
 		super(null);
 		//Assign the variables
 		this.menuButton = menuButton;
+		this.width = this.menuButton.width;
+		this.height = this.menuButton.height;
 		this.buttons = new ArrayList<GUIButton>();
 		this.menuOpen = false;
 		//Add this component listener to the menu button
@@ -55,6 +57,8 @@ public class GUIDropDownMenu extends GUIComponent implements GUIComponentListene
 		this.menuButton.active = this.active;
 		//Set the position of the menu button
 		this.menuButton.position = this.position;
+		//Set the border enabled
+		this.borderEnabled = this.menuOpen;
 		//The current y position
 		float currentY = this.position.y + this.menuButton.height;
 		//Set all of the components visible and active values
@@ -135,6 +139,11 @@ public class GUIDropDownMenu extends GUIComponent implements GUIComponentListene
 		button.addListener(this);
 		//Add the button to the list of buttons
 		this.buttons.add(button);
+		//Get the new bounds of this menu
+		Rectangle bounds = this.getMenuBounds();
+		//Set the width and height
+		this.width = bounds.width;
+		this.height = bounds.height;
 	}
 	
 	public void setOpen(boolean menuOpen) { this.menuOpen = menuOpen; }
