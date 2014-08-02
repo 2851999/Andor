@@ -13,7 +13,7 @@ import org.andor.core.Font;
 public class GUILabel extends GUIComponent {
 	
 	/* The text */
-	public String text;
+	protected String text;
 	
 	/* The constructor */
 	public GUILabel(String text) {
@@ -43,7 +43,11 @@ public class GUILabel extends GUIComponent {
 	}
 	
 	/* The methods used to set/return values */
-	public void setText(String text) { this.text = text; }
+	public void setText(String text) {
+		this.text = text;
+		this.width = this.renderer.font.getWidth(text);
+		this.height = this.renderer.font.getHeight(text);
+	}
 	public String getText() { return this.text; }
 	
 }

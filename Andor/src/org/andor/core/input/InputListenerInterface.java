@@ -22,6 +22,9 @@ public interface InputListenerInterface {
 	/* The method called when the mouse moves */
 	public void onMouseMoved(MouseMotionEvent e);
 	
+	/* The method called when the mouse is dragged */
+	public void onMouseDragged(MouseMotionEvent e);
+	
 	/* The method called when a key on the keyboard is pressed */
 	public void onKeyPressed(KeyboardEvent e);
 	

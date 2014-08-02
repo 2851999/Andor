@@ -47,6 +47,26 @@ public class Font {
 		GL11.glPopAttrib();
 	}
 	
+	public void renderAtCentre(String text, Object2D object) {
+		this.renderAtCentre(text, object, new Vector2D(0, 0));
+	}
+	
+	public void renderAtCentre(String text, Object2D object, Vector2D offset) {
+		//Get the width and height of the text
+		float textWidth = this.getWidth(text);
+		float textHeight = this.getHeight(text);
+		//Get the centre of the object
+		Vector2D centre = object.getCentre();
+		//Calculate the position to render the text
+		float textX = centre.x - (textWidth / 2);
+		float textY = centre.y - (textHeight / 2);
+		//Add the offset
+		textX += offset.x;
+		textY += offset.y;
+		//Render the text
+		this.render(text, textX, textY);
+	}
+	
 	/* The method used to get the width/height of some text */
 	public float getWidth(String text) {
 		return this.font.getWidth(text);

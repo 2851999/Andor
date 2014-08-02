@@ -54,6 +54,14 @@ public class Input {
 			listeners.get(a).onMouseMoved(e);
 	}
 	
+	/* The static method used to call a mouse dragged event */
+	public static void callMouseDragged(MouseMotionEvent e) {
+		//Go through all of the listeners
+		for (int a = 0; a < listeners.size(); a++)
+			//Call the event
+			listeners.get(a).onMouseDragged(e);
+	}
+	
 	/* The static method used to call a key pressed event */
 	public static void callKeyPressed(KeyboardEvent e) {
 		//Go through all of the listeners

@@ -24,34 +24,28 @@ public class GUICheckBox extends GUIComponent {
 	/* The constructor */
 	public GUICheckBox(Colour[] colours, float width, float height) {
 		//Call the super constructor
-		super(Object2DBuilder.createQuad(width, height, Colour.WHITE));
+		super(Object2DBuilder.createQuad(width, height, Colour.WHITE), width, height);
 		//Set the values
 		this.renderer.colours = colours;
-		this.width = width;
-		this.height = height;
 		this.checked = false;
 	}
 	
 	/* The constructor */
 	public GUICheckBox(Image[] images, float width, float height) {
 		//Call the super constructor
-		super(Object2DBuilder.createQuad(images[0], width, height, Colour.WHITE));
+		super(Object2DBuilder.createQuad(images[0], width, height, Colour.WHITE), width, height);
 		//Set the values
 		this.renderer.images = images;
-		this.width = width;
-		this.height = height;
 		this.checked = false;
 	}
 	
 	/* The constructor */
 	public GUICheckBox(Image[] images, Colour[] colours, float width, float height) {
 		//Call the super constructor
-		super(Object2DBuilder.createQuad(images[0], width, height, colours));
+		super(Object2DBuilder.createQuad(images[0], width, height, colours), width, height);
 		//Set the values
 		this.renderer.images = images;
 		this.renderer.colours = colours;
-		this.width = width;
-		this.height = height;
 		this.checked = false;
 	}
 	
@@ -89,7 +83,7 @@ public class GUICheckBox extends GUIComponent {
 		//Make sure there is text to be rendered
 		if (this.text != null)
 			//Render the text
-			this.renderTextAtCenter(this.text, new Vector2D(((this.renderer.font.getWidth(this.text) / 2) + (this.width / 2)) + 4, 0));
+			this.renderTextAtCentre(this.text, new Vector2D(((this.renderer.font.getWidth(this.text) / 2) + (this.width / 2)) + 4, 0));
 	}
 	
 	/* The method called when the component is clicked */

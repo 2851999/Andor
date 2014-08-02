@@ -3,6 +3,7 @@ package org.andor.tests;
 import org.andor.core.BaseGame;
 import org.andor.core.Colour;
 import org.andor.core.Vector2D;
+import org.andor.gui.GUIBorder;
 import org.andor.gui.GUIButton;
 import org.andor.gui.GUICheckBox;
 import org.andor.gui.GUIComponent;
@@ -73,6 +74,8 @@ public class GUITest extends BaseGame implements GUIComponentListener {
 		
 		this.label = new GUILabel("This is a label");
 		this.label.position = new Vector2D(0, 0);
+		
+		this.radio.border = new GUIBorder(this.radio, 1f, new Colour[] { Colour.RED });
 	}
 	
 	/* The method called when the game loop is updated */

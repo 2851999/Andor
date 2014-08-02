@@ -1,4 +1,53 @@
 ------------------------------------------------------
+Release 0 | Beta 2 | Development 2 | Experimental 0
+
+* Added GUIBorder
+* Added GUIPosition
+* Added GUIImage
+* Added support for components within components
+* Added GUIComponent positioning system using
+  GUIPosition
+* Added onMouseDragged() in the Input system
+
+* Fixed bug: GUIComponents - Mouse could click
+             components when dragging the mouse
+             over them
+* Fixed bug: Inactive GUIComponents didn't render
+             properly unless the inactive colour/
+             image had been set
+* Fixed spelling: Center should have been Centre in
+                  GUIComponent
+                  
+------------------------------------------------------
+Release 0 | Beta 2 | Development 1 | Experimental 3
+
+* Added onMouseDragged() in the Input system
+
+------------------------------------------------------
+Release 0 | Beta 2 | Development 1 | Experimental 2
+
+* Added GUIImage
+* Added support for components within components
+* Added GUIComponent positioning system using
+  GUIPosition
+  
+* Fixed bug: Inactive GUIComponents didn't render
+             properly unless the inactive colour/
+             image had been set
+
+------------------------------------------------------
+Release 0 | Beta 2 | Development 1 | Experimental 1
+
+* Added GUIBorder
+* Added GUIPosition
+
+* Fixed bug: GUIComponents - Mouse could click
+             components when dragging the mouse
+             over them
+* Fixed spelling: Center should have been Centre in
+                  GUIComponent
+
+------------------------------------------------------
 Release 0 | Beta 2 | Development 1 | Experimental 0
 
 * Added Camera2D
