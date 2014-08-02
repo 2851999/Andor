@@ -36,6 +36,11 @@ public class InputManager {
 			
 			//Call a mouse moved event
 			Input.callMouseMoved(new MouseMotionEvent(Mouse.lastX, Mouse.lastY, Mouse.x, Mouse.y));
+			
+			//Check to see whether the mouse button is pressed
+			if (org.lwjgl.input.Mouse.isButtonDown(0))
+				//Call a mouse dragged event
+				Input.callMouseDragged(new MouseMotionEvent(Mouse.lastX, Mouse.lastY, Mouse.x, Mouse.y));
 		}
 		
 		//Check to see whether the left mouse button is down

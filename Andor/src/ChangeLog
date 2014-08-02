@@ -1,4 +1,9 @@
 ------------------------------------------------------
+Release 0 | Beta 2 | Development 1 | Experimental 3
+
+* Added onMouseDragged() in the Input system
+
+------------------------------------------------------
 Release 0 | Beta 2 | Development 1 | Experimental 2
 
 * Added GUIImage
