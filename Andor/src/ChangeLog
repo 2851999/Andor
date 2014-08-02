@@ -1,4 +1,18 @@
 ------------------------------------------------------
+Release 0 | Beta 2 | Development 2 | Experimental 2
+
+* Added GUITextBoxCursor
+
+* Added the method restart() in Timer
+* Added moving of cursor using arrow keys in
+  GUITextBox
+* Added moving of cursor by clicking in
+  GUITextBox
+
+* Fixed bug: GUITextBox masked = false, no text
+			 rendered
+
+------------------------------------------------------
 Release 0 | Beta 2 | Development 2 | Experimental 1
 
 * Added GUITextBox (Work in progress)

@@ -51,13 +51,6 @@ public class GUIBorder extends Object2D {
 		this.renderer.images = images;
 	}
 	
-	/* The method used to render the boarder */
-	public void render() {
-		//Make sure this boarder has been setup
-		if (this.renderer != null)
-			this.renderer.render(this, this.component.active);
-	}
-	
 	/* The method used to setup this boarder */
 	public void setup(GUIComponent component, float thickness) {
 		//Assign the variables
@@ -65,6 +58,13 @@ public class GUIBorder extends Object2D {
 		this.renderer = new GUIComponentRenderer(Object2DBuilder.createQuad(this.component.width + (thickness * 2), this.component.height + (thickness * 2), Colour.WHITE));
 		this.position = new Vector2D(-thickness, -thickness);
 		this.component.link(this);
+	}
+	
+	/* The method used to render this boarder */
+	public void render() {
+		//Make sure this boarder has been setup
+		if (this.renderer != null)
+			this.renderer.render(this, this.component.active);
 	}
 	
 }
