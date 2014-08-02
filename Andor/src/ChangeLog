@@ -1,4 +1,33 @@
 ------------------------------------------------------
+Release 0 | Beta 2 | Development 2 | Experimental 1
+
+* Added GUITextBox (Work in progress)
+* Added MaskUtils
+
+* Fixed spelling: keyChatacter should have been
+                  keyCharacter in KeyboardEvent
+
+------------------------------------------------------
+Release 0 | Beta 2 | Development 2 | Experimental 0
+
+* Added GUIBorder
+* Added GUIPosition
+* Added GUIImage
+* Added support for components within components
+* Added GUIComponent positioning system using
+  GUIPosition
+* Added onMouseDragged() in the Input system
+
+* Fixed bug: GUIComponents - Mouse could click
+             components when dragging the mouse
+             over them
+* Fixed bug: Inactive GUIComponents didn't render
+             properly unless the inactive colour/
+             image had been set
+* Fixed spelling: Center should have been Centre in
+                  GUIComponent
+                  
+------------------------------------------------------
 Release 0 | Beta 2 | Development 1 | Experimental 3
 
 * Added onMouseDragged() in the Input system

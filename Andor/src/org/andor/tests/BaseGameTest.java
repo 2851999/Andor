@@ -74,17 +74,17 @@ public class BaseGameTest extends BaseGame {
 	
 	/* The method called when a key on the keyboard is pressed */
 	public void onKeyPressed(KeyboardEvent e) {
-		Logger.log("BaseGameTest", "A key was pressed " + e.keyChatacter);
+		Logger.log("BaseGameTest", "A key was pressed " + e.keyCharacter);
 	}
 	
 	/* The method called when a key on the keyboard is released */
 	public void onKeyReleased(KeyboardEvent e) {
-		Logger.log("BaseGameTest", "A key was released " + e.keyChatacter);
+		Logger.log("BaseGameTest", "A key was released " + e.keyCharacter);
 	}
 	
 	/* The method called when a key on the keyboard is typed */
 	public void onKeyTyped(KeyboardEvent e) {
-		Logger.log("BaseGameTest", "A key was typed " + e.keyChatacter);
+		Logger.log("BaseGameTest", "A key was typed " + e.keyCharacter);
 	}
 	
 	/* The method called when the mouse scrolls */
