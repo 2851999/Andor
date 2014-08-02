@@ -9,5 +9,5 @@
 package org.andor.gui;
 
 public enum GUIPosition {
-	TOP, BOTTOM, LEFT, RIGHT, CENTRE
+	TOP, BOTTOM, LEFT, RIGHT, CENTRE, NONE
 }

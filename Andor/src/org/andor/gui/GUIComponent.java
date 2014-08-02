@@ -54,6 +54,12 @@ public class GUIComponent extends Object2D {
 	/* The boolean that states whether the border should be shown (If the border exists) */
 	public boolean borderEnabled;
 	
+	/* The components within this component */
+	public List<GUIComponent> components;
+	
+	/* The GUIPosition preference */
+	public GUIPosition positionPreference;
+	
 	/* The constructor */
 	public GUIComponent(RenderableObject2D object) {
 		this.setup(object);
@@ -79,6 +85,8 @@ public class GUIComponent extends Object2D {
 		this.hasBeenClickedEvent = false;
 		this.componentListeners = new ArrayList<GUIComponentListener>();
 		this.borderEnabled = true;
+		this.components = new ArrayList<GUIComponent>();
+		this.positionPreference = GUIPosition.NONE;
 	}
 	
 	/* The method used to update this component */
@@ -123,6 +131,10 @@ public class GUIComponent extends Object2D {
 			}
 			//Update this component
 			this.updateComponent();
+			//Go through all of the components within this component
+			for (int a = 0; a < this.components.size(); a++)
+				//Update the current component
+				this.components.get(a).update();
 		}
 	}
 	
@@ -134,6 +146,10 @@ public class GUIComponent extends Object2D {
 			if (this.hasBorder() && this.borderEnabled)
 				this.border.render();
 			this.renderer.render(this, this.active);
+			//Go through all of the components within this component
+			for (int a = 0; a < this.components.size(); a++)
+				//Render the current component
+				this.components.get(a).render();
 			this.renderComponent();
 		}
 	}
@@ -198,6 +214,97 @@ public class GUIComponent extends Object2D {
 			this.componentListeners.get(a).onClicked(this);
 	}
 	
+	/* The method used to add a component to this group */
+	public void add(GUIComponent component) {
+		//Link the component to this
+		this.link(component);
+		//Add the component to the list of components
+		this.components.add(component);
+	}
+	
+	/* The method used to add a component to this group */
+	public void add(GUIComponent component, GUIPosition pos) {
+		this.add(component, pos, new Vector2D(0, 0));
+	}
+	
+	/* The method used to add a component to this group given an offset*/
+	public void add(GUIComponent component, GUIPosition pos, Vector2D offset) {
+		//Set the component's position preference
+		component.positionPreference = pos;
+		//The x and y position
+		float xPos = 0;
+		float yPos = 0;
+		//Check the position value
+		if (pos == GUIPosition.TOP) {
+			//Get all of the components with the same position preference
+			List<GUIComponent> comps = this.getComponentsWithPositionPreference(pos);
+			//Setup x and y position
+			//Don't use getCenter() because this component will be linked, so the position is relative
+			//not exact
+			xPos = (this.width / 2) - (component.width / 2);
+			yPos = 0;
+			//Go through the components
+			for (int a = 0; a < comps.size(); a++)
+				//Add onto the y position
+				yPos += comps.get(a).height;
+		} else if (pos == GUIPosition.BOTTOM) {
+			//Get all of the components with the same position preference
+			List<GUIComponent> comps = this.getComponentsWithPositionPreference(pos);
+			//Setup x and y position
+			xPos = (this.width / 2) - (component.width / 2);
+			yPos = this.height - component.height;
+			//Go through the components
+			for (int a = 0; a < comps.size(); a++)
+				//Add onto the y position
+				yPos -= comps.get(a).height;
+		} else if (pos == GUIPosition.LEFT) {
+			//Get all of the components with the same position preference
+			List<GUIComponent> comps = this.getComponentsWithPositionPreference(pos);
+			//Setup x and y position
+			xPos = 0;
+			yPos = (this.height / 2) - (component.height / 2);
+			//Go through the components
+			for (int a = 0; a < comps.size(); a++)
+				//Add onto the x position
+				xPos += comps.get(a).width;
+		} else if (pos == GUIPosition.RIGHT) {
+			//Get all of the components with the same position preference
+			List<GUIComponent> comps = this.getComponentsWithPositionPreference(pos);
+			//Setup x and y position
+			xPos = this.width - component.width;
+			yPos = (this.height / 2) - (component.height / 2);
+			//Go through the components
+			for (int a = 0; a < comps.size(); a++)
+				//Add onto the x position
+				xPos -= comps.get(a).width;
+		} else if (pos == GUIPosition.CENTRE) {
+			//Setup x and y position
+			xPos = (this.width / 2) - (component.width / 2);
+			yPos = (this.height / 2) - (component.height / 2);
+		}
+		//Set the position of the component
+		component.position = new Vector2D(xPos, yPos);
+		//Add on the offset to the component's position
+		component.position.add(offset);
+		//Add the component
+		this.add(component);
+	}
+	
+	/* The method used to get all of the components with a specific position preference */
+	public List<GUIComponent> getComponentsWithPositionPreference(GUIPosition preference) {
+		//The list
+		List<GUIComponent> list = new ArrayList<GUIComponent>();
+		//Go through all of the components
+		for (int a = 0; a < this.components.size(); a++) {
+			//Check the current component's position preference
+			if (this.components.get(a).positionPreference == preference)
+				//Add it to the list
+				list.add(this.components.get(a));
+		}
+		//Return the list
+		return list;
+	}
+	
 	/* The methods used to set/toggle/return some values */
 	public void setName(String name) { this.name = name; }
 	public void setVisible(boolean visible) { this.visible = visible; }
@@ -206,6 +313,8 @@ public class GUIComponent extends Object2D {
 	public void setGroup(GUIGroup group) { this.group = group; }
 	public void setBorder(GUIBorder border) { this.border = border; }
 	public void setBorderEnabled(boolean borderEnabled) { this.borderEnabled = borderEnabled; }
+	public void setComponents(List<GUIComponent> components) { this.components = components; }
+	public void setPositionPreference(GUIPosition positionPreference) { this.positionPreference = positionPreference; }
 	public void toggleVisible() { this.visible = ! this.visible; }
 	public void toggleActive() { this.active = ! this.active; }
 	public void toggleBorder() { this.borderEnabled = ! this.borderEnabled; }
@@ -218,5 +327,7 @@ public class GUIComponent extends Object2D {
 	public GUIBorder getBorder() { return this.border; }
 	public boolean hasBorder() { return this.border != null; }
 	public boolean isBorderEnabled() { return this.borderEnabled; }
+	public List<GUIComponent> getComponents() { return this.components; }
+	public GUIPosition getPositionPreference() { return this.positionPreference; }
 	
 }

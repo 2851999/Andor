@@ -71,7 +71,7 @@ public class GUIComponentRenderer {
 			GL11.glPushAttrib(GL11.GL_ENABLE_BIT);
 			
 			//Make sure the component is active
-			if (active) {
+			if (active || (! this.shouldUseInactiveImage()) || (!this.shouldUseInactiveColour())) {
 				//Check whether images or colours should be used
 				if (this.shouldUseImages()) {
 					//Enable textures
@@ -90,13 +90,13 @@ public class GUIComponentRenderer {
 				}
 			} else {
 				//Check to see whether the inactive texture has been set
-				if (this.inactiveImage != null) {
+				if (this.shouldUseInactiveImage()) {
 					//Enable textures
 					OpenGLUtils.enableTexture2D();
 					//Bind the inactive image
 					this.inactiveImage.bind();
 					//Check to see whether the colours have also been set
-					if (this.shouldUseColours())
+					if (this.shouldUseInactiveColour())
 						//Update the colour (Assumes the GUI component is 4 - Sided)
 						this.entity.renderer.updateColours(Object2DBuilder.createColourArray(4, this.inactiveColour));
 				} else if (this.inactiveColour != null) {
@@ -125,6 +125,8 @@ public class GUIComponentRenderer {
 	public Font getFont() { return this.font; }
 	public boolean shouldUseImages() { return this.images != null; }
 	public boolean shouldUseColours() { return this.colours != null; }
+	public boolean shouldUseInactiveImage() { return this.inactiveImage != null; }
+	public boolean shouldUseInactiveColour() { return this.inactiveColour != null; }
 	
 	public int getTotalComponents() {
 		if (this.shouldUseImages())

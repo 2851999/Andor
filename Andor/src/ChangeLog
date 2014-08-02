@@ -1,4 +1,16 @@
 ------------------------------------------------------
+Release 0 | Beta 2 | Development 1 | Experimental 2
+
+* Added GUIImage
+* Added support for components within components
+* Added GUIComponent positioning system using
+  GUIPosition
+  
+* Fixed bug: Inactive GUIComponents didn't render
+             properly unless the inactive colour/
+             image had been set
+
+------------------------------------------------------
 Release 0 | Beta 2 | Development 1 | Experimental 1
 
 * Added GUIBorder

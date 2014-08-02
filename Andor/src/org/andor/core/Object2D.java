@@ -84,6 +84,14 @@ public class Object2D {
 		this.linkedObjects.add(object);
 	}
 	
+	/* The method used to return the centre of this object */
+	public Vector2D getCentre() {
+		//The position
+		Vector2D p = this.getPosition();
+		//Calculate and return the centre
+		return new Vector2D(p.x + (this.width / 2), p.y + (this.height / 2));
+	}
+	
 	/* The methods used to set and return the position, rotation, scale, width, height and bounds */
 	public void setPosition(Vector2D position) { this.position = position; }
 	public void setRotation(float rotation) { this.rotation = rotation; }
