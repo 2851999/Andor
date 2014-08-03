@@ -227,7 +227,7 @@ public class GUIComponent extends Object2D {
 		this.add(component, pos, new Vector2D(0, 0));
 	}
 	
-	/* The method used to add a component to this group given an offset*/
+	/* The method used to add a component to this group given an offset */
 	public void add(GUIComponent component, GUIPosition pos, Vector2D offset) {
 		//Set the component's position preference
 		component.positionPreference = pos;

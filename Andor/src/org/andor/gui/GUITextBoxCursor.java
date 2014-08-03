@@ -59,7 +59,7 @@ public class GUITextBoxCursor extends Object2D {
 			//Get the position of the text box
 			Vector2D p = this.textBox.getPosition();
 			//The position values for the cursor
-			float x = 1 + p.x + (this.textBox.renderer.font.getWidth(this.textBox.renderText.substring(0, this.textBox.cursorIndex)));
+			float x = 1 + p.x + (this.textBox.renderer.font.getWidth(this.textBox.renderText.substring(0, this.textBox.cursorIndex - this.textBox.viewIndexStart)));
 			float y = (p.y + (this.textBox.height / 2)) - (this.height / 2);
 			//Set the cursor's position
 			this.position = new Vector2D(x, y);

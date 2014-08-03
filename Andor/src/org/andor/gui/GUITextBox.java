@@ -51,6 +51,10 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface {
 	/* The cursor */
 	public GUITextBoxCursor cursor;
 	
+	/* The viewing start and end index */
+	public int viewIndexStart;
+	public int viewIndexEnd;
+	
 	/* The constructor */
 	public GUITextBox(Colour colour, float width, float height) {
 		//Call the super constructor
@@ -95,6 +99,8 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface {
 		this.defaultText = "";
 		this.cursorIndex = 0;
 		this.cursor = new GUITextBoxCursor(this, 1f);
+		this.viewIndexStart = 0;
+		this.viewIndexEnd = 0;
 	}
 	
 	/* The method used to update this component */
@@ -116,6 +122,7 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface {
 		} else {
 			//Update the text to render
 			this.updateRenderText();
+			this.clipRenderText();
 		}
 		//Get the position of this component
 		Vector2D p = this.getPosition();
@@ -133,14 +140,31 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface {
 	/* The method used to update the render text */
 	public void updateRenderText() {
 		if (! this.shouldUseDefaultText()) {
+			//Set the text
+			this.renderText = this.text.substring(this.viewIndexStart, this.viewIndexEnd);
 			//Check to see whether the text should be masked
 			if (this.masked)
 				//Mask the text
-				this.renderText = MaskUtils.mask(this.text, this.mask);
-			else {
-				//Set the text
-				this.renderText = this.text;
-			}
+				this.renderText = MaskUtils.mask(this.renderText, this.mask);
+		}
+	}
+	
+	/* The method used to clip the render text */
+	public void clipRenderText() {
+		//Keep going until the render text fits
+		while (this.renderer.font.getWidth(this.renderText) >= this.width - 2) {
+			//Change the viewing index
+			this.viewIndexStart++;
+			//Update the render text
+			this.updateRenderText();
+		}
+		
+		//(Keep the cursor at the end)
+		while (this.renderer.font.getWidth(this.renderText) < this.width - 2 && this.viewIndexStart > 0) {
+			//Change the viewing index
+			this.viewIndexStart--;
+			//Update the render text
+			this.updateRenderText();
 		}
 	}
 	
@@ -238,6 +262,7 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface {
 					this.text = front.substring(0, front.length() - 1) + back;
 					//Decrease the cursor index
 					this.cursorIndex--;
+					this.viewIndexEnd--;
 				}
 			} else if (e.keyCode == Keyboard.KEY_LEFT_CODE) {
 				//Make sure the cursor's current index is more than 0
@@ -259,6 +284,7 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface {
 					this.text = front + e.keyCharacter + back;
 					//Increase the cursor index
 					this.cursorIndex++;
+					this.viewIndexEnd++;
 				}
 			}
 			//Show the cursor

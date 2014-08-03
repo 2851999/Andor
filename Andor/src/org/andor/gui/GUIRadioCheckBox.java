@@ -38,9 +38,9 @@ public class GUIRadioCheckBox extends GUICheckBox {
 		//Check to make sure this component is part of a GUIGroup
 		if (this.belongsToGroup()) {
 			//Go through the other components in the same group
-			for (int a = 0; a < this.group.getComponents().size(); a++) {
+			for (int a = 0; a < this.group.getGroupComponents().size(); a++) {
 				//Get an instance of the current component
-				GUIComponent component = this.group.getComponents().get(a);
+				GUIComponent component = this.group.getGroupComponents().get(a);
 				//Check to make sure the component is also an instance of GUIRadioCheckBox, but not the same as this
 				if (component instanceof GUIRadioCheckBox && component != this)
 					//Make sure the component is unchecked
