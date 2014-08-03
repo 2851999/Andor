@@ -21,34 +21,28 @@ public class GUIButton extends GUIComponent {
 	public GUIButton(Colour[] colours, float width, float height) {
 		//Call the super constructor
 		//If using a colour, the colour must be used to colour VBO setup properly (Same for images)
-		super(Object2DBuilder.createQuad(width, height, Colour.WHITE));
+		super(Object2DBuilder.createQuad(width, height, Colour.WHITE), width, height);
 		//Set the values
 		this.renderer.colours = colours;
-		this.width = width;
-		this.height = height;
 		this.text = "";
 	}
 	
 	/* The constructor */
 	public GUIButton(Image[] images, float width, float height) {
 		//Call the super constructor
-		super(Object2DBuilder.createQuad(images[0], width, height, Colour.WHITE));
+		super(Object2DBuilder.createQuad(images[0], width, height, Colour.WHITE), width, height);
 		//Set the values
 		this.renderer.images = images;
-		this.width = width;
-		this.height = height;
 		this.text = "";
 	}
 	
 	/* The constructor */
 	public GUIButton(Image[] images, Colour[] colours, float width, float height) {
 		//Call the super constructor
-		super(Object2DBuilder.createQuad(images[0], width, height, colours));
+		super(Object2DBuilder.createQuad(images[0], width, height, Colour.WHITE), width, height);
 		//Set the values
 		this.renderer.images = images;
 		this.renderer.colours = colours;
-		this.width = width;
-		this.height = height;
 		this.text = "";
 	}
 	
@@ -56,34 +50,28 @@ public class GUIButton extends GUIComponent {
 	public GUIButton(String text, Colour[] colours, float width, float height) {
 		//Call the super constructor
 		//If using a colour, the colour must be used to colour VBO setup properly (Same for images)
-		super(Object2DBuilder.createQuad(width, height, Colour.WHITE));
+		super(Object2DBuilder.createQuad(width, height, Colour.WHITE), width, height);
 		//Set the values
 		this.renderer.colours = colours;
-		this.width = width;
-		this.height = height;
 		this.text = text;
 	}
 	
 	/* The constructor */
 	public GUIButton(String text, Image[] images, float width, float height) {
 		//Call the super constructor
-		super(Object2DBuilder.createQuad(images[0], width, height, Colour.WHITE));
+		super(Object2DBuilder.createQuad(images[0], width, height, Colour.WHITE), width, height);
 		//Set the values
 		this.renderer.images = images;
-		this.width = width;
-		this.height = height;
 		this.text = text;
 	}
 	
 	/* The constructor */
 	public GUIButton(String text, Image[] images, Colour[] colours, float width, float height) {
 		//Call the super constructor
-		super(Object2DBuilder.createQuad(images[0], width, height, colours));
+		super(Object2DBuilder.createQuad(images[0], width, height, colours), width, height);
 		//Set the values
 		this.renderer.images = images;
 		this.renderer.colours = colours;
-		this.width = width;
-		this.height = height;
 		this.text = text;
 	}
 	
@@ -119,7 +107,7 @@ public class GUIButton extends GUIComponent {
 	/* The method used to render this component */
 	protected void renderComponent() {
 		//Render the text
-		this.renderTextAtCenter(this.text);
+		this.renderTextAtCentre(this.text);
 	}
 	
 	/* The methods used to set/return values */

@@ -126,6 +126,11 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 		
 	}
 	
+	/* The method called when the mouse is dragged */
+	public void onMouseDragged(MouseMotionEvent e) {
+		
+	}
+	
 	/* The method called when a key on the keyboard is pressed */
 	public void onKeyPressed(KeyboardEvent e) {
 		

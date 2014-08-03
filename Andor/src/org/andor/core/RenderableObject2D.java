@@ -52,14 +52,23 @@ public class RenderableObject2D extends Object2D {
 		//Push the current matrix
 		GL11.glPushMatrix();
 		
+		//Get the position
+		Vector2D p = this.getPosition();
+		
 		//Move to the correct position (For rotating)
-		GL11.glTranslatef(this.getPosition().x + this.width / 2, this.getPosition().y + this.height / 2, 0);
+		GL11.glTranslatef(p.x + this.width / 2, p.y + this.height / 2, 0);
+		
+		//Get the rotation
+		float r = this.getRotation();
 		
 		//Rotate by the specified amount
-		GL11.glRotatef(this.rotation, 0, 0, 1);
+		GL11.glRotatef(r, 0, 0, 1);
+		
+		//Get the scale
+		Vector2D s = this.getScale();
 		
 		//Scale the object
-		GL11.glScalef(this.scale.x, this.scale.y, 1);
+		GL11.glScalef(s.x, s.y, 1);
 		
 		//Move to the correct position (For rendering)
 		GL11.glTranslatef(-this.width / 2, -this.height / 2, 0);

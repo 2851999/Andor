@@ -1,4 +1,206 @@
 ------------------------------------------------------
+Release 0 | Beta 3 | Development 0 | Experimental 0
+
+* Added Camera2D
+* Added GUIRadioCheckBox
+* Added GUILabel
+* Added GUIBorder
+* Added GUIPosition
+* Added GUIImage
+* Added GUITextBox
+* Added GUITextBoxCursor
+* Added MaskUtils
+
+* Added the variable 'text' in GUICheckBox
+* Added rotation and scaling when linking Objects
+  (2D + 3D)
+* Added support for components within components
+* Added GUIComponent positioning system using
+  GUIPosition
+* Added onMouseDragged() in the Input system
+* Added the method restart() in Timer
+
+* Fixed bug: GUIDropDownMenu and GUIDropDownList
+		 	 stayed open when the mouse clicked
+		 	 outside of the menu/list
+* Fixed bug: Linked object scaling was wrong
+* Fixed bug: GUI components didn't fully work with
+ 			 object linking
+* Fixed bug: GUIComponents - Mouse could click
+             components when dragging the mouse
+             over them
+* Fixed bug: Inactive GUIComponents didn't render
+             properly unless the inactive colour/
+             image had been set
+* Fixed spelling: Center should have been Centre in
+                  GUIComponent
+
+* Fixed bug: GUIRadioCheckBox didn't work properly
+* Fixed spelling: keyChatacter should have been
+                  keyCharacter in KeyboardEvent
+
+* Increased performance (Hopefully): Linked Objects
+
+------------------------------------------------------
+Release 0 | Beta 2 | Development 3 | Experimental 0
+
+* Added GUITextBox
+* Added MaskUtils
+* Added GUITextBoxCursor
+
+* Added the method restart() in Timer
+* Added moving of cursor using arrow keys in
+  GUITextBox
+* Added moving of cursor by clicking in
+  GUITextBox
+
+* Fixed bug: GUIRadioCheckBox didn't work properly
+* Fixed spelling: keyChatacter should have been
+                  keyCharacter in KeyboardEvent
+
+------------------------------------------------------
+Release 0 | Beta 2 | Development 2 | Experimental 5
+
+* Added the ability to delete text in a text box
+  using the delete key
+
+------------------------------------------------------
+Release 0 | Beta 2 | Development 2 | Experimental 4
+
+* Added the ability to move the viewed region in
+  GUITextBox
+
+* Fixed bug: GUITextBox clicking gave a
+             StringIndexOutOfBounds Exception
+
+------------------------------------------------------
+Release 0 | Beta 2 | Development 2 | Experimental 3
+
+* Added text clipping in GUITextBox
+
+* Fixed bug: GUIRadioCheckBox didn't work properly
+
+------------------------------------------------------
+Release 0 | Beta 2 | Development 2 | Experimental 2
+
+* Added GUITextBoxCursor
+
+* Added the method restart() in Timer
+* Added moving of cursor using arrow keys in
+  GUITextBox
+* Added moving of cursor by clicking in
+  GUITextBox
+
+* Fixed bug: GUITextBox masked = false, no text
+			 rendered
+
+------------------------------------------------------
+Release 0 | Beta 2 | Development 2 | Experimental 1
+
+* Added GUITextBox (Work in progress)
+* Added MaskUtils
+
+* Fixed spelling: keyChatacter should have been
+                  keyCharacter in KeyboardEvent
+
+------------------------------------------------------
+Release 0 | Beta 2 | Development 2 | Experimental 0
+
+* Added GUIBorder
+* Added GUIPosition
+* Added GUIImage
+* Added support for components within components
+* Added GUIComponent positioning system using
+  GUIPosition
+* Added onMouseDragged() in the Input system
+
+* Fixed bug: GUIComponents - Mouse could click
+             components when dragging the mouse
+             over them
+* Fixed bug: Inactive GUIComponents didn't render
+             properly unless the inactive colour/
+             image had been set
+* Fixed spelling: Center should have been Centre in
+                  GUIComponent
+                  
+------------------------------------------------------
+Release 0 | Beta 2 | Development 1 | Experimental 3
+
+* Added onMouseDragged() in the Input system
+
+------------------------------------------------------
+Release 0 | Beta 2 | Development 1 | Experimental 2
+
+* Added GUIImage
+* Added support for components within components
+* Added GUIComponent positioning system using
+  GUIPosition
+  
+* Fixed bug: Inactive GUIComponents didn't render
+             properly unless the inactive colour/
+             image had been set
+
+------------------------------------------------------
+Release 0 | Beta 2 | Development 1 | Experimental 1
+
+* Added GUIBorder
+* Added GUIPosition
+
+* Fixed bug: GUIComponents - Mouse could click
+             components when dragging the mouse
+             over them
+* Fixed spelling: Center should have been Centre in
+                  GUIComponent
+
+------------------------------------------------------
+Release 0 | Beta 2 | Development 1 | Experimental 0
+
+* Added Camera2D
+* Added GUIRadioCheckBox
+* Added GUILabel
+* Added the variable 'text' in GUICheckBox
+* Added rotation and scaling when linking Objects
+  (2D + 3D)
+
+* Increased performance (Hopefully): Linked Objects
+
+* Fixed bug: GUIDropDownMenu and GUIDropDownList
+		 	 stayed open when the mouse clicked
+		 	 outside of the menu/list
+* Fixed bug: Linked object scaling was wrong
+* Fixed bug: GUI components didn't fully work with
+ 			 object linking
+
+------------------------------------------------------
+Release 0 | Beta 2 | Development 0 | Experimental 3
+
+* Added Camera2D
+
+------------------------------------------------------
+Release 0 | Beta 2 | Development 0 | Experimental 2
+
+* Added GUIGroup
+* Added GUIRadioCheckBox
+* Added GUILabel
+* Added the variable 'text' in GUICheckBox
+
+* Fixed bug: Linked object scaling was wrong
+* Fixed bug: GUI components didn't fully work with
+ 			 object linking
+ 
+------------------------------------------------------
+Release 0 | Beta 2 | Development 0 | Experimental 1
+
+* Added rotation and scaling when linking Objects
+  (2D + 3D)
+
+* Increased performance (Hopefully): Linked Objects
+
+* Fixed bug: GUIDropDownMenu and GUIDropDownList
+		 	 stayed open when the mouse clicked
+		 	 outside of the menu/list
+
+------------------------------------------------------
 Release 0 | Beta 2 | Development 0 | Experimental 0
 
 * Added Face
