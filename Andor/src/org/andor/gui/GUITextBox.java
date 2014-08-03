@@ -274,6 +274,25 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface {
 							this.viewIndexStart--;
 					}
 				}
+			} else if (e.keyCode == Keyboard.KEY_DELETE_CODE) {
+				//Make sure there is text to be removed and the cursor index isn't at the end
+				if (this.text.substring(this.cursorIndex).length() > 0 && this.cursorIndex < this.text.length()) {
+					//Split up the text using the cursor index
+					String front = this.text.substring(0, this.cursorIndex);
+					String back = this.text.substring(this.cursorIndex);
+					//Remove the last letter
+					this.text = front + back.substring(1);
+					//Make sure there isn't some unseen text
+					if (! (this.viewIndexEnd <= this.text.length())) {
+						//Decrement the view's end index
+						this.viewIndexEnd--;
+						//Decrement the view's start index (Keeps text at the beginning and end)
+						this.viewIndexStart--;
+					}
+					//Keep some text visible if there is more and there is no more text at the end (Finished deleting)
+					//if (this.viewIndexStart > 0 && this.cursorIndex == this.viewIndexEnd)
+						//this.viewIndexStart--;
+				}
 			} else if (e.keyCode == Keyboard.KEY_LEFT_CODE) {
 				//Make sure the cursor's current index is more than 0
 				if (this.cursorIndex > 0) {

@@ -1,4 +1,26 @@
 ------------------------------------------------------
+Release 0 | Beta 2 | Development 2 | Experimental 5
+
+* Added the ability to delete text in a text box
+  using the delete key
+
+------------------------------------------------------
+Release 0 | Beta 2 | Development 2 | Experimental 4
+
+* Added the ability to move the viewed region in
+  GUITextBox
+
+* Fixed bug: GUITextBox clicking gave a
+             StringIndexOutOfBounds Exception
+
+------------------------------------------------------
+Release 0 | Beta 2 | Development 2 | Experimental 3
+
+* Added text clipping in GUITextBox
+
+* Fixed bug: GUIRadioCheckBox didn't work properly
+
+------------------------------------------------------
 Release 0 | Beta 2 | Development 2 | Experimental 2
 
 * Added GUITextBoxCursor
