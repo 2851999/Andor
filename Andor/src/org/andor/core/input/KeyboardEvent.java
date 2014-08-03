@@ -19,7 +19,7 @@ public class KeyboardEvent extends Event {
 	public static final String EVENT_DESCRIPTION = "An event from the keyboard";
 	
 	/* The key's character */
-	public char keyChatacter;
+	public char keyCharacter;
 	
 	/* The key's code */
 	public int keyCode;
@@ -29,12 +29,12 @@ public class KeyboardEvent extends Event {
 		//Call the super constructor
 		super(EVENT_NAME, EVENT_DESCRIPTION);
 		//Assign the variables
-		this.keyChatacter = keyCharacter;
+		this.keyCharacter = keyCharacter;
 		this.keyCode = keyCode;
 	}
 	
 	/* The methods used to return the key's character and code */
-	public char getCharacter() { return this.keyChatacter; }
+	public char getCharacter() { return this.keyCharacter; }
 	public int getCode() { return this.keyCode; }
 	
 }

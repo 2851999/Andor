@@ -13,7 +13,9 @@ import org.andor.gui.GUIDropDownMenu;
 import org.andor.gui.GUIGroup;
 import org.andor.gui.GUILabel;
 import org.andor.gui.GUIRadioCheckBox;
+import org.andor.gui.GUITextBox;
 import org.andor.utils.Console;
+import org.andor.utils.FontUtils;
 import org.andor.utils.OpenGLUtils;
 
 public class GUITest extends BaseGame implements GUIComponentListener {
@@ -27,6 +29,7 @@ public class GUITest extends BaseGame implements GUIComponentListener {
 	public GUIRadioCheckBox radio2;
 	public GUIRadioCheckBox radio3;
 	public GUILabel label;
+	public GUITextBox textBox;
 	
 	public GUITest() {
 		
@@ -37,26 +40,26 @@ public class GUITest extends BaseGame implements GUIComponentListener {
 		this.button = new GUIButton(new Colour[] { Colour.LIGHT_BLUE, Colour.BLUE, Colour.RED }, 100, 20);
 		this.button.text = "Click Me";
 		this.button.name = "Button";
-		this.button.position = new Vector2D(100, 100);
+		this.button.position = new Vector2D(20, 100);
 		this.button.addListener(this);
 		
 		this.checkBox = new GUICheckBox(new Colour[] { Colour.LIGHT_BLUE, Colour.BLUE, Colour.RED }, 20, 20);
 		this.checkBox.name = "Checkbox";
-		this.checkBox.position = new Vector2D(220, 100);
+		this.checkBox.position = new Vector2D(140, 100);
 		this.checkBox.addListener(this);
 		
 		this.menu = new GUIDropDownMenu(new GUIButton("File", new Colour[] { Colour.LIGHT_BLUE, Colour.BLUE, Colour.RED }, 100, 20));
 		this.menu.addButton(new GUIButton("Save", new Colour[] { Colour.LIGHT_BLUE, Colour.BLUE, Colour.RED }, 100, 20));
 		this.menu.addButton(new GUIButton("Save As", new Colour[] { Colour.LIGHT_BLUE, Colour.BLUE, Colour.RED }, 100, 20));
-		this.menu.position = new Vector2D(260, 100);
+		this.menu.position = new Vector2D(180, 100);
 		
 		this.list = new GUIDropDownList(new GUIButton("800 x 600", new Colour[] { Colour.LIGHT_BLUE, Colour.BLUE, Colour.RED }, 100, 20));
 		this.list.addButton(new GUIButton("1024 x 720", new Colour[] { Colour.LIGHT_BLUE, Colour.BLUE, Colour.RED }, 100, 20));
 		this.list.addButton(new GUIButton("1920 x 1080", new Colour[] { Colour.LIGHT_BLUE, Colour.BLUE, Colour.RED }, 100, 20));
-		this.list.position = new Vector2D(380, 100);
+		this.list.position = new Vector2D(300, 100);
 		
 		this.radio = new GUIGroup("RadioButtons");
-		this.radio.position = new Vector2D(100, 200);
+		this.radio.position = new Vector2D(20, 200);
 		
 		this.radio1 = new GUIRadioCheckBox(new Colour[] { Colour.LIGHT_BLUE, Colour.BLUE, Colour.RED }, 20, 20);
 		this.radio1.text = "Option 1";
@@ -76,6 +79,13 @@ public class GUITest extends BaseGame implements GUIComponentListener {
 		this.label.position = new Vector2D(0, 0);
 		
 		this.radio.border = new GUIBorder(this.radio, 1f, new Colour[] { Colour.RED });
+		
+		this.textBox = new GUITextBox(Colour.WHITE, 100, 20);
+		this.textBox.position = new Vector2D(20, 300);
+		this.textBox.renderer.font.colour = Colour.BLACK;
+		this.textBox.defaultText = "Enter something";
+		this.textBox.defaultTextFont = FontUtils.createFont("Arial", 12, Colour.LIGHT_GREY);
+		this.textBox.border = new GUIBorder(this.textBox, 1f, new Colour[] { Colour.LIGHT_BLUE });
 	}
 	
 	/* The method called when the game loop is updated */
@@ -86,6 +96,7 @@ public class GUITest extends BaseGame implements GUIComponentListener {
 		this.list.update();
 		this.radio.update();
 		this.label.update();
+		this.textBox.update();
 	}
 	
 	/* The method called when the game loop is rendered */
@@ -102,6 +113,7 @@ public class GUITest extends BaseGame implements GUIComponentListener {
 		this.list.render();
 		this.radio.render();
 		this.label.render();
+		this.textBox.render();
 	}
 	
 	public static void main(String[] args) {

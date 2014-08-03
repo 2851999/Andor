@@ -39,7 +39,7 @@ public class GUIButton extends GUIComponent {
 	/* The constructor */
 	public GUIButton(Image[] images, Colour[] colours, float width, float height) {
 		//Call the super constructor
-		super(Object2DBuilder.createQuad(images[0], width, height, colours), width, height);
+		super(Object2DBuilder.createQuad(images[0], width, height, Colour.WHITE), width, height);
 		//Set the values
 		this.renderer.images = images;
 		this.renderer.colours = colours;

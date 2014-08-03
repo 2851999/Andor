@@ -83,6 +83,13 @@ public class Timer {
 		this.pauseTotal = 0;
 	}
 	
+	/* The method used to restart this timer */
+	public void restart() {
+		//Reset and start the timer
+		this.reset();
+		this.start();
+	}
+	
 	/* The method used to get the current time on this timer */
 	public long getTime() {
 		//Check the current state of the timer
