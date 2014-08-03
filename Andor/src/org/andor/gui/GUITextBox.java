@@ -55,6 +55,16 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface {
 	public int viewIndexStart;
 	public int viewIndexEnd;
 	
+	/* The boolean that states whether there is a selection */
+	public boolean isSelection;
+	
+	/* The selection's start and end index */
+	public int selectionIndexStart;
+	public int selectionIndexEnd;
+	
+	/* The selection */
+	public GUITextBoxSelection selection;
+	
 	/* The constructor */
 	public GUITextBox(Colour colour, float width, float height) {
 		//Call the super constructor
@@ -101,6 +111,10 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface {
 		this.cursor = new GUITextBoxCursor(this, 1f);
 		this.viewIndexStart = 0;
 		this.viewIndexEnd = 0;
+		this.isSelection = false;
+		this.selectionIndexStart = 0;
+		this.selectionIndexEnd = 0;
+		this.selection = new GUITextBoxSelection(this);
 	}
 	
 	/* The method used to update this component */
@@ -135,6 +149,8 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface {
 		if (this.selected)
 			//Render the cursor
 			this.cursor.render();
+		//Render the selection
+		this.selection.render();
 	}
 	
 	/* The method used to update the render text */
@@ -170,6 +186,14 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface {
 	/* The method used to move the cursor to a specific place given the x
 	 * coordinate */
 	public void moveCursor(double x) {
+		//Get the closest index
+		this.cursorIndex = getIndex(x);
+		//Show the cursor
+		this.cursor.showCursor();
+	}
+	
+	/* The method used to get an index from a certain x position in the render text */
+	public int getIndex(double x) {
 		//Update the textToRender for rendering since we need to look at what the user can see
 		this.updateRenderText();
 		//Get the text to render as an array
@@ -204,11 +228,36 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface {
 				//Exit the loop
 				break;
 		}
-		//Assign the cursor's position relative to all of the text in this text box
-		this.cursorIndex = newPlace + this.viewIndexStart;
-		//Show the cursor
-		this.cursor.showCursor();
+		//Assign the index relative to all of the text in this text box
+		newPlace += this.viewIndexStart;
+		//Return the new place
+		return newPlace;
 	}
+	
+	/* The method used to reset the current selection */
+	public void resetSelection() {
+		//Set the values
+		this.isSelection = false;
+		this.selectionIndexStart = 0;
+		this.selectionIndexEnd = 0;
+	}
+	
+	/* The method used to return the selection if there is one */
+	public String getSelection() {
+		//Check to see whether there is a selection
+		if (this.isSelection) {
+			//Check the start and end values
+			if (this.selectionIndexStart < this.selectionIndexEnd)
+				//Return the string
+				return this.text.substring(this.selectionIndexStart, this.selectionIndexEnd);
+			else
+				//Return the string
+				return this.text.substring(this.selectionIndexEnd, this.selectionIndexStart);
+		} else
+			//Return an empty string
+			return "";
+	}
+
 	
 	/* The method called when the mouse enter's this component */
 	protected void componentOnMouseEnter() { }
@@ -230,8 +279,11 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface {
 		if (! this.mouseHoveringInside)
 			//Set selected to false
 			this.selected = false;
-		else if (this.selected)
+		else if (this.selected) {
 			this.moveCursor(e.x);
+			//Reset the selection
+			this.resetSelection();
+		}
 	}
 	
 	/* The method called when a button on the mouse is released */
@@ -244,12 +296,28 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface {
 	public void onMouseMoved(MouseMotionEvent e) { }
 	
 	/* The method called when the mouse is dragged */
-	public void onMouseDragged(MouseMotionEvent e) { }
+	public void onMouseDragged(MouseMotionEvent e) {
+		//Make sure this is selected
+		if (this.visible && this.active && this.selected && this.mouseHoveringInside) {
+			//Check to see whether there is a selection
+			if (! this.isSelection) {
+				//Set the selection values
+				this.selectionIndexStart = this.getIndex(e.endX);
+				this.selectionIndexEnd = this.selectionIndexStart;
+				this.isSelection = true;
+			} else {
+				//Set the new selection index end
+				this.selectionIndexEnd = this.getIndex(e.endX);
+				//Move the cursor
+				this.moveCursor(e.endX);
+			}
+		}
+	}
 	
 	/* The method called when a key on the keyboard is pressed */
 	public void onKeyPressed(KeyboardEvent e) {
 		//Check to see whether this component is selected
-		if (this.selected) {
+		if (this.visible && this.active && this.selected) {
 			//Check the key code
 			if (e.keyCode == Keyboard.KEY_BACKSPACE_CODE) {
 				//Make sure there is text to be removed and the cursor index isn't at the beginning
