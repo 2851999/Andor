@@ -152,17 +152,16 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface {
 	/* The method used to clip the render text */
 	public void clipRenderText() {
 		//Keep going until the render text fits
-		while (this.renderer.font.getWidth(this.renderText) >= this.width - 2) {
+		while (this.renderer.font.getWidth(this.renderText) >= this.width - 2 && this.cursorIndex != this.viewIndexStart) {// && this.cursorIndex <= this.viewIndexEnd) {
 			//Change the viewing index
 			this.viewIndexStart++;
 			//Update the render text
 			this.updateRenderText();
 		}
-		
-		//(Keep the cursor at the end)
-		while (this.renderer.font.getWidth(this.renderText) < this.width - 2 && this.viewIndexStart > 0) {
+		//Keep going until the render text fits
+		while (this.renderer.font.getWidth(this.renderText) >= this.width - 2 && this.cursorIndex <= this.viewIndexEnd) {
 			//Change the viewing index
-			this.viewIndexStart--;
+			this.viewIndexEnd--;
 			//Update the render text
 			this.updateRenderText();
 		}
@@ -206,7 +205,7 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface {
 				break;
 		}
 		//Assign the cursor's position relative to all of the text in this text box
-		this.cursorIndex = newPlace;
+		this.cursorIndex = newPlace + this.viewIndexStart;
 		//Show the cursor
 		this.cursor.showCursor();
 	}
@@ -260,20 +259,55 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface {
 					String back = this.text.substring(this.cursorIndex);
 					//Remove the last letter
 					this.text = front.substring(0, front.length() - 1) + back;
-					//Decrease the cursor index
-					this.cursorIndex--;
-					this.viewIndexEnd--;
+					if (this.cursorIndex == this.viewIndexStart) {
+						//Decrease the cursor index
+						this.cursorIndex--;
+						if (this.viewIndexStart > 0)
+							this.viewIndexStart--;
+						this.viewIndexEnd--;
+					} else {
+						//Decrease the cursor index
+						this.cursorIndex--;
+						this.viewIndexEnd--;
+						//Keep some text visible if there is more
+						if (this.viewIndexStart > 0)
+							this.viewIndexStart--;
+					}
 				}
 			} else if (e.keyCode == Keyboard.KEY_LEFT_CODE) {
 				//Make sure the cursor's current index is more than 0
-				if (this.cursorIndex > 0)
-					//Decrement the cursor index
-					this.cursorIndex--;
+				if (this.cursorIndex > 0) {
+					//Check the cursor index and viewing index
+					if (this.cursorIndex == this.viewIndexStart) {
+						//Check to see whether there is any unseen text
+						if (this.viewIndexStart > 0) {
+							//Decrement the cursor index
+							this.cursorIndex--;
+							//Decrement the start of the viewing index
+							this.viewIndexStart--;
+						}
+					} else {
+						//Decrement the cursor index
+						this.cursorIndex--;
+					}
+				}
 			} else if (e.keyCode == Keyboard.KEY_RIGHT_CODE) {
 				//Make sure the cursor's current index is less than the length of the text
-				if (this.cursorIndex < this.text.length())
-					//Increment the cursor index
-					this.cursorIndex++;
+				if (this.cursorIndex < this.text.length()) {
+					//Check the cursor index and viewing index
+					if (this.cursorIndex == this.viewIndexEnd) {
+						//Check to see whether there is any unseen text
+						if (this.viewIndexEnd > 0) {
+							//Increment the cursor index
+							this.cursorIndex++;
+							//Increment the end of the viewing index
+							this.viewIndexEnd++;
+						}
+					} else {
+						//Increment the cursor index
+						this.cursorIndex++;
+					}
+				}
 			} else {
 				//Make sure the key that was pressed's character should be added to the text
 				if (this.isDefined(e.keyCharacter)) {
@@ -282,9 +316,15 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface {
 					String back = this.text.substring(this.cursorIndex);
 					//Add the character onto the text
 					this.text = front + e.keyCharacter + back;
-					//Increase the cursor index
-					this.cursorIndex++;
-					this.viewIndexEnd++;
+					//Check the viewing index and cursor index
+					if (this.viewIndexStart == this.cursorIndex && this.viewIndexStart > 0) {
+						//Increase the cursor index
+						this.cursorIndex++;
+					} else {
+						//Increase the cursor index
+						this.cursorIndex++;
+						this.viewIndexEnd++;
+					}
 				}
 			}
 			//Show the cursor
