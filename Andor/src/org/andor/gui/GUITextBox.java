@@ -17,12 +17,15 @@ import org.andor.core.input.Input;
 import org.andor.core.input.InputListenerInterface;
 import org.andor.core.input.Keyboard;
 import org.andor.core.input.KeyboardEvent;
+import org.andor.core.input.KeyboardShortcut;
+import org.andor.core.input.KeyboardShortcutListener;
+import org.andor.core.input.KeyboardShortcuts;
 import org.andor.core.input.MouseEvent;
 import org.andor.core.input.MouseMotionEvent;
 import org.andor.core.input.ScrollEvent;
 import org.andor.utils.MaskUtils;
 
-public class GUITextBox extends GUIComponent implements InputListenerInterface {
+public class GUITextBox extends GUIComponent implements InputListenerInterface, KeyboardShortcutListener {
 	
 	/* The text within this text box */
 	public String text;
@@ -64,6 +67,9 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface {
 
 	/* The selection */
 	public GUITextBoxSelection selection;
+	
+	/* The shortcuts */
+	public KeyboardShortcuts shortcuts;
 	
 	/* The constructor */
 	public GUITextBox(Colour colour, float width, float height) {
@@ -115,6 +121,10 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface {
 		this.selectionIndexStart = 0;
 		this.selectionIndexEnd = 0;
 		this.selection = new GUITextBoxSelection(this);
+		this.shortcuts = new KeyboardShortcuts();
+		this.shortcuts.addListener(this);
+		this.shortcuts.add(new KeyboardShortcut("Shift-Left", new int[] { Keyboard.KEY_LSHIFT_CODE, Keyboard.KEY_LEFT_CODE }));
+		this.shortcuts.add(new KeyboardShortcut("Shift-Right", new int[] { Keyboard.KEY_LSHIFT_CODE, Keyboard.KEY_RIGHT_CODE }));
 	}
 	
 	/* The method used to update this component */
@@ -416,7 +426,9 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface {
 					//if (this.viewIndexStart > 0 && this.cursorIndex == this.viewIndexEnd)
 						//this.viewIndexStart--;
 				}
-			} else if (e.keyCode == Keyboard.KEY_LEFT_CODE) {
+			} else if (e.keyCode == Keyboard.KEY_LEFT_CODE && ! Keyboard.KEY_LSHIFT) {
+				//Remove any selection
+				this.resetSelection();
 				//Make sure the cursor's current index is more than 0
 				if (this.cursorIndex > 0) {
 					//Check the cursor index and viewing index
@@ -433,7 +445,9 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface {
 						this.cursorIndex--;
 					}
 				}
-			} else if (e.keyCode == Keyboard.KEY_RIGHT_CODE) {
+			} else if (e.keyCode == Keyboard.KEY_RIGHT_CODE && ! Keyboard.KEY_LSHIFT) {
+				//Remove any selection
+				this.resetSelection();
 				//Make sure the cursor's current index is less than the length of the text
 				if (this.cursorIndex < this.text.length()) {
 					//Check the cursor index and viewing index
@@ -482,6 +496,60 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface {
 	
 	/* The method called when the mouse scrolls */
 	public void onScroll(ScrollEvent e) { }
+	
+	/* The method called when a keyboard shortcut has been completed */
+	public void onShortcut(KeyboardShortcut e) {
+		//Check the name of the shortcut
+		if (e.name.equals("Shift-Left")) {
+			//Make sure the cursor's current index is more than 0
+			if (this.cursorIndex > 0) {
+				//Check the cursor index and viewing index
+				if (this.cursorIndex == this.viewIndexStart) {
+					//Check to see whether there is any unseen text
+					if (this.viewIndexStart > 0) {
+						//Decrement the cursor index
+						this.cursorIndex--;
+						//Decrement the start of the viewing index
+						this.viewIndexStart--;
+					}
+				} else {
+					//Decrement the cursor index
+					this.cursorIndex--;
+				}
+			}
+			if (! this.isSelection) {
+				this.isSelection = true;
+				this.selectionIndexStart = this.cursorIndex + 1;
+				this.selectionIndexEnd = this.selectionIndexStart;
+			}
+			if (this.selectionIndexEnd > 0)
+				this.selectionIndexEnd--;
+		} else if (e.name.equals("Shift-Right")) {
+			//Make sure the cursor's current index is less than the length of the text
+			if (this.cursorIndex < this.text.length()) {
+				//Check the cursor index and viewing index
+				if (this.cursorIndex == this.viewIndexEnd) {
+					//Check to see whether there is any unseen text
+					if (this.viewIndexEnd > 0) {
+						//Increment the cursor index
+						this.cursorIndex++;
+						//Increment the end of the viewing index
+						this.viewIndexEnd++;
+					}
+				} else {
+					//Increment the cursor index
+					this.cursorIndex++;
+				}
+			}
+			if (! this.isSelection) {
+				this.isSelection = true;
+				this.selectionIndexStart = this.cursorIndex - 1;
+				this.selectionIndexEnd = this.selectionIndexStart;
+			}
+			if (this.selectionIndexEnd < this.text.length())
+				this.selectionIndexEnd++;
+		}
+	}
 	
 	/* The method used to check to see whether a character is defined */
 	private boolean isDefined(char character) {
