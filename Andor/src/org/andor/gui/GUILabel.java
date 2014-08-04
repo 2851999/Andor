@@ -48,6 +48,11 @@ public class GUILabel extends GUIComponent {
 		this.width = this.renderer.font.getWidth(text);
 		this.height = this.renderer.font.getHeight(text);
 	}
+	public void setFont(Font font) {
+		this.renderer.font = font;
+		this.width = font.getWidth(text);
+		this.height = font.getHeight(text);
+	}
 	public String getText() { return this.text; }
 	
 }

@@ -14,12 +14,11 @@ import org.andor.gui.GUIGroup;
 import org.andor.gui.GUILabel;
 import org.andor.gui.GUIRadioCheckBox;
 import org.andor.gui.GUITextBox;
-import org.andor.gui.GUIToolTip;
 import org.andor.utils.Console;
 import org.andor.utils.FontUtils;
 import org.andor.utils.OpenGLUtils;
 
-public class GUITest extends BaseGame implements GUIComponentListener {
+public class CopyOfGUITest extends BaseGame implements GUIComponentListener {
 	
 	public GUIButton button;
 	public GUICheckBox checkBox;
@@ -32,7 +31,7 @@ public class GUITest extends BaseGame implements GUIComponentListener {
 	public GUILabel label;
 	public GUITextBox textBox;
 	
-	public GUITest() {
+	public CopyOfGUITest() {
 		
 	}
 	
@@ -43,7 +42,6 @@ public class GUITest extends BaseGame implements GUIComponentListener {
 		this.button.name = "Button";
 		this.button.position = new Vector2D(20, 100);
 		this.button.addListener(this);
-		this.button.toolTip = new GUIToolTip(this.button, "Please Click Me!");
 		
 		this.checkBox = new GUICheckBox(new Colour[] { Colour.LIGHT_BLUE, Colour.BLUE, Colour.RED }, 20, 20);
 		this.checkBox.name = "Checkbox";
@@ -120,7 +118,7 @@ public class GUITest extends BaseGame implements GUIComponentListener {
 	}
 	
 	public static void main(String[] args) {
-		new GUITest();
+		new CopyOfGUITest();
 	}
 	
 	public void onMouseEnter(GUIComponent component) {

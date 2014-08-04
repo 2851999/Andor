@@ -1,4 +1,31 @@
 ------------------------------------------------------
+Release 1 | Beta 0 | Development 1 | Experimental 1
+
+* Added GUIToolTip
+
+* Fixed bug: Timer hasTimePassed() returned true
+             in most cases when it hadn't ever been
+             started
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 1 | Experimental 0
+
+* Added GUITextBoxSelection
+* Added KeyboardShortcut
+* Added KeyboardShortcuts
+* Added KeyboardShortcutListener
+* Added ClipboardUtils
+
+* Added the constructor Colour(Colour colour, float a) in Colour
+* Added selection to GUITextBox
+* Added the methods in ArrayUtils to change int[] to
+  List<Integer> and vice versa
+
+* Fixed bug: GUITextBox backspace would sometimes
+             leave a gap if not at the beginning or
+             end of the view index's
+
+------------------------------------------------------
 Release 1 | Beta 0 | Development 0 | Experimental 6
 
 * Added cut, copy and paste to GUITextBox

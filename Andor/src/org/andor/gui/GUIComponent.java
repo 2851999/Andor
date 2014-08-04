@@ -60,6 +60,9 @@ public class GUIComponent extends Object2D {
 	/* The GUIPosition preference */
 	public GUIPosition positionPreference;
 	
+	/* The tool tip */
+	public GUIToolTip toolTip;
+	
 	/* The constructor */
 	public GUIComponent(RenderableObject2D object) {
 		this.setup(object);
@@ -87,6 +90,7 @@ public class GUIComponent extends Object2D {
 		this.borderEnabled = true;
 		this.components = new ArrayList<GUIComponent>();
 		this.positionPreference = GUIPosition.NONE;
+		this.toolTip = null;
 	}
 	
 	/* The method used to update this component */
@@ -135,6 +139,9 @@ public class GUIComponent extends Object2D {
 			for (int a = 0; a < this.components.size(); a++)
 				//Update the current component
 				this.components.get(a).update();
+			//Check to see whether the tool tip has been set
+			if (this.toolTip != null)
+				this.toolTip.update();
 		}
 	}
 	
@@ -151,6 +158,9 @@ public class GUIComponent extends Object2D {
 				//Render the current component
 				this.components.get(a).render();
 			this.renderComponent();
+			//Check to see whether the tool tip has been set
+			if (this.toolTip != null)
+				this.toolTip.render();
 		}
 	}
 	

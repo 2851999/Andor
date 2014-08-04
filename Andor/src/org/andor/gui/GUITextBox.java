@@ -642,4 +642,22 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface, 
 		return ! this.selected && this.text.length() == 0 && this.defaultText.length() > 0;
 	}
 	
+	/* The set/get methods */
+	public void setText(String text) { this.text = text; }
+	public void setRenderText(String renderText) { this.renderText = renderText; }
+	public void setSelected(boolean selected) { this.selected = selected; }
+	public void setMasked(boolean masked) { this.masked = masked; }
+	public void setMask(String mask) { this.mask = mask; }
+	public void setDefaultText(String defaultText) { this.defaultText = defaultText; }
+	public void setDefaultTextFont(Font defaultTextFont) { this.defaultTextFont = defaultTextFont; }
+	public void setCursorIndex(int cursorIndex) { this.cursorIndex = cursorIndex; }
+	public String getText() { return this.text; }
+	public String getRenderText() { return this.renderText; }
+	public boolean isSelected() { return this.selected; }
+	public boolean isMasked() { return this.masked; }
+	public String getMask() { return this.mask; }
+	public String getDefaultText() { return this.defaultText; }
+	public Font getDefaultTextFont() { return this.defaultTextFont; }
+	public int getCursorIndex() { return this.cursorIndex; }
+	
 }
