@@ -26,42 +26,42 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface {
 	
 	/* The text within this text box */
 	public String text;
-	
+
 	/* The text that is rendered */
 	public String renderText;
-	
+
 	/* The boolean that states whether this text box is currently selected */
 	public boolean selected;
-	
+
 	/* The boolean that states whether this text box is masked */
 	public boolean masked;
-	
+
 	/* The mask */
 	public String mask;
-	
+
 	/* The default text */
 	public String defaultText;
-	
+
 	/* The font of the default text */
 	public Font defaultTextFont;
-	
+
 	/* The cursor's position within the text */
 	public int cursorIndex;
-	
+
 	/* The cursor */
 	public GUITextBoxCursor cursor;
-	
+
 	/* The viewing start and end index */
 	public int viewIndexStart;
 	public int viewIndexEnd;
-	
+
 	/* The boolean that states whether there is a selection */
 	public boolean isSelection;
-	
+
 	/* The selection's start and end index */
 	public int selectionIndexStart;
 	public int selectionIndexEnd;
-	
+
 	/* The selection */
 	public GUITextBoxSelection selection;
 	
@@ -156,6 +156,11 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface {
 	/* The method used to update the render text */
 	public void updateRenderText() {
 		if (! this.shouldUseDefaultText()) {
+			//Try and prevent any problems with the view index being out of bounds by accident
+			if (this.viewIndexStart < 0)
+				this.viewIndexStart = 0;
+			if (this.viewIndexEnd > this.text.length())
+				this.viewIndexEnd = this.text.length();
 			//Set the text
 			this.renderText = this.text.substring(this.viewIndexStart, this.viewIndexEnd);
 			//Check to see whether the text should be masked
@@ -257,7 +262,35 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface {
 			//Return an empty string
 			return "";
 	}
-
+	
+	/* The method used to return the selection of the render text if there is one */
+	public String getRenderTextSelection() {
+		//Check to see whether there is a selection
+		if (this.isSelection) {
+			//Update the render text
+			this.updateRenderText();
+			this.clipRenderText();
+			int sis = this.selectionIndexStart;
+			if (sis < this.viewIndexStart)
+				sis = this.viewIndexStart;
+			else if (sis > this.viewIndexEnd)
+				sis = this.viewIndexEnd;
+			int sie = this.selectionIndexEnd;
+			if (sie < this.viewIndexStart)
+				sie = this.viewIndexStart;
+			else if (sie > this.viewIndexEnd)
+				sie = this.viewIndexEnd;
+			//Check the start and end values
+			if (this.selectionIndexStart <= this.selectionIndexEnd)
+				//Return the string
+				return this.renderText.substring(sis - this.viewIndexStart, sie - this.viewIndexStart);
+			else
+				//Return the string
+				return this.renderText.substring(sie - this.viewIndexStart, sis - this.viewIndexStart);
+		} else
+			//Return an empty string
+			return "";
+	}
 	
 	/* The method called when the mouse enter's this component */
 	protected void componentOnMouseEnter() { }
@@ -298,7 +331,7 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface {
 	/* The method called when the mouse is dragged */
 	public void onMouseDragged(MouseMotionEvent e) {
 		//Make sure this is selected
-		if (this.visible && this.active && this.selected && this.mouseHoveringInside) {
+		if (this.visible && this.active && this.selected) {
 			//Check to see whether there is a selection
 			if (! this.isSelection) {
 				//Set the selection values
@@ -310,6 +343,26 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface {
 				this.selectionIndexEnd = this.getIndex(e.endX);
 				//Move the cursor
 				this.moveCursor(e.endX);
+				
+				//Check the index values
+				if (this.viewIndexStart == this.cursorIndex) {
+					//Keep some text visible if there is more
+					if (this.cursorIndex > 0)
+						this.cursorIndex--;
+					if (this.viewIndexStart > 0)
+						this.viewIndexStart--;
+					if (this.selectionIndexEnd > 0)
+						this.selectionIndexEnd--;
+				}
+				if (this.viewIndexEnd == this.cursorIndex) {
+					//Keep some text visible if there is more
+					if (this.cursorIndex < this.text.length())
+						this.cursorIndex++;
+					if (this.viewIndexEnd < this.text.length())
+						this.viewIndexEnd++;
+					if (this.selectionIndexEnd < this.text.length())
+						this.selectionIndexEnd++;
+				}
 			}
 		}
 	}

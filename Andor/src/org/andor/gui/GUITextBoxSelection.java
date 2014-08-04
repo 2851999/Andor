@@ -42,14 +42,14 @@ public class GUITextBoxSelection extends Object2D {
 			//Catch any errors
 			try {
 				if (this.textBox.selectionIndexStart < this.textBox.selectionIndexEnd)
-					selectionX = p.x + this.textBox.renderer.font.getWidth(this.textBox.renderText.substring(0, this.textBox.selectionIndexStart - this.textBox.viewIndexStart));
+					selectionX = p.x + this.textBox.renderer.font.getWidth(this.textBox.renderText.substring(this.textBox.selectionIndexEnd - this.textBox.viewIndexStart));
 				else
 					selectionX = p.x + this.textBox.renderer.font.getWidth(this.textBox.renderText.substring(0, this.textBox.selectionIndexEnd - this.textBox.viewIndexStart));
 			} catch (StringIndexOutOfBoundsException e) {
 				
 			}
 			float selectionY = p.y;
-			float selectionWidth = this.textBox.renderer.font.getWidth(this.textBox.getSelection());
+			float selectionWidth = this.textBox.renderer.font.getWidth(this.textBox.getRenderTextSelection());
 			float selectionHeight = this.textBox.height;
 			//Update the renderer
 			this.renderer.entity.renderer.updateVertices(Object2DBuilder.createQuadV(selectionWidth, selectionHeight));
