@@ -393,6 +393,8 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface {
 						//Keep some text visible if there is more
 						if (this.viewIndexStart > 0)
 							this.viewIndexStart--;
+						else
+							this.viewIndexEnd++;
 					}
 				}
 			} else if (e.keyCode == Keyboard.KEY_DELETE_CODE) {
