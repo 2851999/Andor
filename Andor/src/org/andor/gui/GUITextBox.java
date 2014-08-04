@@ -124,7 +124,9 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface, 
 		this.shortcuts = new KeyboardShortcuts();
 		this.shortcuts.addListener(this);
 		this.shortcuts.add(new KeyboardShortcut("Shift-Left", new int[] { Keyboard.KEY_LSHIFT_CODE, Keyboard.KEY_LEFT_CODE }));
+		this.shortcuts.add(new KeyboardShortcut("Shift-Left", new int[] { Keyboard.KEY_RSHIFT_CODE, Keyboard.KEY_LEFT_CODE }));
 		this.shortcuts.add(new KeyboardShortcut("Shift-Right", new int[] { Keyboard.KEY_LSHIFT_CODE, Keyboard.KEY_RIGHT_CODE }));
+		this.shortcuts.add(new KeyboardShortcut("Shift-Right", new int[] { Keyboard.KEY_RSHIFT_CODE, Keyboard.KEY_RIGHT_CODE }));
 	}
 	
 	/* The method used to update this component */
@@ -302,6 +304,37 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface, 
 			return "";
 	}
 	
+	/* The method used to delete the current selection */
+	public void deleteSelection() {
+		//Get the front and back part of the text
+		String front = "";
+		String back = "";
+		//Check the index values
+		if (this.selectionIndexStart < this.selectionIndexEnd) {
+			front = this.text.substring(0, this.selectionIndexStart);
+			back = this.text.substring(this.selectionIndexEnd);
+		} else {
+			front = this.text.substring(0, this.selectionIndexEnd);
+			back = this.text.substring(this.selectionIndexStart);
+		}
+		//Calculate the amount of text that was removed
+		int amountRemoved = this.text.length() - (front + back).length();
+		//Make sure a gap isn't left
+		int a = 0;
+		while (a < amountRemoved) {
+			if (this.viewIndexStart > 0)
+				this.viewIndexStart--;
+			a++;
+		}
+		//Set the text
+		this.text = front + back;
+		//If the selection is at the end it is likely the cursor will now be out of bounds
+		if (this.cursorIndex > this.text.length())
+			this.cursorIndex = this.text.length();
+		//Reset the selection
+		this.resetSelection();
+	}
+	
 	/* The method called when the mouse enter's this component */
 	protected void componentOnMouseEnter() { }
 	
@@ -383,50 +416,62 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface, 
 		if (this.visible && this.active && this.selected) {
 			//Check the key code
 			if (e.keyCode == Keyboard.KEY_BACKSPACE_CODE) {
-				//Make sure there is text to be removed and the cursor index isn't at the beginning
-				if (this.text.length() > 0 && this.cursorIndex > 0) {
-					//Split up the text using the cursor index
-					String front = this.text.substring(0, this.cursorIndex);
-					String back = this.text.substring(this.cursorIndex);
-					//Remove the last letter
-					this.text = front.substring(0, front.length() - 1) + back;
-					if (this.cursorIndex == this.viewIndexStart) {
-						//Decrease the cursor index
-						this.cursorIndex--;
-						if (this.viewIndexStart > 0)
-							this.viewIndexStart--;
-						this.viewIndexEnd--;
-					} else {
-						//Decrease the cursor index
-						this.cursorIndex--;
-						this.viewIndexEnd--;
-						//Keep some text visible if there is more
-						if (this.viewIndexStart > 0)
-							this.viewIndexStart--;
-						else
-							this.viewIndexEnd++;
+				//Check to see whether there is a selection
+				if (this.isSelection) {
+					//Remove the selection
+					this.deleteSelection();
+				} else {
+					//Make sure there is text to be removed and the cursor index isn't at the beginning
+					if (this.text.length() > 0 && this.cursorIndex > 0) {
+						//Split up the text using the cursor index
+						String front = this.text.substring(0, this.cursorIndex);
+						String back = this.text.substring(this.cursorIndex);
+						//Remove the last letter
+						this.text = front.substring(0, front.length() - 1) + back;
+						if (this.cursorIndex == this.viewIndexStart) {
+							//Decrease the cursor index
+							this.cursorIndex--;
+							if (this.viewIndexStart > 0)
+								this.viewIndexStart--;
+							this.viewIndexEnd--;
+						} else {
+							//Decrease the cursor index
+							this.cursorIndex--;
+							this.viewIndexEnd--;
+							//Keep some text visible if there is more
+							if (this.viewIndexStart > 0)
+								this.viewIndexStart--;
+							else
+								this.viewIndexEnd++;
+						}
 					}
 				}
 			} else if (e.keyCode == Keyboard.KEY_DELETE_CODE) {
-				//Make sure there is text to be removed and the cursor index isn't at the end
-				if (this.text.substring(this.cursorIndex).length() > 0 && this.cursorIndex < this.text.length()) {
-					//Split up the text using the cursor index
-					String front = this.text.substring(0, this.cursorIndex);
-					String back = this.text.substring(this.cursorIndex);
-					//Remove the last letter
-					this.text = front + back.substring(1);
-					//Make sure there isn't some unseen text
-					if (! (this.viewIndexEnd <= this.text.length())) {
-						//Decrement the view's end index
-						this.viewIndexEnd--;
-						//Decrement the view's start index (Keeps text at the beginning and end)
-						this.viewIndexStart--;
+				//Check to see whether there is a selection
+				if (this.isSelection) {
+					//Remove the selection
+					this.deleteSelection();
+				} else {
+					//Make sure there is text to be removed and the cursor index isn't at the end
+					if (this.text.substring(this.cursorIndex).length() > 0 && this.cursorIndex < this.text.length()) {
+						//Split up the text using the cursor index
+						String front = this.text.substring(0, this.cursorIndex);
+						String back = this.text.substring(this.cursorIndex);
+						//Remove the last letter
+						this.text = front + back.substring(1);
+						//Make sure there isn't some unseen text
+						if (! (this.viewIndexEnd <= this.text.length())) {
+							//Decrement the view's end index
+							this.viewIndexEnd--;
+							//Decrement the view's start index (Keeps text at the beginning and end)
+							this.viewIndexStart--;
+						}
+						//Keep some text visible if there is more and there is no more text at the end (Finished deleting)
+						//if (this.viewIndexStart > 0 && this.cursorIndex == this.viewIndexEnd)
+							//this.viewIndexStart--;
 					}
-					//Keep some text visible if there is more and there is no more text at the end (Finished deleting)
-					//if (this.viewIndexStart > 0 && this.cursorIndex == this.viewIndexEnd)
-						//this.viewIndexStart--;
 				}
-			} else if (e.keyCode == Keyboard.KEY_LEFT_CODE && ! Keyboard.KEY_LSHIFT) {
+			} else if (e.keyCode == Keyboard.KEY_LEFT_CODE && ! Keyboard.KEY_LSHIFT && ! Keyboard.KEY_RSHIFT) {
 				//Remove any selection
 				this.resetSelection();
 				//Make sure the cursor's current index is more than 0
@@ -445,7 +490,7 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface, 
 						this.cursorIndex--;
 					}
 				}
-			} else if (e.keyCode == Keyboard.KEY_RIGHT_CODE && ! Keyboard.KEY_LSHIFT) {
+			} else if (e.keyCode == Keyboard.KEY_RIGHT_CODE && ! Keyboard.KEY_LSHIFT && ! Keyboard.KEY_RSHIFT) {
 				//Remove any selection
 				this.resetSelection();
 				//Make sure the cursor's current index is less than the length of the text
@@ -467,6 +512,11 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface, 
 			} else {
 				//Make sure the key that was pressed's character should be added to the text
 				if (this.isDefined(e.keyCharacter)) {
+					//Check to see whether there is a selection
+					if (this.isSelection) {
+						//Remove the selection
+						this.deleteSelection();
+					}
 					//Split up the text using the cursor index
 					String front = this.text.substring(0, this.cursorIndex);
 					String back = this.text.substring(this.cursorIndex);

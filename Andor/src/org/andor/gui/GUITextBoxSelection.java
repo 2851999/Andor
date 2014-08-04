@@ -48,7 +48,6 @@ public class GUITextBoxSelection extends Object2D {
 			} catch (StringIndexOutOfBoundsException e) {
 				
 			}
-			System.out.println(selectionX);
 			float selectionY = p.y;
 			float selectionWidth = this.textBox.renderer.font.getWidth(this.textBox.getRenderTextSelection());
 			float selectionHeight = this.textBox.height;
