@@ -1,4 +1,209 @@
 ------------------------------------------------------
+Release 1 | Beta 0 | Development 1 | Experimental 0
+
+* Added GUITextBoxSelection
+* Added KeyboardShortcut
+* Added KeyboardShortcuts
+* Added KeyboardShortcutListener
+* Added ClipboardUtils
+
+* Added the constructor Colour(Colour colour, float a) in Colour
+* Added selection to GUITextBox
+* Added the methods in ArrayUtils to change int[] to
+  List<Integer> and vice versa
+
+* Fixed bug: GUITextBox backspace would sometimes
+             leave a gap if not at the beginning or
+             end of the view index's
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 0 | Experimental 6
+
+* Added cut, copy and paste to GUITextBox
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 0 | Experimental 5
+
+* Added ClipboardUtils
+
+* GUITextBox can now remove selections of text
+* GUITextBox can now replace selections of text
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 0 | Experimental 4
+
+* Added KeyboardShortcut
+* Added KeyboardShortcuts
+* Added KeyboardShortcutListener
+
+* Added the methods in ArrayUtils to change int[] to
+  List<Integer> and vice versa
+  
+* Fixed bug: Selection didn't work properly
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 0 | Experimental 3
+
+* Fixed bug: GUITextBox backspace would sometimes
+             leave a gap if not at the beginning or
+             end of the view index's
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 0 | Experimental 2
+
+* Attempted to improve the selection within the
+  GUITextBox
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 0 | Experimental 1
+
+* Added GUITextBoxSelection
+* Added the constructor Colour(Colour colour, float a) in Colour
+* Added selection to GUITextBox
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 0 | Experimental 0
+
+* Added Settings
+* Added Window
+* Added WindowTest
+* Added GameLoopInterface
+* Added GameLoop
+* Added BaseGame
+* Added BaseGameTest
+* Added Log
+* Added Logger
+* Added Time
+* Added FileUtils
+* Added FileUtilsTest
+* Added ThreadUtils
+* Added ArrayUtils
+* Added Timer
+* Added TimerTest
+* Added Console
+* Added FPSCalculator
+* Added Vector3D
+* Added Object3D
+* Added Renderer
+* Added BufferUtils
+* Added RenderableObject3D
+* Added Colour
+* Added Camera3D
+* Added Object3DBuilder
+* Added Quad3DTest
+* Added OpenGLUtils
+* Added Image
+* Added ImageLoader
+* Added Event
+* Added Input
+* Added InputListener
+* Added InputManager
+* Added Keyboard
+* Added KeyboardEvent
+* Added Mouse
+* Added MouseEvent
+* Added MouseMotionEvent
+* Added ScrollEvent
+* Added Vector2D
+* Added ImageSet
+* Added Font
+* Added FontUtils
+* Added SkyBox
+* Added Face
+* Added Material
+* Added MaterialLoader
+* Added Model
+* Added ModelParserUtils
+* Added OBJLoader
+* Added Shader
+* Added ShaderUtils
+* Added Client
+* Added ClientInputThread
+* Added Server
+* Added ServerClient
+* Added ServerClientInputThread
+* Added ServerConnectionThread
+* Added ServerListener
+* Added ClientListener
+* Added NetworkingTest
+* Added Object2D
+* Added Object2DBuilder
+* Added RenderableObject2D
+* Added ObjectBuilderUtils
+* Added Quad2DTest
+* Added Rectangle
+* Added InputListener
+* Added GUIComponent
+* Added GUIComponentListener
+* Added GUIRenderer
+* Added GUIButton
+* Added GUIButtonTest
+* Added GUICheckBox
+* Added GUIDropDownMenu
+* Added GUIDropDownList
+* Added Camera2D
+* Added GUIRadioCheckBox
+* Added GUILabel
+* Added GUIBorder
+* Added GUIPosition
+* Added GUIImage
+* Added GUITextBox
+* Added GUITextBoxCursor
+* Added MaskUtils
+
+* Created the package org.andor.core
+* Created the package org.andor.core.logger
+* Created the package org.andor.core.input
+* Created the package org.andor.core.model
+* Created the package org.andor.core.networking
+* Created the package org.andor.gui
+* Created the package org.andor.utils
+* Created the package org.andor.tests
+
+------------------------------------------------------
+Release 0 | Beta 3 | Development 0 | Experimental 0
+
+* Added Camera2D
+* Added GUIRadioCheckBox
+* Added GUILabel
+* Added GUIBorder
+* Added GUIPosition
+* Added GUIImage
+* Added GUITextBox
+* Added GUITextBoxCursor
+* Added MaskUtils
+
+* Added the variable 'text' in GUICheckBox
+* Added rotation and scaling when linking Objects
+  (2D + 3D)
+* Added support for components within components
+* Added GUIComponent positioning system using
+  GUIPosition
+* Added onMouseDragged() in the Input system
+* Added the method restart() in Timer
+
+* Fixed bug: GUIDropDownMenu and GUIDropDownList
+		 	 stayed open when the mouse clicked
+		 	 outside of the menu/list
+* Fixed bug: Linked object scaling was wrong
+* Fixed bug: GUI components didn't fully work with
+ 			 object linking
+* Fixed bug: GUIComponents - Mouse could click
+             components when dragging the mouse
+             over them
+* Fixed bug: Inactive GUIComponents didn't render
+             properly unless the inactive colour/
+             image had been set
+* Fixed spelling: Center should have been Centre in
+                  GUIComponent
+
+* Fixed bug: GUIRadioCheckBox didn't work properly
+* Fixed spelling: keyChatacter should have been
+                  keyCharacter in KeyboardEvent
+
+* Increased performance (Hopefully): Linked Objects
+
+------------------------------------------------------
 Release 0 | Beta 2 | Development 3 | Experimental 0
 
 * Added GUITextBox

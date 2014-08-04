@@ -86,6 +86,7 @@ public class GUITest extends BaseGame implements GUIComponentListener {
 		this.textBox.defaultText = "Enter something";
 		this.textBox.defaultTextFont = FontUtils.createFont("Arial", 12, Colour.LIGHT_GREY);
 		this.textBox.border = new GUIBorder(this.textBox, 1f, new Colour[] { Colour.LIGHT_BLUE });
+		this.textBox.selection.renderer.colours = new Colour[] { new Colour(Colour.LIGHT_BLUE, 0.4f) };
 	}
 	
 	/* The method called when the game loop is updated */

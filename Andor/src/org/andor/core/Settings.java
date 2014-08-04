@@ -15,9 +15,9 @@ public class Settings {
 		/* The version of Andor */
 		public static final String VERSION = "V0.0.1.2";
 		/* The build of Andor */
-		public static final String BUILD = "Development";
+		public static final String BUILD = "Experimental";
 		/* The date this build started development */
-		public static final String DATE = "03/08/2014";
+		public static final String DATE = "04/08/2014";
 	}
 	
 	/* The static class containing all of the settings required for the window */
