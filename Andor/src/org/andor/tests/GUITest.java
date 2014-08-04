@@ -12,6 +12,7 @@ import org.andor.gui.GUIDropDownList;
 import org.andor.gui.GUIDropDownMenu;
 import org.andor.gui.GUIGroup;
 import org.andor.gui.GUILabel;
+import org.andor.gui.GUILoadingBar;
 import org.andor.gui.GUIRadioCheckBox;
 import org.andor.gui.GUITextBox;
 import org.andor.gui.GUIToolTip;
@@ -31,6 +32,7 @@ public class GUITest extends BaseGame implements GUIComponentListener {
 	public GUIRadioCheckBox radio3;
 	public GUILabel label;
 	public GUITextBox textBox;
+	public GUILoadingBar loadingBar;
 	
 	public GUITest() {
 		
@@ -89,6 +91,12 @@ public class GUITest extends BaseGame implements GUIComponentListener {
 		this.textBox.defaultTextFont = FontUtils.createFont("Arial", 12, Colour.LIGHT_GREY);
 		this.textBox.border = new GUIBorder(this.textBox, 1f, new Colour[] { Colour.LIGHT_BLUE });
 		this.textBox.selection.renderer.colours = new Colour[] { new Colour(Colour.LIGHT_BLUE, 0.4f) };
+		
+		this.loadingBar = new GUILoadingBar(10, Colour.WHITE, 300, 20);
+		this.loadingBar.position = new Vector2D(20, 340);
+		this.loadingBar.border = new GUIBorder(this.loadingBar, 1f, new Colour[] { Colour.LIGHT_BLUE });
+		this.loadingBar.currentLoadingStage = 2;
+		this.loadingBar.barFill.colour = Colour.LIGHT_BLUE;
 	}
 	
 	/* The method called when the game loop is updated */
@@ -100,6 +108,7 @@ public class GUITest extends BaseGame implements GUIComponentListener {
 		this.radio.update();
 		this.label.update();
 		this.textBox.update();
+		this.loadingBar.update();
 	}
 	
 	/* The method called when the game loop is rendered */
@@ -117,6 +126,7 @@ public class GUITest extends BaseGame implements GUIComponentListener {
 		this.radio.render();
 		this.label.render();
 		this.textBox.render();
+		this.loadingBar.render();
 	}
 	
 	public static void main(String[] args) {
