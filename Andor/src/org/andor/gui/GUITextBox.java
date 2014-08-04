@@ -23,6 +23,7 @@ import org.andor.core.input.KeyboardShortcuts;
 import org.andor.core.input.MouseEvent;
 import org.andor.core.input.MouseMotionEvent;
 import org.andor.core.input.ScrollEvent;
+import org.andor.utils.ClipboardUtils;
 import org.andor.utils.MaskUtils;
 
 public class GUITextBox extends GUIComponent implements InputListenerInterface, KeyboardShortcutListener {
@@ -127,6 +128,12 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface, 
 		this.shortcuts.add(new KeyboardShortcut("Shift-Left", new int[] { Keyboard.KEY_RSHIFT_CODE, Keyboard.KEY_LEFT_CODE }));
 		this.shortcuts.add(new KeyboardShortcut("Shift-Right", new int[] { Keyboard.KEY_LSHIFT_CODE, Keyboard.KEY_RIGHT_CODE }));
 		this.shortcuts.add(new KeyboardShortcut("Shift-Right", new int[] { Keyboard.KEY_RSHIFT_CODE, Keyboard.KEY_RIGHT_CODE }));
+		this.shortcuts.add(new KeyboardShortcut("Cut", new int[] { Keyboard.KEY_LCONTROL_CODE, Keyboard.KEY_X_CODE }));
+		this.shortcuts.add(new KeyboardShortcut("Cut", new int[] { Keyboard.KEY_RCONTROL_CODE, Keyboard.KEY_X_CODE }));
+		this.shortcuts.add(new KeyboardShortcut("Copy", new int[] { Keyboard.KEY_LCONTROL_CODE, Keyboard.KEY_C_CODE }));
+		this.shortcuts.add(new KeyboardShortcut("Copy", new int[] { Keyboard.KEY_RCONTROL_CODE, Keyboard.KEY_C_CODE }));
+		this.shortcuts.add(new KeyboardShortcut("Paste", new int[] { Keyboard.KEY_LCONTROL_CODE, Keyboard.KEY_V_CODE }));
+		this.shortcuts.add(new KeyboardShortcut("Paste", new int[] { Keyboard.KEY_RCONTROL_CODE, Keyboard.KEY_V_CODE }));
 	}
 	
 	/* The method used to update this component */
@@ -598,6 +605,30 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface, 
 			}
 			if (this.selectionIndexEnd < this.text.length())
 				this.selectionIndexEnd++;
+		} else if (e.name.equals("Cut")) {
+			if (this.isSelection) {
+				//Set the clipboard's text
+				ClipboardUtils.setText(this.getSelection());
+				//Delete the current selection
+				this.deleteSelection();
+			}
+		} else if (e.name.equals("Paste")) {
+			if (this.isSelection) {
+				//Delete the current selection
+				this.deleteSelection();
+			}
+			//Split up the text using the cursor index
+			String front = this.text.substring(0, this.cursorIndex);
+			String back = this.text.substring(this.cursorIndex);
+			//Add the text from the clipboard onto the text
+			this.text = front + ClipboardUtils.getText() + back;
+			//Put the cursor onto the end of the new text
+			this.cursorIndex = this.text.length() - back.length();
+			this.viewIndexEnd = this.text.length();
+		} else if (e.name.equals("Copy")) {
+			if (this.isSelection)
+				//Set the clipboard's text
+				ClipboardUtils.setText(this.getSelection());
 		}
 	}
 	

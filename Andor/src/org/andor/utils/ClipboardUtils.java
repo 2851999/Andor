@@ -21,7 +21,7 @@ import org.andor.core.logger.Logger;
 public class ClipboardUtils {
 	
 	/* The static method to get text off of the clip board */
-	public String getText() {
+	public static String getText() {
 		try {
 			return (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
 		} catch (HeadlessException e) {
@@ -41,7 +41,7 @@ public class ClipboardUtils {
 	}
 	
 	/* The static method to set the text of the clip board */
-	public void setText(String text) {
+	public static void setText(String text) {
 		//Set the contents of the clip board
 		StringSelection selection = new StringSelection(text);
 		Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selection, selection);
