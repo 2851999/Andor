@@ -1,4 +1,38 @@
 ------------------------------------------------------
+Release 1 | Beta 0 | Development 2 | Experimental 0
+
+* Added GUIToolTip
+* Added GUIFill
+* Added GUILoadingBar
+* Added GUISlider
+* Added GUIPanel
+
+* Fixed bug: Timer hasTimePassed() returned true
+             in most cases when it hadn't ever been
+             started
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 1 | Experimental 3
+
+* Added GUISlider
+* Added GUIPanel
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 1 | Experimental 2
+
+* Added GUIFill
+* Added GUILoadingBar
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 1 | Experimental 1
+
+* Added GUIToolTip
+
+* Fixed bug: Timer hasTimePassed() returned true
+             in most cases when it hadn't ever been
+             started
+
+------------------------------------------------------
 Release 1 | Beta 0 | Development 1 | Experimental 0
 
 * Added GUITextBoxSelection

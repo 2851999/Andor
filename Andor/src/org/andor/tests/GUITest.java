@@ -12,8 +12,12 @@ import org.andor.gui.GUIDropDownList;
 import org.andor.gui.GUIDropDownMenu;
 import org.andor.gui.GUIGroup;
 import org.andor.gui.GUILabel;
+import org.andor.gui.GUILoadingBar;
+import org.andor.gui.GUIPanel;
 import org.andor.gui.GUIRadioCheckBox;
+import org.andor.gui.GUISlider;
 import org.andor.gui.GUITextBox;
+import org.andor.gui.GUIToolTip;
 import org.andor.utils.Console;
 import org.andor.utils.FontUtils;
 import org.andor.utils.OpenGLUtils;
@@ -30,6 +34,9 @@ public class GUITest extends BaseGame implements GUIComponentListener {
 	public GUIRadioCheckBox radio3;
 	public GUILabel label;
 	public GUITextBox textBox;
+	public GUILoadingBar loadingBar;
+	public GUISlider verticalSlider;
+	public GUISlider horizontalSlider;
 	
 	public GUITest() {
 		
@@ -37,11 +44,13 @@ public class GUITest extends BaseGame implements GUIComponentListener {
 	
 	/* The method called when the loop has been created */
 	public void create() {
+		GUIPanel panel = new GUIPanel("MainPanel", true);
 		this.button = new GUIButton(new Colour[] { Colour.LIGHT_BLUE, Colour.BLUE, Colour.RED }, 100, 20);
 		this.button.text = "Click Me";
 		this.button.name = "Button";
 		this.button.position = new Vector2D(20, 100);
 		this.button.addListener(this);
+		this.button.toolTip = new GUIToolTip(this.button, "Please Click Me!");
 		
 		this.checkBox = new GUICheckBox(new Colour[] { Colour.LIGHT_BLUE, Colour.BLUE, Colour.RED }, 20, 20);
 		this.checkBox.name = "Checkbox";
@@ -87,17 +96,36 @@ public class GUITest extends BaseGame implements GUIComponentListener {
 		this.textBox.defaultTextFont = FontUtils.createFont("Arial", 12, Colour.LIGHT_GREY);
 		this.textBox.border = new GUIBorder(this.textBox, 1f, new Colour[] { Colour.LIGHT_BLUE });
 		this.textBox.selection.renderer.colours = new Colour[] { new Colour(Colour.LIGHT_BLUE, 0.4f) };
+		
+		this.loadingBar = new GUILoadingBar(10, Colour.WHITE, 300, 20);
+		this.loadingBar.position = new Vector2D(20, 340);
+		this.loadingBar.border = new GUIBorder(this.loadingBar, 1f, new Colour[] { Colour.LIGHT_BLUE });
+		this.loadingBar.currentLoadingStage = 2;
+		this.loadingBar.barFill.colour = Colour.LIGHT_BLUE;
+		
+		GUIButton verticalSliderButton = new GUIButton(new Colour[] { Colour.LIGHT_BLUE, Colour.BLUE, Colour.RED }, 26, 10);
+		this.verticalSlider = new GUISlider(verticalSliderButton, GUISlider.DIRECTION_VERTICAL, 4, 100);
+		this.verticalSlider.position = new Vector2D(20, 400);
+		
+		GUIButton horizontalSliderButton = new GUIButton(new Colour[] { Colour.LIGHT_BLUE, Colour.BLUE, Colour.RED }, 10, 26);
+		this.horizontalSlider = new GUISlider(horizontalSliderButton, GUISlider.DIRECTION_HORIZONTAL, 100, 4);
+		this.horizontalSlider.position = new Vector2D(100, 400);
+		
+		panel.add(this.button);
+		panel.add(this.checkBox);
+		panel.add(this.menu);
+		panel.add(this.list);
+		panel.add(this.radio);
+		panel.add(this.label);
+		panel.add(this.textBox);
+		panel.add(this.loadingBar);
+		panel.add(this.verticalSlider);
+		panel.add(this.horizontalSlider);
 	}
 	
 	/* The method called when the game loop is updated */
 	public void update() {
-		this.button.update();
-		this.checkBox.update();
-		this.menu.update();
-		this.list.update();
-		this.radio.update();
-		this.label.update();
-		this.textBox.update();
+		
 	}
 	
 	/* The method called when the game loop is rendered */
@@ -107,14 +135,6 @@ public class GUITest extends BaseGame implements GUIComponentListener {
 		OpenGLUtils.setupRemoveAlpha();
 		
 		OpenGLUtils.setupOrtho(-1, 1);
-		
-		this.button.render();
-		this.checkBox.render();
-		this.menu.render();
-		this.list.render();
-		this.radio.render();
-		this.label.render();
-		this.textBox.render();
 	}
 	
 	public static void main(String[] args) {

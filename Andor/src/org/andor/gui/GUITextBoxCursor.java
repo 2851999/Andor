@@ -76,4 +76,9 @@ public class GUITextBoxCursor extends Object2D {
 		this.cursorShown = true;
 	}
 	
+	/* The set/get methods */
+	public void setTimeBetweenBlink(long timeBetweenBlink) { this.timeBetweenBlink = timeBetweenBlink; }
+	public long getTimeBetweenBlink() { return this.timeBetweenBlink; }
+	public boolean isCursorShowing() { return this.cursorShown; }
+	
 }
