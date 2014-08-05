@@ -8,6 +8,9 @@
 
 package org.andor.core;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.andor.core.input.Input;
 import org.andor.core.input.InputListenerInterface;
 import org.andor.core.input.InputManager;
@@ -25,10 +28,15 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 	/* The FPS calculator */
 	public FPSCalculator fpsCalculator;
 	
+	/* The other game loop interfaces */
+	public static List<GameLoopInterface> interfaces;
+	
 	/* The default constructor */
 	public GameLoop() {
 		//Create the FPS calculator
 		this.fpsCalculator = new FPSCalculator();
+		//Setup the interfaces
+		interfaces = new ArrayList<GameLoopInterface>();
 		//Create the window
 		Window.create();
 		//Create the input
@@ -55,8 +63,10 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 			InputManager.checkInput();
 			//Call the update method
 			this.update();
+			this.interfaceUpdate();
 			//Call the render method
 			this.render();
+			this.interfaceRender();
 			//Update the display
 			Window.updateDisplay();
 		}
@@ -66,8 +76,10 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 		Window.close();
 		//Call the stop method
 		this.stop();
+		this.interfaceStop();
 		//Call the close method
 		this.close();
+		this.interfaceClose();
 	}
 	
 	/* The method called to request the program to close  */
@@ -149,6 +161,35 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 	/* The method called when the mouse scrolls */
 	public void onScroll(ScrollEvent e) {
 		
+	}
+	
+	/* The static method used to add an interface */
+	public static void add(GameLoopInterface i) {
+		interfaces.add(i);
+	}
+	
+	/* The method used to update all of the game loop interfaces */
+	public void interfaceUpdate() {
+		for (int a = 0; a < interfaces.size(); a++)
+			interfaces.get(a).update();
+	}
+	
+	/* The method used to render all of the game loop interfaces */
+	public void interfaceRender() {
+		for (int a = 0; a < interfaces.size(); a++)
+			interfaces.get(a).render();
+	}
+	
+	/* The method used to render all of the game loop interfaces */
+	public void interfaceStop() {
+		for (int a = 0; a < interfaces.size(); a++)
+			interfaces.get(a).stop();
+	}
+	
+	/* The method used to render all of the game loop interfaces */
+	public void interfaceClose() {
+		for (int a = 0; a < interfaces.size(); a++)
+			interfaces.get(a).close();
 	}
 	
 	/* The method used to get the current delta */

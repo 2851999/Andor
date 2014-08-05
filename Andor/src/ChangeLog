@@ -1,4 +1,10 @@
 ------------------------------------------------------
+Release 1 | Beta 0 | Development 1 | Experimental 3
+
+* Added GUISlider
+* Added GUIPanel
+
+------------------------------------------------------
 Release 1 | Beta 0 | Development 1 | Experimental 2
 
 * Added GUIFill
