@@ -11,7 +11,6 @@ package org.andor.gui;
 import org.andor.core.Colour;
 import org.andor.core.Image;
 import org.andor.core.Object2DBuilder;
-import org.andor.core.Vector2D;
 
 public class GUILoadingBar extends GUIComponent {
 
@@ -86,7 +85,6 @@ public class GUILoadingBar extends GUIComponent {
 		//Get the width of the bar
 		float barWidth = (this.width / this.loadingStages) * this.currentLoadingStage;
 		//Setup the bar fill
-		this.barFill.position = new Vector2D(this.getPosition());
 		this.barFill.width = barWidth;
 		this.barFill.height = this.height;
 		//Render the loading bar

@@ -18,6 +18,7 @@ import org.andor.gui.GUIRadioCheckBox;
 import org.andor.gui.GUISlider;
 import org.andor.gui.GUITextBox;
 import org.andor.gui.GUIToolTip;
+import org.andor.gui.GUIWindow;
 import org.andor.utils.Console;
 import org.andor.utils.FontUtils;
 import org.andor.utils.OpenGLUtils;
@@ -37,6 +38,7 @@ public class GUITest extends BaseGame implements GUIComponentListener {
 	public GUILoadingBar loadingBar;
 	public GUISlider verticalSlider;
 	public GUISlider horizontalSlider;
+	public GUIWindow window;
 	
 	public GUITest() {
 		
@@ -111,6 +113,13 @@ public class GUITest extends BaseGame implements GUIComponentListener {
 		this.horizontalSlider = new GUISlider(horizontalSliderButton, GUISlider.DIRECTION_HORIZONTAL, 100, 4);
 		this.horizontalSlider.position = new Vector2D(100, 400);
 		
+		GUIButton closeButton = new GUIButton(new Colour[] { Colour.RED, Colour.BLUE, Colour.LIGHT_BLUE }, 30, 20);
+		closeButton.setText("X");
+		this.window = new GUIWindow("Window", Colour.WHITE, 200, 120);
+		this.window.topBar.colour = Colour.LIGHT_BLUE;
+		this.window.position = new Vector2D(400, 100);
+		this.window.setCloseButton(closeButton);
+		
 		panel.add(this.button);
 		panel.add(this.checkBox);
 		panel.add(this.menu);
@@ -121,6 +130,7 @@ public class GUITest extends BaseGame implements GUIComponentListener {
 		panel.add(this.loadingBar);
 		panel.add(this.verticalSlider);
 		panel.add(this.horizontalSlider);
+		panel.add(this.window);
 	}
 	
 	/* The method called when the game loop is updated */

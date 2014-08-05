@@ -21,6 +21,7 @@ public class GUIPanel extends Object2D implements GameLoopInterface {
 	public GUIPanel(String name, boolean autoUpdate) {
 		//Assign the variables
 		this.group = new GUIGroup(name);
+		this.link(this.group);
 		if (autoUpdate)
 			GameLoop.add(this);
 	}

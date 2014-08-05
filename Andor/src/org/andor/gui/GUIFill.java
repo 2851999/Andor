@@ -57,6 +57,7 @@ public class GUIFill extends Object2D {
 	public void setup(GUIComponent component, Image image) {
 		//Assign the variables
 		this.component = component;
+		this.component.link(this);
 		if (image != null)
 			this.renderer = new GUIComponentRenderer(Object2DBuilder.createQuad(image, this.component.width, this.component.height, Colour.WHITE));
 		else
