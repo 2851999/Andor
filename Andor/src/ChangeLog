@@ -1,4 +1,44 @@
 ------------------------------------------------------
+Release 1 | Beta 0 | Development 3 | Experimental 0
+
+* Added GUIWindow
+* Added InputManagerController
+* Added InputController
+* Added ControllerUtils
+* Added ControllerTest
+* Added ControllerEvent
+* Added ControllerAxis
+* Added ControllerAxisEvent
+* Added ControllerButton
+* Added ControllerButtonEvent
+* Added ContollerPov
+* Added ControllerPovEvent
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 2 | Experimental 3
+
+* Added ControllerEvent
+* Added ControllerAxis
+* Added ControllerAxisEvent
+* Added ControllerButton
+* Added ControllerButtonEvent
+* Added ContollerPov
+* Added ControllerPovEvent
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 2 | Experimental 2
+
+* Added InputManagerController
+* Added InputController
+* Added ControllerUtils
+* Added ControllerTest
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 2 | Experimental 1
+
+* Added GUIWindow
+
+------------------------------------------------------
 Release 1 | Beta 0 | Development 2 | Experimental 0
 
 * Added GUIToolTip

@@ -10,6 +10,8 @@ package org.andor.core.input;
 
 public interface InputListenerInterface {
 	
+	/* MOUSE STUFF */
+	
 	/* The method called when a button on the mouse is pressed */
 	public void onMousePressed(MouseEvent e);
 	
@@ -25,6 +27,11 @@ public interface InputListenerInterface {
 	/* The method called when the mouse is dragged */
 	public void onMouseDragged(MouseMotionEvent e);
 	
+	/* The method called when the mouse scrolls */
+	public void onScroll(ScrollEvent e);
+	
+	/* KEYBOARD STUFF */
+	
 	/* The method called when a key on the keyboard is pressed */
 	public void onKeyPressed(KeyboardEvent e);
 	
@@ -34,7 +41,18 @@ public interface InputListenerInterface {
 	/* The method called when a key on the keyboard is typed */
 	public void onKeyTyped(KeyboardEvent e);
 	
-	/* The method called when the mouse scrolls */
-	public void onScroll(ScrollEvent e);
+	/* CONTROLLER STUFF */
+	
+	/* The method called when an axis changes */
+	public void onAxisChange(ControllerAxisEvent e);
+	
+	/* The method called when a button is pressed */
+	public void onButtonPressed(ControllerButtonEvent e);
+	
+	/* The method called when a button is released */
+	public void onButtonReleased(ControllerButtonEvent e);
+	
+	/* The method called when the pov is changed */
+	public void onPovChange(ControllerPovEvent e);
 	
 }
