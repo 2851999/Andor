@@ -13,6 +13,9 @@ import org.andor.core.Font;
 import org.andor.core.Image;
 import org.andor.core.Object2DBuilder;
 import org.andor.core.Vector2D;
+import org.andor.core.input.ControllerAxisEvent;
+import org.andor.core.input.ControllerButtonEvent;
+import org.andor.core.input.ControllerPovEvent;
 import org.andor.core.input.Input;
 import org.andor.core.input.InputListenerInterface;
 import org.andor.core.input.Keyboard;
@@ -553,6 +556,18 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface, 
 	
 	/* The method called when the mouse scrolls */
 	public void onScroll(ScrollEvent e) { }
+	
+	/* The method called when an axis changes */
+	public void onAxisChange(ControllerAxisEvent e) { }
+	
+	/* The method called when a button is pressed */
+	public void onButtonPressed(ControllerButtonEvent e) { }
+	
+	/* The method called when a button is released */
+	public void onButtonReleased(ControllerButtonEvent e) { }
+	
+	/* The method called when the pov is changed */
+	public void onPovChange(ControllerPovEvent e) { }
 	
 	/* The method called when a keyboard shortcut has been completed */
 	public void onShortcut(KeyboardShortcut e) {

@@ -11,6 +11,9 @@ package org.andor.core;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.andor.core.input.ControllerAxisEvent;
+import org.andor.core.input.ControllerButtonEvent;
+import org.andor.core.input.ControllerPovEvent;
 import org.andor.core.input.Input;
 import org.andor.core.input.InputListenerInterface;
 import org.andor.core.input.InputManager;
@@ -118,50 +121,50 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 		
 	}
 	
+	/* MOUSE STUFF */
+	
 	/* The method called when a button on the mouse is pressed */
-	public void onMousePressed(MouseEvent e) {
-		
-	}
+	public void onMousePressed(MouseEvent e) { }
 	
 	/* The method called when a button on the mouse is released */
-	public void onMouseReleased(MouseEvent e)  {
-		
-	}
+	public void onMouseReleased(MouseEvent e) { }
 	
 	/* The method called when a button on the mouse is clicked */
-	public void onMouseClicked(MouseEvent e) {
-		
-	}
+	public void onMouseClicked(MouseEvent e) { }
 	
 	/* The method called when the mouse moves */
-	public void onMouseMoved(MouseMotionEvent e) {
-		
-	}
+	public void onMouseMoved(MouseMotionEvent e) { }
 	
 	/* The method called when the mouse is dragged */
-	public void onMouseDragged(MouseMotionEvent e) {
-		
-	}
-	
-	/* The method called when a key on the keyboard is pressed */
-	public void onKeyPressed(KeyboardEvent e) {
-		
-	}
-	
-	/* The method called when a key on the keyboard is released */
-	public void onKeyReleased(KeyboardEvent e) {
-		
-	}
-	
-	/* The method called when a key on the keyboard is typed */
-	public void onKeyTyped(KeyboardEvent e) {
-		
-	}
+	public void onMouseDragged(MouseMotionEvent e) { }
 	
 	/* The method called when the mouse scrolls */
-	public void onScroll(ScrollEvent e) {
-		
-	}
+	public void onScroll(ScrollEvent e) { }
+	
+	/* KEYBOARD STUFF */
+	
+	/* The method called when a key on the keyboard is pressed */
+	public void onKeyPressed(KeyboardEvent e) { }
+	
+	/* The method called when a key on the keyboard is released */
+	public void onKeyReleased(KeyboardEvent e) { }
+	
+	/* The method called when a key on the keyboard is typed */
+	public void onKeyTyped(KeyboardEvent e) { }
+	
+	/* CONTROLLER STUFF */
+	
+	/* The method called when an axis changes */
+	public void onAxisChange(ControllerAxisEvent e) { }
+	
+	/* The method called when a button is pressed */
+	public void onButtonPressed(ControllerButtonEvent e) { }
+	
+	/* The method called when a button is released */
+	public void onButtonReleased(ControllerButtonEvent e) { }
+	
+	/* The method called when the pov is changed */
+	public void onPovChange(ControllerPovEvent e) { }
 	
 	/* The static method used to add an interface */
 	public static void add(GameLoopInterface i) {
