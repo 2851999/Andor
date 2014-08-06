@@ -41,10 +41,9 @@ public class MouseMotionEvent extends Event {
 		//Call the super constructor
 		super(EVENT_NAME, EVENT_DESCRIPTION);
 		//Assign the variables
-		//Assign the variables
-		leftButton = Mouse.leftButton;
-		rightButton = Mouse.rightButton;
-		middleButton = Mouse.middleButton;
+		this.leftButton = Mouse.leftButton;
+		this.rightButton = Mouse.rightButton;
+		this.middleButton = Mouse.middleButton;
 		this.startX = startX;
 		this.startY = startY;
 		this.endX = endX;
