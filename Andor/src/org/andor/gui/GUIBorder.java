@@ -31,7 +31,7 @@ public class GUIBorder extends Object2D {
 	public GUIBorder(GUIComponent component, float thickness) {
 		//Setup this boarder
 		this.setup(component, thickness);
-		//Set the colour to black
+		//Set the colour to white
 		this.renderer.colours = new Colour[] { Colour.WHITE };
 	}
 	
@@ -47,7 +47,7 @@ public class GUIBorder extends Object2D {
 	public GUIBorder(GUIComponent component, float thickness, Image[] images) {
 		//Setup this boarder
 		this.setup(component, thickness);
-		//Set the colours
+		//Set the images
 		this.renderer.images = images;
 	}
 	

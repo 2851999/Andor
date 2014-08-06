@@ -13,11 +13,11 @@ public class Settings {
 	/* The static class containing all of the information about Andor */
 	public static class Information {
 		/* The version of Andor */
-		public static final String VERSION = "V0.0.1.2";
+		public static final String VERSION = "V0.0.1.5";
 		/* The build of Andor */
 		public static final String BUILD = "Beta";
 		/* The date this build started development */
-		public static final String DATE = "03/08/2014";
+		public static final String DATE = "06/08/2014";
 	}
 	
 	/* The static class containing all of the settings required for the window */

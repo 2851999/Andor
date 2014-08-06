@@ -8,6 +8,12 @@
 
 package org.andor.core;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.andor.core.input.ControllerAxisEvent;
+import org.andor.core.input.ControllerButtonEvent;
+import org.andor.core.input.ControllerPovEvent;
 import org.andor.core.input.Input;
 import org.andor.core.input.InputListenerInterface;
 import org.andor.core.input.InputManager;
@@ -25,10 +31,15 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 	/* The FPS calculator */
 	public FPSCalculator fpsCalculator;
 	
+	/* The other game loop interfaces */
+	public static List<GameLoopInterface> interfaces;
+	
 	/* The default constructor */
 	public GameLoop() {
 		//Create the FPS calculator
 		this.fpsCalculator = new FPSCalculator();
+		//Setup the interfaces
+		interfaces = new ArrayList<GameLoopInterface>();
 		//Create the window
 		Window.create();
 		//Create the input
@@ -55,8 +66,10 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 			InputManager.checkInput();
 			//Call the update method
 			this.update();
+			this.interfaceUpdate();
 			//Call the render method
 			this.render();
+			this.interfaceRender();
 			//Update the display
 			Window.updateDisplay();
 		}
@@ -66,8 +79,10 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 		Window.close();
 		//Call the stop method
 		this.stop();
+		this.interfaceStop();
 		//Call the close method
 		this.close();
+		this.interfaceClose();
 	}
 	
 	/* The method called to request the program to close  */
@@ -106,49 +121,78 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 		
 	}
 	
+	/* MOUSE STUFF */
+	
 	/* The method called when a button on the mouse is pressed */
-	public void onMousePressed(MouseEvent e) {
-		
-	}
+	public void onMousePressed(MouseEvent e) { }
 	
 	/* The method called when a button on the mouse is released */
-	public void onMouseReleased(MouseEvent e)  {
-		
-	}
+	public void onMouseReleased(MouseEvent e) { }
 	
 	/* The method called when a button on the mouse is clicked */
-	public void onMouseClicked(MouseEvent e) {
-		
-	}
+	public void onMouseClicked(MouseEvent e) { }
 	
 	/* The method called when the mouse moves */
-	public void onMouseMoved(MouseMotionEvent e) {
-		
-	}
+	public void onMouseMoved(MouseMotionEvent e) { }
 	
 	/* The method called when the mouse is dragged */
-	public void onMouseDragged(MouseMotionEvent e) {
-		
-	}
-	
-	/* The method called when a key on the keyboard is pressed */
-	public void onKeyPressed(KeyboardEvent e) {
-		
-	}
-	
-	/* The method called when a key on the keyboard is released */
-	public void onKeyReleased(KeyboardEvent e) {
-		
-	}
-	
-	/* The method called when a key on the keyboard is typed */
-	public void onKeyTyped(KeyboardEvent e) {
-		
-	}
+	public void onMouseDragged(MouseMotionEvent e) { }
 	
 	/* The method called when the mouse scrolls */
-	public void onScroll(ScrollEvent e) {
-		
+	public void onScroll(ScrollEvent e) { }
+	
+	/* KEYBOARD STUFF */
+	
+	/* The method called when a key on the keyboard is pressed */
+	public void onKeyPressed(KeyboardEvent e) { }
+	
+	/* The method called when a key on the keyboard is released */
+	public void onKeyReleased(KeyboardEvent e) { }
+	
+	/* The method called when a key on the keyboard is typed */
+	public void onKeyTyped(KeyboardEvent e) { }
+	
+	/* CONTROLLER STUFF */
+	
+	/* The method called when an axis changes */
+	public void onAxisChange(ControllerAxisEvent e) { }
+	
+	/* The method called when a button is pressed */
+	public void onButtonPressed(ControllerButtonEvent e) { }
+	
+	/* The method called when a button is released */
+	public void onButtonReleased(ControllerButtonEvent e) { }
+	
+	/* The method called when the pov is changed */
+	public void onPovChange(ControllerPovEvent e) { }
+	
+	/* The static method used to add an interface */
+	public static void add(GameLoopInterface i) {
+		interfaces.add(i);
+	}
+	
+	/* The method used to update all of the game loop interfaces */
+	public void interfaceUpdate() {
+		for (int a = 0; a < interfaces.size(); a++)
+			interfaces.get(a).update();
+	}
+	
+	/* The method used to render all of the game loop interfaces */
+	public void interfaceRender() {
+		for (int a = 0; a < interfaces.size(); a++)
+			interfaces.get(a).render();
+	}
+	
+	/* The method used to render all of the game loop interfaces */
+	public void interfaceStop() {
+		for (int a = 0; a < interfaces.size(); a++)
+			interfaces.get(a).stop();
+	}
+	
+	/* The method used to render all of the game loop interfaces */
+	public void interfaceClose() {
+		for (int a = 0; a < interfaces.size(); a++)
+			interfaces.get(a).close();
 	}
 	
 	/* The method used to get the current delta */

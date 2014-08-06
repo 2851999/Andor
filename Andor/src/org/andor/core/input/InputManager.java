@@ -20,6 +20,7 @@ public class InputManager {
 		//Check the mouse and keyboard
 		checkMouse();
 		checkKeyboard();
+		InputManagerController.checkInput();
 	}
 	
 	/* The static method used to check the mouse input */
@@ -129,9 +130,11 @@ public class InputManager {
 			org.lwjgl.input.Mouse.create();
 			//Enable repeat events (To allow for holding down keys etc.)
 			org.lwjgl.input.Keyboard.enableRepeatEvents(true);
+			//Create the controllers
+			InputManagerController.create();
 		} catch (LWJGLException e) {
-			//Log a message
-			Logger.log("InputManager create()" , "An error occurred" , Log.ERROR);
+			//Log an error
+			Logger.log("InputManager create()" , "An error occurred when creting the keyboard and mouse" , Log.ERROR);
 			e.printStackTrace();
 		}
 	}
@@ -141,6 +144,8 @@ public class InputManager {
 		//Destroy the keyboard and mouse
 		org.lwjgl.input.Keyboard.destroy();
 		org.lwjgl.input.Mouse.destroy();
+		//Destroy the controllers
+		InputManagerController.destroy();
 	}
 	
 }

@@ -106,8 +106,12 @@ public class Timer {
 	
 	/* The method used to check whether a certain amount of time has passed */
 	public boolean hasTimePassed(long time) {
-		//Return the correct value
-		return getTime() >= time;
+		//Make sure this timer has actually been started at least once
+		if (this.running || this.paused || this.stopped)
+			//Return the correct value
+			return getTime() >= time;
+		else
+			return false;
 	}
 	
 	/* The methods used to return whether number of seconds, minutes and hours has passed */
