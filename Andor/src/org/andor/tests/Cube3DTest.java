@@ -21,16 +21,24 @@ import org.andor.core.Shader;
 import org.andor.core.SkyBox;
 import org.andor.core.Vector3D;
 import org.andor.core.Window;
+import org.andor.core.input.ControlBindingAxis;
+import org.andor.core.input.ControlBindingButton;
+import org.andor.core.input.ControlBindings;
+import org.andor.core.input.ControlInputListener;
+import org.andor.core.input.InputController;
+import org.andor.core.input.InputManagerController;
 import org.andor.core.input.Keyboard;
 import org.andor.core.input.KeyboardEvent;
 import org.andor.core.input.Mouse;
 import org.andor.core.input.MouseMotionEvent;
 import org.andor.core.model.Model;
 import org.andor.core.model.OBJLoader;
+import org.andor.utils.Console;
+import org.andor.utils.ControllerUtils;
 import org.andor.utils.FontUtils;
 import org.andor.utils.OpenGLUtils;
 
-public class Cube3DTest extends BaseGame {
+public class Cube3DTest extends BaseGame implements ControlInputListener {
 	
 	/* The camera */
 	public Camera3D camera;
@@ -54,6 +62,9 @@ public class Cube3DTest extends BaseGame {
 	
 	/* The boolean that determine whether wireframe is on or off */
 	public boolean wireframe;
+	
+	public InputController controller;
+	public ControlBindings bindings;
 	
 	/* The constructor */
 	public Cube3DTest() {
@@ -102,6 +113,24 @@ public class Cube3DTest extends BaseGame {
 		test.create();
 		//Lock the mouse
 		Mouse.lock();
+		
+		//Get all of the available controllers
+		InputController[] controllers = ControllerUtils.getAvailableControllers();
+		//Go through the controllers
+		for (InputController controller : controllers) {
+			//Print out some information
+			Console.println("Name: " + controller.name);
+			Console.println("Axis Count: " + controller.axisCount);
+			Console.println("Button Count: " + controller.buttonCount);
+			Console.println("");
+		}
+		//Get the last controller (In my case this is a joystick)
+		this.controller = controllers[controllers.length - 1];
+		//Add the controller
+		InputManagerController.addController(this.controller);
+		bindings = new ControlBindings();
+		bindings.addListener(this);
+		bindings.load("C:/gamepadconfig.txt", true, controller);
 	}
 	
 	/* The method called when the game loop has started */
@@ -112,12 +141,6 @@ public class Cube3DTest extends BaseGame {
 	/* The method called when the game loop is updated */
 	public void update() {
 		//Check the keys
-		if (Keyboard.KEY_W)
-			//Move the camera forwards
-			camera.moveForward(0.01f * getDelta());
-		if (Keyboard.KEY_S)
-			//Move the camera forwards
-			camera.moveBackward(0.01f * getDelta());
 		if (Keyboard.KEY_A)
 			//Move the camera forwards
 			camera.moveLeft(0.01f * getDelta());
@@ -129,7 +152,12 @@ public class Cube3DTest extends BaseGame {
 			//Request to end the program
 			requestClose();
 		
-		Vector3D change = new Vector3D(0.1f, 0.1f, 0.1f);
+		camera.moveForward(this.bindings.get("Walk").bindingAxis.currentValue / 100 * getDelta());
+		camera.moveLeft(this.bindings.get("Stride").bindingAxis.currentValue / 100 * getDelta());
+		camera.rotation.y += this.bindings.get("LookX").bindingAxis.currentValue / 3 * getDelta();
+		camera.rotation.x += this.bindings.get("LookY").bindingAxis.currentValue / 3 * getDelta();
+		
+		Vector3D change = new Vector3D(0, 0.1f, 0);
 		change.multiply(getDelta());
 		this.model.rotation.add(change);
 	}
@@ -143,10 +171,16 @@ public class Cube3DTest extends BaseGame {
 		
 		OpenGLUtils.setupPerspective(70f, 0.1f, 1000f);
 		OpenGLUtils.enableDepthTest();
-		OpenGLUtils.enableTexture2D();
 		
 		//Use the camera's view on the world
 		this.camera.useView();
+		
+		OpenGLUtils.disableTexture2D();
+		test.use();
+		this.model.render();
+		test.stopUsing();
+		
+		OpenGLUtils.enableTexture2D();
 		
 		//Bind the texture
 		this.texture.bind();
@@ -154,13 +188,14 @@ public class Cube3DTest extends BaseGame {
 		//Render the cube
 		this.cube.render();
 		
-		OpenGLUtils.disableTexture2D();
-		this.bigCube.render();
-		//test.use();
-		this.model.render();
-		//test.stopUsing();
-		
 		this.texture.unbind();
+		
+		OpenGLUtils.disableTexture2D();
+		
+		this.bigCube.render();
+		
+		OpenGLUtils.enableTexture2D();
+		
 		
 		OpenGLUtils.setupOrtho(-1, 1);
 		
@@ -206,13 +241,7 @@ public class Cube3DTest extends BaseGame {
 			this.cube.renderer.updateColours(Object3DBuilder.createColourArray(24, new Colour(1f, 1f, 1f, 0.1f)));
 		else if (e.getCode() == Keyboard.KEY_9_CODE)
 			this.cube.renderer.updateColours(Object3DBuilder.createColourArray(24, new Colour(1f, 1f, 1f, 0.0f)));
-		else if (e.getCode() == Keyboard.KEY_M_CODE) {
-			wireframe = !wireframe;
-			if (wireframe)
-				OpenGLUtils.enableWireframeMode();
-			else
-				OpenGLUtils.disableWireframeMode();
-		} else if (e.getCode() == Keyboard.KEY_F11_CODE) {
+		else if (e.getCode() == Keyboard.KEY_F11_CODE) {
 			Settings.Window.Fullscreen = ! Settings.Window.Fullscreen;
 			Window.updateDisplaySettings();
 		}
@@ -224,6 +253,24 @@ public class Cube3DTest extends BaseGame {
 		if (Mouse.isLocked())
 			//Change the camera's rotation
 			camera.rotation.add(new Vector3D(e.dy * 0.5f, e.dx * 0.5f, 0));
+	}
+	
+	public void onAxisChange(ControlBindingAxis binding) {
+		
+	}
+	
+	public void onButtonPressed(ControlBindingButton binding) {
+		
+	}
+	
+	public void onButtonReleased(ControlBindingButton binding) {
+		if (binding.controlBinding.name.equals("Wireframe")) {
+			wireframe = !wireframe;
+			if (wireframe)
+				OpenGLUtils.enableWireframeMode();
+			else
+				OpenGLUtils.disableWireframeMode();
+		}
 	}
 	
 	

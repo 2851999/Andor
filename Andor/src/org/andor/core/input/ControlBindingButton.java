@@ -120,7 +120,7 @@ public class ControlBindingButton extends InputListener {
 				this.controllerButton = e.getButton();
 				//Stop expecting this event
 				this.expectingEvent = false;
-			} else if (this.controllerButton != null && this.controllerButton == e.getButton()) {
+			} else if (this.controllerButton != null && this.controllerButton.index == e.getButton().index) {
 				//Check the current value
 				if (this.pressed != true) {
 					//Assign the value
@@ -137,7 +137,7 @@ public class ControlBindingButton extends InputListener {
 		//Make sure this is the right controller
 		if (e.controller.index == this.controlBinding.controllerIndex) {
 			//Check the button
-			if (this.controllerButton != null && this.controllerButton == e.getButton()) {
+			if (this.controllerButton != null && this.controllerButton.index == e.getButton().index) {
 				//Check the current value
 				if (this.pressed != false) {
 					//Assign the value

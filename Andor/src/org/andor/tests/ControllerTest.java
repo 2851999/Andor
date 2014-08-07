@@ -24,7 +24,7 @@ import org.andor.utils.ControllerUtils;
 
 public class ControllerTest extends BaseGame implements ControlInputListener {
 	
-	public static final String PATH = "C:/Users/Joel/Desktop/config.txt";
+	public static final String PATH = "C:/config.txt";
 	
 	/* The controller */
 	public InputController controller;
@@ -50,6 +50,8 @@ public class ControllerTest extends BaseGame implements ControlInputListener {
 		bindings = new ControlBindings();
 		bindings.addListener(this);
 		bindings.load(PATH, true, controller);
+		if (this.controller.getRumblerCount() > 0)
+			this.controller.rumble(2000, 1f);
 	}
 	
 	/* The method called to update the game */
@@ -59,22 +61,23 @@ public class ControllerTest extends BaseGame implements ControlInputListener {
 	
 	/* The method called when an axis changes */
 	public void onAxisChange(ControllerAxisEvent e) {
-		//Console.println("Axis Changed: " + e.getAxis().getName() + " New Value: " + e.getAxisValue());
+		Console.println("Axis Changed: " + e.getAxis().getName() + " New Value: " + e.getAxisValue());
+		Console.println(e.getAxis().getIndex());
 	}
 	
 	/* The method called when a button is pressed */
 	public void onButtonPressed(ControllerButtonEvent e) {
-		//Console.println("Button Pressed: " + e.getButton().getName());
+		Console.println("Button Pressed: " + e.getButton().getName());
 	}
 	
 	/* The method called when a button is released */
 	public void onButtonReleased(ControllerButtonEvent e) {
-		//Console.println("Button Released: " + e.getButton().getName());
+		Console.println("Button Released: " + e.getButton().getName());
 	}
 	
 	/* The method called when the pov is changed */
 	public void onPovChange(ControllerPovEvent e) {
-		//Console.println("POV Change X: " + e.getPovValue().x + " Y: " + e.getPovValue().y);
+		Console.println("POV Change X: " + e.getPovValue().x + " Y: " + e.getPovValue().y);
 	}
 	
 	/* The method called when a button on the mouse is clicked */
