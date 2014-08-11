@@ -33,6 +33,7 @@ import org.andor.core.input.Mouse;
 import org.andor.core.input.MouseMotionEvent;
 import org.andor.core.model.Model;
 import org.andor.core.model.OBJLoader;
+import org.andor.utils.ClampUtils;
 import org.andor.utils.Console;
 import org.andor.utils.ControllerUtils;
 import org.andor.utils.FontUtils;
@@ -79,7 +80,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		//Load the font
 		this.font = FontUtils.createFont("Arial", 12);
 		//Load the texture and bind it
-		String path = "C:/";
+		String path = "C:/Andor/";
 		//Create a skybox
 		SkyBox skybox = new SkyBox(path, new String[] {
 				"front.png",
@@ -103,13 +104,13 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		}, 1, 1, 1, Colour.WHITE);
 		bigCube = Object3DBuilder.createCube(10, 10, 10, new Colour(130f / 255f, 176f / 255f, 255f / 255f, 0.8f));
 		//Load the model
-		this.model = OBJLoader.loadModel(path + "monkey.obj", true);
+		this.model = OBJLoader.loadModel(path + "monkey2.obj", true);
 		this.model.prepare();
 		this.model.position.z = -10;
 		//Set wireframe to false
 		wireframe = false;
 		test = new Shader();
-		test.load("C:/light", true);
+		test.load("C:/Andor/light", true);
 		test.create();
 		//Lock the mouse
 		Mouse.lock();
@@ -130,7 +131,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		InputManagerController.addController(this.controller);
 		bindings = new ControlBindings();
 		bindings.addListener(this);
-		bindings.load("C:/gamepadconfig.txt", true, controller);
+		bindings.load("C:/Andor/gamepadconfig.txt", true, controller);
 	}
 	
 	/* The method called when the game loop has started */
@@ -156,6 +157,8 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		camera.moveLeft(this.bindings.get("Stride").bindingAxis.currentValue / 100 * getDelta());
 		camera.rotation.y += this.bindings.get("LookX").bindingAxis.currentValue / 3 * getDelta();
 		camera.rotation.x += this.bindings.get("LookY").bindingAxis.currentValue / 3 * getDelta();
+		
+		this.camera.rotation.x = ClampUtils.clamp(this.camera.rotation.x, -80, 80);
 		
 		Vector3D change = new Vector3D(0, 0.1f, 0);
 		change.multiply(getDelta());
@@ -220,9 +223,6 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		if (e.getCode() == Keyboard.KEY_F3_CODE)
 			//Toggle the mouse locked
 			Mouse.setLocked(! Mouse.isLocked());
-		else if (e.getCode() == Keyboard.KEY_R_CODE)
-			//Reset the players position
-			this.camera.position = new Vector3D(0, -2, 0);
 		else if (e.getCode() == Keyboard.KEY_1_CODE)
 			this.cube.renderer.updateColours(Object3DBuilder.createColourArray(24, Colour.WHITE));
 		else if (e.getCode() == Keyboard.KEY_2_CODE)
@@ -270,6 +270,11 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 				OpenGLUtils.enableWireframeMode();
 			else
 				OpenGLUtils.disableWireframeMode();
+		} else if (binding.controlBinding.name.equals("Rumble")) {
+			this.controller.rumble(500, 1f);
+			//Reset the players position
+			this.camera.position = new Vector3D(0, -2, 0);
+			this.camera.rotation = new Vector3D(0, 0, 0);
 		}
 	}
 	

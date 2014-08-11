@@ -121,6 +121,18 @@ public class InputController {
 			Logger.log("Andor - InputController rumble()", "No rumblers found in the controller " + this.name, Log.ERROR);
 	}
 	
+	/* The method used to make this controller stop rumbling */
+	public void stopRumble() {
+		if (this.rumblerCount > 0) {
+			//Go through all of the rumblers
+			for (int a = 0; a < this.rumblers.length; a++)
+				//Stop rumbling
+				this.rumblers[a].stop();
+		} else
+			//Log an error
+			Logger.log("Andor - InputController rumble()", "No rumblers found in the controller " + this.name, Log.ERROR);
+	}
+	
 	/* The methods used to get values from this controller */
 	public int getIndex() { return this.index; }
 	public Controller getController() { return this.controller; }

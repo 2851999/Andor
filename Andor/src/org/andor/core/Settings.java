@@ -41,4 +41,12 @@ public class Settings {
 		public static int MaxFPS = 60;
 	}
 	
+	/* The static class containing all of the audio settings */
+	public static class Audio {
+		/* The sound effect volume */
+		public static int SoundEffectVolume = 100;
+		/* The music volume */
+		public static int MusicVolume = 100;
+	}
+	
 }
