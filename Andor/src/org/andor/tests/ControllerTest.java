@@ -9,6 +9,7 @@
 package org.andor.tests;
 
 import org.andor.core.BaseGame;
+import org.andor.core.input.ControlBinding;
 import org.andor.core.input.ControlBindingAxis;
 import org.andor.core.input.ControlBindingButton;
 import org.andor.core.input.ControlBindings;
@@ -24,7 +25,7 @@ import org.andor.utils.ControllerUtils;
 
 public class ControllerTest extends BaseGame implements ControlInputListener {
 	
-	public static final String PATH = "C:/config.txt";
+	public static final String PATH = "C:/Users/Joel/Desktop/config.txt";
 	
 	/* The controller */
 	public InputController controller;
@@ -49,9 +50,7 @@ public class ControllerTest extends BaseGame implements ControlInputListener {
 		InputManagerController.addController(this.controller);
 		bindings = new ControlBindings();
 		bindings.addListener(this);
-		bindings.load(PATH, true, controller);
-		if (this.controller.getRumblerCount() > 0)
-			this.controller.rumble(2000, 1f);
+		bindings.add("Test", ControlBinding.TYPE_AXIS, controller);
 	}
 	
 	/* The method called to update the game */
@@ -86,6 +85,8 @@ public class ControllerTest extends BaseGame implements ControlInputListener {
 			bindings.get("Test").bindingAxis.setPos();
 		else if (e.rightButton)
 			bindings.get("Test").bindingAxis.setNeg();
+		else if (e.middleButton)
+			bindings.save(PATH);
 	}
 	
 	public void onAxisChange(ControlBindingAxis binding) {

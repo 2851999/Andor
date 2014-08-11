@@ -11,7 +11,7 @@ package org.andor.core.input;
 public class ControlBindingAxis extends InputListener {
 	
 	/* The control binding instance */
-	public ControlBinding controlBinding;
+	private ControlBinding controlBinding;
 	
 	/* The key codes */
 	public int keyCodePos;
@@ -228,5 +228,12 @@ public class ControlBindingAxis extends InputListener {
 		//Return the direction
 		return direction;
 	}
+	
+	/* The 'get' methods */
+	public ControlBinding getControlBinding() { return this.controlBinding; }
+	public int getKeyCodePos() { return this.keyCodePos; }
+	public int getKeyCodeNeg() { return this.keyCodeNeg; }
+	public ControllerAxis getControllerAxisPos() { return this.axisPos; }
+	public ControllerAxis getControllerAxisNeg() { return this.axisNeg; }
 	
 }

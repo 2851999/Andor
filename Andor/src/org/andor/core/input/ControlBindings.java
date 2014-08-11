@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.andor.utils.ArrayUtils;
+import org.andor.utils.FieldScanner;
 import org.andor.utils.FileUtils;
 
 public class ControlBindings {
@@ -33,6 +34,12 @@ public class ControlBindings {
 	public void add(String name, int binding) {
 		//Add the binding
 		this.bindings.add(new ControlBinding(this, name, binding));
+	}
+	
+	/* The method used to add a binding */
+	public void add(String name, int binding, InputController controller) {
+		//Add the binding
+		this.bindings.add(new ControlBinding(this, name, binding, controller.index, controller.name));
 	}
 	
 	/* The method used to get a binding given its name */
@@ -85,6 +92,15 @@ public class ControlBindings {
 	public void save(String path) {
 		//The file text
 		List<String> fileText = new ArrayList<String>();
+		//The scanner
+		FieldScanner scanner = new FieldScanner();
+		//Add the required classes to the scanner
+		scanner.addClass("org.andor.core.input.InputController");
+		scanner.addClass("org.andor.core.input.ControlBinding");
+		scanner.addClass("org.andor.core.input.ControlBindingAxis");
+		scanner.addClass("org.andor.core.input.ControlBindingButton");
+		scanner.addClass("org.andor.core.input.ControllerAxis");
+		scanner.addClass("org.andor.core.input.ControllerButton");
 		//Go through the bindings
 		for (int a = 0; a < this.bindings.size(); a++) {
 			//Get the current binding
@@ -98,20 +114,20 @@ public class ControlBindings {
 			//Add the type
 			fileText.add(type);
 			fileText.add("Name: " + binding.name);
-			if (binding.binding == ControlBinding.TYPE_AXIS) {
-				fileText.add("KeyCodePos: " + binding.bindingAxis.keyCodePos);
-				fileText.add("KeyCodeNeg: " + binding.bindingAxis.keyCodeNeg);
-				fileText.add("AxisDirectionPos: " + binding.bindingAxis.axisDirectionPos);
-				fileText.add("AxisDirectionNeg: " + binding.bindingAxis.axisDirectionNeg);
-				if (binding.bindingAxis.axisPos != null)
-					fileText.add("AxisPosIndex: " + binding.bindingAxis.axisPos.index);
-				if (binding.bindingAxis.axisNeg != null)
-					fileText.add("AxisNegIndex: " + binding.bindingAxis.axisNeg.index);
-			} else if (binding.binding == ControlBinding.TYPE_BUTTON) {
-				fileText.add("KeyCode: " + binding.bindingButton.keyCode);
-				if (binding.bindingButton.controllerButton != null)
-					fileText.add("ControllerButtonIndex: " + binding.bindingButton.controllerButton.index);
-			}
+			
+			List<?> names = null;
+			List<?> values = null;
+			
+			//Scan the binding
+			scanner.scan(binding);
+			//Get all of the names and values
+			names = scanner.getFieldNames();
+			values = scanner.getFieldValues(binding);
+			
+			//Go through each field
+			for (int b = 0; b < names.size(); b++)
+				//Add onto the file text
+				fileText.add(names.get(b) + ": " + values.get(b));
 			fileText.add("END");
 		}
 		//Save the file

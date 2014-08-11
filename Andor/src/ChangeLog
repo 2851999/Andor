@@ -1,4 +1,30 @@
 ------------------------------------------------------
+Release 1 | Beta 1 | Development 1 | Experimental 1
+
+* Added FieldScanner
+* Added FieldUtils
+
+* Started adding a better control binding saving/
+  loading system
+
+------------------------------------------------------
+Release 1 | Beta 1 | Development 1 | Experimental 0
+
+* Added ControlBinding
+* Added ControlBindingAxis
+* Added ControlBindingButton
+* Added ControlBindings
+* Added ControlInputListener
+* Added ControllerRumbler
+* Added ClampUtils
+
+* Fixed bug: MouseEvent didn't assign the right left/ 
+  right/middle mouse values
+  
+* Fixed bug: InputController getButtonCount() returned
+  the axisCount
+
+------------------------------------------------------
 Release 1 | Beta 1 | Development 0 | Experimental 3
 
 * Added ClampUtils

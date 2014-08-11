@@ -33,12 +33,36 @@ public class ControlBinding {
 	/* The controller's index (If set) */
 	public int controllerIndex;
 	
+	/* The controller's name (If set) */
+	public String controllerName;
+	
 	/* The constructor */
 	public ControlBinding(ControlBindings bindings, String name, int binding) {
 		//Assign the variables
 		this.bindings = bindings;
 		this.name = name;
 		this.binding = binding;
+		//Check the binding type
+		if (binding == TYPE_AXIS) {
+			//Create the binding
+			this.bindingAxis = new ControlBindingAxis(this);
+		} else if (binding == TYPE_BUTTON) {
+			//Create the binding
+			this.bindingButton = new ControlBindingButton(this);
+		} else {
+			//Log an error
+			Logger.log("Andor - ControlBinding", "Invalid binding type: " + this.binding, Log.ERROR);
+		}
+	}
+	
+	/* The constructor */
+	public ControlBinding(ControlBindings bindings, String name, int binding, int controllerIndex, String controllerName) {
+		//Assign the variables
+		this.bindings = bindings;
+		this.name = name;
+		this.binding = binding;
+		this.controllerIndex = controllerIndex;
+		this.controllerName = controllerName;
 		//Check the binding type
 		if (binding == TYPE_AXIS) {
 			//Create the binding
