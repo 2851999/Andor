@@ -1,4 +1,88 @@
 ------------------------------------------------------
+Release 1 | Beta 1 | Development 1 | Experimental 0
+
+* Added ControlBinding
+* Added ControlBindingAxis
+* Added ControlBindingButton
+* Added ControlBindings
+* Added ControlInputListener
+* Added ControllerRumbler
+* Added ClampUtils
+
+* Fixed bug: MouseEvent didn't assign the right left/ 
+  right/middle mouse values
+  
+* Fixed bug: InputController getButtonCount() returned
+  the axisCount
+
+------------------------------------------------------
+Release 1 | Beta 1 | Development 0 | Experimental 3
+
+* Added ClampUtils
+
+------------------------------------------------------
+Release 1 | Beta 1 | Development 0 | Experimental 2
+
+* Added ControllerRumbler
+
+* Fixed bug: Loading ControlBindings config's didn't
+  work with controller buttons
+  
+* Fixed bug: InputController getButtonCount() returned
+  the axisCount
+
+------------------------------------------------------
+Release 1 | Beta 1 | Development 0 | Experimental 1
+
+* Added ControlBinding
+* Added ControlBindingAxis
+* Added ControlBindingButton
+* Added ControlBindings
+* Added ControlInputListener
+
+* Fixed bug: MouseEvent didn't assign the right left/ 
+  right/middle mouse values
+
+------------------------------------------------------
+Release 1 | Beta 1 | Development 0 | Experimental 0
+
+* Added GUITextBoxSelection
+* Added KeyboardShortcut
+* Added KeyboardShortcuts
+* Added KeyboardShortcutListener
+* Added ClipboardUtils
+* Added GUIToolTip
+* Added GUIFill
+* Added GUILoadingBar
+* Added GUISlider
+* Added GUIPanel
+* Added GUIWindow
+* Added InputManagerController
+* Added InputController
+* Added ControllerUtils
+* Added ControllerTest
+* Added ControllerEvent
+* Added ControllerAxis
+* Added ControllerAxisEvent
+* Added ControllerButton
+* Added ControllerButtonEvent
+* Added ContollerPov
+* Added ControllerPovEvent
+
+* Added the constructor Colour(Colour colour, float a) in Colour
+* Added selection to GUITextBox
+* Added the methods in ArrayUtils to change int[] to
+  List<Integer> and vice versa
+
+* Fixed bug: GUITextBox backspace would sometimes
+             leave a gap if not at the beginning or
+             end of the view index's
+             
+* Fixed bug: Timer hasTimePassed() returned true
+             in most cases when it hadn't ever been
+             started
+
+------------------------------------------------------
 Release 1 | Beta 0 | Development 3 | Experimental 0
 
 * Added GUIWindow

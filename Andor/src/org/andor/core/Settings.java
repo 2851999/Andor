@@ -13,11 +13,11 @@ public class Settings {
 	/* The static class containing all of the information about Andor */
 	public static class Information {
 		/* The version of Andor */
-		public static final String VERSION = "V0.0.1.5";
+		public static final String VERSION = "V0.0.1.6";
 		/* The build of Andor */
 		public static final String BUILD = "Development";
 		/* The date this build started development */
-		public static final String DATE = "06/08/2014";
+		public static final String DATE = "11/08/2014";
 	}
 	
 	/* The static class containing all of the settings required for the window */
@@ -39,6 +39,14 @@ public class Settings {
 		public static boolean AntiAliasing = false;
 		/* The maximum FPS */
 		public static int MaxFPS = 60;
+	}
+	
+	/* The static class containing all of the audio settings */
+	public static class Audio {
+		/* The sound effect volume */
+		public static int SoundEffectVolume = 100;
+		/* The music volume */
+		public static int MusicVolume = 100;
 	}
 	
 }

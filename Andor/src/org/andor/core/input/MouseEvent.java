@@ -29,13 +29,13 @@ public class MouseEvent extends Event {
 	public float y;
 	
 	/* The constructor */
-	public MouseEvent() {
+	public MouseEvent(boolean leftButton, boolean rightButton, boolean middleButton) {
 		//Call the super constructor
 		super(EVENT_NAME, EVENT_DESCRIPTION);
 		//Assign the variables
-		leftButton = Mouse.leftButton;
-		rightButton = Mouse.rightButton;
-		middleButton = Mouse.middleButton;
+		this.leftButton = leftButton;
+		this.rightButton = rightButton;
+		this.middleButton = middleButton;
 		this.x = Mouse.x;
 		this.y = Mouse.y;
 	}
