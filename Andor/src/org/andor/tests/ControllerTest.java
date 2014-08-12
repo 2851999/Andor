@@ -9,7 +9,6 @@
 package org.andor.tests;
 
 import org.andor.core.BaseGame;
-import org.andor.core.input.ControlBinding;
 import org.andor.core.input.ControlBindingAxis;
 import org.andor.core.input.ControlBindingButton;
 import org.andor.core.input.ControlBindings;
@@ -50,7 +49,8 @@ public class ControllerTest extends BaseGame implements ControlInputListener {
 		InputManagerController.addController(this.controller);
 		bindings = new ControlBindings();
 		bindings.addListener(this);
-		bindings.add("Test", ControlBinding.TYPE_AXIS, controller);
+		//bindings.add("Test", ControlBinding.TYPE_AXIS, controller);
+		bindings.load("C:/Andor/config.txt", true, controller);
 	}
 	
 	/* The method called to update the game */

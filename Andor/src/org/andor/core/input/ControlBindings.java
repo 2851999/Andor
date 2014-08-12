@@ -122,7 +122,7 @@ public class ControlBindings {
 			scanner.scan(binding);
 			//Get all of the names and values
 			names = scanner.getFieldNames();
-			values = scanner.getFieldValues(binding);
+			values = scanner.getFieldValues();
 			
 			//Go through each field
 			for (int b = 0; b < names.size(); b++)
@@ -138,47 +138,48 @@ public class ControlBindings {
 	public void load(String path, boolean external, InputController controller) {
 		//The file text
 		List<String> fileText = FileUtils.read(path, external);
+		//The scanner
+		FieldScanner scanner = new FieldScanner();
 		int a = 0;
 		//Go through the bindings
 		while (a < fileText.size()) {
+			//The field names and values
+			List<String> fieldNames = new ArrayList<String>();
+			List<Object> fieldValues = new ArrayList<Object>();
 			//Check the current line
 			if (fileText.get(a).equals("AXIS")) {
 				a++;
 				//Add the binding
 				this.bindings.add(new ControlBinding(this, fileText.get(a).split(": ")[1], ControlBinding.TYPE_AXIS));
-				while (! fileText.get(a).equals("END")) {
-					if (fileText.get(a).startsWith("KeyCodePos"))
-						this.bindings.get(this.bindings.size() - 1).bindingAxis.keyCodePos = Integer.parseInt(fileText.get(a).split(": ")[1]);
-					else if (fileText.get(a).startsWith("KeyCodeNeg"))
-						this.bindings.get(this.bindings.size() - 1).bindingAxis.keyCodeNeg = Integer.parseInt(fileText.get(a).split(": ")[1]);
-					else if (fileText.get(a).startsWith("AxisDirectionPos"))
-						this.bindings.get(this.bindings.size() - 1).bindingAxis.axisDirectionPos = Integer.parseInt(fileText.get(a).split(": ")[1]);
-					else if (fileText.get(a).startsWith("AxisDirectionNeg"))
-						this.bindings.get(this.bindings.size() - 1).bindingAxis.axisDirectionNeg = Integer.parseInt(fileText.get(a).split(": ")[1]);
-					else if (fileText.get(a).startsWith("AxisPosIndex")) {
-						this.bindings.get(this.bindings.size() - 1).bindingAxis.axisPos = new ControllerAxis(controller, Integer.parseInt(fileText.get(a).split(": ")[1]));
-						this.bindings.get(this.bindings.size() - 1).controllerIndex = controller.index;
-					} else if (fileText.get(a).startsWith("AxisNegIndex")) {
-						this.bindings.get(this.bindings.size() - 1).bindingAxis.axisNeg = new ControllerAxis(controller, Integer.parseInt(fileText.get(a).split(": ")[1]));
-						this.bindings.get(this.bindings.size() - 1).controllerIndex = controller.index;
-					}
-					a++;
-				}
+				a++;
 			} else if (fileText.get(a).equals("BUTTON")) {
 				a++;
 				//Add the binding
-				this.bindings.add(new ControlBinding(this, fileText.get(a).split(": ")[1], ControlBinding.TYPE_BUTTON));
-				while (! fileText.get(a).equals("END")) {
-					if (fileText.get(a).startsWith("KeyCode"))
-						this.bindings.get(this.bindings.size() - 1).bindingButton.keyCode = Integer.parseInt(fileText.get(a).split(": ")[1]);
-					else if (fileText.get(a).startsWith("ControllerButtonIndex")) {
-						this.bindings.get(this.bindings.size() - 1).bindingButton.controllerButton = new ControllerButton(controller, Integer.parseInt(fileText.get(a).split(": ")[1]));
-						this.bindings.get(this.bindings.size() - 1).controllerIndex = controller.index;
-					}
-					a++;
-				}
+				this.bindings.add(new ControlBinding(this, fileText.get(a).split(": ")[1], ControlBinding.TYPE_AXIS));
+				a++;
 			}
-			//Keep going
+			while (! fileText.get(a).equals("END")) {
+				//Add split up the current line
+				String[] split = fileText.get(a).split(": ");
+				//Add the name and the value
+				fieldNames.add(split[0]);
+				fieldValues.add(split[1]);
+				//Check the name
+				if (split[0].startsWith("bindingAxis.axisPos"))
+					//Create the instance
+					this.bindings.get(this.bindings.size() - 1).bindingAxis.axisPos = new ControllerAxis(controller, 0);
+				else if (split[0].startsWith("bindingAxis.axisNeg"))
+					//Create the instance
+					this.bindings.get(this.bindings.size() - 1).bindingAxis.axisNeg = new ControllerAxis(controller, 0);
+				else if (split[0].startsWith("bindingButton.controllerButton"))
+					//Create the instance
+					this.bindings.get(this.bindings.size() - 1).bindingButton.controllerButton = new ControllerButton(controller, 0);
+				a++;
+			}
+			//Set the variables
+			scanner.setFieldNames(fieldNames);
+			scanner.setFieldValues(fieldValues);
+			scanner.set(this.bindings.get(this.bindings.size() - 1));
 			a++;
 		}
 	}
