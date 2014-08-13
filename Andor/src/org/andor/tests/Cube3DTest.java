@@ -264,13 +264,13 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 	}
 	
 	public void onButtonReleased(ControlBindingButton binding) {
-		if (binding.controlBinding.name.equals("Wireframe")) {
+		if (binding.getControlBinding().name.equals("Wireframe")) {
 			wireframe = !wireframe;
 			if (wireframe)
 				OpenGLUtils.enableWireframeMode();
 			else
 				OpenGLUtils.disableWireframeMode();
-		} else if (binding.controlBinding.name.equals("Rumble")) {
+		} else if (binding.getControlBinding().name.equals("Rumble")) {
 			this.controller.rumble(500, 1f);
 			//Reset the players position
 			this.camera.position = new Vector3D(0, -2, 0);

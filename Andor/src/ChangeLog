@@ -1,4 +1,36 @@
 ------------------------------------------------------
+Release 1 | Beta 1 | Development 2 | Experimental 0
+
+* Added FieldScanner
+* Added FieldUtils
+* Added ImageEntity2D
+* Added Animation2D
+* Added AnimationTest2D
+
+* Added a new control binding saving/loading system
+
+------------------------------------------------------
+Release 1 | Beta 1 | Development 1 | Experimental 3
+
+* Added ImageEntity2D
+* Added Animation2D
+* Added AnimationTest2D
+
+------------------------------------------------------
+Release 1 | Beta 1 | Development 1 | Experimental 2
+
+* Added a new control binding saving/loading system
+
+------------------------------------------------------
+Release 1 | Beta 1 | Development 1 | Experimental 1
+
+* Added FieldScanner
+* Added FieldUtils
+
+* Started adding a better control binding saving/
+  loading system
+
+------------------------------------------------------
 Release 1 | Beta 1 | Development 1 | Experimental 0
 
 * Added ControlBinding
