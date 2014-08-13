@@ -21,7 +21,1084 @@ Release 1 | Beta 1 | Development 1 | Experimental 2
 
 * Added a new control binding saving/loading system
 
+-----------------------------------------------------------------------------------------------------
+Release 1 | Beta 1 | Development 2 | Experimental 0
+
+* Added FieldScanner
+* Added FieldUtils
+* Added ImageEntity2D
+* Added Animation2D
+* Added AnimationTest2D
+
+* Added a new control binding saving/loading system
+
 ------------------------------------------------------
+Release 1 | Beta 1 | Development 1 | Experimental 3
+
+* Added ImageEntity2D
+* Added Animation2D
+* Added AnimationTest2D
+
+------------------------------------------------------
+Release 1 | Beta 1 | Development 1 | Experimental 2
+
+* Added a new control binding saving/loading system
+
+------------------------------------------------------
+Release 1 | Beta 1 | Development 1 | Experimental 1
+
+* Added FieldScanner
+* Added FieldUtils
+
+* Started adding a better control binding saving/
+  loading system
+
+------------------------------------------------------
+Release 1 | Beta 1 | Development 1 | Experimental 0
+
+* Added ControlBinding
+* Added ControlBindingAxis
+* Added ControlBindingButton
+* Added ControlBindings
+* Added ControlInputListener
+* Added ControllerRumbler
+* Added ClampUtils
+
+* Fixed bug: MouseEvent didn't assign the right left/ 
+  right/middle mouse values
+  
+* Fixed bug: InputController getButtonCount() returned
+  the axisCount
+
+------------------------------------------------------
+Release 1 | Beta 1 | Development 0 | Experimental 3
+
+* Added ClampUtils
+
+------------------------------------------------------
+Release 1 | Beta 1 | Development 0 | Experimental 2
+
+* Added ControllerRumbler
+
+* Fixed bug: Loading ControlBindings config's didn't
+  work with controller buttons
+  
+* Fixed bug: InputController getButtonCount() returned
+  the axisCount
+
+------------------------------------------------------
+Release 1 | Beta 1 | Development 0 | Experimental 1
+
+* Added ControlBinding
+* Added ControlBindingAxis
+* Added ControlBindingButton
+* Added ControlBindings
+* Added ControlInputListener
+
+* Fixed bug: MouseEvent didn't assign the right left/ 
+  right/middle mouse values
+
+------------------------------------------------------
+Release 1 | Beta 1 | Development 0 | Experimental 0
+
+* Added GUITextBoxSelection
+* Added KeyboardShortcut
+* Added KeyboardShortcuts
+* Added KeyboardShortcutListener
+* Added ClipboardUtils
+* Added GUIToolTip
+* Added GUIFill
+* Added GUILoadingBar
+* Added GUISlider
+* Added GUIPanel
+* Added GUIWindow
+* Added InputManagerController
+* Added InputController
+* Added ControllerUtils
+* Added ControllerTest
+* Added ControllerEvent
+* Added ControllerAxis
+* Added ControllerAxisEvent
+* Added ControllerButton
+* Added ControllerButtonEvent
+* Added ContollerPov
+* Added ControllerPovEvent
+
+* Added the constructor Colour(Colour colour, float a) in Colour
+* Added selection to GUITextBox
+* Added the methods in ArrayUtils to change int[] to
+  List<Integer> and vice versa
+
+* Fixed bug: GUITextBox backspace would sometimes
+             leave a gap if not at the beginning or
+             end of the view index's
+             
+* Fixed bug: Timer hasTimePassed() returned true
+             in most cases when it hadn't ever been
+             started
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 3 | Experimental 0
+
+* Added GUIWindow
+* Added InputManagerController
+* Added InputController
+* Added ControllerUtils
+* Added ControllerTest
+* Added ControllerEvent
+* Added ControllerAxis
+* Added ControllerAxisEvent
+* Added ControllerButton
+* Added ControllerButtonEvent
+* Added ContollerPov
+* Added ControllerPovEvent
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 2 | Experimental 3
+
+* Added ControllerEvent
+* Added ControllerAxis
+* Added ControllerAxisEvent
+* Added ControllerButton
+* Added ControllerButtonEvent
+* Added ContollerPov
+* Added ControllerPovEvent
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 2 | Experimental 2
+
+* Added InputManagerController
+* Added InputController
+* Added ControllerUtils
+* Added ControllerTest
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 2 | Experimental 1
+
+* Added GUIWindow
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 2 | Experimental 0
+
+* Added GUIToolTip
+* Added GUIFill
+* Added GUILoadingBar
+* Added GUISlider
+* Added GUIPanel
+
+* Fixed bug: Timer hasTimePassed() returned true
+             in most cases when it hadn't ever been
+             started
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 1 | Experimental 3
+
+* Added GUISlider
+* Added GUIPanel
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 1 | Experimental 2
+
+* Added GUIFill
+* Added GUILoadingBar
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 1 | Experimental 1
+
+* Added GUIToolTip
+
+* Fixed bug: Timer hasTimePassed() returned true
+             in most cases when it hadn't ever been
+             started
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 1 | Experimental 0
+
+* Added GUITextBoxSelection
+* Added KeyboardShortcut
+* Added KeyboardShortcuts
+* Added KeyboardShortcutListener
+* Added ClipboardUtils
+
+* Added the constructor Colour(Colour colour, float a) in Colour
+* Added selection to GUITextBox
+* Added the methods in ArrayUtils to change int[] to
+  List<Integer> and vice versa
+
+* Fixed bug: GUITextBox backspace would sometimes
+             leave a gap if not at the beginning or
+             end of the view index's
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 0 | Experimental 6
+
+* Added cut, copy and paste to GUITextBox
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 0 | Experimental 5
+
+* Added ClipboardUtils
+
+* GUITextBox can now remove selections of text
+* GUITextBox can now replace selections of text
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 0 | Experimental 4
+
+* Added KeyboardShortcut
+* Added KeyboardShortcuts
+* Added KeyboardShortcutListener
+
+* Added the methods in ArrayUtils to change int[] to
+  List<Integer> and vice versa
+  
+* Fixed bug: Selection didn't work properly
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 0 | Experimental 3
+
+* Fixed bug: GUITextBox backspace would sometimes
+             leave a gap if not at the beginning or
+             end of the view index's
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 0 | Experimental 2
+
+* Attempted to improve the selection within the
+  GUITextBox
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 0 | Experimental 1
+
+* Added GUITextBoxSelection
+* Added the constructor Colour(Colour colour, float a) in Colour
+* Added selection to GUITextBox
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 0 | Experimental 0
+
+* Added Settings
+* Added Window
+* Added WindowTest
+* Added GameLoopInterface
+* Added GameLoop
+* Added BaseGame
+* Added BaseGameTest
+* Added Log
+* Added Logger
+* Added Time
+* Added FileUtils
+* Added FileUtilsTest
+* Added ThreadUtils
+* Added ArrayUtils
+* Added Timer
+* Added TimerTest
+* Added Console
+* Added FPSCalculator
+* Added Vector3D
+* Added Object3D
+* Added Renderer
+* Added BufferUtils
+* Added RenderableObject3D
+* Added Colour
+* Added Camera3D
+* Added Object3DBuilder
+* Added Quad3DTest
+* Added OpenGLUtils
+* Added Image
+* Added ImageLoader
+* Added Event
+* Added Input
+* Added InputListener
+* Added InputManager
+* Added Keyboard
+* Added KeyboardEvent
+* Added Mouse
+* Added MouseEvent
+* Added MouseMotionEvent
+* Added ScrollEvent
+* Added Vector2D
+* Added ImageSet
+* Added Font
+* Added FontUtils
+* Added SkyBox
+* Added Face
+* Added Material
+* Added MaterialLoader
+* Added Model
+* Added ModelParserUtils
+* Added OBJLoader
+* Added Shader
+* Added ShaderUtils
+* Added Client
+* Added ClientInputThread
+* Added Server
+* Added ServerClient
+* Added ServerClientInputThread
+* Added ServerConnectionThread
+* Added ServerListener
+* Added ClientListener
+* Added NetworkingTest
+* Added Object2D
+* Added Object2DBuilder
+* Added RenderableObject2D
+* Added ObjectBuilderUtils
+* Added Quad2DTest
+* Added Rectangle
+* Added InputListener
+* Added GUIComponent
+* Added GUIComponentListener
+* Added GUIRenderer
+* Added GUIButton
+* Added GUIButtonTest
+* Added GUICheckBox
+* Added GUIDropDownMenu
+* Added GUIDropDownList
+* Added Camera2D
+* Added GUIRadioCheckBox
+* Added GUILabel
+* Added GUIBorder
+* Added GUIPosition
+* Added GUIImage
+* Added GUITextBox
+* Added GUITextBoxCursor
+* Added MaskUtils
+
+* Created the package org.andor.core
+* Created the package org.andor.core.logger
+* Created the package org.andor.core.input
+* Created the package org.andor.core.model
+* Created the package org.andor.core.networking
+* Created the package org.andor.gui
+* Created the package org.andor.utils
+* Created the package org.andor.tests
+
+------------------------------------------------------
+Release 0 | Beta 3 | Development 0 | Experimental 0
+
+* Added Camera2D
+* Added GUIRadioCheckBox
+* Added GUILabel
+* Added GUIBorder
+* Added GUIPosition
+* Added GUIImage
+* Added GUITextBox
+* Added GUITextBoxCursor
+* Added MaskUtils
+
+* Added the variable 'text' in GUICheckBox
+* Added rotation and scaling when linking Objects
+  (2D + 3D)
+* Added support for components within components
+* Added GUIComponent positioning system using
+  GUIPosition
+* Added onMouseDragged() in the Input system
+* Added the method restart() in Timer
+
+* Fixed bug: GUIDropDownMenu and GUIDropDownList
+		 	 stayed open when the mouse clicked
+		 	 outside of the menu/list
+* Fixed bug: Linked object scaling was wrong
+* Fixed bug: GUI components didn't fully work with
+ 			 object linking
+* Fixed bug: GUIComponents - Mouse could click
+             components when dragging the mouse
+             over them
+* Fixed bug: Inactive GUIComponents didn't render
+             properly unless the inactive colour/
+             image had been set
+* Fixed spelling: Center should have been Centre in
+                  GUIComponent
+
+* Fixed bug: GUIRadioCheckBox didn't work properly
+* Fixed spelling: keyChatacter should have been
+                  keyCharacter in KeyboardEvent
+
+* Increased performance (Hopefully): Linked Objects
+
+------------------------------------------------------
+Release 0 | Beta 2 | Development 3 | Experimental 0
+
+* Added GUITextBox
+* Added MaskUtils
+* Added GUITextBoxCursor
+
+* Added the method restart() in Timer
+* Added moving of cursor using arrow keys in
+  GUITextBox
+* Added moving of cursor by clicking in
+  GUITextBox
+
+* Fixed bug: GUIRadioCheckBox didn't work properly
+* Fixed spelling: keyChatacter should have been
+                  keyCharacter in KeyboardEvent
+
+------------------------------------------------------
+Release 0 | Beta 2 | Development 2 | Experimental 5
+
+* Added the ability to delete text in a text box
+  using the delete key
+
+------------------------------------------------------
+Release 0 | Beta 2 | Development 2 | Experimental 4
+
+* Added the ability to move the viewed region in
+  GUITextBox
+
+* Fixed bug: GUITextBox clicking gave a
+             StringIndexOutOfBounds Exception
+
+------------------------------------------------------
+Release 0 | Beta 2 | Development 2 | Experimental 3
+
+* Added text clipping in GUITextBox
+
+* Fixed bug: GUIRadioCheckBox didn't work properly
+
+------------------------------------------------------
+Release 0 | Beta 2 | Development 2 | Experimental 2
+
+* Added GUITextBoxCursor
+
+* Added the method restart() in Timer
+* Added moving of cursor using arrow keys in
+  GUITextBox
+* Added moving of cursor by clicking in
+  GUITextBox
+
+* Fixed bug: GUITextBox masked = false, no text
+			 rendered
+
+------------------------------------------------------
+Release 0 | Beta 2 | Development 2 | Experimental 1
+
+* Added GUITextBox (Work in progress)
+* Added MaskUtils
+
+* Fixed spelling: keyChatacter should have been
+                  keyCharacter in KeyboardEvent
+
+------------------------------------------------------
+Release 0 | Beta 2 | Development 2 | Experimental 0
+
+* Added GUIBorder
+* Added GUIPosition
+* Added GUIImage
+* Added support for components within components
+* Added GUIComponent positioning system using
+  GUIPosition
+* Added onMouseDragged() in the Input system
+
+* Fixed bug: GUIComponents - Mouse could click
+             components when dragging the mouse
+             over them
+* Fixed bug: Inactive GUIComponents didn't render
+             properly unless the inactive colour/
+             image had been set
+* Fixed spelling: Center should have been Centre in
+                  GUIComponent
+                  
+------------------------------------------------------
+Release 0 | Beta 2 | Development 1 | Experimental 3
+
+* Added onMouseDragged() in the Input system
+
+------------------------------------------------------
+Release 0 | Beta 2 | Development 1 | Experimental 2
+
+* Added GUIImage
+* Added support for components within components
+* Added GUIComponent positioning system using
+  GUIPosition
+  
+* Fixed bug: Inactive GUIComponents didn't render
+             properly unless the inactive colour/
+             image had been set
+
+------------------------------------------------------
+Release 0 | Beta 2 | Development 1 | Experimental 1
+
+* Added GUIBorder
+* Added GUIPosition
+
+* Fixed bug: GUIComponents - Mouse could click
+             components when dragging the mouse
+             over them
+* Fixed spelling: Center should have been Centre in
+                  GUIComponent
+
+------------------------------------------------------
+Release 0 | Beta 2 | Development 1 | Experimental 0
+
+* Added Camera2D
+* Added GUIRadioCheckBox
+* Added GUILabel
+* Added the variable 'text' in GUICheckBox
+* Added rotation and scaling when linking Objects
+  (2D + 3D)
+
+* Increased performance (Hopefully): Linked Objects
+
+* Fixed bug: GUIDropDownMenu and GUIDropDownList
+		 	 stayed open when the mouse clicked
+		 	 outside of the menu/list
+* Fixed bug: Linked object scaling was wrong
+* Fixed bug: GUI components didn't fully work with
+ 			 object linking
+
+------------------------------------------------------
+Release 0 | Beta 2 | Development 0 | Experimental 3
+
+* Added Camera2D
+
+------------------------------------------------------
+Release 0 | Beta 2 | Development 0 | Experimental 2
+
+* Added GUIGroup
+* Added GUIRadioCheckBox
+* Added GUILabel
+* Added the variable 'text' in GUICheckBox
+
+* Fixed bug: Linked object scaling was wrong
+* Fixed bug: GUI components didn't fully work with
+ 			 object linking
+ 
+------------------------------------------------------
+Release 0 | Beta 2 | Development 0 | Experimental 1
+
+* Added rotation and scaling when linking Objects
+  (2D + 3D)
+
+* Increased performance (Hopefully): Linked Objects
+
+* Fixed bug: GUIDropDownMenu and GUIDropDownList
+		 	 stayed open when the mouse clicked
+		 	 outside of the menu/list
+
+------------------------------------------------------
+Release 0 | Beta 2 | Development 0 | Experimental 0
+
+* Added Face
+* Added Material
+* Added MaterialLoader
+* Added Model
+* Added ModelParserUtils
+* Added OBJLoader
+* Added Shader
+* Added ShaderUtils
+* Added Client
+* Added ClientInputThread
+* Added Server
+* Added ServerClient
+* Added ServerClientInputThread
+* Added ServerConnectionThread
+* Added ServerListener
+* Added ClientListener
+* Added NetworkingTest
+* Added Object2D
+* Added Object2DBuilder
+* Added RenderableObject2D
+* Added ObjectBuilderUtils
+* Added Quad2DTest
+* Added Rectangle
+* Added InputListener
+* Added GUIComponent
+* Added GUIComponentListener
+* Added GUIRenderer
+* Added GUIButton
+* Added GUIButtonTest
+* Added GUICheckBox
+* Added GUIDropDownMenu
+* Added GUIDropDownList
+* Added methods in Renderer to update certain data
+* Added the method unbind() in Image
+* Added object scaling
+
+* Created the package org.andor.core.model
+* Created the package org.andor.core.networking
+* Created the package org.andor.gui
+
+* Renamed Quad3DTest to Cube3DTest
+* Renamed InputListener to InputListenerInterface
+
+* Fixed bug: VSync wasn't being used
+* Fixed bug: Sizes of objects made using
+  Object3DBuilder were not strictly the correct size
+
+* Hopefully decreased loading time and memory usage,
+  ImageSet.loadImage() doesn't return an Image with
+  anything inside, it only contains the texture
+  coordinates and the size of the texture.
+
+------------------------------------------------------
+Release 0 | Beta 1 | Development 3 | Experimental 0
+
+* Added Object2D
+* Added Object2DBuilder
+* Added RenderableObject2D
+* Added ObjectBuilderUtils
+* Added Quad2DTest
+* Added Rectangle
+* Added InputListener
+* Added GUIComponent
+* Added GUIComponentListener
+* Added GUIRenderer
+* Added GUIButton
+* Added GUIButtonTest
+* Added GUICheckBox
+* Added GUIDropDownMenu
+* Added GUIDropDownList
+
+* Created the package org.andor.gui
+
+* Renamed InputListener to InputListenerInterface
+
+* Fixed bug: Sizes of objects made using
+  Object3DBuilder were not strictly the correct size
+
+------------------------------------------------------
+Release 0 | Beta 1 | Development 2 | Experimental 3
+
+* Added GUICheckBox
+* Added GUIDropDownMenu
+* Added GUIDropDownList
+
+* Renamed GUIButtonTest to GUITest
+* Renamed GUIRenderer to GUIComponentRenderer
+
+------------------------------------------------------
+Release 0 | Beta 1 | Development 2 | Experimental 2
+
+* Added Rectangle
+* Added InputListener
+* Added GUIComponent
+* Added GUIComponentListener
+* Added GUIRenderer
+* Added GUIButton
+* Added GUIButtonTest
+
+* Created the package org.andor.gui
+
+* Renamed InputListener to InputListenerInterface
+
+------------------------------------------------------
+Release 0 | Beta 1 | Development 2 | Experimental 1
+
+* Added Object2D
+* Added Object2DBuilder
+* Added RenderableObject2D
+* Added ObjectBuilderUtils
+* Added Quad2DTest
+
+* Fixed bug: Sizes of objects made using
+  Object3DBuilder were not strictly the correct size
+
+------------------------------------------------------
+Release 0 | Beta 1 | Development 2 | Experimental 0
+
+* Added Shader
+* Added ShaderUtils
+* Added Client
+* Added ClientInputThread
+* Added Server
+* Added ServerClient
+* Added ServerClientInputThread
+* Added ServerConnectionThread
+* Added ServerListener
+* Added ClientListener
+* Added NetworkingTest
+
+* Added object scaling
+
+* Created the package org.andor.core.networking
+
+------------------------------------------------------
+Release 0 | Beta 1 | Development 1 | Experimental 3
+
+* Added ServerListener
+* Added ClientListener
+
+------------------------------------------------------
+Release 0 | Beta 1 | Development 1 | Experimental 2
+
+* Added Client
+* Added ClientInputThread
+* Added Server
+* Added ServerClient
+* Added ServerClientInputThread
+* Added ServerConnectionThread
+* Added NetworkingTest
+
+* Added object scaling
+
+* Created the package org.andor.core.networking
+
+* NOTE: Networking is a work in progress
+
+------------------------------------------------------
+Release 0 | Beta 1 | Development 1 | Experimental 1
+
+* Added Shader
+* Added ShaderUtils
+
+------------------------------------------------------
+Release 0 | Beta 1 | Development 1 | Experimental 0
+
+* Added Face
+* Added Material
+* Added MaterialLoader
+* Added Model
+* Added ModelParserUtils
+* Added OBJLoader
+* Added methods in Renderer to update certain data
+* Added the method unbind() in Image
+
+* Created the package org.andor.core.model
+
+* Renamed Quad3DTest to Cube3DTest
+
+* Fixed bug: VSync wasn't being used
+
+* Hopefully decreased loading time and memory usage,
+  ImageSet.loadImage() doesn't return an Image with
+  anything inside, it only contains the texture
+  coordinates and the size of the texture.
+
+------------------------------------------------------
+Release 0 | Beta 1 | Development 0 | Experimental 3
+
+* Added Face
+* Added Material
+* Added MaterialLoader
+* Added Model
+* Added ModelParserUtils
+* Added OBJLoader
+
+* Created the package org.andor.core.model
+
+------------------------------------------------------
+Release 0 | Beta 1 | Development 0 | Experimental 2
+
+* Added the method unbind() in Image
+
+* Fixed bug: VSync wasn't being used
+
+* Hopefully decreased loading time and memory usage,
+  ImageSet.loadImage() doesn't return an Image with
+  anything inside, it only contains the texture
+  coordinates and the size of the texture.
+
+------------------------------------------------------
+Release 0 | Beta 1 | Development 0 | Experimental 1
+
+* Added methods in Renderer to update certain data
+
+* Renamed Quad3DTest to Cube3DTest
+
+------------------------------------------------------
+Release 0 | Beta 1 | Development 0 | Experimental 0
+
+* Added Settings
+* Added Window
+* Added WindowTest
+* Added GameLoopInterface
+* Added GameLoop
+* Added BaseGame
+* Added BaseGameTest
+* Added Log
+* Added Logger
+* Added Time
+* Added FileUtils
+* Added FileUtilsTest
+* Added ThreadUtils
+* Added ArrayUtils
+* Added Timer
+* Added TimerTest
+* Added Console
+* Added FPSCalculator
+* Added Vector3D
+* Added Object3D
+* Added Renderer
+* Added BufferUtils
+* Added RenderableObject3D
+* Added Colour
+* Added Camera3D
+* Added Object3DBuilder
+* Added Quad3DTest
+* Added OpenGLUtils
+* Added Image
+* Added ImageLoader
+* Added Event
+* Added Input
+* Added InputListener
+* Added InputManager
+* Added Keyboard
+* Added KeyboardEvent
+* Added Mouse
+* Added MouseEvent
+* Added MouseMotionEvent
+* Added ScrollEvent
+* Added Vector2D
+* Added ImageSet
+* Added Font
+* Added FontUtils
+* Added SkyBox
+
+* Created the package org.andor.core
+* Created the package org.andor.core.logger
+* Created the package org.andor.core.input
+* Created the package org.andor.utils
+* Created the package org.andor.tests
+
+------------------------------------------------------
+Release 0 | Beta 0 | Development 4 | Experimental 0
+
+* Added Vector2D
+* Added ImageSet
+* Added Font
+* Added FontUtils
+* Added SkyBox
+
+* Added the methods lock and unlock in Mouse
+
+* Fixed bug: Problems when having more than one
+  RenderableObject3D
+* Fixed bug: Bottom textures of cubes were not
+  rendering properly
+
+* Fixed spelling: Changed the method getCoode() to
+  getCode() in KeyboardEvent
+  
+* Linked objects no longer share rotation
+* Now using a custom Image and ImageLoader method
+
+------------------------------------------------------
+Release 0 | Beta 0 | Development 3 | Experimental 3
+
+* Added Font
+* Added FontUtils
+* Added SkyBox
+
+* Fixed bug: Problems when having more than one
+  RenderableObject3D
+* Fixed bug: Bottom textures of cubes were not
+  rendering properly
+  
+* Linked objects no longer share rotation
+
+------------------------------------------------------
+Release 0 | Beta 0 | Development 3 | Experimental 2
+
+* Added ImageSet
+
+------------------------------------------------------
+Release 0 | Beta 0 | Development 3 | Experimental 1
+
+* Added Vector2D
+
+* Added the methods lock and unlock in Mouse
+
+* Fixed spelling: Changed the method getCoode() to
+  getCode() in KeyboardEvent
+  
+* Now using a custom Image and ImageLoader method
+
+------------------------------------------------------
+Release 0 | Beta 0 | Development 3 | Experimental 0
+
+* Added Colour
+* Added Camera3D
+* Added Object3DBuilder
+* Added Quad3DTest
+* Added OpenGLUtils
+* Added Image
+* Added ImageLoader
+* Added Event
+* Added Input
+* Added InputListener
+* Added InputManager
+* Added Keyboard
+* Added KeyboardEvent
+* Added Mouse
+* Added MouseEvent
+* Added MouseMotionEvent
+* Added ScrollEvent
+
+* Added a hierarchy to objects, so child objects will
+  now base their position and rotation of parent
+  objects
+  
+* Created the package org.andor.core.input
+  
+* Changed the type of Settings.Window.Width, and
+  Settings.Window.Height to float instead of
+  int
+  
+* Fixed bug: The width and height of the window was
+  set to 0 when not fullscreen, causing things not
+  to render
+
+* Window now sets the size of the window after it
+  has been created so fullscreen windows will also
+  set the width and height properly
+
+------------------------------------------------------
+Release 0 | Beta 0 | Development 2 | Experimental 4
+
+* Added Event
+* Added Input
+* Added InputListener
+* Added InputManager
+* Added Keyboard
+* Added KeyboardEvent
+* Added Mouse
+* Added MouseEvent
+* Added MouseMotionEvent
+* Added ScrollEvent
+
+* Created the package org.andor.core.input
+
+------------------------------------------------------
+Release 0 | Beta 0 | Development 2 | Experimental 3
+
+* Added Image
+* Added ImageLoader
+
+* Fixed bug: The width and height of the window was
+  set to 0 when not fullscreen, causing things not
+  to render
+
+------------------------------------------------------
+Release 0 | Beta 0 | Development 2 | Experimental 2
+
+* Added Object3DBuilder
+* Added Quad3DTest
+* Added OpenGLUtils
+
+* Changed the type of Settings.Window.Width, and
+  Settings.Window.Height to float instead of
+  int
+
+* Window now sets the size of the window after it
+  has been created so fullscreen windows will also
+  set the width and height properly
+
+------------------------------------------------------
+Release 0 | Beta 0 | Development 2 | Experimental 1
+
+* Added Colour
+* Added Camera3D
+* Added the method link(Object3D object) to Object3D
+* Added a hierarchy to objects, so child objects will
+  now base their position and rotation of parent
+  objects
+
+------------------------------------------------------
+Release 0 | Beta 0 | Development 2 | Experimental 0
+
+* Added FileUtils
+* Added FileUtilsTest
+* Added ThreadUtils
+* Added ArrayUtils
+* Added Timer
+* Added TimerTest
+* Added Console
+* Added FPSCalculator
+* Added Vector3D
+* Added Object3D
+* Added Renderer
+* Added BufferUtils
+* Added RenderableObject3D
+* Added the method getDelta() to GameLoop
+* Added the method getFPS() to GameLoop
+
+------------------------------------------------------
+Release 0 | Beta 0 | Development 1 | Experimental 4
+
+* Added Renderer
+* Added BufferUtils
+* Added RenderableObject3D
+
+------------------------------------------------------
+Release 0 | Beta 0 | Development 1 | Experimental 3
+
+* Added Vector3D
+* Added Object3D
+
+------------------------------------------------------
+Release 0 | Beta 0 | Development 1 | Experimental 2
+
+* Added Timer
+* Added TimerTest
+* Added Console
+* Added FPSCalculator
+* Added the method getDelta() to GameLoop
+* Added the method getFPS() to GameLoop
+
+------------------------------------------------------
+Release 0 | Beta 0 | Development 1 | Experimental 1
+
+* Added FileUtils
+* Added FileUtilsTest
+* Added ThreadUtils
+* Added ArrayUtils
+
+------------------------------------------------------
+Release 0 | Beta 0 | Development 1 | Experimental 0
+
+* Added Settings
+* Added Window
+* Added WindowTest
+* Added GameLoopInterface
+* Added GameLoop
+* Added BaseGame
+* Added BaseGameTest
+* Added Log
+* Added Logger
+* Added Time
+
+* Created the package org.andor.core
+* Created the package org.andor.core.logger
+* Created the package org.andor.utils
+* Created the package org.andor.tests
+
+
+------------------------------------------------------
+Release 0 | Beta 0 | Development 0 | Experimental 4
+
+* Added Time
+* Added time to a log
+* Added variables in Logger to allow for certain parts of the log such as time to be disabled
+
+* Changed over the Source and Log Type when outputting Logs
+
+* Created the package org.andor.utils
+
+------------------------------------------------------
+Release 0 | Beta 0 | Development 0 | Experimental 3
+
+* Added Log
+* Added Logger
+
+* Created the package org.andor.core.logger
+
+------------------------------------------------------
+Release 0 | Beta 0 | Development 0 | Experimental 2
+
+* Added GameLoopInterface
+* Added GameLoop
+* Added BaseGame
+* Added BaseGameTest
+
+------------------------------------------------------
+Release 0 | Beta 0 | Development 0 | Experimental 1
+
+* Added Settings
+* Added Window
+* Added WindowTest
+
+* Created the package org.andor.core
+* Created the package org.andor.tests-------
 Release 1 | Beta 1 | Development 1 | Experimental 1
 
 * Added FieldScanner
