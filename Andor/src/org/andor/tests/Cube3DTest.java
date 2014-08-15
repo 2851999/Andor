@@ -17,6 +17,9 @@ import org.andor.core.Font;
 import org.andor.core.Image;
 import org.andor.core.ImageSet;
 import org.andor.core.Object3DBuilder;
+import org.andor.core.Particle;
+import org.andor.core.ParticleEffect;
+import org.andor.core.ParticleEmitter;
 import org.andor.core.RenderableObject3D;
 import org.andor.core.Settings;
 import org.andor.core.Shader;
@@ -69,6 +72,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 	public InputController controller;
 	public ControlBindings bindings;
 	public Audio audio;
+	public ParticleEmitter particleEmitter;
 	
 	/* The constructor */
 	public Cube3DTest() {
@@ -107,7 +111,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		}, 1, 1, 1, Colour.WHITE);
 		bigCube = Object3DBuilder.createCube(10, 10, 10, new Colour(130f / 255f, 176f / 255f, 255f / 255f, 0.8f));
 		//Load the model
-		this.model = OBJLoader.loadModel(path + "monkey2.obj", true);
+		this.model = OBJLoader.loadModel(path + "monkey.obj", true);
 		this.model.prepare();
 		this.model.position.z = -10;
 		//Set wireframe to false
@@ -139,6 +143,15 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		bindings.setController(this.controller);
 		
 		audio = AudioLoader.load("C:/Andor/test2.wav", true);
+		
+		this.particleEmitter = new ParticleEmitter();
+		this.particleEmitter.particleColour = Colour.RED;
+		this.particleEmitter.position.y = 1f;
+		this.particleEmitter.particleInitialVelocity = new Vector3D(0, 1f, 0);
+		this.particleEmitter.particlesPerUpdate = 600;
+		this.particleEmitter.particleLifeTime = 1000;
+		this.particleEmitter.uniformity = 80;
+		this.particleEmitter.particleEffect = new FireEffect();
 	}
 	
 	/* The method called when the game loop has started */
@@ -148,14 +161,6 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 	
 	/* The method called when the game loop is updated */
 	public void update() {
-		//Check the keys
-		if (Keyboard.KEY_A)
-			//Move the camera forwards
-			camera.moveLeft(0.01f * getDelta());
-		if (Keyboard.KEY_D)
-			//Move the camera forwards
-			camera.moveRight(0.01f * getDelta());
-		
 		if (Keyboard.KEY_ESCAPE)
 			//Request to end the program
 			requestClose();
@@ -166,13 +171,15 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		camera.rotation.x += this.bindings.get("LookY").bindingAxis.currentValue / 3 * getDelta();
 		
 		this.camera.rotation.x = ClampUtils.clamp(this.camera.rotation.x, -80, 80);
-		
+		                                                                                                                                   
 		this.audio.listenerPosition = this.camera.position.clone();
 		this.audio.listenerPosition.multiply(new Vector3D(-1, 1, 1));
 		this.audio.listenerRotation = this.camera.rotation;
 		this.audio.sourcePosition = this.model.position.clone();
 		this.audio.sourcePosition.multiply(new Vector3D(1, 1, -1));
 		this.audio.update();
+		
+		this.particleEmitter.update();
 		
 		Vector3D change = new Vector3D(0, 0.1f, 0);
 		change.multiply(getDelta());
@@ -210,6 +217,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		OpenGLUtils.disableTexture2D();
 		
 		this.bigCube.render();
+		this.particleEmitter.render();
 		
 		OpenGLUtils.enableTexture2D();
 		
@@ -302,6 +310,21 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		Settings.Video.MaxFPS = 60;
 		//Create a new instance of this test
 		new Cube3DTest();
+	}
+	
+	private class FireEffect implements ParticleEffect {
+		
+		public void update(Particle particle) {
+			float life = particle.getPercentageOfLife() / 100;
+			particle.colour = new Colour(Colour.RED);
+			if (life > 0.5 && life < 0.75) {
+				particle.colour = Colour.ORANGE.clone();
+				particle.colour.g -= life;
+			}
+			if (life > 0.75)
+				particle.colour = Colour.GREY.clone();
+		}
+		
 	}
 	
 }

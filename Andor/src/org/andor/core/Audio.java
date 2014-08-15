@@ -58,7 +58,6 @@ public class Audio {
 		this.pitch = 1.0f;
 		this.gain = 1.0f;
 		this.looping = false;
-		System.out.println(waveData.format);
 		AL10.alBufferData(bufferHandle, waveData.format, waveData.data, waveData.samplerate);
 		waveData.dispose();
 		//Setup the source
