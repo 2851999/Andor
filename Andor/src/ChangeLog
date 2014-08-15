@@ -1,4 +1,152 @@
 ------------------------------------------------------
+Release 1 | Beta 2 | Development 0 | Experimental 0
+
+* Added ControlBinding
+* Added ControlBindingAxis
+* Added ControlBindingButton
+* Added ControlBindings
+* Added ControlInputListener
+* Added ControllerRumbler
+* Added ClampUtils
+* Added FieldScanner
+* Added FieldUtils
+* Added ImageEntity2D
+* Added Animation2D
+* Added AnimationTest2D
+* Added Audio
+* Added AudioLoader
+* Added AudioTest
+
+* Fixed bug: MouseEvent didn't assign the right left/ 
+  right/middle mouse values
+* Fixed bug: InputController getButtonCount() returned
+  the axisCount
+  
+  * Note: For 3D Audio, the audio file should be in Mono
+  format
+* Note: When closing, Andor now releases the data
+  that was used (VBO data, Images, Audio)
+
+------------------------------------------------------
+Release 1 | Beta 1 | Development 3 | Experimental 0
+
+* Added Audio
+* Added AudioLoader
+* Added AudioTest
+
+* Fixed bug: FieldScanner failed to set anything
+  other than strings
+* Fixed bug: ControllerBindings configs with multiple
+  bindings loaded with errors
+
+* Note: For 3D Audio, the audio file should be in Mono
+  format
+* Note: When closing, Andor now releases the data
+  that was used (VBO data, Images, Audio)
+
+------------------------------------------------------
+Release 1 | Beta 1 | Development 2 | Experimental 3
+
+* Note: When closing, Andor now releases the data
+  that was used (VBO data, Images, Audio)
+
+------------------------------------------------------
+Release 1 | Beta 1 | Development 2 | Experimental 2
+
+* Fixed bug: FieldScanner failed to set anything
+  other than strings
+
+* Fixed bug: ControllerBindings configs with multiple
+  bindings loaded with errors
+
+------------------------------------------------------
+Release 1 | Beta 1 | Development 2 | Experimental 1
+
+* Added Audio
+* Added AudioLoader
+* Added AudioTest
+
+* Note: For 3D Audio, the audio file should be in Mono
+  format
+
+------------------------------------------------------
+Release 1 | Beta 1 | Development 2 | Experimental 0
+
+* Added FieldScanner
+* Added FieldUtils
+* Added ImageEntity2D
+* Added Animation2D
+* Added AnimationTest2D
+
+* Added a new control binding saving/loading system
+
+------------------------------------------------------
+Release 1 | Beta 1 | Development 1 | Experimental 3
+
+* Added ImageEntity2D
+* Added Animation2D
+* Added AnimationTest2D
+
+------------------------------------------------------
+Release 1 | Beta 1 | Development 1 | Experimental 2
+
+* Added a new control binding saving/loading system
+
+------------------------------------------------------
+Release 1 | Beta 1 | Development 1 | Experimental 1
+
+* Added FieldScanner
+* Added FieldUtils
+
+* Started adding a better control binding saving/
+  loading system
+
+------------------------------------------------------
+Release 1 | Beta 1 | Development 1 | Experimental 0
+
+* Added ControlBinding
+* Added ControlBindingAxis
+* Added ControlBindingButton
+* Added ControlBindings
+* Added ControlInputListener
+* Added ControllerRumbler
+* Added ClampUtils
+
+* Fixed bug: MouseEvent didn't assign the right left/ 
+  right/middle mouse values
+  
+* Fixed bug: InputController getButtonCount() returned
+  the axisCount
+
+------------------------------------------------------
+Release 1 | Beta 1 | Development 0 | Experimental 3
+
+* Added ClampUtils
+
+------------------------------------------------------
+Release 1 | Beta 1 | Development 0 | Experimental 2
+
+* Added ControllerRumbler
+
+* Fixed bug: Loading ControlBindings config's didn't
+  work with controller buttons
+  
+* Fixed bug: InputController getButtonCount() returned
+  the axisCount
+
+------------------------------------------------------
+Release 1 | Beta 1 | Development 0 | Experimental 1
+
+* Added ControlBinding
+* Added ControlBindingAxis
+* Added ControlBindingButton
+* Added ControlBindings
+* Added ControlInputListener
+
+* Fixed bug: MouseEvent didn't assign the right left/ 
+  right/middle mouse values
+
+------------------------------------------------------
 Release 1 | Beta 1 | Development 0 | Experimental 0
 
 * Added GUITextBoxSelection

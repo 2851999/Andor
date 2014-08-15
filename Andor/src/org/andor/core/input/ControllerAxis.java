@@ -22,6 +22,9 @@ public class ControllerAxis {
 	/* The current value of this axis (From the last time this axis was checked for input) */
 	public float currentValue;
 	
+	/* The boolean that states whether an event has been called once */
+	private boolean calledOnce;
+	
 	/* The constructor */
 	public ControllerAxis(InputController controller, int index) {
 		//Assign the variables
@@ -29,6 +32,7 @@ public class ControllerAxis {
 		this.index = index;
 		this.name = this.controller.getController().getAxisName(this.index);
 		this.currentValue = 0;
+		this.calledOnce = false;
 	}
 	
 	/* The method used to check this axis for a change */
@@ -39,8 +43,12 @@ public class ControllerAxis {
 		if (value != this.currentValue) {
 			//Assign the new value
 			this.currentValue = value;
-			//Call an event
-			Input.callAxisChange(new ControllerAxisEvent(this.controller, this));
+			//Value -1 prior to input, so ignore it unless that value is actually from the user
+			if (calledOnce || this.currentValue == 0)
+				//Call an event
+				Input.callAxisChange(new ControllerAxisEvent(this.controller, this));
+			if (! calledOnce)
+				calledOnce = true;
 		}
 	}
 	

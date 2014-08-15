@@ -44,6 +44,8 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 		Window.create();
 		//Create the input
 		InputManager.create();
+		//Create the audio
+		Audio.create();
 		//Add this input listener
 		Input.addListener(this);
 		//Call the create method
@@ -73,8 +75,12 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 			//Update the display
 			Window.updateDisplay();
 		}
+		//Release all of the data
+		this.releaseAll();
 		//Destroy the input
 		InputManager.destroy();
+		//Destroy the audio
+		Audio.destroy();
 		//Close the window
 		Window.close();
 		//Call the stop method
@@ -83,6 +89,16 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 		//Call the close method
 		this.close();
 		this.interfaceClose();
+	}
+	
+	/* The method called to release all of the data */
+	public void releaseAll() {
+		//Release all of the renderer's
+		Renderer.releaseAll();
+		//Release all of the images's
+		Image.releaseAll();
+		//Release all of the audio
+		Audio.releaseAll();
 	}
 	
 	/* The method called to request the program to close  */
