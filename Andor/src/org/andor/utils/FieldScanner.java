@@ -153,15 +153,15 @@ public class FieldScanner {
 				//Check the fields type
 				if (fieldType.equals("java.lang.String"))
 					value = currentValue;
-				else if (fieldType.equals("java.lang.Integer"))
+				else if (fieldType.equals("int"))
 					value = Integer.parseInt(currentValue);
-				else if (fieldType.equals("java.lang.Long"))
+				else if (fieldType.equals("long"))
 					value = Long.parseLong(currentValue);
-				else if (fieldType.equals("java.lang.Float"))
+				else if (fieldType.equals("float"))
 					value = Float.parseFloat(currentValue);
-				else if (fieldType.equals("java.lang.Double"))
+				else if (fieldType.equals("double"))
 					value = Double.parseDouble(currentValue);
-				else if (fieldType.equals("java.lang.Boolean"))
+				else if (fieldType.equals("boolean"))
 					value = Boolean.parseBoolean(currentValue);
 				else
 					value = null;

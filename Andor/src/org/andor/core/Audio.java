@@ -27,10 +27,10 @@ public class Audio {
 	public Vector3D sourcePosition;
 	public Vector3D sourceVelocity;
 	
-	/* The position, velocity and the orientation of this audio's listener */
+	/* The position, velocity and the rotation of this audio's listener */
 	public Vector3D listenerPosition;
 	public Vector3D listenerVelocity;
-	public Vector3D listenerOrientation;
+	public Vector3D listenerRotation;
 	
 	/* The other values used for the audio */
 	public float pitch;
@@ -48,10 +48,11 @@ public class Audio {
 		this.sourceVelocity = new Vector3D();
 		this.listenerPosition = new Vector3D();
 		this.listenerVelocity = new Vector3D();
-		this.listenerOrientation = new Vector3D();
+		this.listenerRotation = new Vector3D();
 		this.pitch = 1.0f;
 		this.gain = 1.0f;
 		this.looping = false;
+		System.out.println(waveData.format);
 		AL10.alBufferData(bufferHandle, waveData.format, waveData.data, waveData.samplerate);
 		waveData.dispose();
 		//Setup the source
@@ -87,7 +88,7 @@ public class Audio {
 		//Update the listener
 		AL10.alListener3f(AL10.AL_POSITION, this.listenerPosition.x, this.listenerPosition.y, this.listenerPosition.z);
 		AL10.alListener3f(AL10.AL_VELOCITY, this.listenerVelocity.x, this.listenerVelocity.y, this.listenerVelocity.z);
-		AL10.alListener3f(AL10.AL_ORIENTATION, this.listenerOrientation.x, this.listenerOrientation.y, this.listenerOrientation.z);
+		AL10.alListener3f(AL10.AL_ORIENTATION, this.listenerRotation.x, this.listenerRotation.y, this.listenerRotation.z);
 		//Update the sources values
 		AL10.alSource3f(this.sourceHandle, AL10.AL_POSITION, this.sourcePosition.x, this.sourcePosition.y, this.sourcePosition.z);
 		AL10.alSource3f(this.sourceHandle, AL10.AL_VELOCITY, this.sourceVelocity.x, this.sourceVelocity.y, this.sourceVelocity.z);

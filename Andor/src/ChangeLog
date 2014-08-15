@@ -1,4 +1,13 @@
 ------------------------------------------------------
+Release 1 | Beta 1 | Development 2 | Experimental 2
+
+* Fixed bug: FieldScanner failed to set anything
+  other than strings
+
+* Fixed bug: ControllerBindings configs with multiple
+  bindings loaded with errors
+
+------------------------------------------------------
 Release 1 | Beta 1 | Development 2 | Experimental 1
 
 * Added Audio

@@ -8,6 +8,8 @@
 
 package org.andor.tests;
 
+import org.andor.core.Audio;
+import org.andor.core.AudioLoader;
 import org.andor.core.BaseGame;
 import org.andor.core.Camera3D;
 import org.andor.core.Colour;
@@ -66,6 +68,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 	
 	public InputController controller;
 	public ControlBindings bindings;
+	public Audio audio;
 	
 	/* The constructor */
 	public Cube3DTest() {
@@ -124,19 +127,23 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 			Console.println("Axis Count: " + controller.axisCount);
 			Console.println("Button Count: " + controller.buttonCount);
 			Console.println("");
+			//Check the controller
+			if (controller.getName().equals("SPEEDLINK Strike 2 Gamepad"))
+				this.controller = controller;
 		}
-		//Get the last controller (In my case this is a joystick)
-		this.controller = controllers[controllers.length - 1];
 		//Add the controller
 		InputManagerController.addController(this.controller);
 		bindings = new ControlBindings();
 		bindings.addListener(this);
 		bindings.load("C:/Andor/gamepadconfig.txt", true, controller);
+		bindings.setController(this.controller);
+		
+		audio = AudioLoader.load("C:/Andor/test2.wav", true);
 	}
 	
 	/* The method called when the game loop has started */
 	public void start() {
-		
+		this.audio.play();
 	}
 	
 	/* The method called when the game loop is updated */
@@ -159,6 +166,13 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		camera.rotation.x += this.bindings.get("LookY").bindingAxis.currentValue / 3 * getDelta();
 		
 		this.camera.rotation.x = ClampUtils.clamp(this.camera.rotation.x, -80, 80);
+		
+		this.audio.listenerPosition = this.camera.position.clone();
+		this.audio.listenerPosition.multiply(new Vector3D(-1, 1, 1));
+		this.audio.listenerRotation = this.camera.rotation;
+		this.audio.sourcePosition = this.model.position.clone();
+		this.audio.sourcePosition.multiply(new Vector3D(1, 1, -1));
+		this.audio.update();
 		
 		Vector3D change = new Vector3D(0, 0.1f, 0);
 		change.multiply(getDelta());
