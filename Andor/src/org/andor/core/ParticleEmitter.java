@@ -41,8 +41,14 @@ public class ParticleEmitter extends RenderableObject3D {
 	 * 120 makes it look like the particles come from a single point */
 	public float uniformity;
 	
+	/* The boolean that states whether this emitter is emitting */
+	public boolean emitting;
+	
 	/* The random generator */
 	private Random randomGenerator;
+	
+	/* The boolean that represents whether this should be run in 2D mode (Ignore the z coordinate) */
+	public boolean ignoreZ;
 	
 	/* The constructor */
 	public ParticleEmitter() {
@@ -60,6 +66,8 @@ public class ParticleEmitter extends RenderableObject3D {
 		this.particleEffect = particleEffect;
 		this.uniformity = uniformity;
 		this.particles = new ArrayList<Particle>();
+		this.emitting = true;
+		this.ignoreZ = false;
 		this.randomGenerator = new Random();
 		this.renderer = new Renderer(GL11.GL_POINTS, Renderer.VERTEX_VALUES_COUNT_3D);
 		this.renderer.setValues(new float[] { 0, 0, 0 }, new Colour(0.0f, 0.0f, 0.0f, 0.0f).getValuesRGBA());
@@ -68,34 +76,37 @@ public class ParticleEmitter extends RenderableObject3D {
 	
 	/* The method called to update this particle emitter */
 	public void update() {
-		//Add as many particles as necessary
-		for (int a = 0; a < this.particlesPerUpdate; a++)
-			this.particles.add(generateParticle());
-		//The vertices list
-		List<Float> vertices = new ArrayList<Float>();
-		//The colours list
-		List<Float> colours = new ArrayList<Float>();
-		//Go through each particle
-		for (int a = 0; a < this.particles.size(); a++) {
-			//Make sure the current particle is not dead
-			if (! this.particles.get(a).isDead()) {
-				//Update the current particle
-				this.particles.get(a).update();
-				//Get the current vertices and add it to the list
-				float[] cpv = this.particles.get(a).getVertices();
-				for (int b = 0; b < cpv.length; b++)
-					vertices.add(cpv[b]);
-				//Get the current colours and add it to the list
-				float[] cpc = this.particles.get(a).getColours();
-				for (int b = 0; b < cpc.length; b++)
-					colours.add(cpc[b]);
-			} else
-				//Remove the current particle
-				this.particles.remove(a);
+		//Make sure this emitter is emitting
+		if (this.emitting) {
+			//Add as many particles as necessary
+			for (int a = 0; a < this.particlesPerUpdate; a++)
+				this.particles.add(generateParticle());
+			//The vertices list
+			List<Float> vertices = new ArrayList<Float>();
+			//The colours list
+			List<Float> colours = new ArrayList<Float>();
+			//Go through each particle
+			for (int a = 0; a < this.particles.size(); a++) {
+				//Make sure the current particle is not dead
+				if (! this.particles.get(a).isDead()) {
+					//Update the current particle
+					this.particles.get(a).update();
+					//Get the current vertices and add it to the list
+					float[] cpv = this.particles.get(a).getVertices();
+					for (int b = 0; b < cpv.length; b++)
+						vertices.add(cpv[b]);
+					//Get the current colours and add it to the list
+					float[] cpc = this.particles.get(a).getColours();
+					for (int b = 0; b < cpc.length; b++)
+						colours.add(cpc[b]);
+				} else
+					//Remove the current particle
+					this.particles.remove(a);
+			}
+			//Update this renderer
+			this.renderer.updateVertices(ArrayUtils.toFloatArray(vertices));
+			this.renderer.updateColours(ArrayUtils.toFloatArray(colours));
 		}
-		//Update this renderer
-		this.renderer.updateVertices(ArrayUtils.toFloatArray(vertices));
-		this.renderer.updateColours(ArrayUtils.toFloatArray(colours));
 	}
 	
 	/* The method used to generate a particle */
@@ -108,7 +119,10 @@ public class ParticleEmitter extends RenderableObject3D {
 		//The random values
 		float randomX = this.randomGenerator.nextFloat() - 0.5f;
 		float randomY = this.randomGenerator.nextFloat() - 0.5f;
-		float randomZ = this.randomGenerator.nextFloat() - 0.5f;
+		float randomZ = 0;
+		//Make sure z shouldn't be ignored
+		if (! this.ignoreZ)
+			randomZ = this.randomGenerator.nextFloat() - 0.5f;
 		particleVelocity = new Vector3D(
 				(randomX + this.particleInitialVelocity.x) / uniformity,
 				(randomY + this.particleInitialVelocity.y) / uniformity,
@@ -118,5 +132,25 @@ public class ParticleEmitter extends RenderableObject3D {
 		//Return the particle
 		return particle;
 	}
+	
+	/* The set/toggle/get methods */
+	public void setParticlesPerUpdate(int particlesPerUpdate) { this.particlesPerUpdate = particlesPerUpdate; }
+	public void setParticleInitialVelocity(Vector3D particleInitialVelocity) { this.particleInitialVelocity = particleInitialVelocity; }
+	public void setParticleLifeTime(long particleLifeTime) { this.particleLifeTime = particleLifeTime; }
+	public void setParticleColour(Colour particleColour) { this.particleColour = particleColour; }
+	public void setParticleEffect(ParticleEffect particleEffect) { this.particleEffect = particleEffect; }
+	public void setUniformity(float uniformity) { this.uniformity = uniformity; }
+	public void setEmitting(boolean emitting) { this.emitting = emitting; }
+	public void setIgnoreZ(boolean ignoreZ) { this.ignoreZ = ignoreZ; }
+	public void toggleEmitting() { this.emitting = ! this.emitting; }
+	public void toggleIgnoreZ() { this.ignoreZ = ! this.ignoreZ; }
+	public int getParticlesPerUpdate() { return this.particlesPerUpdate;}
+	public Vector3D getParticlesInitialVelocity() { return this.particleInitialVelocity; }
+	public long getParticleLifeTime() { return this.particleLifeTime; }
+	public Colour getParticleColour() { return this.particleColour; }
+	public ParticleEffect getParticleEffect() { return this.particleEffect; }
+	public float getUniformity() { return this.uniformity; }
+	public boolean isEmitting() { return this.emitting; }
+	public boolean doesIgnoreZ() { return this.ignoreZ; }
 	
 }

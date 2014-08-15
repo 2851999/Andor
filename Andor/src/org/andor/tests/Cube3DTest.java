@@ -43,6 +43,7 @@ import org.andor.utils.Console;
 import org.andor.utils.ControllerUtils;
 import org.andor.utils.FontUtils;
 import org.andor.utils.OpenGLUtils;
+import org.lwjgl.opengl.GL11;
 
 public class Cube3DTest extends BaseGame implements ControlInputListener {
 	
@@ -146,11 +147,11 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		
 		this.particleEmitter = new ParticleEmitter();
 		this.particleEmitter.particleColour = Colour.RED;
-		this.particleEmitter.position.y = 1f;
-		this.particleEmitter.particleInitialVelocity = new Vector3D(0, 1f, 0);
-		this.particleEmitter.particlesPerUpdate = 600;
-		this.particleEmitter.particleLifeTime = 1000;
-		this.particleEmitter.uniformity = 80;
+		this.particleEmitter.position.y = 4f;
+		this.particleEmitter.particleInitialVelocity = new Vector3D(0, 0.9f, 0);
+		this.particleEmitter.particlesPerUpdate = 300;
+		this.particleEmitter.particleLifeTime = 3000;
+		this.particleEmitter.uniformity = 10;
 		this.particleEmitter.particleEffect = new FireEffect();
 	}
 	
@@ -164,6 +165,10 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		if (Keyboard.KEY_ESCAPE)
 			//Request to end the program
 			requestClose();
+		if (Keyboard.KEY_Q)
+			this.particleEmitter.particleEffect = new WaterEffect();
+		if (Keyboard.KEY_F)
+			this.particleEmitter.particleEffect = new FireEffect();
 		
 		camera.moveForward(this.bindings.get("Walk").bindingAxis.currentValue / 100 * getDelta());
 		camera.moveLeft(this.bindings.get("Stride").bindingAxis.currentValue / 100 * getDelta());
@@ -188,6 +193,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 	
 	/* The method called when the game loop is rendered */
 	public void render() {
+		GL11.glPointSize(4);
 		//Setup OpenGL
 		OpenGLUtils.clearColourBuffer();
 		OpenGLUtils.clearDepthBuffer();
@@ -227,6 +233,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		//Render the FPS
 		this.font.render("Current FPS: " + this.getFPS(), 10, 10);
 		this.font.render("Object Face Count: " + this.model.faces.size(), 10, 26);
+		this.font.render("Particle Count: " + this.particleEmitter.particles.size(), 10, 42);
 	}
 	
 	/* The method called when the game loop is stopped */
@@ -312,7 +319,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		new Cube3DTest();
 	}
 	
-	private class FireEffect implements ParticleEffect {
+	public class FireEffect implements ParticleEffect {
 		
 		public void update(Particle particle) {
 			float life = particle.getPercentageOfLife() / 100;
@@ -323,6 +330,27 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 			}
 			if (life > 0.75)
 				particle.colour = Colour.GREY.clone();
+//			Random r = new Random();
+//			particle.colour = new Colour(r.nextFloat(), r.nextFloat(), r.nextFloat(), r.nextFloat());
+		}
+		
+	}
+	
+	public class WaterEffect implements ParticleEffect {
+		
+		public void update(Particle particle) {
+			float life = particle.getPercentageOfLife() / 100;
+			particle.colour = new Colour(Colour.BLUE);
+			particle.velocity.z = 0.1f;
+			if (life > 0.5 && life < 0.75) {
+				particle.colour = Colour.LIGHT_BLUE.clone();
+				particle.colour.g -= life;
+			}
+			if (life > 0.75) {
+				particle.colour = Colour.WHITE.clone();
+				particle.colour.a -= life / 2;
+			}
+			particle.velocity.subtract(new Vector3D(0, life / 100, 0));
 		}
 		
 	}
