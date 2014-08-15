@@ -155,7 +155,7 @@ public class ControlBindings {
 			} else if (fileText.get(a).equals("BUTTON")) {
 				a++;
 				//Add the binding
-				this.bindings.add(new ControlBinding(this, fileText.get(a).split(": ")[1], ControlBinding.TYPE_AXIS));
+				this.bindings.add(new ControlBinding(this, fileText.get(a).split(": ")[1], ControlBinding.TYPE_BUTTON));
 				a++;
 			}
 			while (! fileText.get(a).equals("END")) {
@@ -164,6 +164,7 @@ public class ControlBindings {
 				//Add the name and the value
 				fieldNames.add(split[0]);
 				fieldValues.add(split[1]);
+				
 				//Check the name
 				if (split[0].startsWith("bindingAxis.axisPos"))
 					//Create the instance
@@ -180,7 +181,17 @@ public class ControlBindings {
 			scanner.setFieldNames(fieldNames);
 			scanner.setFieldValues(fieldValues);
 			scanner.set(this.bindings.get(this.bindings.size() - 1));
-			a++;
+			a += 2;
+		}
+	}
+	
+	/* The method used to set the controller */
+	public void setController(InputController controller) {
+		//Go through each binding
+		for (int a = 0; a < this.bindings.size(); a++) {
+			//Set the current bindings controller
+			this.bindings.get(a).controllerIndex = controller.index;
+			this.bindings.get(a).controllerName = controller.name;
 		}
 	}
 	
