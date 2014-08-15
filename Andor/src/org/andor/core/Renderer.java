@@ -9,12 +9,17 @@
 package org.andor.core;
 
 import java.nio.FloatBuffer;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.andor.utils.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
 
 public class Renderer {
+	
+	/* The list of renderer's that have been created */
+	private static List<Renderer> allRenderers = new ArrayList<Renderer>();
 	
 	/* The numbers of values for the vertices in both 2D and 3D space */
 	public static final int VERTEX_VALUES_COUNT_2D = 2;
@@ -62,6 +67,8 @@ public class Renderer {
 		//Assign the variables
 		this.renderMode = renderMode;
 		this.vertexValuesCount = vertexValuesCount;
+		//Add this renderer to the list
+		allRenderers.add(this);
 	}
 	
 	/* The method used to setup the buffers,
@@ -218,6 +225,25 @@ public class Renderer {
 		this.verticesData = verticesData;
 		this.colourData = colourData;
 		this.textureData = textureData;
+	}
+	
+	/* The method used to release this renderer */
+	public void release() {
+		GL15.glDeleteBuffers(this.verticesHandle);
+		if (this.normalsData != null)
+			GL15.glDeleteBuffers(this.normalsHandle);
+		if (this.colourData != null)
+			GL15.glDeleteBuffers(this.coloursHandle);
+		if (this.textureData != null)
+			GL15.glDeleteBuffers(this.texturesHandle);
+	}
+	
+	/* The static method used to release all of the renderer's that have been created */
+	public static void releaseAll() {
+		//Go through each renderer
+		for (int a = 0; a < allRenderers.size(); a++)
+			//Delete the current renderer
+			allRenderers.get(a).release();
 	}
 	
 }

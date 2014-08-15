@@ -8,6 +8,9 @@
 
 package org.andor.core;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.andor.core.logger.Log;
 import org.andor.core.logger.Logger;
 import org.lwjgl.LWJGLException;
@@ -16,6 +19,9 @@ import org.lwjgl.openal.AL10;
 import org.lwjgl.util.WaveData;
 
 public class Audio {
+	
+	/* The list of audio that has been created */
+	private static List<Audio> allAudio = new ArrayList<Audio>();
 	
 	/* The source handle */
 	public int sourceHandle;
@@ -57,6 +63,8 @@ public class Audio {
 		waveData.dispose();
 		//Setup the source
 		AL10.alSourcei(this.sourceHandle, AL10.AL_BUFFER, this.bufferHandle);
+		//Add this audio to the list
+		allAudio.add(this);
 	}
 	
 	/* The method used to play this audio */
@@ -122,6 +130,14 @@ public class Audio {
 	/* The static method used to create the audio context */
 	public static void destroy() {
 		AL.destroy();
+	}
+	
+	/* The static method used to release all of the audio that have been created */
+	public static void releaseAll() {
+		//Go through each audio
+		for (int a = 0; a < allAudio.size(); a++)
+			//Delete the current audio
+			allAudio.get(a).release();
 	}
 	
 }

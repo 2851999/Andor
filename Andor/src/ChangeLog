@@ -1,4 +1,10 @@
 ------------------------------------------------------
+Release 1 | Beta 1 | Development 2 | Experimental 3
+
+* Note: When closing, Andor now releases the data
+  that was used (VBO data, Images, Audio)
+
+------------------------------------------------------
 Release 1 | Beta 1 | Development 2 | Experimental 2
 
 * Fixed bug: FieldScanner failed to set anything

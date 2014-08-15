@@ -75,6 +75,8 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 			//Update the display
 			Window.updateDisplay();
 		}
+		//Release all of the data
+		this.releaseAll();
 		//Destroy the input
 		InputManager.destroy();
 		//Destroy the audio
@@ -87,6 +89,16 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 		//Call the close method
 		this.close();
 		this.interfaceClose();
+	}
+	
+	/* The method called to release all of the data */
+	public void releaseAll() {
+		//Release all of the renderer's
+		Renderer.releaseAll();
+		//Release all of the images's
+		Image.releaseAll();
+		//Release all of the audio
+		Audio.releaseAll();
 	}
 	
 	/* The method called to request the program to close  */
