@@ -1,4 +1,13 @@
 ------------------------------------------------------
+Release 1 | Beta 2 | Development 0 | Experimental 3
+
+* Added BitmapText
+
+* Fixed bug: ParticleEmitter didn't update the
+  paricles when emitting was false
+* Slight performance increase with ParticleEmittter
+
+------------------------------------------------------
 Release 1 | Beta 2 | Development 0 | Experimental 2
 
 * Added 2D support for ParticleEmitter by using

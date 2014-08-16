@@ -11,10 +11,12 @@ package org.andor.tests;
 import org.andor.core.Audio;
 import org.andor.core.AudioLoader;
 import org.andor.core.BaseGame;
+import org.andor.core.BitmapText;
 import org.andor.core.Camera3D;
 import org.andor.core.Colour;
 import org.andor.core.Font;
 import org.andor.core.Image;
+import org.andor.core.ImageLoader;
 import org.andor.core.ImageSet;
 import org.andor.core.Object3DBuilder;
 import org.andor.core.Particle;
@@ -24,6 +26,7 @@ import org.andor.core.RenderableObject3D;
 import org.andor.core.Settings;
 import org.andor.core.Shader;
 import org.andor.core.SkyBox;
+import org.andor.core.Vector2D;
 import org.andor.core.Vector3D;
 import org.andor.core.Window;
 import org.andor.core.input.ControlBindingAxis;
@@ -74,6 +77,8 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 	public ControlBindings bindings;
 	public Audio audio;
 	public ParticleEmitter particleEmitter;
+	
+	public BitmapText bitmapText;
 	
 	/* The constructor */
 	public Cube3DTest() {
@@ -149,10 +154,14 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		this.particleEmitter.particleColour = Colour.RED;
 		this.particleEmitter.position.y = 4f;
 		this.particleEmitter.particleInitialVelocity = new Vector3D(0, 0.9f, 0);
-		this.particleEmitter.particlesPerUpdate = 300;
+		this.particleEmitter.particlesPerUpdate = 400;
 		this.particleEmitter.particleLifeTime = 3000;
 		this.particleEmitter.uniformity = 10;
 		this.particleEmitter.particleEffect = new FireEffect();
+		
+		this.bitmapText = new BitmapText(ImageLoader.loadImage("C:/Andor/test2.png", true), 40, 16);
+		this.bitmapText.update("Hello World");
+		this.bitmapText.position = new Vector2D(100, 100);
 	}
 	
 	/* The method called when the game loop has started */
@@ -226,9 +235,13 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		this.particleEmitter.render();
 		
 		OpenGLUtils.enableTexture2D();
+		OpenGLUtils.disableDepthTest();
 		
 		
 		OpenGLUtils.setupOrtho(-1, 1);
+		
+		this.bitmapText.image.bind();
+		this.bitmapText.render();
 		
 		//Render the FPS
 		this.font.render("Current FPS: " + this.getFPS(), 10, 10);
@@ -314,7 +327,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		Settings.Window.Fullscreen = false;
 		//Enable VSync
 		Settings.Video.VSync = true;
-		Settings.Video.MaxFPS = 60;
+		Settings.Video.MaxFPS = 0;
 		//Create a new instance of this test
 		new Cube3DTest();
 	}

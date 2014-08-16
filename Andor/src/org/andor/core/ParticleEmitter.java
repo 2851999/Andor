@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.andor.utils.ArrayUtils;
 import org.lwjgl.opengl.GL11;
 
 public class ParticleEmitter extends RenderableObject3D {
@@ -81,32 +80,44 @@ public class ParticleEmitter extends RenderableObject3D {
 			//Add as many particles as necessary
 			for (int a = 0; a < this.particlesPerUpdate; a++)
 				this.particles.add(generateParticle());
-			//The vertices list
-			List<Float> vertices = new ArrayList<Float>();
-			//The colours list
-			List<Float> colours = new ArrayList<Float>();
-			//Go through each particle
-			for (int a = 0; a < this.particles.size(); a++) {
-				//Make sure the current particle is not dead
-				if (! this.particles.get(a).isDead()) {
-					//Update the current particle
-					this.particles.get(a).update();
-					//Get the current vertices and add it to the list
-					float[] cpv = this.particles.get(a).getVertices();
-					for (int b = 0; b < cpv.length; b++)
-						vertices.add(cpv[b]);
-					//Get the current colours and add it to the list
-					float[] cpc = this.particles.get(a).getColours();
-					for (int b = 0; b < cpc.length; b++)
-						colours.add(cpc[b]);
-				} else
-					//Remove the current particle
-					this.particles.remove(a);
-			}
-			//Update this renderer
-			this.renderer.updateVertices(ArrayUtils.toFloatArray(vertices));
-			this.renderer.updateColours(ArrayUtils.toFloatArray(colours));
 		}
+		//The current number
+		int count = 0;
+		//Go through each particle
+		while (count < this.particles.size()) {
+			//Make sure the current particle is not dead
+			if (! this.particles.get(count).isDead())
+				//Increment count
+				count++;
+			else
+				//Remove the current particle
+				this.particles.remove(count);
+		}
+		//The vertices array
+		float[] vertices = new float[this.particles.size() * 3];
+		//The colours array
+		float[] colours = new float[this.particles.size() * 4];
+		//Go through each particle
+		for (int a = 0; a < this.particles.size(); a++) {
+			//Update the current particle
+			this.particles.get(a).update();
+			//Get the current vertices and add it to the array
+			float[] cpv = this.particles.get(a).getVertices();
+			int startV = a * 3;
+			vertices[startV] = cpv[0];
+			vertices[startV + 1] = cpv[1];
+			vertices[startV + 2] = cpv[2];
+			//Get the current colours and add it to the array
+			float[] cpc = this.particles.get(a).getColours();
+			int startC = a * 4;
+			colours[startC] = cpc[0];
+			colours[startC+ 1] = cpc[1];
+			colours[startC + 2] = cpc[2];
+			colours[startC + 3] = cpc[3];
+		}
+		//Update this renderer
+		this.renderer.updateVertices(vertices);
+		this.renderer.updateColours(colours);
 	}
 	
 	/* The method used to generate a particle */
