@@ -1,4 +1,63 @@
 ------------------------------------------------------
+Release 1 | Beta 2 | Development 1 | Experimental 0
+
+* Added Particle
+* Added ParticleEffect
+* Added ParticleEmitter
+* Added BitmapText
+
+------------------------------------------------------
+Release 1 | Beta 2 | Development 0 | Experimental 3
+
+* Added BitmapText
+
+* Fixed bug: ParticleEmitter didn't update the
+  paricles when emitting was false
+* Slight performance increase with ParticleEmittter
+
+------------------------------------------------------
+Release 1 | Beta 2 | Development 0 | Experimental 2
+
+* Added 2D support for ParticleEmitter by using
+  ignoreZ
+
+------------------------------------------------------
+Release 1 | Beta 2 | Development 0 | Experimental 1
+
+* Added Particle
+* Added ParticleEffect
+* Added ParticleEmitter
+
+------------------------------------------------------
+Release 1 | Beta 2 | Development 0 | Experimental 0
+
+* Added ControlBinding
+* Added ControlBindingAxis
+* Added ControlBindingButton
+* Added ControlBindings
+* Added ControlInputListener
+* Added ControllerRumbler
+* Added ClampUtils
+* Added FieldScanner
+* Added FieldUtils
+* Added ImageEntity2D
+* Added Animation2D
+* Added AnimationTest2D
+* Added Audio
+* Added AudioLoader
+* Added AudioTest
+
+* Fixed bug: MouseEvent didn't assign the right left/ 
+  right/middle mouse values
+* Fixed bug: InputController getButtonCount() returned
+  the axisCount
+  
+  * Note: For 3D Audio, the audio file should be in Mono
+  format
+* Note: When closing, Andor now releases the data
+  that was used (VBO data, Images, Audio)
+
+------------------------------------------------------
 Release 1 | Beta 1 | Development 3 | Experimental 0
 
 * Added Audio

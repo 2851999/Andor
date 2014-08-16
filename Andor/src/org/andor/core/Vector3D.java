@@ -116,5 +116,6 @@ public class Vector3D {
 	public float getX() { return this.x; }
 	public float getY() { return this.y; }
 	public float getZ() { return this.z; }
+	public float[] getValues() { return new float[] { this.x, this.y, this.z }; }
 	
 }
