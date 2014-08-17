@@ -1,6 +1,13 @@
 ------------------------------------------------------
 Release 1 | Beta 2 | Development 1 | Experimental 2
 
+* Added AndroidRenderer
+
+* NOTE: It looks like Android support may take a
+  while to come up to the same level as on PC,
+  as there are many problems with VBO's and making
+  the shaders to work in the same way
+
 ------------------------------------------------------
 Release 1 | Beta 2 | Development 1 | Experimental 1
 

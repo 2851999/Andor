@@ -27,7 +27,8 @@ public class AndroidDisplayRenderer implements GLSurfaceView.Renderer {
 	
 	/* The method called when this surface is created */
 	public void onSurfaceCreated(GL10 gl10, EGLConfig eglConfig) {
-		
+		//Create the game
+		this.display.activity.game.create();
 	}
 	
 	/* The method called when this surface is changed */

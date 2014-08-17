@@ -55,8 +55,6 @@ public class AndroidDisplay extends GLSurfaceView {
 			this.gameAlreadyCreated = true;
 			//Add the game to the input listeners
 			Input.addListener(this.activity.game);
-			//Create the game
-			this.activity.game.create();
 		}
 	}
 	
