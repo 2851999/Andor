@@ -69,6 +69,7 @@ public class ShaderUtils {
 				if (shader == 0) {
 					//Log an error
 					Logger.log("Andor - ShaderUtils createShader()" , "Error when creating shader with the type: " + shaderType , Log.ERROR);
+					Logger.log("Andor - ShaderInformation", GLES20.glGetShaderInfoLog(shader), Log.ERROR);
 					//Return 0
 					return 0;
 				}

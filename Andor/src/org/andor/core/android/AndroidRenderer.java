@@ -24,9 +24,10 @@ public class AndroidRenderer extends Renderer {
 		 	"attribute vec4 colour;",
 		 	"varying vec4 fcolour;",
 		    "attribute vec4 vertexPosition;",
+		 	"uniform mat4 matrix;",
 		    "void main() {",
 		    "  fcolour = colour;",
-		    "  gl_Position = vertexPosition;",
+		    "  gl_Position = matrix * vertexPosition;",
 		    "}" };
 	
 	private static final String[] androidFragmentShaderCode = new String[] {
@@ -42,8 +43,7 @@ public class AndroidRenderer extends Renderer {
 	 * number of vertex values given */
 	public AndroidRenderer(int renderMode, int vertexValuesCount) {
 		super(renderMode, vertexValuesCount);
-		//Add this renderer to the list
-		allRenderers.add(this);
+		//Set the default usage
 		usage = GLES20.GL_STATIC_DRAW;
 		//Setup the Android shader
 		this.androidShader = new AndroidShader();
@@ -121,6 +121,8 @@ public class AndroidRenderer extends Renderer {
 		int normalAttribute = 0;
 		int colourAttribute = 0;
 		int texturesAttribute = 0;
+		int matrixAttribute = GLES20.glGetUniformLocation(this.androidShader.program, "matrix");
+		GLES20.glUniformMatrix4fv(matrixAttribute, 1, false, AndroidDisplayRenderer.mMVPMatrix, 0);
 		GLES20.glEnableVertexAttribArray(vertexPositionAttribute);
 		GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, this.verticesHandle);
 		GLES20.glVertexAttribPointer(vertexPositionAttribute, this.vertexValuesCount, GLES20.GL_FLOAT, false, 0, 0);

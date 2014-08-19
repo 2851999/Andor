@@ -12,11 +12,21 @@ import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.andor.core.android.AndroidRenderer;
+import org.andor.core.logger.Logger;
 import org.andor.utils.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
 
+import android.opengl.GLES20;
+import android.util.Log;
+
 public class Renderer {
+	
+	/* The different shapes that can be rendered */
+	public static final int QUADS = 1;
+	public static final int TRIANGLES = 2;
+	public static final int POINTS = 3;
 	
 	/* The list of renderer's that have been created */
 	protected static List<Renderer> allRenderers = new ArrayList<Renderer>();
@@ -62,7 +72,7 @@ public class Renderer {
 	 * number of vertex values given */
 	public Renderer(int renderMode, int vertexValuesCount) {
 		//Assign the variables
-		this.renderMode = renderMode;
+		this.renderMode = convert(renderMode);
 		this.vertexValuesCount = vertexValuesCount;
 		//Add this renderer to the list
 		allRenderers.add(this);
@@ -246,6 +256,52 @@ public class Renderer {
 		for (int a = 0; a < allRenderers.size(); a++)
 			//Delete the current renderer
 			allRenderers.get(a).release();
+	}
+	
+	/* The static method used to convert the render mode */
+	private static int convert(int renderMode) {
+		//Check to see whether Andor is currently running on android
+		if (! Settings.AndroidMode) {
+			//Check the render mode
+			if (renderMode == QUADS)
+				return GL11.GL_QUADS;
+			else if (renderMode == TRIANGLES)
+				return GL11.GL_TRIANGLES;
+			else if (renderMode == POINTS)
+				return GL11.GL_POINTS;
+			else {
+				//Log an error
+				Logger.log("Andor - Renderer", "Invalid render mode: " + renderMode, Log.ERROR);
+				//Return -1
+				return -1;
+			}
+		} else {
+			//Check the render mode
+			if (renderMode == QUADS)
+				return GLES20.GL_TRIANGLE_FAN;
+			else if (renderMode == TRIANGLES)
+				return GLES20.GL_TRIANGLES;
+			else if (renderMode == POINTS)
+				return GLES20.GL_POINTS;
+			else {
+				//Log an error
+				Logger.log("Andor - Renderer", "Invalid render mode: " + renderMode, Log.ERROR);
+				//Return -1
+				return -1;
+			}
+		}
+	}
+	
+	/* The static method used to create a renderer instance appropriate for the current
+	 * platform */
+	public static Renderer create(int renderMode, int vertexValuesCount) {
+		//Check to see whether Andor is currently running on Android
+		if (! Settings.AndroidMode)
+			//Return the default renderer
+			return Renderer.create(renderMode, vertexValuesCount);
+		else
+			//Return the Android renderer
+			return new AndroidRenderer(renderMode, vertexValuesCount);
 	}
 	
 }

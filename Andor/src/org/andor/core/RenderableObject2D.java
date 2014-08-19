@@ -84,7 +84,7 @@ public class RenderableObject2D extends Object2D {
 	 * and the vertices data */
 	public void setup(int renderMode, float[] verticesData) {
 		//Create the renderer
-		this.renderer = new Renderer(renderMode, Renderer.VERTEX_VALUES_COUNT_2D);
+		this.renderer = Renderer.create(renderMode, Renderer.VERTEX_VALUES_COUNT_2D);
 		//Set the correct values
 		this.renderer.setValues(verticesData);
 		//Setup the buffers
@@ -95,7 +95,7 @@ public class RenderableObject2D extends Object2D {
 	 * the vertices data and the colour data */
 	public void setup(int renderMode, float[] verticesData, float[] colourData) {
 		//Create the renderer
-		this.renderer = new Renderer(renderMode, Renderer.VERTEX_VALUES_COUNT_2D);
+		this.renderer = Renderer.create(renderMode, Renderer.VERTEX_VALUES_COUNT_2D);
 		//Set the correct values
 		this.renderer.setValues(verticesData, colourData);
 		//Setup the buffers
@@ -106,7 +106,7 @@ public class RenderableObject2D extends Object2D {
 	 * the vertices data, the colour data and the texture data */
 	public void setup(int renderMode, float[] verticesData, float[] colourData, float[] textureData) {
 		//Create the renderer
-		this.renderer = new Renderer(renderMode, Renderer.VERTEX_VALUES_COUNT_2D);
+		this.renderer = Renderer.create(renderMode, Renderer.VERTEX_VALUES_COUNT_2D);
 		//Set the correct values
 		this.renderer.setValues(verticesData, colourData, textureData);
 		//Setup the buffers

@@ -47,7 +47,7 @@ public class BitmapText extends RenderableObject2D {
 		//Set the size
 		this.fontSize = fontSize;
 		//Create the renderer
-		this.renderer = new Renderer(GL11.GL_QUADS, Renderer.VERTEX_VALUES_COUNT_2D);
+		this.renderer = Renderer.create(GL11.GL_QUADS, Renderer.VERTEX_VALUES_COUNT_2D);
 		this.renderer.setValues(Object2DBuilder.createQuadV(1, 1), Object2DBuilder.createColourArray(4, Colour.WHITE), Object2DBuilder.createQuadT(image));
 		this.renderer.setupBuffers();
 	}

@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.lwjgl.opengl.GL11;
-
 public class ParticleEmitter extends RenderableObject3D {
 	
 	/* The amount of particles to produce each update */
@@ -68,7 +66,7 @@ public class ParticleEmitter extends RenderableObject3D {
 		this.emitting = true;
 		this.ignoreZ = false;
 		this.randomGenerator = new Random();
-		this.renderer = new Renderer(GL11.GL_POINTS, Renderer.VERTEX_VALUES_COUNT_3D);
+		this.renderer = Renderer.create(Renderer.POINTS, Renderer.VERTEX_VALUES_COUNT_3D);
 		this.renderer.setValues(new float[] { 0, 0, 0 }, new Colour(0.0f, 0.0f, 0.0f, 0.0f).getValuesRGBA());
 		this.renderer.setupBuffers();
 	}

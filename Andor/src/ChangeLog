@@ -1,4 +1,29 @@
 ------------------------------------------------------
+Release 1 | Beta 2 | Development 2 | Experimental 1
+
+* Fixed bug: The window sizes in the Settings were
+  0 when create() was called in GameLoop on Android
+* Fixed bug: AndroidRenderer added to the allRenderers
+  list twice when initialised
+
+------------------------------------------------------
+Release 1 | Beta 2 | Development 2 | Experimental 0
+
+* Added ActivityListenerInterface
+* Added AndroidDisplay
+* Added AndroidDisplayRenderer
+* Added BaseActivity
+* Added ScreenUtils
+* Added AndroidRenderer
+* Added Android support for Console (And therefore
+  also logger)
+
+* Created the package org.andor.core.android
+
+* WARNING: Prepare for some quite big updates...
+  Android Support is coming
+
+------------------------------------------------------
 Release 1 | Beta 2 | Development 1 | Experimental 3
 
 * Added VBO's to AndroidRenderer

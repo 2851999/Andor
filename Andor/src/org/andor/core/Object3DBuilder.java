@@ -9,50 +9,49 @@
 package org.andor.core;
 
 import org.andor.utils.ObjectBuilderUtils;
-import org.lwjgl.opengl.GL11;
 
 public class Object3DBuilder {
 	
 	/* The static method used to create a muti-textured cube renderable object given the
 	 * width, height and colours */
 	public static RenderableObject3D createCube(Image[] textures, float width, float height, float depth, Colour[] colours) {
-		return new RenderableObject3D(GL11.GL_QUADS, createCubeV(width, height, depth), createColourArray(24, colours), createCubeT(textures), width, height, depth);
+		return new RenderableObject3D(Renderer.QUADS, createCubeV(width, height, depth), createColourArray(24, colours), createCubeT(textures), width, height, depth);
 	}
 	
 	/* The static method used to create a multi-cube renderable object given the
 	 * width, height and colour */
 	public static RenderableObject3D createCube(Image[] textures, float width, float height, float depth, Colour colour) {
-		return new RenderableObject3D(GL11.GL_QUADS, createCubeV(width, height, depth), createColourArray(24, colour), createCubeT(textures), width, height, depth);
+		return new RenderableObject3D(Renderer.QUADS, createCubeV(width, height, depth), createColourArray(24, colour), createCubeT(textures), width, height, depth);
 	}
 	
 	/* The static method used to create a textured cube renderable object given the
 	 * width, height and colours */
 	public static RenderableObject3D createCube(Image texture, float width, float height, float depth, Colour[] colours) {
-		return new RenderableObject3D(GL11.GL_QUADS, createCubeV(width, height, depth), createColourArray(24, colours), createCubeT(texture), width, height, depth);
+		return new RenderableObject3D(Renderer.QUADS, createCubeV(width, height, depth), createColourArray(24, colours), createCubeT(texture), width, height, depth);
 	}
 	
 	/* The static method used to create a textured cube renderable object given the
 	 * width, height and colour */
 	public static RenderableObject3D createCube(Image texture, float width, float height, float depth, Colour colour) {
-		return new RenderableObject3D(GL11.GL_QUADS, createCubeV(width, height, depth), createColourArray(24, colour), createCubeT(texture), width, height, depth);
+		return new RenderableObject3D(Renderer.QUADS, createCubeV(width, height, depth), createColourArray(24, colour), createCubeT(texture), width, height, depth);
 	}
 	
 	/* The static method used to create a cube renderable object given the
 	 * width, height and colours */
 	public static RenderableObject3D createCube(float width, float height, float depth, Colour[] colours) {
-		return new RenderableObject3D(GL11.GL_QUADS, createCubeV(width, height, depth), createColourArray(24, colours), width, height, depth);
+		return new RenderableObject3D(Renderer.QUADS, createCubeV(width, height, depth), createColourArray(24, colours), width, height, depth);
 	}
 	
 	/* The static method used to create a cube renderable object given the
 	 * width, height and colour */
 	public static RenderableObject3D createCube(float width, float height, float depth, Colour colour) {
-		return new RenderableObject3D(GL11.GL_QUADS, createCubeV(width, height, depth), createColourArray(24, colour), width, height, depth);
+		return new RenderableObject3D(Renderer.QUADS, createCubeV(width, height, depth), createColourArray(24, colour), width, height, depth);
 	}
 	
 	/* The static method used to create a cube renderable object given the
 	 * width and height */
 	public static RenderableObject3D createCube(float width, float height, float depth) {
-		return new RenderableObject3D(GL11.GL_QUADS, createCubeV(width, height, depth), width, height, depth);
+		return new RenderableObject3D(Renderer.QUADS, createCubeV(width, height, depth), width, height, depth);
 	}
 	
 	/* The static method used to create a cube's texture coordinates with multiple textures */
@@ -181,31 +180,31 @@ public class Object3DBuilder {
 	/* The static method used to create a textured quad renderable object given the
 	 * width, height and colours */
 	public static RenderableObject3D createQuad(Image texture, float width, float height, Colour[] colours) {
-		return new RenderableObject3D(GL11.GL_QUADS, createQuadV(width, height), createColourArray(4, colours), createQuadT(texture), width, height, 0);
+		return new RenderableObject3D(Renderer.QUADS, createQuadV(width, height), createColourArray(4, colours), createQuadT(texture), width, height, 0);
 	}
 	
 	/* The static method used to create a textured quad renderable object given the
 	 * width, height and colour */
 	public static RenderableObject3D createQuad(Image texture, float width, float height, Colour colour) {
-		return new RenderableObject3D(GL11.GL_QUADS, createQuadV(width, height), createColourArray(4, colour), createQuadT(texture), width, height, 0);
+		return new RenderableObject3D(Renderer.QUADS, createQuadV(width, height), createColourArray(4, colour), createQuadT(texture), width, height, 0);
 	}
 	
 	/* The static method used to create a quad renderable object given the
 	 * width, height and colours */
 	public static RenderableObject3D createQuad(float width, float height, Colour[] colours) {
-		return new RenderableObject3D(GL11.GL_QUADS, createQuadV(width, height), createColourArray(4, colours), width, height, 0);
+		return new RenderableObject3D(Renderer.QUADS, createQuadV(width, height), createColourArray(4, colours), width, height, 0);
 	}
 	
 	/* The static method used to create a quad renderable object given the
 	 * width, height and colour */
 	public static RenderableObject3D createQuad(float width, float height, Colour colour) {
-		return new RenderableObject3D(GL11.GL_QUADS, createQuadV(width, height), createColourArray(4, colour), width, height, 0);
+		return new RenderableObject3D(Renderer.QUADS, createQuadV(width, height), createColourArray(4, colour), width, height, 0);
 	}
 	
 	/* The static method used to create a quad renderable object given the
 	 * width and height */
 	public static RenderableObject3D createQuad(float width, float height) {
-		return new RenderableObject3D(GL11.GL_QUADS, createQuadV(width, height), width, height, 0);
+		return new RenderableObject3D(Renderer.QUADS, createQuadV(width, height), width, height, 0);
 	}
 	
 	/* The static method used to create a quad's vertices array given the width and height */
