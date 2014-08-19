@@ -15,15 +15,14 @@ import org.andor.core.Settings;
 
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
-import android.opengl.Matrix;
 
 public class AndroidDisplayRenderer implements GLSurfaceView.Renderer {
 	
 	/* The display */
 	public AndroidDisplay display;
 	
-	public float mVMatrix[] = new float[16];
-	public float mProjMatrix[] = new float[16];
+	public static float mVMatrix[] = new float[16];
+	public static float mProjMatrix[] = new float[16];
 	public static float mMVPMatrix[] = new float[16];
 	
 	/* The constructor */
@@ -47,15 +46,6 @@ public class AndroidDisplayRenderer implements GLSurfaceView.Renderer {
 		this.display.changeDisplay(width, height);
 		//Setup the view port
 		GLES20.glViewport(0, 0, width, height);
-		//float ratio = (float) width / height;
-		//Matrix.frustumM(mProjMatrix, 0, -ratio, ratio, -1, 1, 3, 7);
-		//Matrix.setLookAtM(mVMatrix, 0, 0, 0, -3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
-		Matrix.orthoM(mProjMatrix, 0, 0, width, height, 0, -1, 1);
-		Matrix.setLookAtM(mVMatrix, 0, 0f, 0f, 1f, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
-		//Matrix.perspectiveM(mProjMatrix, 0, 60, ratio, 0.1f, 100);
-		//Matrix.setLookAtM(mVMatrix, 0, 0, 0, -3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
-		//Combine the projection and camera view matrices
-		Matrix.multiplyMM(mMVPMatrix, 0, mProjMatrix, 0, mVMatrix, 0);
 	}
 	
 	/* The method called to draw the frame */

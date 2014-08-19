@@ -298,7 +298,7 @@ public class Renderer {
 		//Check to see whether Andor is currently running on Android
 		if (! Settings.AndroidMode)
 			//Return the default renderer
-			return Renderer.create(renderMode, vertexValuesCount);
+			return new Renderer(renderMode, vertexValuesCount);
 		else
 			//Return the Android renderer
 			return new AndroidRenderer(renderMode, vertexValuesCount);

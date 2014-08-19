@@ -135,7 +135,7 @@ public class AndroidRenderer extends Renderer {
 			colourAttribute = GLES20.glGetAttribLocation(this.androidShader.program, "colour");
 			GLES20.glEnableVertexAttribArray(colourAttribute);
 			GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, this.coloursHandle);
-			GLES20.glVertexAttribPointer(colourAttribute, this.colourValuesCount, GLES20.GL_FLOAT, false, this.colourValuesCount, 0);
+			GLES20.glVertexAttribPointer(colourAttribute, this.colourValuesCount, GLES20.GL_FLOAT, false, 0, 0);
 		}
 		if (this.textureData != null) {
 			GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, this.texturesHandle);
