@@ -19,7 +19,7 @@ import org.lwjgl.opengl.GL15;
 public class Renderer {
 	
 	/* The list of renderer's that have been created */
-	private static List<Renderer> allRenderers = new ArrayList<Renderer>();
+	protected static List<Renderer> allRenderers = new ArrayList<Renderer>();
 	
 	/* The numbers of values for the vertices in both 2D and 3D space */
 	public static final int VERTEX_VALUES_COUNT_2D = 2;
@@ -29,11 +29,8 @@ public class Renderer {
 	public static final int DEFAULT_COLOUR_VALUES_COUNT = 4;
 	public static final int DEFAULT_TEXTURE_VALUES_COUNT = 2;
 	
-	/* The default usage type of the buffers */
-	public static final int DEFAULT_USAGE = GL15.GL_STATIC_DRAW;
-	
 	/* The usage type of the buffers */
-	public int usage = DEFAULT_USAGE;
+	public int usage;
 	
 	/* The number of values for each piece of data */
 	public int vertexValuesCount = 0;
@@ -69,6 +66,9 @@ public class Renderer {
 		this.vertexValuesCount = vertexValuesCount;
 		//Add this renderer to the list
 		allRenderers.add(this);
+		//Make sure Andor isn't currently running on Android
+		if (! Settings.AndroidMode)
+			usage = GL15.GL_STATIC_DRAW;
 	}
 	
 	/* The method used to setup the buffers,
@@ -76,7 +76,6 @@ public class Renderer {
 	public void setupBuffers() {
 		//Create the vertices buffer
 		this.verticesBuffer = BufferUtils.createFlippedBuffer(this.verticesData);
-		
 		//Setup the vertices handle
 		this.verticesHandle = GL15.glGenBuffers();
 		
@@ -182,9 +181,12 @@ public class Renderer {
 		this.normalsData = normalsData;
 		//Create the normals buffer
 		this.normalsBuffer = BufferUtils.createFlippedBuffer(this.normalsData);
-		//Bind the normals buffer and give OpenGL the data
-		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.normalsHandle);
-		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, this.normalsBuffer, this.usage);
+		//Make sure Andor isn't currently running on Android
+		if (! Settings.AndroidMode) {
+			//Bind the normals buffer and give OpenGL the data
+			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.normalsHandle);
+			GL15.glBufferData(GL15.GL_ARRAY_BUFFER, this.normalsBuffer, this.usage);
+		}
 	}
 	
 	/* The method used to update the colours */

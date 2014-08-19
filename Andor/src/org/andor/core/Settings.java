@@ -10,14 +10,17 @@ package org.andor.core;
 
 public class Settings {
 	
+	/* The static boolean that states whether Andor is running on Android */
+	public static boolean AndroidMode = false;
+	
 	/* The static class containing all of the information about Andor */
 	public static class Information {
 		/* The version of Andor */
-		public static final String VERSION = "V0.0.1.9";
+		public static final String VERSION = "V0.0.2.0";
 		/* The build of Andor */
 		public static final String BUILD = "Development";
 		/* The date this build started development */
-		public static final String DATE = "16/08/2014";
+		public static final String DATE = "19/08/2014";
 	}
 	
 	/* The static class containing all of the settings required for the window */
@@ -41,12 +44,14 @@ public class Settings {
 		public static int MaxFPS = 60;
 	}
 	
-	/* The static class containing all of the audio settings */
-	public static class Audio {
-		/* The sound effect volume */
-		public static int SoundEffectVolume = 100;
-		/* The music volume */
-		public static int MusicVolume = 100;
+	/* The static class containing all of the Android settings */
+	public static class Android {
+		/* The setting for the screen orientation portrait */
+		public static final int SCREEN_ORIENTATION_PORTRAIT = 1;
+		/* The setting for the screen orientation landscape */
+		public static final int SCREEN_ORIENTATION_LANDSCAPE = 2;
+		/* The setting for the screen orientation */
+		public static int ScreenOrientation = SCREEN_ORIENTATION_PORTRAIT;
 	}
 	
 }
