@@ -1,4 +1,52 @@
 ------------------------------------------------------
+Release 1 | Beta 2 | Development 2 | Experimental 0
+
+* Added ActivityListenerInterface
+* Added AndroidDisplay
+* Added AndroidDisplayRenderer
+* Added BaseActivity
+* Added ScreenUtils
+* Added AndroidRenderer
+* Added Android support for Console (And therefore
+  also logger)
+
+* Created the package org.andor.core.android
+
+* WARNING: Prepare for some quite big updates...
+  Android Support is coming
+
+------------------------------------------------------
+Release 1 | Beta 2 | Development 1 | Experimental 3
+
+* Added VBO's to AndroidRenderer
+* Added Android support for Console (And therefore
+  also logger)
+
+------------------------------------------------------
+Release 1 | Beta 2 | Development 1 | Experimental 2
+
+* Added AndroidRenderer
+
+* NOTE: It looks like Android support may take a
+  while to come up to the same level as on PC,
+  as there are many problems with VBO's and making
+  the shaders to work in the same way
+
+------------------------------------------------------
+Release 1 | Beta 2 | Development 1 | Experimental 1
+
+* Added ActivityListenerInterface
+* Added AndroidDisplay
+* Added AndroidDisplayRenderer
+* Added BaseActivity
+* Added ScreenUtils
+
+* Created the package org.andor.core.android
+
+* WARNING: Prepare for some quite big updates...
+  Android Support is coming
+
+------------------------------------------------------
 Release 1 | Beta 2 | Development 1 | Experimental 0
 
 * Added Particle
