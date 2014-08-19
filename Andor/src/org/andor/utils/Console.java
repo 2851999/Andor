@@ -10,27 +10,43 @@ package org.andor.utils;
 
 import java.util.Scanner;
 
+import org.andor.core.Settings;
+
+import android.util.Log;
+
 public class Console {
 	
 	/* The static method used to print out a message */
 	public static <T> void print(T message) {
-		//Print out the message
-		System.out.print(message);
+		//Check to see whether using Android mode
+		if (! Settings.AndroidMode)
+			//Print out the message
+			System.out.print(message);
+		else
+			Log.d("Andor", "" + message);
 	}
 	
 	/* The static method used to print out a message and start a new line */
 	public static <T> void println(T message) {
-		//Print out the message
-		System.out.println(message);
+		//Check to see whether using Android mode
+		if (! Settings.AndroidMode)
+			//Print out the message
+			System.out.println(message);
+		else
+			Log.d("Andor", "" + message);
 	}
 	
 	/* The static method used to get input from the console */
 	@SuppressWarnings("resource")
 	public static String getInput() {
-		//Create the scanner object
-		Scanner scanner = new Scanner(System.in);
-		//Return the input
-		return scanner.nextLine();
+		//Check to see whether using Android mode
+		if (! Settings.AndroidMode) {
+			//Create the scanner object
+			Scanner scanner = new Scanner(System.in);
+			//Return the input
+			return scanner.nextLine();
+		} else
+			return "";
 	}
 	
 	/* The static method used to print out a message and return

@@ -1,4 +1,11 @@
 ------------------------------------------------------
+Release 1 | Beta 2 | Development 1 | Experimental 3
+
+* Added VBO's to AndroidRenderer
+* Added Android support for Console (And therefore
+  also logger)
+
+------------------------------------------------------
 Release 1 | Beta 2 | Development 1 | Experimental 2
 
 * Added AndroidRenderer

@@ -9,6 +9,7 @@
 package org.andor.core.android;
 
 import org.andor.core.Renderer;
+import org.andor.core.Settings;
 import org.andor.core.Shader;
 import org.andor.utils.ArrayUtils;
 import org.andor.utils.BufferUtils;
@@ -20,16 +21,18 @@ public class AndroidRenderer extends Renderer {
 	
 	/* The Android shader code */
 	private static final String[] androidVertexShaderCode = new String[] {
-		    "attribute vec4 vPosition;",
+		 	"attribute vec4 colour;",
+		 	"varying vec4 fcolour;",
+		    "attribute vec4 vertexPosition;",
 		    "void main() {",
-		    "  gl_Position = vPosition;",
+		    "  fcolour = colour;",
+		    "  gl_Position = vertexPosition;",
 		    "}" };
 	
 	private static final String[] androidFragmentShaderCode = new String[] {
-		    "precision mediump float;",
-		    "uniform vec4 vColor;",
+		    "varying vec4 fcolour;",
 		    "void main() {",
-		    "  gl_FragColor = vColor;",
+		    "  gl_FragColor = fcolour;",
 		    "}" };
 	
 	/* The Android shader */
@@ -43,7 +46,7 @@ public class AndroidRenderer extends Renderer {
 		allRenderers.add(this);
 		usage = GLES20.GL_STATIC_DRAW;
 		//Setup the Android shader
-		this.androidShader = new Shader();
+		this.androidShader = new AndroidShader();
 		this.androidShader.vertexShader = ShaderUtils.createShader(ArrayUtils.toStringList(androidVertexShaderCode), GLES20.GL_VERTEX_SHADER);
 		this.androidShader.fragmentShader = ShaderUtils.createShader(ArrayUtils.toStringList(androidFragmentShaderCode), GLES20.GL_FRAGMENT_SHADER);
 		this.androidShader.create();
@@ -54,53 +57,100 @@ public class AndroidRenderer extends Renderer {
 	public void setupBuffers() {
 		//Create the vertices buffer
 		this.verticesBuffer = BufferUtils.createFlippedBuffer(this.verticesData);
+		int[] vh = new int[1];
+		GLES20.glGenBuffers(1, vh, 0);
+		//Setup the vertices handle
+		this.verticesHandle = vh[0];
+		
+		//Bind the vertices buffer and give OpenGL the data
+		GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, this.verticesHandle);
+		GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, Float.BYTES * verticesData.length, this.verticesBuffer, this.usage);
+		GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
 		
 		//Check to see whether the normals have been set
 		if (this.normalsData != null) {
 			//Create the normals buffer
 			this.normalsBuffer = BufferUtils.createFlippedBuffer(this.normalsData);
+			int[] nh = new int[1];
+			GLES20.glGenBuffers(1, nh, 0);
+			//Setup the normals handle
+			this.normalsHandle = nh[0];
+			
+			//Bind the normals buffer and give OpenGL the data
+			GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, this.normalsHandle);
+			GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, Float.BYTES * verticesData.length, this.normalsBuffer, this.usage);
+			GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
 		}
 		
 		//Check to see whether the colours have been set
 		if (this.colourData!= null) {
 			//Create the colours buffer
 			this.coloursBuffer = BufferUtils.createFlippedBuffer(this.colourData);
+			int[] ch = new int[1];
+			GLES20.glGenBuffers(1, ch, 0);
+			//Setup the colours handle
+			this.coloursHandle = ch[0];
+			
+			//Bind the colours buffer and give OpenGL the data
+			GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, this.coloursHandle);
+			GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, Float.BYTES * colourData.length, this.coloursBuffer, this.usage);
+			GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
 		}
 		
 		//Check to see whether the texture coordinates have been set
 		if (this.textureData != null) {
 			//Create the texture coordinates buffer
 			this.texturesBuffer = BufferUtils.createFlippedBuffer(this.textureData);
+			int[] th = new int[1];
+			GLES20.glGenBuffers(1, th, 0);
+			//Setup the texture coordinates handle
+			this.texturesHandle = th[0];
+			
+			//Bind the texture coordinates buffer and give OpenGL the data
+			GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, this.texturesHandle);
+			GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, Float.BYTES * textureData.length, this.texturesBuffer, this.usage);
+			GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
 		}
 	}
 	
 	/* The method used to draw the object */
 	public void render() {
-	    // Add program to OpenGL ES environment
-	    GLES20.glUseProgram(androidShader.program);
-
-	    // get handle to vertex shader's vPosition member
-	    int mPositionHandle = GLES20.glGetAttribLocation(androidShader.program, "vPosition");
-
-	    // Enable a handle to the triangle vertices
-	    GLES20.glEnableVertexAttribArray(mPositionHandle);
-
-	    // Prepare the triangle coordinate data
-	    GLES20.glVertexAttribPointer(mPositionHandle, this.vertexValuesCount,
-	                                 GLES20.GL_FLOAT, false,
-	                                 this.vertexValuesCount * Float.BYTES, this.verticesBuffer);
-
-	    // get handle to fragment shader's vColor member
-	    int mColorHandle = GLES20.glGetUniformLocation(androidShader.program, "vColor");
-
-	    // Set colour for drawing the triangle
-	    GLES20.glUniform4fv(mColorHandle, 1, colourData, 0);
-
-	    // Draw the triangle
-	    GLES20.glDrawArrays(this.renderMode, 0, this.verticesData.length / this.vertexValuesCount);
-
-	    // Disable vertex array
-	    GLES20.glDisableVertexAttribArray(mPositionHandle);
+		this.androidShader.use();
+		//Enable the arrays as needed
+		int vertexPositionAttribute = GLES20.glGetAttribLocation(this.androidShader.program, "vertexPosition");
+		int normalAttribute = 0;
+		int colourAttribute = 0;
+		int texturesAttribute = 0;
+		GLES20.glEnableVertexAttribArray(vertexPositionAttribute);
+		GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, this.verticesHandle);
+		GLES20.glVertexAttribPointer(vertexPositionAttribute, this.vertexValuesCount, GLES20.GL_FLOAT, false, 0, 0);
+		if (this.normalsData != null) {
+			GLES20.glEnableVertexAttribArray(normalAttribute);
+			GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, this.normalsHandle);
+			GLES20.glVertexAttribPointer(normalAttribute, 2, GLES20.GL_FLOAT, false, 0, 0);
+		}
+		if (this.colourData != null) {
+			colourAttribute = GLES20.glGetAttribLocation(this.androidShader.program, "colour");
+			GLES20.glEnableVertexAttribArray(colourAttribute);
+			GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, this.coloursHandle);
+			GLES20.glVertexAttribPointer(colourAttribute, this.colourValuesCount, GLES20.GL_FLOAT, false, this.colourValuesCount, 0);
+		}
+		if (this.textureData != null) {
+			GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, this.texturesHandle);
+			GLES20.glEnableVertexAttribArray(texturesAttribute);
+			GLES20.glVertexAttribPointer(texturesAttribute, this.textureValuesCount, GLES20.GL_FLOAT, false, 0, 0);
+		}
+		//Draw the arrays
+		GLES20.glDrawArrays(this.renderMode, 0, this.verticesData.length / this.vertexValuesCount);
+		//Disable the arrays as needed
+		if (this.normalsData != null)
+			GLES20.glDisableVertexAttribArray(normalAttribute);
+		if (this.textureData != null)
+			GLES20.glDisableVertexAttribArray(texturesAttribute);
+		if (this.colourData != null)
+			GLES20.glDisableVertexAttribArray(colourAttribute);
+		GLES20.glDisableVertexAttribArray(vertexPositionAttribute);
+		this.androidShader.stopUsing();
 	}
 	
 	/* The method used to update the vertices */
@@ -109,6 +159,9 @@ public class AndroidRenderer extends Renderer {
 		this.verticesData = verticesData;
 		//Create the vertices buffer
 		this.verticesBuffer = BufferUtils.createFlippedBuffer(this.verticesData);
+		//Bind the vertices buffer and give OpenGL the data
+		GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, this.verticesHandle);
+		GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, Float.BYTES * verticesData.length, this.verticesBuffer, this.usage);
 	}
 	
 	/* The method used to update the normals */
@@ -117,6 +170,12 @@ public class AndroidRenderer extends Renderer {
 		this.normalsData = normalsData;
 		//Create the normals buffer
 		this.normalsBuffer = BufferUtils.createFlippedBuffer(this.normalsData);
+		//Make sure Andor isn't currently running on Android
+		if (! Settings.AndroidMode) {
+			//Bind the normals buffer and give OpenGL the data
+			GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, this.normalsHandle);
+			GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, Float.BYTES * verticesData.length, this.normalsBuffer, this.usage);
+		}
 	}
 	
 	/* The method used to update the colours */
@@ -125,6 +184,9 @@ public class AndroidRenderer extends Renderer {
 		this.colourData = colourData;
 		//Create the colour buffer
 		this.coloursBuffer = BufferUtils.createFlippedBuffer(this.colourData);
+		//Bind the colours buffer and give OpenGL the data
+		GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, this.coloursHandle);
+		GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, Float.BYTES * verticesData.length, this.coloursBuffer, this.usage);
 	}
 	
 	/* The method used to update the texture coordinates */
@@ -133,6 +195,9 @@ public class AndroidRenderer extends Renderer {
 		this.textureData = textureData;
 		//Create the colour buffer
 		this.texturesBuffer = BufferUtils.createFlippedBuffer(this.textureData);
+		//Bind the texture coordinates buffer and give OpenGL the data
+		GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, this.texturesHandle);
+		GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, Float.BYTES * verticesData.length, this.texturesBuffer, this.usage);
 	}
 	
 	/* The method used to set the vertices */
@@ -155,7 +220,13 @@ public class AndroidRenderer extends Renderer {
 	
 	/* The method used to release this renderer */
 	public void release() {
-		
+		GLES20.glDeleteBuffers(1, new int[] { this.verticesHandle }, 0);
+		if (this.normalsData != null)
+			GLES20.glDeleteBuffers(1, new int[] { this.normalsHandle }, 0);
+		if (this.colourData != null)
+			GLES20.glDeleteBuffers(1, new int[] { this.coloursHandle }, 0);
+		if (this.textureData != null)
+			GLES20.glDeleteBuffers(1, new int[] { this.texturesHandle }, 0);
 	}
 	
 }

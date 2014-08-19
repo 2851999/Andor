@@ -2,6 +2,7 @@ package org.andor.utils;
 import java.util.List;
 
 import org.andor.core.Settings;
+import org.andor.core.Shader;
 import org.andor.core.logger.Log;
 import org.andor.core.logger.Logger;
 import org.lwjgl.opengl.GL11;
@@ -25,6 +26,11 @@ public class ShaderUtils {
 		try {
 			//Make sure Andor isn't currently running on Android
 			if (! Settings.AndroidMode) {
+				//Convert the shader type
+				if (shaderType == Shader.VERTEX_SHADER)
+					shaderType = GL20.GL_VERTEX_SHADER;
+				else if (shaderType == Shader.FRAGMENT_SHADER)
+					shaderType = GL20.GL_FRAGMENT_SHADER;
 				//Create the shader
 				shader = GL20.glCreateShader(shaderType);
 				//Check the shader was created
@@ -52,6 +58,11 @@ public class ShaderUtils {
 					Logger.log("Andor - ShaderInformation", getLogInformation(shader), Log.ERROR);
 				}
 			} else {
+				//Convert the shader type
+				if (shaderType == Shader.VERTEX_SHADER)
+					shaderType = GLES20.GL_VERTEX_SHADER;
+				else if (shaderType == Shader.FRAGMENT_SHADER)
+					shaderType = GLES20.GL_FRAGMENT_SHADER;
 				//Create the shader
 				shader = GLES20.glCreateShader(shaderType);
 				//Check the shader was created

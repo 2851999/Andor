@@ -13,6 +13,7 @@ import java.nio.ByteOrder;
 import java.nio.DoubleBuffer;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
+import java.nio.ShortBuffer;
 
 public class BufferUtils {
 	
@@ -20,6 +21,16 @@ public class BufferUtils {
 	public static ByteBuffer createBuffer(byte[] data) {
 		//Create the buffer
 		ByteBuffer buffer = ByteBuffer.allocateDirect(data.length).order(ByteOrder.nativeOrder());
+		//Give the data to the buffer
+		buffer.put(data);
+		//Return the buffer
+		return buffer;
+	}
+	
+	/* The static method used to create a short buffer given the data */
+	public static ShortBuffer createBuffer(short[] data) {
+		//Create the buffer
+		ShortBuffer buffer = ByteBuffer.allocateDirect(data.length * Integer.BYTES).order(ByteOrder.nativeOrder()).asShortBuffer();
 		//Give the data to the buffer
 		buffer.put(data);
 		//Return the buffer
@@ -60,6 +71,16 @@ public class BufferUtils {
 	public static ByteBuffer createFlippedBuffer(byte[] data) {
 		//Get the buffer
 		ByteBuffer buffer = createBuffer(data);
+		//Flip the buffer
+		buffer.flip();
+		//Return the buffer
+		return buffer;
+	}
+	
+	/* The static method used to create a flipped short buffer */
+	public static ShortBuffer createFlippedBuffer(short[] data) {
+		//Get the buffer
+		ShortBuffer buffer = createBuffer(data);
 		//Flip the buffer
 		buffer.flip();
 		//Return the buffer
