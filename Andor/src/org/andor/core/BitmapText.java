@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.andor.utils.ArrayUtils;
-import org.lwjgl.opengl.GL11;
 
 public class BitmapText extends RenderableObject2D {
 	
@@ -47,8 +46,8 @@ public class BitmapText extends RenderableObject2D {
 		//Set the size
 		this.fontSize = fontSize;
 		//Create the renderer
-		this.renderer = new Renderer(GL11.GL_QUADS, Renderer.VERTEX_VALUES_COUNT_2D);
-		this.renderer.setValues(Object2DBuilder.createQuadV(1, 1), Object2DBuilder.createColourArray(4, Colour.WHITE), Object2DBuilder.createQuadT(image));
+		this.renderer = Renderer.create(Renderer.TRIANGLES, Renderer.VERTEX_VALUES_COUNT_2D);
+		this.renderer.setValues(Object2DBuilder.createQuadV(1, 1), Object2DBuilder.createColourArray(4, Colour.WHITE), Object2DBuilder.createQuadT(image), Object2DBuilder.createQuadDO());
 		this.renderer.setupBuffers();
 	}
 	
@@ -59,6 +58,7 @@ public class BitmapText extends RenderableObject2D {
 		List<Float> vertices = new ArrayList<Float>();
 		float[] colours = Object2DBuilder.createColourArray(text.length() * 4, Colour.WHITE);
 		List<Float> textures = new ArrayList<Float>();
+		List<Short> drawOrder = new ArrayList<Short>();
 		float x = 0;
 		//Loop though the text
 		for (int a = 0; a < text.length(); a++) {
@@ -93,12 +93,23 @@ public class BitmapText extends RenderableObject2D {
 			textures.add(cellX / this.image.getWidth());
 			textures.add((cellY + cellHeight) / this.image.getHeight());
 			
+			//Get the draw order
+			short[] cdrawOrder = Object2DBuilder.createQuadDO();
+			//Add the draw order onto the draw order list
+			drawOrder.add((short) ((a * 4) + cdrawOrder[0]));
+			drawOrder.add((short) ((a * 4) + cdrawOrder[1]));
+			drawOrder.add((short) ((a * 4) + cdrawOrder[2]));
+			drawOrder.add((short) ((a * 4) + cdrawOrder[3]));
+			drawOrder.add((short) ((a * 4) + cdrawOrder[4]));
+			drawOrder.add((short) ((a * 4) + cdrawOrder[5]));
+			
 			x += ((this.cellWidth / this.cellHeight) * this.fontSize) / 1.5f;
 		}
 		//Update the renderer
 		this.renderer.updateVertices(ArrayUtils.toFloatArray(vertices));
 		this.renderer.updateColours(colours);
 		this.renderer.updateTextures(ArrayUtils.toFloatArray(textures));
+		this.renderer.updateDrawOrder(ArrayUtils.toShortArray(drawOrder));
 	}
 	
 	/* The method to get the width of a string */

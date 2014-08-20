@@ -39,7 +39,6 @@ public class AndroidDisplay extends GLSurfaceView {
 		this.setRenderer(new AndroidDisplayRenderer(this));
 		//Set the surface view focusable
 		this.setFocusable(true);
-		
 		//Set the size of the screen in the settings based on the value of fullscreen
 		if (Settings.Window.Fullscreen) {
 			Settings.Window.Width = ScreenUtils.getScreenWidth();

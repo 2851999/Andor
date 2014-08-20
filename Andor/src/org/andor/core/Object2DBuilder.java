@@ -9,38 +9,37 @@
 package org.andor.core;
 
 import org.andor.utils.ObjectBuilderUtils;
-import org.lwjgl.opengl.GL11;
 
 public class Object2DBuilder {
 	
 	/* The static method used to create a textured quad renderable object given the
 	 * width, height and colours */
 	public static RenderableObject2D createQuad(Image texture, float width, float height, Colour[] colours) {
-		return new RenderableObject2D(GL11.GL_QUADS, createQuadV(width, height), createColourArray(4, colours), createQuadT(texture), width, height);
+		return new RenderableObject2D(Renderer.TRIANGLES, createQuadV(width, height), createColourArray(4, colours), createQuadT(texture), createQuadDO(), width, height);
 	}
 	
 	/* The static method used to create a textured quad renderable object given the
 	 * width, height and colour */
 	public static RenderableObject2D createQuad(Image texture, float width, float height, Colour colour) {
-		return new RenderableObject2D(GL11.GL_QUADS, createQuadV(width, height), createColourArray(4, colour), createQuadT(texture), width, height);
+		return new RenderableObject2D(Renderer.TRIANGLES, createQuadV(width, height), createColourArray(4, colour), createQuadT(texture), createQuadDO(), width, height);
 	}
 	
 	/* The static method used to create a quad renderable object given the
 	 * width, height and colours */
 	public static RenderableObject2D createQuad(float width, float height, Colour[] colours) {
-		return new RenderableObject2D(GL11.GL_QUADS, createQuadV(width, height), createColourArray(4, colours), width, height);
+		return new RenderableObject2D(Renderer.TRIANGLES, createQuadV(width, height), createColourArray(4, colours), createQuadDO(), width, height);
 	}
 	
 	/* The static method used to create a quad renderable object given the
 	 * width, height and colour */
 	public static RenderableObject2D createQuad(float width, float height, Colour colour) {
-		return new RenderableObject2D(GL11.GL_QUADS, createQuadV(width, height), createColourArray(4, colour), width, height);
+		return new RenderableObject2D(Renderer.TRIANGLES, createQuadV(width, height), createColourArray(4, colour), createQuadDO(), width, height);
 	}
 	
 	/* The static method used to create a quad renderable object given the
 	 * width and height */
 	public static RenderableObject2D createQuad(float width, float height) {
-		return new RenderableObject2D(GL11.GL_QUADS, createQuadV(width, height), width, height);
+		return new RenderableObject2D(Renderer.TRIANGLES, createQuadV(width, height), createQuadDO(), width, height);
 	}
 	
 	/* The static method used to create a quad's vertices array given the width and height */
@@ -70,6 +69,16 @@ public class Object2DBuilder {
 				t.right, t.top,
 				t.right, t.bottom,
 				t.left, t.bottom
+		};
+	}
+	
+	/* The static method used to create a quad's draw order array given the width and height */
+	public static short[] createQuadDO() {
+		return new short[] {
+			//Bottom-Left triangle
+			0, 1, 2,
+			//Top-Right triangle
+			2, 3, 0
 		};
 	}
 	

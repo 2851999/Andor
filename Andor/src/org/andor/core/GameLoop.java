@@ -53,8 +53,10 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 		Input.addListener(this);
 		//Set close requested to false
 		this.closeRequested = false;
-		//Call the create method
-		this.create();
+		//Make sure Andor isn't currently running on Android
+		if (! Settings.AndroidMode)
+			//Call the create method
+			this.create();
 		//Start the game loop
 		this.startGameLoop();
 	}
@@ -69,9 +71,9 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 			while (! Window.shouldClose() && ! this.closeRequested)
 				//Run a cycle of the loop
 				this.tick();
+			//Shutdown the game engine
+			this.shutdown();
 		}
-		//Shutdown the game engine
-		this.shutdown();
 	}
 	
 	/* The method called to run a 'tick' of this game loop */

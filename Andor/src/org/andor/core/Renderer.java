@@ -9,14 +9,25 @@
 package org.andor.core;
 
 import java.nio.FloatBuffer;
+import java.nio.ShortBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.andor.core.android.AndroidRenderer;
+import org.andor.core.logger.Logger;
 import org.andor.utils.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
 
+import android.opengl.GLES20;
+import android.util.Log;
+
 public class Renderer {
+	
+	/* The different shapes that can be rendered */
+	public static final int QUADS = 1;
+	public static final int TRIANGLES = 2;
+	public static final int POINTS = 3;
 	
 	/* The list of renderer's that have been created */
 	protected static List<Renderer> allRenderers = new ArrayList<Renderer>();
@@ -42,18 +53,21 @@ public class Renderer {
 	public float[] normalsData;
 	public float[] colourData;
 	public float[] textureData;
+	public short[] drawOrder;
 	
 	/* The buffers */
 	public FloatBuffer verticesBuffer;
 	public FloatBuffer normalsBuffer;
 	public FloatBuffer coloursBuffer;
 	public FloatBuffer texturesBuffer;
+	public ShortBuffer drawOrderBuffer;
 	
 	/* The handles for each buffer */
 	public int verticesHandle;
 	public int normalsHandle;
 	public int coloursHandle;
 	public int texturesHandle;
+	public int drawOrderHandle;
 	
 	/* The render mode */
 	public int renderMode;
@@ -62,7 +76,7 @@ public class Renderer {
 	 * number of vertex values given */
 	public Renderer(int renderMode, int vertexValuesCount) {
 		//Assign the variables
-		this.renderMode = renderMode;
+		this.renderMode = convert(renderMode);
 		this.vertexValuesCount = vertexValuesCount;
 		//Add this renderer to the list
 		allRenderers.add(this);
@@ -125,6 +139,15 @@ public class Renderer {
 			GL15.glBufferData(GL15.GL_ARRAY_BUFFER, this.texturesBuffer, this.usage);
 			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
 		}
+		
+		//Check to see whether the draw order has been set
+		if (this.drawOrder != null) {
+			this.drawOrderBuffer = BufferUtils.createFlippedBuffer(this.drawOrder);
+			this.drawOrderHandle = GL15.glGenBuffers();
+			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.drawOrderHandle);
+			GL15.glBufferData(GL15.GL_ARRAY_BUFFER, this.drawOrderBuffer, this.usage);
+			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
+		}
 	}
 	
 	/* The method used to draw the object */
@@ -152,8 +175,15 @@ public class Renderer {
 			GL11.glTexCoordPointer(this.textureValuesCount, GL11.GL_FLOAT, 0, 0L);
 			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
 		}
-		//Draw the arrays
-		GL11.glDrawArrays(this.renderMode, 0, this.verticesData.length / this.vertexValuesCount);
+		//Check to see whether the draw order has been set
+		if (this.drawOrder != null) {
+			GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, this.drawOrderHandle);
+			GL11.glDrawElements(this.renderMode, this.drawOrder.length, GL11.GL_UNSIGNED_SHORT, 0);
+			GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, 0);
+		} else {
+			//Draw the arrays
+			GL11.glDrawArrays(this.renderMode, 0, this.verticesData.length / this.vertexValuesCount);
+		}
 		//Disable the arrays as needed
 		if (this.normalsData != null)
 			GL11.glDisableClientState(GL11.GL_NORMAL_ARRAY);
@@ -204,11 +234,22 @@ public class Renderer {
 	public void updateTextures(float[] textureData) {
 		//Set the texture data
 		this.textureData = textureData;
-		//Create the colour buffer
+		//Create the textures buffer
 		this.texturesBuffer = BufferUtils.createFlippedBuffer(this.textureData);
 		//Bind the texture coordinates buffer and give OpenGL the data
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.texturesHandle);
 		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, this.texturesBuffer, this.usage);
+	}
+	
+	/* The method used to update the draw order */
+	public void updateDrawOrder(short[] drawOrder) {
+		//Set the draw order
+		this.drawOrder = drawOrder;
+		//Create the draw order buffer
+		this.drawOrderBuffer = BufferUtils.createFlippedBuffer(this.drawOrder);
+		//Bind the texture coordinates buffer and give OpenGL the data
+		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.drawOrderHandle);
+		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, this.drawOrderBuffer, this.usage);
 	}
 	
 	/* The method used to set the vertices */
@@ -229,6 +270,27 @@ public class Renderer {
 		this.textureData = textureData;
 	}
 	
+	/* The method used to set the vertices and the draw orders */
+	public void setValues(float[] verticesData, short[] drawOrder) {
+		this.verticesData = verticesData;
+		this.drawOrder = drawOrder;
+	}
+	
+	/* The method used to set the vertices, colours and the draw order */
+	public void setValues(float[] verticesData, float[] colourData, short[] drawOrder) {
+		this.verticesData = verticesData;
+		this.colourData = colourData;
+		this.drawOrder = drawOrder;
+	}
+	
+	/* The method used to set the vertices, colours, texture coordinates and the draw order */
+	public void setValues(float[] verticesData, float[] colourData, float[] textureData, short[] drawOrder) {
+		this.verticesData = verticesData;
+		this.colourData = colourData;
+		this.textureData = textureData;
+		this.drawOrder = drawOrder;
+	}
+	
 	/* The method used to release this renderer */
 	public void release() {
 		GL15.glDeleteBuffers(this.verticesHandle);
@@ -238,6 +300,8 @@ public class Renderer {
 			GL15.glDeleteBuffers(this.coloursHandle);
 		if (this.textureData != null)
 			GL15.glDeleteBuffers(this.texturesHandle);
+		if (this.drawOrder != null)
+			GL15.glDeleteBuffers(this.drawOrderHandle);
 	}
 	
 	/* The static method used to release all of the renderer's that have been created */
@@ -246,6 +310,52 @@ public class Renderer {
 		for (int a = 0; a < allRenderers.size(); a++)
 			//Delete the current renderer
 			allRenderers.get(a).release();
+	}
+	
+	/* The static method used to convert the render mode */
+	private static int convert(int renderMode) {
+		//Check to see whether Andor is currently running on android
+		if (! Settings.AndroidMode) {
+			//Check the render mode
+			if (renderMode == QUADS)
+				return GL11.GL_QUADS;
+			else if (renderMode == TRIANGLES)
+				return GL11.GL_TRIANGLES;
+			else if (renderMode == POINTS)
+				return GL11.GL_POINTS;
+			else {
+				//Log an error
+				Logger.log("Andor - Renderer", "Invalid render mode: " + renderMode, Log.ERROR);
+				//Return -1
+				return -1;
+			}
+		} else {
+			//Check the render mode
+			if (renderMode == QUADS)
+				return GLES20.GL_TRIANGLE_FAN;
+			else if (renderMode == TRIANGLES)
+				return GLES20.GL_TRIANGLES;
+			else if (renderMode == POINTS)
+				return GLES20.GL_POINTS;
+			else {
+				//Log an error
+				Logger.log("Andor - Renderer", "Invalid render mode: " + renderMode, Log.ERROR);
+				//Return -1
+				return -1;
+			}
+		}
+	}
+	
+	/* The static method used to create a renderer instance appropriate for the current
+	 * platform */
+	public static Renderer create(int renderMode, int vertexValuesCount) {
+		//Check to see whether Andor is currently running on Android
+		if (! Settings.AndroidMode)
+			//Return the default renderer
+			return new Renderer(renderMode, vertexValuesCount);
+		else
+			//Return the Android renderer
+			return new AndroidRenderer(renderMode, vertexValuesCount);
 	}
 	
 }

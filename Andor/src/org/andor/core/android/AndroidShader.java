@@ -9,6 +9,7 @@
 package org.andor.core.android;
 
 import org.andor.core.Shader;
+import org.andor.utils.BufferUtils;
 import org.andor.utils.ShaderUtils;
 
 import android.opengl.GLES20;
@@ -68,49 +69,61 @@ public class AndroidShader extends Shader {
 	}
 	
 	/* The method used to set a specific value in this shader */
-	public void setValuef(String variableName, float v1) {
+	public void setUniformf(String variableName, float v1) {
 		//Set the value in the shader
-		GLES20.glUniform1f(GLES20.glGetUniformLocation(this.program, variableName), v1);
+		GLES20.glUniform1f(this.getUniformLocation(variableName), v1);
 	}
 
 	/* The method used to set a specific value in this shader */
-	public void setValuef(String variableName, float v1, float v2) {
+	public void setUniformf(String variableName, float v1, float v2) {
 		//Set the value in the shader
-		GLES20.glUniform2f(GLES20.glGetUniformLocation(this.program, variableName), v1, v2);
+		GLES20.glUniform2f(this.getUniformLocation(variableName), v1, v2);
 	}
 
 	/* The method used to set a specific value in this shader */
-	public void setValuef(String variableName, float v1, float v2, float v3) {
+	public void setUniformf(String variableName, float v1, float v2, float v3) {
 		//Set the value in the shader
-		GLES20.glUniform3f(GLES20.glGetUniformLocation(this.program, variableName), v1, v2, v3);
+		GLES20.glUniform3f(this.getUniformLocation(variableName), v1, v2, v3);
 	}
 
 	/* The method used to set a specific value in this shader */
-	public void setValuei(String variableName, int v1) {
+	public void setUniformi(String variableName, int v1) {
 		//Set the value in the shader
-		GLES20.glUniform1i(GLES20.glGetUniformLocation(this.program, variableName), v1);
+		GLES20.glUniform1i(this.getUniformLocation(variableName), v1);
 	}
 
 	/* The method used to set a specific value in this shader */
-	public void setValuei(String variableName, int v1, int v2) {
+	public void setUniformi(String variableName, int v1, int v2) {
 		//Set the value in the shader
-		GLES20.glUniform2i(GLES20.glGetUniformLocation(this.program, variableName), v1, v2);
+		GLES20.glUniform2i(this.getUniformLocation(variableName), v1, v2);
 	}
 
 	/* The method used to set a specific value in this shader */
-	public void setValuei(String variableName, int v1, int v2, int v3) {
+	public void setUniformi(String variableName, int v1, int v2, int v3) {
 		//Set the value in the shader
-		GLES20.glUniform3i(GLES20.glGetUniformLocation(this.program, variableName), v1, v2, v3);
+		GLES20.glUniform3i(this.getUniformLocation(variableName), v1, v2, v3);
 	}
 
 	/* The method used to set a specific value in this shader */
-	public void setValuei(String variableName, int[] arrayValues) {
-		
+	public void setUniformi(String variableName, int[] arrayValues) {
+		//Set the value in the shader
+		GLES20.glUniform1iv(this.getUniformLocation(variableName), 0, BufferUtils.createBuffer(arrayValues));
+	}
+
+	/* The method used to set a specific value in this shader */
+	public void setUniformf(String variableName, float[] arrayValues) {
+		//Set the value in the shader
+		GLES20.glUniform1fv(this.getUniformLocation(variableName), 0, BufferUtils.createBuffer(arrayValues));
 	}
 	
-	/* The method used to set a specific value in this shader */
-	public void setValuef(String variableName, float[] arrayValues) {
-		
+	/* The method used to get the location of a uniform variable */
+	public int getUniformLocation(String name) {
+		return GLES20.glGetUniformLocation(this.program, name);
+	}
+	
+	/* The method used to get the location of a attribute variable */
+	public int getAtrrbuteLocation(String name) {
+		return GLES20.glGetAttribLocation(this.program, name);
 	}
 	
 }
