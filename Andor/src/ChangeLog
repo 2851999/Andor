@@ -1,4 +1,19 @@
 ------------------------------------------------------
+Release 1 | Beta 2 | Development 2 | Experimental 3
+  
+* Fixed bug: Delta became very large / FPS became
+  very low when leaving the Android version and
+  then coming back
+
+------------------------------------------------------
+Release 1 | Beta 2 | Development 2 | Experimental 2
+
+* Fixed bug: AndroidRenderer didn't always display
+  the specified colours
+* Fixed bug: StackOverflow calling Renderer.create()
+  with AndroidMode set to false
+
+------------------------------------------------------
 Release 1 | Beta 2 | Development 2 | Experimental 1
 
 * Fixed bug: The window sizes in the Settings were

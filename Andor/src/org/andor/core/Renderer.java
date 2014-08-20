@@ -9,6 +9,7 @@
 package org.andor.core;
 
 import java.nio.FloatBuffer;
+import java.nio.ShortBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,18 +53,21 @@ public class Renderer {
 	public float[] normalsData;
 	public float[] colourData;
 	public float[] textureData;
+	public short[] drawOrder;
 	
 	/* The buffers */
 	public FloatBuffer verticesBuffer;
 	public FloatBuffer normalsBuffer;
 	public FloatBuffer coloursBuffer;
 	public FloatBuffer texturesBuffer;
+	public ShortBuffer drawOrderBuffer;
 	
 	/* The handles for each buffer */
 	public int verticesHandle;
 	public int normalsHandle;
 	public int coloursHandle;
 	public int texturesHandle;
+	public int drawOrderHandle;
 	
 	/* The render mode */
 	public int renderMode;
@@ -135,6 +139,15 @@ public class Renderer {
 			GL15.glBufferData(GL15.GL_ARRAY_BUFFER, this.texturesBuffer, this.usage);
 			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
 		}
+		
+		//Check to see whether the draw order has been set
+		if (this.drawOrder != null) {
+			this.drawOrderBuffer = BufferUtils.createFlippedBuffer(this.drawOrder);
+			this.drawOrderHandle = GL15.glGenBuffers();
+			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.drawOrderHandle);
+			GL15.glBufferData(GL15.GL_ARRAY_BUFFER, this.drawOrderBuffer, this.usage);
+			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
+		}
 	}
 	
 	/* The method used to draw the object */
@@ -162,8 +175,15 @@ public class Renderer {
 			GL11.glTexCoordPointer(this.textureValuesCount, GL11.GL_FLOAT, 0, 0L);
 			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
 		}
-		//Draw the arrays
-		GL11.glDrawArrays(this.renderMode, 0, this.verticesData.length / this.vertexValuesCount);
+		//Check to see whether the draw order has been set
+		if (this.drawOrder != null) {
+			GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, this.drawOrderHandle);
+			GL11.glDrawElements(this.renderMode, this.drawOrder.length, GL11.GL_UNSIGNED_SHORT, 0);
+			GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, 0);
+		} else {
+			//Draw the arrays
+			GL11.glDrawArrays(this.renderMode, 0, this.verticesData.length / this.vertexValuesCount);
+		}
 		//Disable the arrays as needed
 		if (this.normalsData != null)
 			GL11.glDisableClientState(GL11.GL_NORMAL_ARRAY);
@@ -214,11 +234,22 @@ public class Renderer {
 	public void updateTextures(float[] textureData) {
 		//Set the texture data
 		this.textureData = textureData;
-		//Create the colour buffer
+		//Create the textures buffer
 		this.texturesBuffer = BufferUtils.createFlippedBuffer(this.textureData);
 		//Bind the texture coordinates buffer and give OpenGL the data
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.texturesHandle);
 		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, this.texturesBuffer, this.usage);
+	}
+	
+	/* The method used to update the draw order */
+	public void updateDrawOrder(short[] drawOrder) {
+		//Set the draw order
+		this.drawOrder = drawOrder;
+		//Create the draw order buffer
+		this.drawOrderBuffer = BufferUtils.createFlippedBuffer(this.drawOrder);
+		//Bind the texture coordinates buffer and give OpenGL the data
+		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.drawOrderHandle);
+		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, this.drawOrderBuffer, this.usage);
 	}
 	
 	/* The method used to set the vertices */
@@ -239,6 +270,27 @@ public class Renderer {
 		this.textureData = textureData;
 	}
 	
+	/* The method used to set the vertices and the draw orders */
+	public void setValues(float[] verticesData, short[] drawOrder) {
+		this.verticesData = verticesData;
+		this.drawOrder = drawOrder;
+	}
+	
+	/* The method used to set the vertices, colours and the draw order */
+	public void setValues(float[] verticesData, float[] colourData, short[] drawOrder) {
+		this.verticesData = verticesData;
+		this.colourData = colourData;
+		this.drawOrder = drawOrder;
+	}
+	
+	/* The method used to set the vertices, colours, texture coordinates and the draw order */
+	public void setValues(float[] verticesData, float[] colourData, float[] textureData, short[] drawOrder) {
+		this.verticesData = verticesData;
+		this.colourData = colourData;
+		this.textureData = textureData;
+		this.drawOrder = drawOrder;
+	}
+	
 	/* The method used to release this renderer */
 	public void release() {
 		GL15.glDeleteBuffers(this.verticesHandle);
@@ -248,6 +300,8 @@ public class Renderer {
 			GL15.glDeleteBuffers(this.coloursHandle);
 		if (this.textureData != null)
 			GL15.glDeleteBuffers(this.texturesHandle);
+		if (this.drawOrder != null)
+			GL15.glDeleteBuffers(this.drawOrderHandle);
 	}
 	
 	/* The static method used to release all of the renderer's that have been created */

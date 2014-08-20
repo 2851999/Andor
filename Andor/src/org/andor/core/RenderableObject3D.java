@@ -8,7 +8,12 @@
 
 package org.andor.core;
 
+import java.util.Arrays;
+
+import org.andor.core.android.AndroidDisplayRenderer;
 import org.lwjgl.opengl.GL11;
+
+import android.opengl.Matrix;
 
 public class RenderableObject3D extends Object3D {
 	
@@ -49,33 +54,51 @@ public class RenderableObject3D extends Object3D {
 	
 	/* The method used to render this object */
 	public void render() {
-		//Push the current matrix
-		GL11.glPushMatrix();
-		
 		//Get the position
 		Vector3D p = this.getPosition();
-		
-		//Move to the correct position
-		GL11.glTranslatef(p.x, p.y, p.z);
-		
 		//Get the rotation
 		Vector3D r = this.getRotation();
-		
-		//Rotate by the specified amount
-		GL11.glRotatef(r.x, 1, 0, 0);
-		GL11.glRotatef(r.y, 0, 1, 0);
-		GL11.glRotatef(r.z, 0, 0, 1);
-		
 		//Get the scale
 		Vector3D s = this.getScale();
-		
-		GL11.glScalef(s.x, s.y, s.z);
-		
-		//Render the object using the renderer
-		this.renderer.render();
-		
-		//Pop the current matrix
-		GL11.glPopMatrix();
+		//Check to see whether Andor is currently running on Android
+		if (! Settings.AndroidMode) {
+			//Push the current matrix
+			GL11.glPushMatrix();
+			
+			//Move to the correct position
+			GL11.glTranslatef(p.x, p.y, p.z);
+			
+			//Rotate by the specified amount
+			GL11.glRotatef(r.x, 1, 0, 0);
+			GL11.glRotatef(r.y, 0, 1, 0);
+			GL11.glRotatef(r.z, 0, 0, 1);
+			
+			//Scale by the specified amount
+			GL11.glScalef(s.x, s.y, s.z);
+			
+			//Render the object using the renderer
+			this.renderer.render();
+			
+			//Pop the current matrix
+			GL11.glPopMatrix();
+		} else {
+			//Save the current matrix
+			float[] clone = Arrays.copyOf(AndroidDisplayRenderer.mMVPMatrix, AndroidDisplayRenderer.mMVPMatrix.length);
+			//Reset the current matrix
+			//AndroidDisplayRenderer.mMVPMatrix = new float[16];
+			//Move to the correct position
+			Matrix.translateM(AndroidDisplayRenderer.mMVPMatrix, 0, p.x, p.y, p.z);
+			//Rotate by the specified amount
+			Matrix.rotateM(AndroidDisplayRenderer.mMVPMatrix, 0, r.x, 1, 0, 0);
+			Matrix.rotateM(AndroidDisplayRenderer.mMVPMatrix, 0, r.y, 0, 1, 0);
+			Matrix.rotateM(AndroidDisplayRenderer.mMVPMatrix, 0, r.z, 0, 0, 1);
+			//Scale by the specified amount
+			Matrix.scaleM(AndroidDisplayRenderer.mMVPMatrix, 0, s.x, s.y, s.z);
+			//Render the object using the renderer
+			this.renderer.render();
+			//Restore the current matrix
+			AndroidDisplayRenderer.mMVPMatrix = clone;
+		}
 	}
 	
 	/* The method used to setup this object given the render mode

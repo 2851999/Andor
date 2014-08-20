@@ -96,6 +96,9 @@ public abstract class BaseActivity extends Activity implements ActivityListenerI
 		//Call the onResume() method
 		super.onResume();
 		this.setContentView(this.display);
+		//Reset the times in the FPSCalculator to avoid
+		//a massive delta / low FPS
+		this.game.fpsCalculator.reset();
 		//Resume the OpenGL ES display
 		this.display.onResume();
 		//Call the method in the interfaces

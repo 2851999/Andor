@@ -117,11 +117,11 @@ public class AndroidRenderer extends Renderer {
 	public void render() {
 		this.androidShader.use();
 		//Enable the arrays as needed
-		int vertexPositionAttribute = GLES20.glGetAttribLocation(this.androidShader.program, "vertexPosition");
+		int vertexPositionAttribute = this.androidShader.getAtrrbuteLocation("vertexPosition");
 		int normalAttribute = 0;
 		int colourAttribute = 0;
 		int texturesAttribute = 0;
-		int matrixAttribute = GLES20.glGetUniformLocation(this.androidShader.program, "matrix");
+		int matrixAttribute = this.androidShader.getUniformLocation("matrix");
 		GLES20.glUniformMatrix4fv(matrixAttribute, 1, false, AndroidDisplayRenderer.mMVPMatrix, 0);
 		GLES20.glEnableVertexAttribArray(vertexPositionAttribute);
 		GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, this.verticesHandle);
@@ -132,7 +132,7 @@ public class AndroidRenderer extends Renderer {
 			GLES20.glVertexAttribPointer(normalAttribute, 2, GLES20.GL_FLOAT, false, 0, 0);
 		}
 		if (this.colourData != null) {
-			colourAttribute = GLES20.glGetAttribLocation(this.androidShader.program, "colour");
+			colourAttribute = this.androidShader.getAtrrbuteLocation("colour");
 			GLES20.glEnableVertexAttribArray(colourAttribute);
 			GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, this.coloursHandle);
 			GLES20.glVertexAttribPointer(colourAttribute, this.colourValuesCount, GLES20.GL_FLOAT, false, 0, 0);
