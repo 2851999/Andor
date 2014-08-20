@@ -40,49 +40,75 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 		this.fpsCalculator = new FPSCalculator();
 		//Setup the interfaces
 		interfaces = new ArrayList<GameLoopInterface>();
-		//Create the window
-		Window.create();
-		//Create the input
-		InputManager.create();
-		//Create the audio
-		Audio.create();
+		//Make sure Andor isn't currently running on Android
+		if (! Settings.AndroidMode) {
+			//Create the window
+			Window.create();
+			//Create the input
+			InputManager.create();
+			//Create the audio
+			Audio.create();
+		}
 		//Add this input listener
 		Input.addListener(this);
-		//Call the create method
-		this.create();
+		//Set close requested to false
+		this.closeRequested = false;
+		//Make sure Andor isn't currently running on Android
+		if (! Settings.AndroidMode)
+			//Call the create method
+			this.create();
 		//Start the game loop
 		this.startGameLoop();
 	}
 	
 	/* The method used to start the game loop */
 	private void startGameLoop() {
-		//Set close requested to false
-		this.closeRequested = false;
 		//Call the start method
 		this.start();
-		//Keep going until the window closes
-		while (! Window.shouldClose() && ! this.closeRequested) {
-			//Update the FPS calculator
-			this.fpsCalculator.update();
+		//Make sure Andor isn't currently running on Android
+		if (! Settings.AndroidMode) {
+			//Keep going until the window closes
+			while (! Window.shouldClose() && ! this.closeRequested)
+				//Run a cycle of the loop
+				this.tick();
+			//Shutdown the game engine
+			this.shutdown();
+		}
+	}
+	
+	/* The method called to run a 'tick' of this game loop */
+	public void tick() {
+		//Update the FPS calculator
+		this.fpsCalculator.update();
+		//Make sure Andor isn't currently running on Android
+		if (! Settings.AndroidMode)
 			//Check the input
 			InputManager.checkInput();
-			//Call the update method
-			this.update();
-			this.interfaceUpdate();
-			//Call the render method
-			this.render();
-			this.interfaceRender();
+		//Call the update method
+		this.update();
+		this.interfaceUpdate();
+		//Call the render method
+		this.render();
+		this.interfaceRender();
+		//Make sure Andor isn't currently running on Android
+		if (! Settings.AndroidMode)
 			//Update the display
 			Window.updateDisplay();
-		}
+	}
+	
+	/* The method used to shutdown the game loop */
+	public void shutdown() {
 		//Release all of the data
 		this.releaseAll();
-		//Destroy the input
-		InputManager.destroy();
-		//Destroy the audio
-		Audio.destroy();
-		//Close the window
-		Window.close();
+		//Make sure Andor isn't currently running on Android
+		if (! Settings.AndroidMode) {
+			//Destroy the input
+			InputManager.destroy();
+			//Destroy the audio
+			Audio.destroy();
+			//Close the window
+			Window.close();
+		}
 		//Call the stop method
 		this.stop();
 		this.interfaceStop();
@@ -97,8 +123,10 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 		Renderer.releaseAll();
 		//Release all of the images's
 		Image.releaseAll();
-		//Release all of the audio
-		Audio.releaseAll();
+		//Make sure Andor isn't currently running on Android
+		if (! Settings.AndroidMode)
+			//Release all of the audio
+			Audio.releaseAll();
 	}
 	
 	/* The method called to request the program to close  */

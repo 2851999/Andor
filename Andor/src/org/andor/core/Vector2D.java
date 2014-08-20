@@ -88,5 +88,6 @@ public class Vector2D {
 	public void setY(float y) { this.y = y; }
 	public float getX() { return this.x; }
 	public float getY() { return this.y; }
+	public float[] getValues() { return new float[] { this.x, this.y }; }
 	
 }

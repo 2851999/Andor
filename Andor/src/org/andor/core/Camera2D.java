@@ -8,7 +8,10 @@
 
 package org.andor.core;
 
+import org.andor.core.android.AndroidDisplayRenderer;
 import org.lwjgl.opengl.GL11;
+
+import android.opengl.Matrix;
 
 public class Camera2D extends Object2D {
 	
@@ -47,20 +50,31 @@ public class Camera2D extends Object2D {
 	public void useView() {
 		//Get the rotation
 		float r = this.getRotation();
-		
-		//Rotate by the specified amount
-		GL11.glRotatef(r, 0, 0, 1);
-		
 		//Get the position
 		Vector2D p = this.getPosition();
-		
-		//Move to the correct position
-		GL11.glTranslatef(p.x, p.y, 0);
-		
 		//Get the scale
 		Vector2D s = this.getScale();
 		
-		GL11.glScalef(s.x, s.y, 0);
+		//Check to see whether Andor is currently running on Android
+		if (! Settings.AndroidMode) {
+			//Rotate by the specified amount
+			GL11.glRotatef(r, 0, 0, 1);
+			
+			//Move to the correct position
+			GL11.glTranslatef(p.x, p.y, 0);
+			
+			//Scale by the correct amount
+			GL11.glScalef(s.x, s.y, 0);
+		} else {
+			//Rotate by the specified amount
+			Matrix.rotateM(AndroidDisplayRenderer.mMVPMatrix, 0, r, 0, 0, 1);
+			
+			//Move to the correct position
+			Matrix.translateM(AndroidDisplayRenderer.mMVPMatrix, 0, p.x, p.y, 0);
+			
+			//Scale by the correct amount
+			Matrix.scaleM(AndroidDisplayRenderer.mMVPMatrix, 0, s.x, s.y, 0);
+		}
 	}
 	
 }

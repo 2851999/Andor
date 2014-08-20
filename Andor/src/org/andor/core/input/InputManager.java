@@ -25,7 +25,6 @@ public class InputManager {
 	
 	/* The static method used to check the mouse input */
 	public static void checkMouse() {
-		
 		//Check if the current mouse position is different to the last
 		if (Mouse.x != org.lwjgl.input.Mouse.getX() ||
 				Mouse.y != (Settings.Window.Height - org.lwjgl.input.Mouse.getY())) {

@@ -1,4 +1,143 @@
 ------------------------------------------------------
+Release 1 | Beta 3 | Development 0 | Experimental 0
+
+* Added Particle
+* Added ParticleEffect
+* Added ParticleEmitter
+* Added BitmapText
+* Added ActivityListenerInterface
+* Added AndroidDisplay
+* Added AndroidDisplayRenderer
+* Added BaseActivity
+* Added ScreenUtils
+* Added AndroidRenderer
+
+* Created the package org.andor.core.android
+
+* NOTE: Started adding Android support
+
+------------------------------------------------------
+Release 1 | Beta 2 | Development 3 | Experimental 0
+
+* More Android Support
+
+* Fixed bug: The window sizes in the Settings were
+  0 when create() was called in GameLoop on Android
+* Fixed bug: AndroidRenderer added to the allRenderers
+  list twice when initialised
+* Fixed bug: AndroidRenderer didn't always display
+  the specified colours
+* Fixed bug: Delta became very large / FPS became
+  very low when leaving the Android version and
+  then coming back
+
+------------------------------------------------------
+Release 1 | Beta 2 | Development 2 | Experimental 4
+
+* More Android Support
+
+------------------------------------------------------
+Release 1 | Beta 2 | Development 2 | Experimental 3
+  
+* Fixed bug: Delta became very large / FPS became
+  very low when leaving the Android version and
+  then coming back
+
+------------------------------------------------------
+Release 1 | Beta 2 | Development 2 | Experimental 2
+
+* Fixed bug: AndroidRenderer didn't always display
+  the specified colours
+* Fixed bug: StackOverflow calling Renderer.create()
+  with AndroidMode set to false
+
+------------------------------------------------------
+Release 1 | Beta 2 | Development 2 | Experimental 1
+
+* Fixed bug: The window sizes in the Settings were
+  0 when create() was called in GameLoop on Android
+* Fixed bug: AndroidRenderer added to the allRenderers
+  list twice when initialised
+
+------------------------------------------------------
+Release 1 | Beta 2 | Development 2 | Experimental 0
+
+* Added ActivityListenerInterface
+* Added AndroidDisplay
+* Added AndroidDisplayRenderer
+* Added BaseActivity
+* Added ScreenUtils
+* Added AndroidRenderer
+* Added Android support for Console (And therefore
+  also logger)
+
+* Created the package org.andor.core.android
+
+* WARNING: Prepare for some quite big updates...
+  Android Support is coming
+
+------------------------------------------------------
+Release 1 | Beta 2 | Development 1 | Experimental 3
+
+* Added VBO's to AndroidRenderer
+* Added Android support for Console (And therefore
+  also logger)
+
+------------------------------------------------------
+Release 1 | Beta 2 | Development 1 | Experimental 2
+
+* Added AndroidRenderer
+
+* NOTE: It looks like Android support may take a
+  while to come up to the same level as on PC,
+  as there are many problems with VBO's and making
+  the shaders to work in the same way
+
+------------------------------------------------------
+Release 1 | Beta 2 | Development 1 | Experimental 1
+
+* Added ActivityListenerInterface
+* Added AndroidDisplay
+* Added AndroidDisplayRenderer
+* Added BaseActivity
+* Added ScreenUtils
+
+* Created the package org.andor.core.android
+
+* WARNING: Prepare for some quite big updates...
+  Android Support is coming
+
+------------------------------------------------------
+Release 1 | Beta 2 | Development 1 | Experimental 0
+
+* Added Particle
+* Added ParticleEffect
+* Added ParticleEmitter
+* Added BitmapText
+
+------------------------------------------------------
+Release 1 | Beta 2 | Development 0 | Experimental 3
+
+* Added BitmapText
+
+* Fixed bug: ParticleEmitter didn't update the
+  paricles when emitting was false
+* Slight performance increase with ParticleEmittter
+
+------------------------------------------------------
+Release 1 | Beta 2 | Development 0 | Experimental 2
+
+* Added 2D support for ParticleEmitter by using
+  ignoreZ
+
+------------------------------------------------------
+Release 1 | Beta 2 | Development 0 | Experimental 1
+
+* Added Particle
+* Added ParticleEffect
+* Added ParticleEmitter
+
+------------------------------------------------------
 Release 1 | Beta 2 | Development 0 | Experimental 0
 
 * Added ControlBinding

@@ -11,6 +11,8 @@ package org.andor.tests;
 import org.andor.core.BaseGame;
 import org.andor.core.Colour;
 import org.andor.core.Font;
+import org.andor.core.Image;
+import org.andor.core.ImageLoader;
 import org.andor.core.Object2DBuilder;
 import org.andor.core.RenderableObject2D;
 import org.andor.core.Settings;
@@ -33,6 +35,8 @@ public class Quad2DTest extends BaseGame {
 	/* The boolean that determine whether wireframe is on or off */
 	public boolean wireframe;
 	
+	public Image image;
+	
 	/* The constructor */
 	public Quad2DTest() {
 		
@@ -40,7 +44,8 @@ public class Quad2DTest extends BaseGame {
 	
 	/* The method called when the loop has been created */
 	public void create() {
-		this.quad = Object2DBuilder.createQuad(100, 100, new Colour[] { Colour.LIGHT_BLUE, Colour.LIGHT_GREY, Colour.ORANGE, Colour.WHITE });
+		image = ImageLoader.loadImage("C:/Andor/Grass_Side.png", true);
+		this.quad = Object2DBuilder.createQuad(image, 100, 100, new Colour[] { Colour.LIGHT_BLUE, Colour.LIGHT_GREY, Colour.ORANGE, Colour.WHITE });
 		this.quad.position = new Vector2D(100, 100);
 		this.font = FontUtils.createFont("Arial", 12);
 	}
@@ -62,8 +67,9 @@ public class Quad2DTest extends BaseGame {
 		OpenGLUtils.setupRemoveAlpha();
 		
 		OpenGLUtils.setupOrtho(-1, 1);
-		OpenGLUtils.disableTexture2D();
+		OpenGLUtils.enableTexture2D();
 		
+		image.bind();
 		this.quad.render();
 		
 		OpenGLUtils.enableTexture2D();
