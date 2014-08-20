@@ -14,7 +14,6 @@ import java.util.List;
 import org.andor.core.RenderableObject3D;
 import org.andor.core.Renderer;
 import org.andor.core.Vector3D;
-import org.lwjgl.opengl.GL11;
 
 public class Model extends RenderableObject3D {
 	
@@ -65,7 +64,7 @@ public class Model extends RenderableObject3D {
 		this.currentNormal = 0;
 		this.currentTexture = 0;
 		//Create the renderer
-		this.renderer = new Renderer(GL11.GL_TRIANGLES, Renderer.VERTEX_VALUES_COUNT_3D);
+		this.renderer = Renderer.create(Renderer.TRIANGLES, Renderer.VERTEX_VALUES_COUNT_3D);
 		//Prepare the values
 		this.renderer.verticesData = new float[this.calculateNumberOfVertices() * Renderer.VERTEX_VALUES_COUNT_3D];
 		//Check to see whether the normals have been set

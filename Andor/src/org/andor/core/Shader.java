@@ -74,56 +74,66 @@ public class Shader {
 	
 	/* The method used to load the shaders and attach it to this program */
 	public void load(String path, boolean external) {
-		this.vertexShader = ShaderUtils.createShader(path + ".vs", external, GL20.GL_VERTEX_SHADER);
-		this.fragmentShader = ShaderUtils.createShader(path + ".fs", external, GL20.GL_FRAGMENT_SHADER);
+		this.vertexShader = ShaderUtils.createShader(path + ".vs", external, Shader.VERTEX_SHADER);
+		this.fragmentShader = ShaderUtils.createShader(path + ".fs", external, Shader.FRAGMENT_SHADER);
 	}
 	
 	/* The method used to set a specific value in this shader */
-	public void setValuef(String variableName, float v1) {
+	public void setUniformf(String variableName, float v1) {
 		//Set the value in the shader
-		GL20.glUniform1f(GL20.glGetUniformLocation(this.program, variableName), v1);
+		GL20.glUniform1f(this.getUniformLocation(variableName), v1);
 	}
 
 	/* The method used to set a specific value in this shader */
-	public void setValuef(String variableName, float v1, float v2) {
+	public void setUniformf(String variableName, float v1, float v2) {
 		//Set the value in the shader
-		GL20.glUniform2f(GL20.glGetUniformLocation(this.program, variableName), v1, v2);
+		GL20.glUniform2f(this.getUniformLocation(variableName), v1, v2);
 	}
 
 	/* The method used to set a specific value in this shader */
-	public void setValuef(String variableName, float v1, float v2, float v3) {
+	public void setUniformf(String variableName, float v1, float v2, float v3) {
 		//Set the value in the shader
-		GL20.glUniform3f(GL20.glGetUniformLocation(this.program, variableName), v1, v2, v3);
+		GL20.glUniform3f(this.getUniformLocation(variableName), v1, v2, v3);
 	}
 
 	/* The method used to set a specific value in this shader */
-	public void setValuei(String variableName, int v1) {
+	public void setUniformi(String variableName, int v1) {
 		//Set the value in the shader
-		GL20.glUniform1i(GL20.glGetUniformLocation(this.program, variableName), v1);
+		GL20.glUniform1i(this.getUniformLocation(variableName), v1);
 	}
 
 	/* The method used to set a specific value in this shader */
-	public void setValuei(String variableName, int v1, int v2) {
+	public void setUniformi(String variableName, int v1, int v2) {
 		//Set the value in the shader
-		GL20.glUniform2i(GL20.glGetUniformLocation(this.program, variableName), v1, v2);
+		GL20.glUniform2i(this.getUniformLocation(variableName), v1, v2);
 	}
 
 	/* The method used to set a specific value in this shader */
-	public void setValuei(String variableName, int v1, int v2, int v3) {
+	public void setUniformi(String variableName, int v1, int v2, int v3) {
 		//Set the value in the shader
-		GL20.glUniform3i(GL20.glGetUniformLocation(this.program, variableName), v1, v2, v3);
+		GL20.glUniform3i(this.getUniformLocation(variableName), v1, v2, v3);
 	}
 
 	/* The method used to set a specific value in this shader */
-	public void setValuei(String variableName, int[] arrayValues) {
+	public void setUniformi(String variableName, int[] arrayValues) {
 		//Set the value in the shader
-		GL20.glUniform1(GL20.glGetUniformLocation(this.program, variableName), BufferUtils.createBuffer(arrayValues));
+		GL20.glUniform1(this.getUniformLocation(variableName), BufferUtils.createBuffer(arrayValues));
 	}
 
 	/* The method used to set a specific value in this shader */
-	public void setValuef(String variableName, float[] arrayValues) {
+	public void setUniformf(String variableName, float[] arrayValues) {
 		//Set the value in the shader
-		GL20.glUniform1(GL20.glGetUniformLocation(this.program, variableName), BufferUtils.createBuffer(arrayValues));
+		GL20.glUniform1(this.getUniformLocation(variableName), BufferUtils.createBuffer(arrayValues));
+	}
+	
+	/* The method used to get the location of a uniform variable */
+	public int getUniformLocation(String name) {
+		return GL20.glGetUniformLocation(this.program, name);
+	}
+	
+	/* The method used to get the location of a attribute variable */
+	public int getAtrrbuteLocation(String name) {
+		return GL20.glGetAttribLocation(this.program, name);
 	}
 	
 }

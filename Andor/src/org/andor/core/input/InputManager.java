@@ -20,11 +20,11 @@ public class InputManager {
 		//Check the mouse and keyboard
 		checkMouse();
 		checkKeyboard();
+		InputManagerController.checkInput();
 	}
 	
 	/* The static method used to check the mouse input */
 	public static void checkMouse() {
-		
 		//Check if the current mouse position is different to the last
 		if (Mouse.x != org.lwjgl.input.Mouse.getX() ||
 				Mouse.y != (Settings.Window.Height - org.lwjgl.input.Mouse.getY())) {
@@ -47,36 +47,39 @@ public class InputManager {
 		if (org.lwjgl.input.Mouse.isButtonDown(0) && ! Mouse.leftButton) {
 			//Set the button as being down and call a mouse event
 			Mouse.leftButton = true;
-			Input.callMousePressed(new MouseEvent());
+			Input.callMousePressed(new MouseEvent(true, false, false));
 		} else if (! org.lwjgl.input.Mouse.isButtonDown(0) && Mouse.leftButton) {
 			//Set the button as being up and call a mouse events
 			Mouse.leftButton = false;
-			Input.callMouseReleased(new MouseEvent());
-			Input.callMouseClicked(new MouseEvent());
+			MouseEvent e = new MouseEvent(true, false, false);
+			Input.callMouseReleased(e);
+			Input.callMouseClicked(e);
 		}
 		
 		//Check to see whether the right mouse button is down
 		if (org.lwjgl.input.Mouse.isButtonDown(1) && ! Mouse.rightButton) {
 			//Set the button as being down and call a mouse event
 			Mouse.rightButton = true;
-			Input.callMousePressed(new MouseEvent());
+			Input.callMousePressed(new MouseEvent(false, true, false));
 		} else if (! org.lwjgl.input.Mouse.isButtonDown(1) && Mouse.rightButton) {
 			//Set the button as being up and call a mouse events
 			Mouse.rightButton = false;
-			Input.callMouseReleased(new MouseEvent());
-			Input.callMouseClicked(new MouseEvent());
+			MouseEvent e = new MouseEvent(false, true, false);
+			Input.callMouseReleased(e);
+			Input.callMouseClicked(e);
 		}
 		
 		//Check to see whether the middle mouse button is down
 		if (org.lwjgl.input.Mouse.isButtonDown(2) && ! Mouse.middleButton) {
 			//Set the button as being down and call a mouse event
 			Mouse.middleButton = true;
-			Input.callMousePressed(new MouseEvent());
+			Input.callMousePressed(new MouseEvent(false, false, true));
 		} else if (! org.lwjgl.input.Mouse.isButtonDown(2) && Mouse.middleButton) {
 			//Set the button as being up and call a mouse events
 			Mouse.middleButton = false;
-			Input.callMouseReleased(new MouseEvent());
-			Input.callMouseClicked(new MouseEvent());
+			MouseEvent e = new MouseEvent(false, false, true);
+			Input.callMouseReleased(e);
+			Input.callMouseClicked(e);
 		}
 		
 		//Check the scroll wheel
@@ -129,9 +132,11 @@ public class InputManager {
 			org.lwjgl.input.Mouse.create();
 			//Enable repeat events (To allow for holding down keys etc.)
 			org.lwjgl.input.Keyboard.enableRepeatEvents(true);
+			//Create the controllers
+			InputManagerController.create();
 		} catch (LWJGLException e) {
-			//Log a message
-			Logger.log("InputManager create()" , "An error occurred" , Log.ERROR);
+			//Log an error
+			Logger.log("InputManager create()" , "An error occurred when creting the keyboard and mouse" , Log.ERROR);
 			e.printStackTrace();
 		}
 	}
@@ -141,6 +146,8 @@ public class InputManager {
 		//Destroy the keyboard and mouse
 		org.lwjgl.input.Keyboard.destroy();
 		org.lwjgl.input.Mouse.destroy();
+		//Destroy the controllers
+		InputManagerController.destroy();
 	}
 	
 }

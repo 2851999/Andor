@@ -38,7 +38,7 @@ public class FPSCalculator {
 		//Assign the variables
 		this.mode = MODE_FPS_PER_SECOND;
 		this.lastFrameTime = Time.getMiliseconds();
-		this.lastDeltaFrameTime = this.lastFrameTime;
+		this.lastDeltaFrameTime = Time.getMiliseconds();
 		this.currentDeltaTime = 0;
 		this.currentFPS = 0;
 	}
@@ -75,6 +75,14 @@ public class FPSCalculator {
 				}
 			}
 		}
+	}
+	
+	/* The method used to reset this */
+	public void reset() {
+		this.lastFrameTime = Time.getMiliseconds();
+		this.lastDeltaFrameTime = Time.getMiliseconds();
+		this.currentDeltaTime = 0;
+		this.currentFPS = 0;
 	}
 	
 }

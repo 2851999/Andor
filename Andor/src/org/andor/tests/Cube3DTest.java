@@ -8,29 +8,47 @@
 
 package org.andor.tests;
 
+import org.andor.core.Audio;
+import org.andor.core.AudioLoader;
 import org.andor.core.BaseGame;
+import org.andor.core.BitmapText;
 import org.andor.core.Camera3D;
 import org.andor.core.Colour;
 import org.andor.core.Font;
 import org.andor.core.Image;
+import org.andor.core.ImageLoader;
 import org.andor.core.ImageSet;
 import org.andor.core.Object3DBuilder;
+import org.andor.core.Particle;
+import org.andor.core.ParticleEffect;
+import org.andor.core.ParticleEmitter;
 import org.andor.core.RenderableObject3D;
 import org.andor.core.Settings;
 import org.andor.core.Shader;
 import org.andor.core.SkyBox;
+import org.andor.core.Vector2D;
 import org.andor.core.Vector3D;
 import org.andor.core.Window;
+import org.andor.core.input.ControlBindingAxis;
+import org.andor.core.input.ControlBindingButton;
+import org.andor.core.input.ControlBindings;
+import org.andor.core.input.ControlInputListener;
+import org.andor.core.input.InputController;
+import org.andor.core.input.InputManagerController;
 import org.andor.core.input.Keyboard;
 import org.andor.core.input.KeyboardEvent;
 import org.andor.core.input.Mouse;
 import org.andor.core.input.MouseMotionEvent;
 import org.andor.core.model.Model;
 import org.andor.core.model.OBJLoader;
+import org.andor.utils.ClampUtils;
+import org.andor.utils.Console;
+import org.andor.utils.ControllerUtils;
 import org.andor.utils.FontUtils;
 import org.andor.utils.OpenGLUtils;
+import org.lwjgl.opengl.GL11;
 
-public class Cube3DTest extends BaseGame {
+public class Cube3DTest extends BaseGame implements ControlInputListener {
 	
 	/* The camera */
 	public Camera3D camera;
@@ -55,6 +73,13 @@ public class Cube3DTest extends BaseGame {
 	/* The boolean that determine whether wireframe is on or off */
 	public boolean wireframe;
 	
+	public InputController controller;
+	public ControlBindings bindings;
+	public Audio audio;
+	public ParticleEmitter particleEmitter;
+	
+	public BitmapText bitmapText;
+	
 	/* The constructor */
 	public Cube3DTest() {
 		
@@ -68,7 +93,7 @@ public class Cube3DTest extends BaseGame {
 		//Load the font
 		this.font = FontUtils.createFont("Arial", 12);
 		//Load the texture and bind it
-		String path = "C:/";
+		String path = "C:/Andor/";
 		//Create a skybox
 		SkyBox skybox = new SkyBox(path, new String[] {
 				"front.png",
@@ -98,44 +123,86 @@ public class Cube3DTest extends BaseGame {
 		//Set wireframe to false
 		wireframe = false;
 		test = new Shader();
-		test.load("C:/light", true);
+		test.load("C:/Andor/light", true);
 		test.create();
 		//Lock the mouse
 		Mouse.lock();
+		
+		//Get all of the available controllers
+		InputController[] controllers = ControllerUtils.getAvailableControllers();
+		//Go through the controllers
+		for (InputController controller : controllers) {
+			//Print out some information
+			Console.println("Name: " + controller.name);
+			Console.println("Axis Count: " + controller.axisCount);
+			Console.println("Button Count: " + controller.buttonCount);
+			Console.println("");
+			//Check the controller
+			if (controller.getName().equals("SPEEDLINK Strike 2 Gamepad"))
+				this.controller = controller;
+		}
+		//Add the controller
+		InputManagerController.addController(this.controller);
+		bindings = new ControlBindings();
+		bindings.addListener(this);
+		bindings.load("C:/Andor/gamepadconfig.txt", true, controller);
+		bindings.setController(this.controller);
+		
+		audio = AudioLoader.load("C:/Andor/test2.wav", true);
+		
+		this.particleEmitter = new ParticleEmitter();
+		this.particleEmitter.particleColour = Colour.RED;
+		this.particleEmitter.position.y = 4f;
+		this.particleEmitter.particleInitialVelocity = new Vector3D(0, 0.9f, 0);
+		this.particleEmitter.particlesPerUpdate = 400;
+		this.particleEmitter.particleLifeTime = 3000;
+		this.particleEmitter.uniformity = 10;
+		this.particleEmitter.particleEffect = new FireEffect();
+		
+		this.bitmapText = new BitmapText(ImageLoader.loadImage("C:/Andor/test2.png", true), 40, 16);
+		this.bitmapText.update("Hello World");
+		this.bitmapText.position = new Vector2D(100, 100);
 	}
 	
 	/* The method called when the game loop has started */
 	public void start() {
-		
+		this.audio.play();
 	}
 	
 	/* The method called when the game loop is updated */
 	public void update() {
-		//Check the keys
-		if (Keyboard.KEY_W)
-			//Move the camera forwards
-			camera.moveForward(0.01f * getDelta());
-		if (Keyboard.KEY_S)
-			//Move the camera forwards
-			camera.moveBackward(0.01f * getDelta());
-		if (Keyboard.KEY_A)
-			//Move the camera forwards
-			camera.moveLeft(0.01f * getDelta());
-		if (Keyboard.KEY_D)
-			//Move the camera forwards
-			camera.moveRight(0.01f * getDelta());
-		
 		if (Keyboard.KEY_ESCAPE)
 			//Request to end the program
 			requestClose();
+		if (Keyboard.KEY_Q)
+			this.particleEmitter.particleEffect = new WaterEffect();
+		if (Keyboard.KEY_F)
+			this.particleEmitter.particleEffect = new FireEffect();
 		
-		Vector3D change = new Vector3D(0.1f, 0.1f, 0.1f);
+		camera.moveForward(this.bindings.get("Walk").bindingAxis.currentValue / 100 * getDelta());
+		camera.moveLeft(this.bindings.get("Stride").bindingAxis.currentValue / 100 * getDelta());
+		camera.rotation.y += this.bindings.get("LookX").bindingAxis.currentValue / 3 * getDelta();
+		camera.rotation.x += this.bindings.get("LookY").bindingAxis.currentValue / 3 * getDelta();
+		
+		this.camera.rotation.x = ClampUtils.clamp(this.camera.rotation.x, -80, 80);
+		                                                                                                                                   
+		this.audio.listenerPosition = this.camera.position.clone();
+		this.audio.listenerPosition.multiply(new Vector3D(-1, 1, 1));
+		this.audio.listenerRotation = this.camera.rotation;
+		this.audio.sourcePosition = this.model.position.clone();
+		this.audio.sourcePosition.multiply(new Vector3D(1, 1, -1));
+		this.audio.update();
+		
+		this.particleEmitter.update();
+		
+		Vector3D change = new Vector3D(0, 0.1f, 0);
 		change.multiply(getDelta());
 		this.model.rotation.add(change);
 	}
 	
 	/* The method called when the game loop is rendered */
 	public void render() {
+		GL11.glPointSize(4);
 		//Setup OpenGL
 		OpenGLUtils.clearColourBuffer();
 		OpenGLUtils.clearDepthBuffer();
@@ -143,10 +210,16 @@ public class Cube3DTest extends BaseGame {
 		
 		OpenGLUtils.setupPerspective(70f, 0.1f, 1000f);
 		OpenGLUtils.enableDepthTest();
-		OpenGLUtils.enableTexture2D();
 		
 		//Use the camera's view on the world
 		this.camera.useView();
+		
+		OpenGLUtils.disableTexture2D();
+		test.use();
+		this.model.render();
+		test.stopUsing();
+		
+		OpenGLUtils.enableTexture2D();
 		
 		//Bind the texture
 		this.texture.bind();
@@ -154,19 +227,26 @@ public class Cube3DTest extends BaseGame {
 		//Render the cube
 		this.cube.render();
 		
-		OpenGLUtils.disableTexture2D();
-		this.bigCube.render();
-		//test.use();
-		this.model.render();
-		//test.stopUsing();
-		
 		this.texture.unbind();
 		
+		OpenGLUtils.disableTexture2D();
+		
+		this.bigCube.render();
+		this.particleEmitter.render();
+		
+		OpenGLUtils.enableTexture2D();
+		OpenGLUtils.disableDepthTest();
+		
+		
 		OpenGLUtils.setupOrtho(-1, 1);
+		
+		this.bitmapText.image.bind();
+		this.bitmapText.render();
 		
 		//Render the FPS
 		this.font.render("Current FPS: " + this.getFPS(), 10, 10);
 		this.font.render("Object Face Count: " + this.model.faces.size(), 10, 26);
+		this.font.render("Particle Count: " + this.particleEmitter.particles.size(), 10, 42);
 	}
 	
 	/* The method called when the game loop is stopped */
@@ -185,9 +265,6 @@ public class Cube3DTest extends BaseGame {
 		if (e.getCode() == Keyboard.KEY_F3_CODE)
 			//Toggle the mouse locked
 			Mouse.setLocked(! Mouse.isLocked());
-		else if (e.getCode() == Keyboard.KEY_R_CODE)
-			//Reset the players position
-			this.camera.position = new Vector3D(0, -2, 0);
 		else if (e.getCode() == Keyboard.KEY_1_CODE)
 			this.cube.renderer.updateColours(Object3DBuilder.createColourArray(24, Colour.WHITE));
 		else if (e.getCode() == Keyboard.KEY_2_CODE)
@@ -206,13 +283,7 @@ public class Cube3DTest extends BaseGame {
 			this.cube.renderer.updateColours(Object3DBuilder.createColourArray(24, new Colour(1f, 1f, 1f, 0.1f)));
 		else if (e.getCode() == Keyboard.KEY_9_CODE)
 			this.cube.renderer.updateColours(Object3DBuilder.createColourArray(24, new Colour(1f, 1f, 1f, 0.0f)));
-		else if (e.getCode() == Keyboard.KEY_M_CODE) {
-			wireframe = !wireframe;
-			if (wireframe)
-				OpenGLUtils.enableWireframeMode();
-			else
-				OpenGLUtils.disableWireframeMode();
-		} else if (e.getCode() == Keyboard.KEY_F11_CODE) {
+		else if (e.getCode() == Keyboard.KEY_F11_CODE) {
 			Settings.Window.Fullscreen = ! Settings.Window.Fullscreen;
 			Window.updateDisplaySettings();
 		}
@@ -226,6 +297,29 @@ public class Cube3DTest extends BaseGame {
 			camera.rotation.add(new Vector3D(e.dy * 0.5f, e.dx * 0.5f, 0));
 	}
 	
+	public void onAxisChange(ControlBindingAxis binding) {
+		
+	}
+	
+	public void onButtonPressed(ControlBindingButton binding) {
+		
+	}
+	
+	public void onButtonReleased(ControlBindingButton binding) {
+		if (binding.getControlBinding().name.equals("Wireframe")) {
+			wireframe = !wireframe;
+			if (wireframe)
+				OpenGLUtils.enableWireframeMode();
+			else
+				OpenGLUtils.disableWireframeMode();
+		} else if (binding.getControlBinding().name.equals("Rumble")) {
+			this.controller.rumble(500, 1f);
+			//Reset the players position
+			this.camera.position = new Vector3D(0, -2, 0);
+			this.camera.rotation = new Vector3D(0, 0, 0);
+		}
+	}
+	
 	
 	/* The main method */
 	public static void main(String[] args) {
@@ -233,9 +327,45 @@ public class Cube3DTest extends BaseGame {
 		Settings.Window.Fullscreen = false;
 		//Enable VSync
 		Settings.Video.VSync = true;
-		Settings.Video.MaxFPS = 60;
+		Settings.Video.MaxFPS = 0;
 		//Create a new instance of this test
 		new Cube3DTest();
+	}
+	
+	public class FireEffect implements ParticleEffect {
+		
+		public void update(Particle particle) {
+			float life = particle.getPercentageOfLife() / 100;
+			particle.colour = new Colour(Colour.RED);
+			if (life > 0.5 && life < 0.75) {
+				particle.colour = Colour.ORANGE.clone();
+				particle.colour.g -= life;
+			}
+			if (life > 0.75)
+				particle.colour = Colour.GREY.clone();
+//			Random r = new Random();
+//			particle.colour = new Colour(r.nextFloat(), r.nextFloat(), r.nextFloat(), r.nextFloat());
+		}
+		
+	}
+	
+	public class WaterEffect implements ParticleEffect {
+		
+		public void update(Particle particle) {
+			float life = particle.getPercentageOfLife() / 100;
+			particle.colour = new Colour(Colour.BLUE);
+			particle.velocity.z = 0.1f;
+			if (life > 0.5 && life < 0.75) {
+				particle.colour = Colour.LIGHT_BLUE.clone();
+				particle.colour.g -= life;
+			}
+			if (life > 0.75) {
+				particle.colour = Colour.WHITE.clone();
+				particle.colour.a -= life / 2;
+			}
+			particle.velocity.subtract(new Vector3D(0, life / 100, 0));
+		}
+		
 	}
 	
 }

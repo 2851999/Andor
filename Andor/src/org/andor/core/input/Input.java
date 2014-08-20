@@ -62,6 +62,14 @@ public class Input {
 			listeners.get(a).onMouseDragged(e);
 	}
 	
+	/* The static method used to call a scroll event */
+	public static void callScroll(ScrollEvent e) {
+		//Go through all of the listeners
+		for (int a = 0; a < listeners.size(); a++)
+			//Call the event
+			listeners.get(a).onScroll(e);
+	}
+	
 	/* The static method used to call a key pressed event */
 	public static void callKeyPressed(KeyboardEvent e) {
 		//Go through all of the listeners
@@ -86,12 +94,37 @@ public class Input {
 			listeners.get(a).onKeyTyped(e);
 	}
 	
-	/* The static method used to call a scroll event */
-	public static void callScroll(ScrollEvent e) {
+	/* The static method used to call an axis change event */
+	public static void callAxisChange(ControllerAxisEvent e) {
 		//Go through all of the listeners
 		for (int a = 0; a < listeners.size(); a++)
 			//Call the event
-			listeners.get(a).onScroll(e);
+			listeners.get(a).onAxisChange(e);
+	}
+	
+	/* The static method used to call a button pressed event */
+	public static void callButtonPressed(ControllerButtonEvent e) {
+		//Go through all of the listeners
+		for (int a = 0; a < listeners.size(); a++)
+			//Call the event
+			listeners.get(a).onButtonPressed(e);
+	}
+	
+	
+	/* The static method used to call a button pressed event */
+	public static void callButtonReleased(ControllerButtonEvent e) {
+		//Go through all of the listeners
+		for (int a = 0; a < listeners.size(); a++)
+			//Call the event
+			listeners.get(a).onButtonReleased(e);
+	}
+	
+	/* The static method used to call a pov change event */
+	public static void callPovChange(ControllerPovEvent e) {
+		//Go through all of the listeners
+		for (int a = 0; a < listeners.size(); a++)
+			//Call the event
+			listeners.get(a).onPovChange(e);
 	}
 	
 }

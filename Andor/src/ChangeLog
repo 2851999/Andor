@@ -1,4 +1,553 @@
 ------------------------------------------------------
+Release 2 | Beta 0 | Development 0 | Experimental 0
+
+Information:
+This update includes many new features, some of which,
+were not the easiest to implement, since they were
+quite new to me, but here is the new release.
+
+New Features:
+
+* More GUI
+* Controller Support
+* Basic Android Support
+* Particle emitters
+* Bitmap Fonts
+* Some more utilities
+
+Full Change Log:
+
+* Added GUITextBoxSelection
+* Added KeyboardShortcut
+* Added KeyboardShortcuts
+* Added KeyboardShortcutListener
+* Added ClipboardUtils
+* Added GUIToolTip
+* Added GUIFill
+* Added GUILoadingBar
+* Added GUISlider
+* Added GUIPanel
+* Added GUIWindow
+* Added InputManagerController
+* Added InputController
+* Added ControllerUtils
+* Added ControllerTest
+* Added ControllerEvent
+* Added ControllerAxis
+* Added ControllerAxisEvent
+* Added ControllerButton
+* Added ControllerButtonEvent
+* Added ContollerPov
+* Added ControllerPovEvent
+* Added ControlBinding
+* Added ControlBindingAxis
+* Added ControlBindingButton
+* Added ControlBindings
+* Added ControlInputListener
+* Added ControllerRumbler
+* Added ClampUtils
+* Added FieldScanner
+* Added FieldUtils
+* Added ImageEntity2D
+* Added Animation2D
+* Added AnimationTest2D
+* Added Audio
+* Added AudioLoader
+* Added AudioTest
+* Added Particle
+* Added ParticleEffect
+* Added ParticleEmitter
+* Added BitmapText
+* Added ActivityListenerInterface
+* Added AndroidDisplay
+* Added AndroidDisplayRenderer
+* Added BaseActivity
+* Added ScreenUtils
+* Added AndroidRenderer
+
+* Created the package org.andor.core.android
+
+* Fixed bug: GUITextBox backspace would sometimes
+  leave a gap if not at the beginning or
+  end of the view index's      
+* Fixed bug: Timer hasTimePassed() returned true
+  in most cases when it hadn't ever been
+  started
+* Fixed bug: MouseEvent didn't assign the right left/ 
+  right/middle mouse values
+* Fixed bug: InputController getButtonCount() returned
+  the axisCount
+             
+* NOTE: For 3D Audio, the audio file should be in Mono
+  format
+* NOTE: When closing, Andor now releases the data
+  that was used (VBO data, Images, Audio)
+* NOTE: Started adding Android support
+
+------------------------------------------------------
+Release 1 | Beta 3 | Development 0 | Experimental 0
+
+* Added Particle
+* Added ParticleEffect
+* Added ParticleEmitter
+* Added BitmapText
+* Added ActivityListenerInterface
+* Added AndroidDisplay
+* Added AndroidDisplayRenderer
+* Added BaseActivity
+* Added ScreenUtils
+* Added AndroidRenderer
+
+* Created the package org.andor.core.android
+
+* NOTE: Started adding Android support
+
+------------------------------------------------------
+Release 1 | Beta 2 | Development 3 | Experimental 0
+
+* More Android Support
+
+* Fixed bug: The window sizes in the Settings were
+  0 when create() was called in GameLoop on Android
+* Fixed bug: AndroidRenderer added to the allRenderers
+  list twice when initialised
+* Fixed bug: AndroidRenderer didn't always display
+  the specified colours
+* Fixed bug: Delta became very large / FPS became
+  very low when leaving the Android version and
+  then coming back
+
+------------------------------------------------------
+Release 1 | Beta 2 | Development 2 | Experimental 4
+
+* More Android Support
+
+------------------------------------------------------
+Release 1 | Beta 2 | Development 2 | Experimental 3
+  
+* Fixed bug: Delta became very large / FPS became
+  very low when leaving the Android version and
+  then coming back
+
+------------------------------------------------------
+Release 1 | Beta 2 | Development 2 | Experimental 2
+
+* Fixed bug: AndroidRenderer didn't always display
+  the specified colours
+* Fixed bug: StackOverflow calling Renderer.create()
+  with AndroidMode set to false
+
+------------------------------------------------------
+Release 1 | Beta 2 | Development 2 | Experimental 1
+
+* Fixed bug: The window sizes in the Settings were
+  0 when create() was called in GameLoop on Android
+* Fixed bug: AndroidRenderer added to the allRenderers
+  list twice when initialised
+
+------------------------------------------------------
+Release 1 | Beta 2 | Development 2 | Experimental 0
+
+* Added ActivityListenerInterface
+* Added AndroidDisplay
+* Added AndroidDisplayRenderer
+* Added BaseActivity
+* Added ScreenUtils
+* Added AndroidRenderer
+* Added Android support for Console (And therefore
+  also logger)
+
+* Created the package org.andor.core.android
+
+* WARNING: Prepare for some quite big updates...
+  Android Support is coming
+
+------------------------------------------------------
+Release 1 | Beta 2 | Development 1 | Experimental 3
+
+* Added VBO's to AndroidRenderer
+* Added Android support for Console (And therefore
+  also logger)
+
+------------------------------------------------------
+Release 1 | Beta 2 | Development 1 | Experimental 2
+
+* Added AndroidRenderer
+
+* NOTE: It looks like Android support may take a
+  while to come up to the same level as on PC,
+  as there are many problems with VBO's and making
+  the shaders to work in the same way
+
+------------------------------------------------------
+Release 1 | Beta 2 | Development 1 | Experimental 1
+
+* Added ActivityListenerInterface
+* Added AndroidDisplay
+* Added AndroidDisplayRenderer
+* Added BaseActivity
+* Added ScreenUtils
+
+* Created the package org.andor.core.android
+
+* WARNING: Prepare for some quite big updates...
+  Android Support is coming
+
+------------------------------------------------------
+Release 1 | Beta 2 | Development 1 | Experimental 0
+
+* Added Particle
+* Added ParticleEffect
+* Added ParticleEmitter
+* Added BitmapText
+
+------------------------------------------------------
+Release 1 | Beta 2 | Development 0 | Experimental 3
+
+* Added BitmapText
+
+* Fixed bug: ParticleEmitter didn't update the
+  paricles when emitting was false
+* Slight performance increase with ParticleEmittter
+
+------------------------------------------------------
+Release 1 | Beta 2 | Development 0 | Experimental 2
+
+* Added 2D support for ParticleEmitter by using
+  ignoreZ
+
+------------------------------------------------------
+Release 1 | Beta 2 | Development 0 | Experimental 1
+
+* Added Particle
+* Added ParticleEffect
+* Added ParticleEmitter
+
+------------------------------------------------------
+Release 1 | Beta 2 | Development 0 | Experimental 0
+
+* Added ControlBinding
+* Added ControlBindingAxis
+* Added ControlBindingButton
+* Added ControlBindings
+* Added ControlInputListener
+* Added ControllerRumbler
+* Added ClampUtils
+* Added FieldScanner
+* Added FieldUtils
+* Added ImageEntity2D
+* Added Animation2D
+* Added AnimationTest2D
+* Added Audio
+* Added AudioLoader
+* Added AudioTest
+
+* Fixed bug: MouseEvent didn't assign the right left/ 
+  right/middle mouse values
+* Fixed bug: InputController getButtonCount() returned
+  the axisCount
+  
+* Note: For 3D Audio, the audio file should be in Mono
+  format
+* Note: When closing, Andor now releases the data
+  that was used (VBO data, Images, Audio)
+
+------------------------------------------------------
+Release 1 | Beta 1 | Development 3 | Experimental 0
+
+* Added Audio
+* Added AudioLoader
+* Added AudioTest
+
+* Fixed bug: FieldScanner failed to set anything
+  other than strings
+* Fixed bug: ControllerBindings configs with multiple
+  bindings loaded with errors
+
+* Note: For 3D Audio, the audio file should be in Mono
+  format
+* Note: When closing, Andor now releases the data
+  that was used (VBO data, Images, Audio)
+
+------------------------------------------------------
+Release 1 | Beta 1 | Development 2 | Experimental 3
+
+* Note: When closing, Andor now releases the data
+  that was used (VBO data, Images, Audio)
+
+------------------------------------------------------
+Release 1 | Beta 1 | Development 2 | Experimental 2
+
+* Fixed bug: FieldScanner failed to set anything
+  other than strings
+
+* Fixed bug: ControllerBindings configs with multiple
+  bindings loaded with errors
+
+------------------------------------------------------
+Release 1 | Beta 1 | Development 2 | Experimental 1
+
+* Added Audio
+* Added AudioLoader
+* Added AudioTest
+
+* Note: For 3D Audio, the audio file should be in Mono
+  format
+
+------------------------------------------------------
+Release 1 | Beta 1 | Development 2 | Experimental 0
+
+* Added FieldScanner
+* Added FieldUtils
+* Added ImageEntity2D
+* Added Animation2D
+* Added AnimationTest2D
+
+* Added a new control binding saving/loading system
+
+------------------------------------------------------
+Release 1 | Beta 1 | Development 1 | Experimental 3
+
+* Added ImageEntity2D
+* Added Animation2D
+* Added AnimationTest2D
+
+------------------------------------------------------
+Release 1 | Beta 1 | Development 1 | Experimental 2
+
+* Added a new control binding saving/loading system
+
+------------------------------------------------------
+Release 1 | Beta 1 | Development 1 | Experimental 1
+
+* Added FieldScanner
+* Added FieldUtils
+
+* Started adding a better control binding saving/
+  loading system
+
+------------------------------------------------------
+Release 1 | Beta 1 | Development 1 | Experimental 0
+
+* Added ControlBinding
+* Added ControlBindingAxis
+* Added ControlBindingButton
+* Added ControlBindings
+* Added ControlInputListener
+* Added ControllerRumbler
+* Added ClampUtils
+
+* Fixed bug: MouseEvent didn't assign the right left/ 
+  right/middle mouse values
+  
+* Fixed bug: InputController getButtonCount() returned
+  the axisCount
+
+------------------------------------------------------
+Release 1 | Beta 1 | Development 0 | Experimental 3
+
+* Added ClampUtils
+
+------------------------------------------------------
+Release 1 | Beta 1 | Development 0 | Experimental 2
+
+* Added ControllerRumbler
+
+* Fixed bug: Loading ControlBindings config's didn't
+  work with controller buttons
+  
+* Fixed bug: InputController getButtonCount() returned
+  the axisCount
+
+------------------------------------------------------
+Release 1 | Beta 1 | Development 0 | Experimental 1
+
+* Added ControlBinding
+* Added ControlBindingAxis
+* Added ControlBindingButton
+* Added ControlBindings
+* Added ControlInputListener
+
+* Fixed bug: MouseEvent didn't assign the right left/ 
+  right/middle mouse values
+
+------------------------------------------------------
+Release 1 | Beta 1 | Development 0 | Experimental 0
+
+* Added GUITextBoxSelection
+* Added KeyboardShortcut
+* Added KeyboardShortcuts
+* Added KeyboardShortcutListener
+* Added ClipboardUtils
+* Added GUIToolTip
+* Added GUIFill
+* Added GUILoadingBar
+* Added GUISlider
+* Added GUIPanel
+* Added GUIWindow
+* Added InputManagerController
+* Added InputController
+* Added ControllerUtils
+* Added ControllerTest
+* Added ControllerEvent
+* Added ControllerAxis
+* Added ControllerAxisEvent
+* Added ControllerButton
+* Added ControllerButtonEvent
+* Added ContollerPov
+* Added ControllerPovEvent
+
+* Added the constructor Colour(Colour colour, float a) in Colour
+* Added selection to GUITextBox
+* Added the methods in ArrayUtils to change int[] to
+  List<Integer> and vice versa
+
+* Fixed bug: GUITextBox backspace would sometimes
+             leave a gap if not at the beginning or
+             end of the view index's
+             
+* Fixed bug: Timer hasTimePassed() returned true
+             in most cases when it hadn't ever been
+             started
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 3 | Experimental 0
+
+* Added GUIWindow
+* Added InputManagerController
+* Added InputController
+* Added ControllerUtils
+* Added ControllerTest
+* Added ControllerEvent
+* Added ControllerAxis
+* Added ControllerAxisEvent
+* Added ControllerButton
+* Added ControllerButtonEvent
+* Added ContollerPov
+* Added ControllerPovEvent
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 2 | Experimental 3
+
+* Added ControllerEvent
+* Added ControllerAxis
+* Added ControllerAxisEvent
+* Added ControllerButton
+* Added ControllerButtonEvent
+* Added ContollerPov
+* Added ControllerPovEvent
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 2 | Experimental 2
+
+* Added InputManagerController
+* Added InputController
+* Added ControllerUtils
+* Added ControllerTest
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 2 | Experimental 1
+
+* Added GUIWindow
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 2 | Experimental 0
+
+* Added GUIToolTip
+* Added GUIFill
+* Added GUILoadingBar
+* Added GUISlider
+* Added GUIPanel
+
+* Fixed bug: Timer hasTimePassed() returned true
+             in most cases when it hadn't ever been
+             started
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 1 | Experimental 3
+
+* Added GUISlider
+* Added GUIPanel
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 1 | Experimental 2
+
+* Added GUIFill
+* Added GUILoadingBar
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 1 | Experimental 1
+
+* Added GUIToolTip
+
+* Fixed bug: Timer hasTimePassed() returned true
+             in most cases when it hadn't ever been
+             started
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 1 | Experimental 0
+
+* Added GUITextBoxSelection
+* Added KeyboardShortcut
+* Added KeyboardShortcuts
+* Added KeyboardShortcutListener
+* Added ClipboardUtils
+
+* Added the constructor Colour(Colour colour, float a) in Colour
+* Added selection to GUITextBox
+* Added the methods in ArrayUtils to change int[] to
+  List<Integer> and vice versa
+
+* Fixed bug: GUITextBox backspace would sometimes
+             leave a gap if not at the beginning or
+             end of the view index's
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 0 | Experimental 6
+
+* Added cut, copy and paste to GUITextBox
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 0 | Experimental 5
+
+* Added ClipboardUtils
+
+* GUITextBox can now remove selections of text
+* GUITextBox can now replace selections of text
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 0 | Experimental 4
+
+* Added KeyboardShortcut
+* Added KeyboardShortcuts
+* Added KeyboardShortcutListener
+
+* Added the methods in ArrayUtils to change int[] to
+  List<Integer> and vice versa
+  
+* Fixed bug: Selection didn't work properly
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 0 | Experimental 3
+
+* Fixed bug: GUITextBox backspace would sometimes
+             leave a gap if not at the beginning or
+             end of the view index's
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 0 | Experimental 2
+
+* Attempted to improve the selection within the
+  GUITextBox
+
+------------------------------------------------------
+Release 1 | Beta 0 | Development 0 | Experimental 1
+
+* Added GUITextBoxSelection
+* Added the constructor Colour(Colour colour, float a) in Colour
+* Added selection to GUITextBox
+
+------------------------------------------------------
 Release 1 | Beta 0 | Development 0 | Experimental 0
 
 * Added Settings

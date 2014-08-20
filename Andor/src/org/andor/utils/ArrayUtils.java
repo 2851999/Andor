@@ -61,4 +61,52 @@ public class ArrayUtils {
 		return list;
 	}
 	
+	/* The static method to turn a short list into a short array */
+	public static short[] toShortArray(List<Short> list) {
+		//Create the array
+		short[] array = new short[list.size()];
+		//Go through the new array
+		for (int a = 0; a < array.length; a++)
+			//Set the current line
+			array[a] = list.get(a);
+		//Return the array
+		return array;
+	}
+	
+	/* The static method to turn a short array into a short list */
+	public static List<Short> toShortList(short[] array) {
+		//Create the list
+		List<Short> list = new ArrayList<Short>();
+		//Go through the array
+		for (int a = 0; a < array.length; a++)
+			//Add the current line to the list
+			list.add(array[a]);
+		//Return the list
+		return list;
+	}
+	
+	/* The static method to turn a integer list into a integer array */
+	public static int[] toIntegerArray(List<Integer> list) {
+		//Create the array
+		int[] array = new int[list.size()];
+		//Go through the new array
+		for (int a = 0; a < array.length; a++)
+			//Set the current line
+			array[a] = list.get(a);
+		//Return the array
+		return array;
+	}
+	
+	/* The static method to turn a integer array into a integer list */
+	public static List<Integer> toIntegerList(int[] array) {
+		//Create the list
+		List<Integer> list = new ArrayList<Integer>();
+		//Go through the array
+		for (int a = 0; a < array.length; a++)
+			//Add the current line to the list
+			list.add(array[a]);
+		//Return the list
+		return list;
+	}
+	
 }

@@ -9,10 +9,16 @@
 package org.andor.core;
 
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.andor.core.logger.Logger;
 import org.lwjgl.opengl.GL11;
 
 public class Image {
+	
+	/* The list of images that has been created */
+	private static List<Image> allImages = new ArrayList<Image>();
 	
 	/* The texture used in this image */
 	public ByteBuffer texture;
@@ -42,6 +48,8 @@ public class Image {
 		this.bottom = 1f;
 		this.left = 0f;
 		this.right = 1f;
+		//Add this image to the list
+		allImages.add(this);
 	}
 	
 	/* The constructor */
@@ -87,6 +95,8 @@ public class Image {
 		//Set the minification and magnification values
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST);
+		//Add this image to the list
+		allImages.add(this);
 	}
 	
 	/* The method used to bind this image ready for OpenGL rendering */
@@ -101,8 +111,8 @@ public class Image {
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
 	}
 	
-	/* The method used to delete this image */
-	public void delete() {
+	/* The method used to release this image */
+	public void release() {
 		//Delete this texture
 		GL11.glDeleteTextures(this.textureId);
 	}
@@ -115,5 +125,14 @@ public class Image {
 	public float[] getTextureCoordinates() {
 		return new float[] { this.top, this.bottom, this.left, this.right };
 	}
+	
+	/* The static method used to release all of the images that have been created */
+	public static void releaseAll() {
+		//Go through each image
+		for (int a = 0; a < allImages.size(); a++)
+			//Delete the current image
+			allImages.get(a).release();
+	}
+
 	
 }

@@ -66,6 +66,15 @@ public class Colour {
 		this.a = a;
 	}
 	
+	/* The constructor with another colour and the alpha values given */	
+	public Colour(Colour colour, float a) {
+		//Assign the variables
+		this.r = colour.r;
+		this.g = colour.g;
+		this.b = colour.b;
+		this.a = a;
+	}
+	
 	/* The method used to create a new colour with the same values as
 	 * this one and then return it (Clones this colour) */
 	public Colour clone() {
