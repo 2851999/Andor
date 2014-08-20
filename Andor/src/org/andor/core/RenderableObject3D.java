@@ -52,6 +52,33 @@ public class RenderableObject3D extends Object3D {
 		this.setup(renderMode, verticesData, colourData, textureData);
 	}
 	
+	/* The constructor with the render mode,
+	 * the vertices data, width and height given */
+	public RenderableObject3D(int renderMode, float[] verticesData, short[] drawOrder, float width, float height, float depth) {
+		//Call the super constructor
+		super(width, height, depth);
+		//Setup this object
+		this.setup(renderMode, verticesData, drawOrder);
+	}
+	
+	/* The constructor with the render mode,
+	 * the vertices data, the colour data, width and height given */
+	public RenderableObject3D(int renderMode, float[] verticesData, float[] colourData, short[] drawOrder, float width, float height, float depth) {
+		//Call the super constructor
+		super(width, height, depth);
+		//Setup this object
+		this.setup(renderMode, verticesData, colourData, drawOrder);
+	}
+	
+	/* The constructor with the render mode,
+	 * the vertices data, the colour data, the texture data width and height given */
+	public RenderableObject3D(int renderMode, float[] verticesData, float[] colourData, float[] textureData, short[] drawOrder, float width, float height, float depth) {
+		//Call the super constructor
+		super(width, height, depth);
+		//Setup this object
+		this.setup(renderMode, verticesData, colourData, textureData, drawOrder);
+	}
+	
 	/* The method used to render this object */
 	public void render() {
 		//Get the position
@@ -84,8 +111,6 @@ public class RenderableObject3D extends Object3D {
 		} else {
 			//Save the current matrix
 			float[] clone = Arrays.copyOf(AndroidDisplayRenderer.mMVPMatrix, AndroidDisplayRenderer.mMVPMatrix.length);
-			//Reset the current matrix
-			//AndroidDisplayRenderer.mMVPMatrix = new float[16];
 			//Move to the correct position
 			Matrix.translateM(AndroidDisplayRenderer.mMVPMatrix, 0, p.x, p.y, p.z);
 			//Rotate by the specified amount
@@ -130,6 +155,39 @@ public class RenderableObject3D extends Object3D {
 		this.renderer = Renderer.create(renderMode, Renderer.VERTEX_VALUES_COUNT_3D);
 		//Set the correct values
 		this.renderer.setValues(verticesData, colourData, textureData);
+		//Setup the buffers
+		this.renderer.setupBuffers();
+	}
+	
+	/* The method used to setup this object given the render mode
+	 * and the vertices data */
+	public void setup(int renderMode, float[] verticesData, short[] drawOrder) {
+		//Create the renderer
+		this.renderer = Renderer.create(renderMode, Renderer.VERTEX_VALUES_COUNT_3D);
+		//Set the correct values
+		this.renderer.setValues(verticesData, drawOrder);
+		//Setup the buffers
+		this.renderer.setupBuffers();
+	}
+	
+	/* The method used to setup this object given the render mode,
+	 * the vertices data and the colour data */
+	public void setup(int renderMode, float[] verticesData, float[] colourData, short[] drawOrder) {
+		//Create the renderer
+		this.renderer = Renderer.create(renderMode, Renderer.VERTEX_VALUES_COUNT_3D);
+		//Set the correct values
+		this.renderer.setValues(verticesData, colourData, drawOrder);
+		//Setup the buffers
+		this.renderer.setupBuffers();
+	}
+	
+	/* The method used to setup this object given the render mode,
+	 * the vertices data, the colour data and the texture data */
+	public void setup(int renderMode, float[] verticesData, float[] colourData, float[] textureData, short[] drawOrder) {
+		//Create the renderer
+		this.renderer = Renderer.create(renderMode, Renderer.VERTEX_VALUES_COUNT_3D);
+		//Set the correct values
+		this.renderer.setValues(verticesData, colourData, textureData, drawOrder);
 		//Setup the buffers
 		this.renderer.setupBuffers();
 	}

@@ -14,7 +14,6 @@ import org.andor.core.Shader;
 import org.andor.utils.ArrayUtils;
 import org.andor.utils.BufferUtils;
 import org.andor.utils.ShaderUtils;
-
 import android.opengl.GLES20;
 
 public class AndroidRenderer extends Renderer {
@@ -111,6 +110,17 @@ public class AndroidRenderer extends Renderer {
 			GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, Float.BYTES * textureData.length, this.texturesBuffer, this.usage);
 			GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
 		}
+		
+		//Check to see whether the draw order has been set
+		if (this.drawOrder != null) {
+			this.drawOrderBuffer = BufferUtils.createFlippedBuffer(this.drawOrder);
+			int[] doh = new int[1];
+			GLES20.glGenBuffers(1, doh, 0);
+			this.drawOrderHandle = doh[0];
+			GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, this.drawOrderHandle);
+			GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, Short.BYTES * this.drawOrder.length, this.drawOrderBuffer, this.usage);
+			GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
+		}
 	}
 	
 	/* The method used to draw the object */
@@ -142,8 +152,15 @@ public class AndroidRenderer extends Renderer {
 			GLES20.glEnableVertexAttribArray(texturesAttribute);
 			GLES20.glVertexAttribPointer(texturesAttribute, this.textureValuesCount, GLES20.GL_FLOAT, false, 0, 0);
 		}
-		//Draw the arrays
-		GLES20.glDrawArrays(this.renderMode, 0, this.verticesData.length / this.vertexValuesCount);
+		//Check to see whether the draw order has been set
+		if (this.drawOrder != null) {
+			GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, this.drawOrderHandle);
+			GLES20.glDrawElements(this.renderMode, this.drawOrder.length, GLES20.GL_UNSIGNED_SHORT, 0);
+			GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, 0);
+		} else {
+			//Draw the arrays
+			GLES20.glDrawArrays(this.renderMode, 0, this.verticesData.length / this.vertexValuesCount);
+		}
 		//Disable the arrays as needed
 		if (this.normalsData != null)
 			GLES20.glDisableVertexAttribArray(normalAttribute);
@@ -188,7 +205,7 @@ public class AndroidRenderer extends Renderer {
 		this.coloursBuffer = BufferUtils.createFlippedBuffer(this.colourData);
 		//Bind the colours buffer and give OpenGL the data
 		GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, this.coloursHandle);
-		GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, Float.BYTES * verticesData.length, this.coloursBuffer, this.usage);
+		GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, Float.BYTES * this.colourData.length, this.coloursBuffer, this.usage);
 	}
 	
 	/* The method used to update the texture coordinates */
@@ -199,25 +216,18 @@ public class AndroidRenderer extends Renderer {
 		this.texturesBuffer = BufferUtils.createFlippedBuffer(this.textureData);
 		//Bind the texture coordinates buffer and give OpenGL the data
 		GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, this.texturesHandle);
-		GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, Float.BYTES * verticesData.length, this.texturesBuffer, this.usage);
+		GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, Float.BYTES * this.textureData.length, this.texturesBuffer, this.usage);
 	}
 	
-	/* The method used to set the vertices */
-	public void setValues(float[] verticesData) {
-		this.verticesData = verticesData;
-	}
-	
-	/* The method used to set the vertices and the colours */
-	public void setValues(float[] verticesData, float[] colourData) {
-		this.verticesData = verticesData;
-		this.colourData = colourData;
-	}
-	
-	/* The method used to set the vertices, colours and the texture coordinates */
-	public void setValues(float[] verticesData, float[] colourData, float[] textureData) {
-		this.verticesData = verticesData;
-		this.colourData = colourData;
-		this.textureData = textureData;
+	/* The method used to update the draw order */
+	public void updateDrawOrder(short[] drawOrder) {
+		//Set the draw order
+		this.drawOrder = drawOrder;
+		//Create the draw order buffer
+		this.drawOrderBuffer = BufferUtils.createFlippedBuffer(this.drawOrder);
+		//Bind the texture coordinates buffer and give OpenGL the data
+		GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, this.drawOrderHandle);
+		GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, Short.BYTES * this.drawOrder.length, this.drawOrderBuffer, this.usage);
 	}
 	
 	/* The method used to release this renderer */
@@ -229,6 +239,8 @@ public class AndroidRenderer extends Renderer {
 			GLES20.glDeleteBuffers(1, new int[] { this.coloursHandle }, 0);
 		if (this.textureData != null)
 			GLES20.glDeleteBuffers(1, new int[] { this.texturesHandle }, 0);
+		if (this.drawOrder != null)
+			GLES20.glDeleteBuffers(1, new int[] { this.drawOrderHandle }, 0);
 	}
 	
 }

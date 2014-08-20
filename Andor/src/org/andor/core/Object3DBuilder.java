@@ -15,43 +15,43 @@ public class Object3DBuilder {
 	/* The static method used to create a muti-textured cube renderable object given the
 	 * width, height and colours */
 	public static RenderableObject3D createCube(Image[] textures, float width, float height, float depth, Colour[] colours) {
-		return new RenderableObject3D(Renderer.QUADS, createCubeV(width, height, depth), createColourArray(24, colours), createCubeT(textures), width, height, depth);
+		return new RenderableObject3D(Renderer.TRIANGLES, createCubeV(width, height, depth), createColourArray(24, colours), createCubeT(textures), createCubeDO(), width, height, depth);
 	}
 	
 	/* The static method used to create a multi-cube renderable object given the
 	 * width, height and colour */
 	public static RenderableObject3D createCube(Image[] textures, float width, float height, float depth, Colour colour) {
-		return new RenderableObject3D(Renderer.QUADS, createCubeV(width, height, depth), createColourArray(24, colour), createCubeT(textures), width, height, depth);
+		return new RenderableObject3D(Renderer.TRIANGLES, createCubeV(width, height, depth), createColourArray(24, colour), createCubeT(textures), createCubeDO(), width, height, depth);
 	}
 	
 	/* The static method used to create a textured cube renderable object given the
 	 * width, height and colours */
 	public static RenderableObject3D createCube(Image texture, float width, float height, float depth, Colour[] colours) {
-		return new RenderableObject3D(Renderer.QUADS, createCubeV(width, height, depth), createColourArray(24, colours), createCubeT(texture), width, height, depth);
+		return new RenderableObject3D(Renderer.TRIANGLES, createCubeV(width, height, depth), createColourArray(24, colours), createCubeT(texture), createCubeDO(), width, height, depth);
 	}
 	
 	/* The static method used to create a textured cube renderable object given the
 	 * width, height and colour */
 	public static RenderableObject3D createCube(Image texture, float width, float height, float depth, Colour colour) {
-		return new RenderableObject3D(Renderer.QUADS, createCubeV(width, height, depth), createColourArray(24, colour), createCubeT(texture), width, height, depth);
+		return new RenderableObject3D(Renderer.TRIANGLES, createCubeV(width, height, depth), createColourArray(24, colour), createCubeT(texture), createCubeDO(), width, height, depth);
 	}
 	
 	/* The static method used to create a cube renderable object given the
 	 * width, height and colours */
 	public static RenderableObject3D createCube(float width, float height, float depth, Colour[] colours) {
-		return new RenderableObject3D(Renderer.QUADS, createCubeV(width, height, depth), createColourArray(24, colours), width, height, depth);
+		return new RenderableObject3D(Renderer.TRIANGLES, createCubeV(width, height, depth), createColourArray(24, colours), createCubeDO(), width, height, depth);
 	}
 	
 	/* The static method used to create a cube renderable object given the
 	 * width, height and colour */
 	public static RenderableObject3D createCube(float width, float height, float depth, Colour colour) {
-		return new RenderableObject3D(Renderer.QUADS, createCubeV(width, height, depth), createColourArray(24, colour), width, height, depth);
+		return new RenderableObject3D(Renderer.TRIANGLES, createCubeV(width, height, depth), createColourArray(24, colour), createCubeDO(), width, height, depth);
 	}
 	
 	/* The static method used to create a cube renderable object given the
 	 * width and height */
 	public static RenderableObject3D createCube(float width, float height, float depth) {
-		return new RenderableObject3D(Renderer.QUADS, createCubeV(width, height, depth), width, height, depth);
+		return new RenderableObject3D(Renderer.TRIANGLES, createCubeV(width, height, depth), createCubeDO(), width, height, depth);
 	}
 	
 	/* The static method used to create a cube's texture coordinates with multiple textures */
@@ -177,34 +177,75 @@ public class Object3DBuilder {
 			};
 	}
 	
+	/* The static method used to create a cube's vertices array given the width, height and depth */
+	public static short[] createCubeDO() {
+		return new short[] {
+				//Front face
+				//Bottom-Left triangle
+				0, 1, 2,
+				//Top-Right triangle
+				2, 3, 0,
+				
+				//Left face
+				//Bottom-Left triangle
+				4, 5, 6,
+				//Top-Right triangle
+				6, 7, 4,
+				
+				//Back face
+				//Bottom-Left triangle
+				8, 9, 10,
+				//Top-Right triangle
+				10, 11, 8,
+				
+				//Bottom face
+				//Bottom-Left triangle
+				12, 13, 14,
+				//Top-Right triangle
+				14, 15, 12,
+				
+				//Right face
+				//Bottom-Left triangle
+				16, 17, 18,
+				//Top-Right triangle
+				18, 19, 16,
+				
+				//Top face
+				//Bottom-Left triangle
+				20, 21, 22,
+				//Top-Right triangle
+				22, 23, 20
+			};
+	}
+	
 	/* The static method used to create a textured quad renderable object given the
 	 * width, height and colours */
 	public static RenderableObject3D createQuad(Image texture, float width, float height, Colour[] colours) {
-		return new RenderableObject3D(Renderer.QUADS, createQuadV(width, height), createColourArray(4, colours), createQuadT(texture), width, height, 0);
+		return new RenderableObject3D(Renderer.TRIANGLES, createQuadV(width, height), createColourArray(4, colours), createQuadT(texture), createQuadDO(), width, height, 0);
 	}
 	
 	/* The static method used to create a textured quad renderable object given the
 	 * width, height and colour */
 	public static RenderableObject3D createQuad(Image texture, float width, float height, Colour colour) {
-		return new RenderableObject3D(Renderer.QUADS, createQuadV(width, height), createColourArray(4, colour), createQuadT(texture), width, height, 0);
+		return new RenderableObject3D(Renderer.TRIANGLES, createQuadV(width, height), createColourArray(4, colour), createQuadT(texture), createQuadDO(), width, height, 0);
 	}
 	
 	/* The static method used to create a quad renderable object given the
 	 * width, height and colours */
 	public static RenderableObject3D createQuad(float width, float height, Colour[] colours) {
-		return new RenderableObject3D(Renderer.QUADS, createQuadV(width, height), createColourArray(4, colours), width, height, 0);
+		return new RenderableObject3D(Renderer.TRIANGLES, createQuadV(width, height), createColourArray(4, colours), createQuadDO(), width, height, 0);
 	}
 	
 	/* The static method used to create a quad renderable object given the
 	 * width, height and colour */
 	public static RenderableObject3D createQuad(float width, float height, Colour colour) {
-		return new RenderableObject3D(Renderer.QUADS, createQuadV(width, height), createColourArray(4, colour), width, height, 0);
+		return new RenderableObject3D(Renderer.TRIANGLES, createQuadV(width, height), createColourArray(4, colour), createQuadDO(), width, height, 0);
 	}
 	
 	/* The static method used to create a quad renderable object given the
 	 * width and height */
 	public static RenderableObject3D createQuad(float width, float height) {
-		return new RenderableObject3D(Renderer.QUADS, createQuadV(width, height), width, height, 0);
+		return new RenderableObject3D(Renderer.TRIANGLES, createQuadV(width, height), createQuadDO(), width, height, 0);
 	}
 	
 	/* The static method used to create a quad's vertices array given the width and height */
@@ -234,6 +275,16 @@ public class Object3DBuilder {
 				t.right, t.top,
 				t.right, t.bottom,
 				t.left, t.bottom
+		};
+	}
+	
+	/* The static method used to create a quad's draw order array given the width and height */
+	public static short[] createQuadDO() {
+		return new short[] {
+			//Bottom-Left triangle
+			0, 1, 2,
+			//Top-Right triangle
+			2, 3, 0
 		};
 	}
 	
