@@ -113,11 +113,13 @@ public class RenderableObject2D extends Object2D {
 			//Save the current matrix
 			float[] clone = Arrays.copyOf(AndroidDisplayRenderer.mMVPMatrix, AndroidDisplayRenderer.mMVPMatrix.length);
 			//Move to the correct position
-			Matrix.translateM(AndroidDisplayRenderer.mMVPMatrix, 0, p.x, p.y, 0);
+			Matrix.translateM(AndroidDisplayRenderer.mMVPMatrix, 0, p.x + this.width / 2, p.y + this.width / 2, 0);
 			//Rotate by the specified amount
 			Matrix.rotateM(AndroidDisplayRenderer.mMVPMatrix, 0, r, 0, 0, 1);
 			//Scale by the specified amount
 			Matrix.scaleM(AndroidDisplayRenderer.mMVPMatrix, 0, s.x, s.y, 0);
+			//Move to the correct position (For rendering)
+			Matrix.translateM(AndroidDisplayRenderer.mMVPMatrix, 0, -this.width / 2, -this.width / 2, 0);
 			//Render the object using the renderer
 			this.renderer.render();
 			//Restore the current matrix

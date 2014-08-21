@@ -8,31 +8,47 @@
 
 package org.andor.core.android;
 
+import org.andor.core.Image;
 import org.andor.core.Renderer;
 import org.andor.core.Settings;
 import org.andor.core.Shader;
 import org.andor.utils.ArrayUtils;
 import org.andor.utils.BufferUtils;
 import org.andor.utils.ShaderUtils;
+
 import android.opengl.GLES20;
 
 public class AndroidRenderer extends Renderer {
+	
+	/* The active texture */
+	public static Image texture;
 	
 	/* The Android shader code */
 	private static final String[] androidVertexShaderCode = new String[] {
 		 	"attribute vec4 colour;",
 		 	"varying vec4 fcolour;",
 		    "attribute vec4 vertexPosition;",
+		    "attribute vec4 normal;",
+		    "attribute vec2 textureCoord;",
+		    "varying vec2 textureV;",
 		 	"uniform mat4 matrix;",
 		    "void main() {",
 		    "  fcolour = colour;",
+		    "  textureV = textureCoord;",
 		    "  gl_Position = matrix * vertexPosition;",
 		    "}" };
 	
 	private static final String[] androidFragmentShaderCode = new String[] {
 		    "varying vec4 fcolour;",
+		    "varying vec2 textureV;",
+		    "uniform sampler2D texture;",
+		    "uniform float hasTexture;",
 		    "void main() {",
-		    "  gl_FragColor = fcolour;",
+		    "  if (hasTexture > 0.5) {",
+		    "    gl_FragColor = fcolour * texture2D(texture, textureV);",
+		    "  } else {",
+		    "    gl_FragColor = fcolour;",
+		    "  }",
 		    "}" };
 	
 	/* The Android shader */
@@ -127,7 +143,7 @@ public class AndroidRenderer extends Renderer {
 	public void render() {
 		this.androidShader.use();
 		//Enable the arrays as needed
-		int vertexPositionAttribute = this.androidShader.getAtrrbuteLocation("vertexPosition");
+		int vertexPositionAttribute = this.androidShader.getAttributeLocation("vertexPosition");
 		int normalAttribute = 0;
 		int colourAttribute = 0;
 		int texturesAttribute = 0;
@@ -137,22 +153,26 @@ public class AndroidRenderer extends Renderer {
 		GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, this.verticesHandle);
 		GLES20.glVertexAttribPointer(vertexPositionAttribute, this.vertexValuesCount, GLES20.GL_FLOAT, false, 0, 0);
 		if (this.normalsData != null) {
+			normalAttribute = this.androidShader.getUniformLocation("normal");
 			GLES20.glEnableVertexAttribArray(normalAttribute);
 			GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, this.normalsHandle);
-			GLES20.glVertexAttribPointer(normalAttribute, 2, GLES20.GL_FLOAT, false, 0, 0);
+			GLES20.glVertexAttribPointer(normalAttribute, this.vertexValuesCount, GLES20.GL_FLOAT, false, 0, 0);
 		}
 		if (this.colourData != null) {
-			colourAttribute = this.androidShader.getAtrrbuteLocation("colour");
+			colourAttribute = this.androidShader.getAttributeLocation("colour");
 			GLES20.glEnableVertexAttribArray(colourAttribute);
 			GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, this.coloursHandle);
 			GLES20.glVertexAttribPointer(colourAttribute, this.colourValuesCount, GLES20.GL_FLOAT, false, 0, 0);
 		}
 		if (this.textureData != null) {
+			texturesAttribute = this.androidShader.getAttributeLocation("textureCoord");
 			GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, this.texturesHandle);
 			GLES20.glEnableVertexAttribArray(texturesAttribute);
 			GLES20.glVertexAttribPointer(texturesAttribute, this.textureValuesCount, GLES20.GL_FLOAT, false, 0, 0);
+			GLES20.glUniform1i(this.androidShader.getUniformLocation("texture"), 0);
+			if (texture != null)
+				GLES20.glUniform1f(this.androidShader.getUniformLocation("hasTexture"), 1f);
 		}
-		//Check to see whether the draw order has been set
 		if (this.drawOrder != null) {
 			GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, this.drawOrderHandle);
 			GLES20.glDrawElements(this.renderMode, this.drawOrder.length, GLES20.GL_UNSIGNED_SHORT, 0);

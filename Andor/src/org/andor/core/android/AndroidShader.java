@@ -122,7 +122,7 @@ public class AndroidShader extends Shader {
 	}
 	
 	/* The method used to get the location of a attribute variable */
-	public int getAtrrbuteLocation(String name) {
+	public int getAttributeLocation(String name) {
 		return GLES20.glGetAttribLocation(this.program, name);
 	}
 	

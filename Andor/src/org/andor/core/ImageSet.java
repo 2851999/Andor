@@ -57,7 +57,7 @@ public class ImageSet {
 			x += this.loadedImages.get(a).getWidth();
 		}
 		//Create the new image
-		Image image = ImageLoader.loadImage(bufferedImage);
+		Image image = ImageLoaderPC.loadImage(bufferedImage);
 		//Return the image
 		return image;
 	}
@@ -65,7 +65,7 @@ public class ImageSet {
 	/* The method used to load an image */
 	public Image loadImage(String filePath, boolean external) {
 		//Load the image
-		BufferedImage bufferedImage = ImageLoader.loadBufferedImage(filePath, external);
+		BufferedImage bufferedImage = ImageLoaderPC.loadBufferedImage(filePath, external);
 		//Add the image to the list of loaded images
 		loadedImages.add(bufferedImage);
 		//Create the image instance

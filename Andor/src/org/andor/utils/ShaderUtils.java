@@ -83,6 +83,14 @@ public class ShaderUtils {
 				GLES20.glShaderSource(shader , shaderSource.toString());
 				//Compile the shader
 				GLES20.glCompileShader(shader);
+				//Check for errors
+	            int[] compiled = new int[1];
+	            GLES20.glGetShaderiv(shader, GLES20.GL_COMPILE_STATUS, compiled, 0);
+	            if (compiled[0] == 0) {
+					//Log an error
+					Logger.log("Andor - ShaderUtils createShader()" , "Error when creating shader with the type: " + shaderType + " could not compile the shader" , Log.ERROR);
+					Logger.log("Andor - ShaderInformation", GLES20.glGetShaderInfoLog(shader), Log.ERROR);
+	            }
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
