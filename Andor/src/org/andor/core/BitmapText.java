@@ -74,14 +74,14 @@ public class BitmapText extends RenderableObject2D {
 			float cellY = (float) ((Math.floor((int) asciiCode / this.gridHeight)) * this.cellHeight);
 			
 			//Add the vertices
-			vertices.add(this.position.x + x);
-			vertices.add(this.position.y);
-			vertices.add(this.position.x + x + (this.cellWidth / this.cellHeight) * this.fontSize);
-			vertices.add(this.position.y);
-			vertices.add(this.position.x + x + (this.cellWidth / this.cellHeight) * this.fontSize);
-			vertices.add(this.position.y + this.fontSize);
-			vertices.add(this.position.x + x);
-			vertices.add(this.position.y + this.fontSize);
+			vertices.add(x);
+			vertices.add(0f);
+			vertices.add(x + (this.cellWidth / this.cellHeight) * this.fontSize);
+			vertices.add(0f);
+			vertices.add(x + (this.cellWidth / this.cellHeight) * this.fontSize);
+			vertices.add(this.fontSize);
+			vertices.add(x);
+			vertices.add(this.fontSize);
 			
 			//Add the textures
 			textures.add(cellX / this.image.getWidth());

@@ -46,6 +46,8 @@ public abstract class BaseActivity extends Activity implements ActivityListenerI
 		this.setTitle(Settings.Window.Title);
 		//Assign the game
 		this.game = game;
+		//Create the input
+		InputManagerAndroid.create();
 		//Check the orientation and request it
 		if (Settings.Android.ScreenOrientation == Settings.Android.SCREEN_ORIENTATION_PORTRAIT)
 			this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);

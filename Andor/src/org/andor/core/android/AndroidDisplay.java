@@ -79,6 +79,8 @@ public class AndroidDisplay extends GLSurfaceView {
 	 * to AndroidActivity, the coordinates given will include the title
 	 * bar and the engine will not work properly when fullscreen = false */
 	public boolean onTouchEvent(MotionEvent e) {
+		//Call the event in InputManagerAndroid
+		InputManagerAndroid.instance.onTouch(e);
 		//The event was handled
 		return true;
 	}
