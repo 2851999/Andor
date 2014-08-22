@@ -15,6 +15,7 @@ import java.io.IOException;
 
 import org.andor.core.Colour;
 import org.andor.core.Font;
+import org.andor.core.FontPC;
 import org.andor.core.Settings;
 import org.andor.core.logger.Log;
 import org.andor.core.logger.Logger;
@@ -29,52 +30,92 @@ public class FontUtils {
 	
 	/* The static method used to create a font */
 	public static Font createFont(java.awt.Font font) {
-		return new Font(new TrueTypeFont(font, Settings.Video.AntiAliasing));
+		Font f = null;
+		FontPC fpc = new FontPC(new TrueTypeFont(font, Settings.Video.AntiAliasing));
+		f = new Font(fpc);
+		fpc.instance = f;
+		return f;
 	}
 	
 	/* The static method used to create a font given its name, font type and size */
 	public static Font createFont(String font, int fontType, float size) {
-		return new Font(createTrueTypeFont(new java.awt.Font(font, getFontType(fontType), (int) size)));
+		Font f = null;
+		FontPC fpc = new FontPC(createTrueTypeFont(new java.awt.Font(font, getFontType(fontType), (int) size)));
+		f = new Font(fpc);
+		fpc.instance = f;
+		return f;
 	}
 	
 	/* The static method used to create a font given its name and size */
 	public static Font createFont(String font, float size) {
-		return new Font(createTrueTypeFont(font, FONT_TYPE_PLAIN, size));
+		Font f = null;
+		FontPC fpc = new FontPC(createTrueTypeFont(font, FONT_TYPE_PLAIN, size));
+		f = new Font(fpc);
+		fpc.instance = f;
+		return f;
 	}
 	
 	/* The static method used to load a font from a file given the size*/
 	public static Font load(String fontPath, boolean external, float size) {
-		return new Font(loadTrueTypeFont(fontPath, external, FONT_TYPE_PLAIN, size));
+		Font f = null;
+		FontPC fpc = new FontPC(loadTrueTypeFont(fontPath, external, FONT_TYPE_PLAIN, size));
+		f = new Font(fpc);
+		fpc.instance = f;
+		return f;
 	}
 	
 	/* The static method used to load a font from a file given the font type and size */
 	public static Font load(String fontPath, boolean external, int fontType, float size) {
-		return new Font(loadTrueTypeFont(fontPath, external, fontType, size));
+		Font f = null;
+		FontPC fpc = new FontPC(loadTrueTypeFont(fontPath, external, fontType, size));
+		f = new Font(fpc);
+		fpc.instance = f;
+		return f;
 	}
 	
 	/* The static method used to create a font given its colour */
 	public static Font createFont(java.awt.Font font, Colour colour) {
-		return new Font(new TrueTypeFont(font, Settings.Video.AntiAliasing), colour);
+		Font f = null;
+		FontPC fpc = new FontPC(new TrueTypeFont(font, Settings.Video.AntiAliasing));
+		f = new Font(fpc);
+		fpc.instance = f;
+		return f;
 	}
 	
 	/* The static method used to create a font given its name, font type, size and colour */
 	public static Font createFont(String font, int fontType, float size, Colour colour) {
-		return new Font(createTrueTypeFont(new java.awt.Font(font, getFontType(fontType), (int) size)), colour);
+		Font f = null;
+		FontPC fpc = new FontPC(createTrueTypeFont(new java.awt.Font(font, getFontType(fontType), (int) size)));
+		f = new Font(fpc, colour);
+		fpc.instance = f;
+		return f;
 	}
 	
 	/* The static method used to create a font given its name, size and colour */
 	public static Font createFont(String font, float size, Colour colour) {
-		return new Font(createTrueTypeFont(font, FONT_TYPE_PLAIN, size), colour);
+		Font f = null;
+		FontPC fpc = new FontPC(createTrueTypeFont(font, FONT_TYPE_PLAIN, size));
+		f = new Font(fpc, colour);
+		fpc.instance = f;
+		return f;
 	}
 	
 	/* The static method used to load a font from a file given the size and colour */
 	public static Font load(String fontPath, boolean external, float size, Colour colour) {
-		return new Font(loadTrueTypeFont(fontPath, external, FONT_TYPE_PLAIN, size), colour);
+		Font f = null;
+		FontPC fpc = new FontPC(loadTrueTypeFont(fontPath, external, FONT_TYPE_PLAIN, size));
+		f = new Font(fpc, colour);
+		fpc.instance = f;
+		return f;
 	}
 	
 	/* The static method used to load a font from a file given the font type, size and colour */
 	public static Font load(String fontPath, boolean external, int fontType, float size, Colour colour) {
-		return new Font(loadTrueTypeFont(fontPath, external, fontType, size), colour);
+		Font f = null;
+		FontPC fpc = new FontPC(loadTrueTypeFont(fontPath, external, fontType, size));
+		f = new Font(fpc, colour);
+		fpc.instance = f;
+		return f;
 	}
 	
 	/* The static method used to create a font */

@@ -1,6 +1,20 @@
 ------------------------------------------------------
 Release 2 | Beta 0 | Development 0 | Experimental 1
 
+* Added FontPC
+* Added ImageSetPC
+* Added ImageSetAndroid
+
+* Fixed bug: RenderableObject2D didn't render in the
+  correct place unless the width was equal to the
+  height on Android
+  
+* Fixed bug: Bitmap font's were not rendering in
+  the correct place
+
+------------------------------------------------------
+Release 2 | Beta 0 | Development 0 | Experimental 1
+
 * Added ImageLoaderPC
 * Added ImageLoaderAndroid
 
