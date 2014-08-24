@@ -1,4 +1,5 @@
 package org.andor.utils;
+
 import java.util.List;
 
 import org.andor.core.Settings;
@@ -11,6 +12,60 @@ import org.lwjgl.opengl.GL20;
 import android.opengl.GLES20;
 
 public class ShaderUtils {
+	
+	/* The Android shader code */
+	public static final String[] androidVertexShaderCode = new String[] {
+			"attribute vec4 andor_vertexPosition;",
+	    	"attribute vec4 andor_normal;",
+	    	"attribute vec2 andor_textureCoord;",
+		 	"attribute vec4 andor_colour;",
+		 	"uniform mat4 andor_matrix;",
+		 	"varying vec4 andor_fcolour;",
+		    "varying vec2 andor_textureV;",
+		    "void andor_main();",
+		    "void main() {",
+		    "  andor_fcolour = andor_colour;",
+		    "  andor_textureV = andor_textureCoord;",
+		    "  gl_Position = andor_matrix * andor_vertexPosition;",
+		    "  andor_main();",
+		    "}" };
+	
+	public static final String[] androidVertexAndorMain = new String[] {
+		"void andor_main() {","}"
+	};
+	
+	public static final String[] androidFragmentShaderCode = new String[] {
+			"uniform sampler2D andor_texture;",
+			"uniform float andor_hasTexture;",
+		    "varying vec4 andor_fcolour;",
+		    "varying vec2 andor_textureV;",
+		    "void andor_main();",
+		    "void main() {",
+		    "  if (andor_hasTexture > 0.5) {",
+		    "    gl_FragColor = andor_fcolour * texture2D(andor_texture, andor_textureV);",
+		    "  } else {",
+		    "    gl_FragColor = andor_fcolour;",
+		    "  }",
+		    "  andor_main();",
+		    "}" };
+	
+	public static final String[] androidFragmentAndorMain = new String[] {
+		"void andor_main() {","}"
+	};
+	
+	/* The Android shader code */
+	public static final String[] pcVertexShaderCode = new String[] {
+		    "void andor_main();",
+		    "void main() {",
+		    "  gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;",
+		    "  andor_main();",
+		    "}" };
+	
+	public static final String[] pcFragmentShaderCode = new String[] {
+		    "void andor_main();",
+		    "void main() {",
+		    "  andor_main();",
+		    "}" };
 	
 	/* The static method to create a shader from a file */
 	public static int createShader(String path, boolean external, int shaderType) {
@@ -40,12 +95,19 @@ public class ShaderUtils {
 					//Return 0
 					return 0;
 				}
+				//Join together both pieces of code
+				String[] source1 = ArrayUtils.toStringArray(shaderCode);
+				String[] shaderSourceArray = null;
+				if (shaderType == GL20.GL_VERTEX_SHADER)
+					shaderSourceArray = combine(source1, ShaderUtils.pcVertexShaderCode);
+				else if (shaderType == GL20.GL_FRAGMENT_SHADER)
+					shaderSourceArray = combine(source1, ShaderUtils.pcFragmentShaderCode);
 				//The shader source
 				StringBuilder shaderSource = new StringBuilder();
 				//Look at all of the shader file text
-				for (int a = 0; a < shaderCode.size(); a++)
+				for (int a = 0; a < shaderSourceArray.length; a++)
 					//Add onto the shader source
-					shaderSource.append(shaderCode.get(a)).append('\n');
+					shaderSource.append(shaderSourceArray[a]).append('\n');
 				//Load the shader file
 				GL20.glShaderSource(shader , shaderSource);
 				//Compile the shader
@@ -73,12 +135,19 @@ public class ShaderUtils {
 					//Return 0
 					return 0;
 				}
+				//Join together both pieces of code
+				String[] source1 = ArrayUtils.toStringArray(shaderCode);
+				String[] shaderSourceArray = null;
+				if (shaderType == GLES20.GL_VERTEX_SHADER)
+					shaderSourceArray = combine(ShaderUtils.androidVertexShaderCode, source1);
+				else if (shaderType == GLES20.GL_FRAGMENT_SHADER)
+					shaderSourceArray = combine(ShaderUtils.androidFragmentShaderCode, source1);
 				//The shader source
 				StringBuilder shaderSource = new StringBuilder();
 				//Look at all of the shader file text
-				for (int a = 0; a < shaderCode.size(); a++)
+				for (int a = 0; a < shaderSourceArray.length; a++)
 					//Add onto the shader source
-					shaderSource.append(shaderCode.get(a)).append('\n');
+					shaderSource.append(shaderSourceArray[a]).append('\n');
 				//Load the shader file
 				GLES20.glShaderSource(shader , shaderSource.toString());
 				//Compile the shader
@@ -111,6 +180,14 @@ public class ShaderUtils {
 	public static String getLogInformation(int shader) {
 		//Return the information
 		return GL20.glGetShaderInfoLog(shader, 1000);
+	}
+	
+	/* The static method used to combine two pieces of shader code */
+	public static String[] combine(String[] source1, String[] source2) {
+		List<String> src1 = ArrayUtils.toStringList(source1);
+		List<String> src2 = ArrayUtils.toStringList(source2);
+		src1.addAll(src2);
+		return ArrayUtils.toStringArray(src1);
 	}
 	
 }

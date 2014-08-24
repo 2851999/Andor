@@ -33,13 +33,13 @@ public class AndroidShader extends Shader {
 	/* The method used to use this shader */
 	public void use() {
 		//Use the shader program
-		GLES20.glUseProgram(this.program);
+		AndroidRenderer.currentShader = this;
 	}
 	
 	/* The method used to stop using this shader */
 	public void stopUsing() {
 		//Use the shader program
-		GLES20.glUseProgram(0);
+		AndroidRenderer.currentShader = null;
 	}
 	
 	/* The method used to delete this shader program */

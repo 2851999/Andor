@@ -13,6 +13,7 @@ import java.util.List;
 
 import org.andor.core.Object2D;
 import org.andor.core.RenderableObject2D;
+import org.andor.core.Settings;
 import org.andor.core.Vector2D;
 import org.andor.core.input.Mouse;
 
@@ -100,14 +101,14 @@ public class GUIComponent extends Object2D {
 			//Check to see whether the mouse is inside this component
 			if (this.getBounds().contains(Mouse.x, Mouse.y)) {
 				//Check to see whether the mouse is already hovering
-				if (! this.mouseHoveringInside && ! Mouse.leftButton) {
+				if (! Settings.AndroidMode && ! this.mouseHoveringInside && ! Mouse.leftButton) {
 					//The mouse is hovering inside of this component
 					this.mouseHoveringInside = true;
 					//Call an onMouseEnter event
 					this.callOnMouseEnterEvent();
 				}
 				//Check to see whether the left mouse button is down
-				if (Mouse.leftButton && this.mouseHoveringInside) {
+				if (Mouse.leftButton && this.mouseHoveringInside || Settings.AndroidMode && Mouse.leftButton) {
 					//Check to see whether repeat click events are enabled
 					if (this.repeatClickedEvents || (! this.repeatClickedEvents && ! this.hasBeenClickedEvent)) {
 						//Set clicked to true

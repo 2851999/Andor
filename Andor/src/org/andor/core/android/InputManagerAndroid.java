@@ -84,12 +84,16 @@ public class InputManagerAndroid implements GestureDetector.OnGestureListener , 
 	
 	/* Gesture event method */
 	public void onTouch(MotionEvent e) {
-		Mouse.lastX = Mouse.x;
-		Mouse.lastY = Mouse.y;
-		Mouse.x = e.getX();
-		Mouse.y = e.getY();
 		AndroidInput.callOnTouch(e);
 		//Set the Mouse variables (For GUI)
+		if (e.getX() != Mouse.x || e.getY() != Mouse.y) {
+			Mouse.lastX = Mouse.x;
+			Mouse.lastY = Mouse.y;
+			Mouse.x = e.getX();
+			Mouse.y = e.getY();
+			Input.callMouseMoved(new MouseMotionEvent(Mouse.lastX, Mouse.lastY, Mouse.x, Mouse.y));
+			Input.callMouseDragged(new MouseMotionEvent(Mouse.lastX, Mouse.lastY, Mouse.x, Mouse.y));
+		}
 		if (e.getAction() == MotionEvent.ACTION_DOWN) {
 			Mouse.leftButton = true;
 			Input.callMousePressed(new MouseEvent(true, false, false));
@@ -97,8 +101,6 @@ public class InputManagerAndroid implements GestureDetector.OnGestureListener , 
 			Input.callMouseReleased(new MouseEvent(false, false, false));
 			Input.callMouseClicked(new MouseEvent(false, false, false));
 			Mouse.leftButton = false;
-		} else if (e.getAction() == MotionEvent.ACTION_MOVE) {
-			Input.callMouseDragged(new MouseMotionEvent(Mouse.lastX, Mouse.lastY, Mouse.x, Mouse.y));
 		}
 		this.gestures.onTouchEvent(e);
 	}

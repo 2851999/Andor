@@ -1,4 +1,16 @@
 ------------------------------------------------------
+Release 2 | Beta 0 | Development 0 | Experimental 3
+
+* Fixed some GUI bugs on Android
+* Fixed bug: Android normals were not set in the
+  default shader
+
+* NOTE: When using Andor to create shaders using
+  GLSL, don't use the main method, instead use
+  andor_main instead to increase portability to
+  Android
+
+------------------------------------------------------
 Release 2 | Beta 0 | Development 0 | Experimental 2
 
 * Added AndroidInput
