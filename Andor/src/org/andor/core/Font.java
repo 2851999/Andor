@@ -8,15 +8,10 @@
 
 package org.andor.core;
 
-import org.lwjgl.opengl.GL11;
-import org.newdawn.slick.Color;
-import org.newdawn.slick.TrueTypeFont;
-import org.newdawn.slick.opengl.TextureImpl;
-
 public class Font {
 	
 	/* The font */
-	public TrueTypeFont font;
+	public FontPC font;
 	
 	/* The bitmap font */
 	public BitmapText bitmapFont;
@@ -25,14 +20,14 @@ public class Font {
 	public Colour colour;
 	
 	/* The constructor with the font */
-	public Font(TrueTypeFont font) {
+	public Font(FontPC font) {
 		//Assign the variables
 		this.font = font;
 		this.colour = Colour.WHITE;
 	}
 	
 	/* The constructor with the font and colour given */
-	public Font(TrueTypeFont font, Colour colour) {
+	public Font(FontPC font, Colour colour) {
 		//Assign the variables
 		this.font = font;
 		this.colour = colour;
@@ -47,25 +42,21 @@ public class Font {
 	
 	/* The method used to render some text */
 	public void render(String text, float x, float y) {
-		GL11.glPushAttrib(GL11.GL_ENABLE_BIT);
-		//Enable 2D textures
-		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		//Check which font has been set
 		if (this.bitmapFont == null)
 			//Render the text
-			this.font.drawString(x, y, text, new Color(this.colour.r, this.colour.g, this.colour.b, this.colour.a));
+			this.font.render(text, x, y);
 		else {
+			//Bind the image
+			this.bitmapFont.image.bind();
+			//Set the position
+			this.bitmapFont.position = new Vector2D(x, y);
 			//Check the text
 			if (this.bitmapFont.getCurrentText() == null || ! this.bitmapFont.getCurrentText().equals(text))
 				this.bitmapFont.update(text);
-			//Set the position
-			this.bitmapFont.position = new Vector2D(x, y);
 			//Render the text
 			this.bitmapFont.render();
 		}
-		TextureImpl.unbind();
-		GL11.glDisable(GL11.GL_TEXTURE_2D);
-		GL11.glPopAttrib();
 	}
 	
 	public void renderAtCentre(String text, Object2D object) {

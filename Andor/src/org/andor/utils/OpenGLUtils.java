@@ -10,6 +10,7 @@ package org.andor.utils;
 
 import org.andor.core.Settings;
 import org.andor.core.android.AndroidDisplayRenderer;
+import org.andor.core.android.AndroidRenderer;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
 
@@ -68,7 +69,10 @@ public class OpenGLUtils {
 		//Check to see whether using Android mode
 		if (! Settings.AndroidMode)
 			GL11.glDisable(GL11.GL_TEXTURE_2D);
-		else GLES20.glDisable(GLES20.GL_TEXTURE_2D);
+		else {
+			AndroidRenderer.texture = null;
+			GLES20.glDisable(GLES20.GL_TEXTURE_2D);
+		}
 	}
 
 	/* The static method used to enable wireframe mode */

@@ -14,12 +14,17 @@ import org.andor.core.Image;
 import org.andor.core.Object2D;
 import org.andor.core.Object2DBuilder;
 import org.andor.core.RenderableObject2D;
+import org.andor.core.Settings;
 import org.andor.utils.FontUtils;
 import org.andor.utils.OpenGLUtils;
-import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
 
+import android.opengl.GLES20;
+
 public class GUIComponentRenderer {
+	
+	/* The default font */
+	public static Font defaultFont;
 	
 	/* The colours */
 	public Colour[] colours;
@@ -46,11 +51,17 @@ public class GUIComponentRenderer {
 	public GUIComponentRenderer(RenderableObject2D entity) {
 		//Assign the variables
 		this.entity = entity;
-		this.font = FontUtils.createFont("Arial", 12);
+		if (! Settings.AndroidMode && defaultFont == null)
+			this.font = FontUtils.createFont("Arial", 12);
+		else
+			this.font = defaultFont;
 		//Make sure the entity has been set
 		if (this.entity != null) {
 			//Setup the entity
-			this.entity.renderer.usage = GL15.GL_DYNAMIC_DRAW;
+			if (! Settings.AndroidMode)
+				this.entity.renderer.usage = GL15.GL_DYNAMIC_DRAW;
+			else
+				this.entity.renderer.usage = GLES20.GL_DYNAMIC_DRAW;
 			this.entity.renderer.setupBuffers();
 		}
 	}
@@ -66,9 +77,6 @@ public class GUIComponentRenderer {
 			this.entity.scale = object.getScale();
 			this.entity.width = object.width;
 			this.entity.height = object.height;
-			
-			//Save the current enabled features
-			GL11.glPushAttrib(GL11.GL_ENABLE_BIT);
 			
 			//Make sure the component is active
 			if (active || (! this.shouldUseInactiveImage()) || (!this.shouldUseInactiveColour())) {
@@ -86,7 +94,7 @@ public class GUIComponentRenderer {
 					//Update the colours (Assumes the GUI component is 4 - Sided)
 					this.entity.renderer.updateColours(Object2DBuilder.createColourArray(4, this.colours[this.componentIndex]));
 					//Disable textures
-					GL11.glDisable(GL11.GL_TEXTURE_2D);
+					OpenGLUtils.disableTexture2D();
 				}
 			} else {
 				//Check to see whether the inactive texture has been set
@@ -103,14 +111,11 @@ public class GUIComponentRenderer {
 					//Update the colour (Assumes the GUI component is 4 - Sided)
 					this.entity.renderer.updateColours(Object2DBuilder.createColourArray(4, this.inactiveColour));
 					//Disable textures
-					GL11.glDisable(GL11.GL_TEXTURE_2D);
+					OpenGLUtils.disableTexture2D();
 				}
 			}
 			//Render the entity
 			this.entity.render();
-			
-			//Revert the enabled features
-			GL11.glPopAttrib();
 		}
 	}
 	

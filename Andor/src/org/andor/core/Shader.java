@@ -132,7 +132,7 @@ public class Shader {
 	}
 	
 	/* The method used to get the location of a attribute variable */
-	public int getAtrrbuteLocation(String name) {
+	public int getAttributeLocation(String name) {
 		return GL20.glGetAttribLocation(this.program, name);
 	}
 	

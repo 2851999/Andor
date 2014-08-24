@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
+import org.andor.core.Settings;
+import org.andor.core.android.BaseActivity;
 import org.andor.core.logger.Log;
 import org.andor.core.logger.Logger;
 import org.andor.utils.ArrayUtils;
@@ -38,8 +40,12 @@ public class OBJLoader {
 				//Create the buffered reader
 				bufferedReader = new BufferedReader(fileReader);
 			} else {
-				//Create the buffered reader
-				bufferedReader = new BufferedReader(new InputStreamReader(FileUtils.class.getResourceAsStream(filePath)));
+				//Check to see whether Andor is currently running on Android
+				if (! Settings.AndroidMode)
+					//Create the buffered reader
+					bufferedReader = new BufferedReader(new InputStreamReader(FileUtils.class.getResourceAsStream(filePath)));
+				else
+					bufferedReader = new BufferedReader(new InputStreamReader(BaseActivity.instance.getAssets().open(filePath)));
 			}
 
 			//The current line
