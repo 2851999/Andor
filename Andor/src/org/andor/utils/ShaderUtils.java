@@ -16,16 +16,16 @@ public class ShaderUtils {
 	/* The Android shader code */
 	public static final String[] androidVertexShaderCode = new String[] {
 			"attribute vec4 andor_vertexPosition;",
-	    	"attribute vec4 andor_normal;",
-	    	"attribute vec2 andor_textureCoord;",
-		 	"attribute vec4 andor_colour;",
+	    	"attribute vec3 andor_normal;",
+	    	"attribute vec2 andor_vtextureCoord;",
+		 	"attribute vec4 andor_vcolour;",
 		 	"uniform mat4 andor_matrix;",
-		 	"varying vec4 andor_fcolour;",
-		    "varying vec2 andor_textureV;",
+		 	"varying vec4 andor_colour;",
+		    "varying vec2 andor_textureCoord;",
 		    "void andor_main();",
 		    "void main() {",
-		    "  andor_fcolour = andor_colour;",
-		    "  andor_textureV = andor_textureCoord;",
+		    "  andor_colour = andor_vcolour;",
+		    "  andor_textureCoord = andor_vtextureCoord;",
 		    "  gl_Position = andor_matrix * andor_vertexPosition;",
 		    "  andor_main();",
 		    "}" };
@@ -37,14 +37,14 @@ public class ShaderUtils {
 	public static final String[] androidFragmentShaderCode = new String[] {
 			"uniform sampler2D andor_texture;",
 			"uniform float andor_hasTexture;",
-		    "varying vec4 andor_fcolour;",
-		    "varying vec2 andor_textureV;",
+		    "varying vec4 andor_colour;",
+		    "varying vec2 andor_textureCoord;",
 		    "void andor_main();",
 		    "void main() {",
 		    "  if (andor_hasTexture > 0.5) {",
-		    "    gl_FragColor = andor_fcolour * texture2D(andor_texture, andor_textureV);",
+		    "    gl_FragColor = andor_colour * texture2D(andor_texture, andor_textureCoord);",
 		    "  } else {",
-		    "    gl_FragColor = andor_fcolour;",
+		    "    gl_FragColor = andor_colour;",
 		    "  }",
 		    "  andor_main();",
 		    "}" };
@@ -55,13 +55,18 @@ public class ShaderUtils {
 	
 	/* The Android shader code */
 	public static final String[] pcVertexShaderCode = new String[] {
+	    	"varying vec4 andor_colour;",
+	    	"attribute vec3 andor_normal;",
 		    "void andor_main();",
 		    "void main() {",
+		    "  andor_colour = gl_Color;",
+		    "  andor_normal = vec3(gl_Normal);",
 		    "  gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;",
 		    "  andor_main();",
 		    "}" };
 	
 	public static final String[] pcFragmentShaderCode = new String[] {
+	    	"varying vec4 andor_colour;",
 		    "void andor_main();",
 		    "void main() {",
 		    "  andor_main();",
@@ -99,9 +104,9 @@ public class ShaderUtils {
 				String[] source1 = ArrayUtils.toStringArray(shaderCode);
 				String[] shaderSourceArray = null;
 				if (shaderType == GL20.GL_VERTEX_SHADER)
-					shaderSourceArray = combine(source1, ShaderUtils.pcVertexShaderCode);
+					shaderSourceArray = combine(ShaderUtils.pcVertexShaderCode, source1);
 				else if (shaderType == GL20.GL_FRAGMENT_SHADER)
-					shaderSourceArray = combine(source1, ShaderUtils.pcFragmentShaderCode);
+					shaderSourceArray = combine(ShaderUtils.pcFragmentShaderCode, source1);
 				//The shader source
 				StringBuilder shaderSource = new StringBuilder();
 				//Look at all of the shader file text

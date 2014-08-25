@@ -141,13 +141,13 @@ public class AndroidRenderer extends Renderer {
 			GLES20.glVertexAttribPointer(normalAttribute, this.vertexValuesCount, GLES20.GL_FLOAT, false, 0, 0);
 		}
 		if (this.colourData != null) {
-			colourAttribute = androidShader.getAttributeLocation("andor_colour");
+			colourAttribute = androidShader.getAttributeLocation("andor_vcolour");
 			GLES20.glEnableVertexAttribArray(colourAttribute);
 			GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, this.coloursHandle);
 			GLES20.glVertexAttribPointer(colourAttribute, this.colourValuesCount, GLES20.GL_FLOAT, false, 0, 0);
 		}
 		if (this.textureData != null) {
-			texturesAttribute = androidShader.getAttributeLocation("andor_textureCoord");
+			texturesAttribute = androidShader.getAttributeLocation("andor_vtextureCoord");
 			GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, this.texturesHandle);
 			GLES20.glEnableVertexAttribArray(texturesAttribute);
 			GLES20.glVertexAttribPointer(texturesAttribute, this.textureValuesCount, GLES20.GL_FLOAT, false, 0, 0);
