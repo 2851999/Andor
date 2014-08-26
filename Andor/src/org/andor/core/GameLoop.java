@@ -47,7 +47,7 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 			//Create the input
 			InputManager.create();
 			//Create the audio
-			Audio.create();
+			AudioPC.create();
 		}
 		//Add this input listener
 		Input.addListener(this);
@@ -63,10 +63,10 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 	
 	/* The method used to start the game loop */
 	private void startGameLoop() {
-		//Call the start method
-		this.start();
 		//Make sure Andor isn't currently running on Android
 		if (! Settings.AndroidMode) {
+			//Call the start method
+			this.start();
 			//Keep going until the window closes
 			while (! Window.shouldClose() && ! this.closeRequested)
 				//Run a cycle of the loop
@@ -105,7 +105,7 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 			//Destroy the input
 			InputManager.destroy();
 			//Destroy the audio
-			Audio.destroy();
+			AudioPC.destroy();
 			//Close the window
 			Window.close();
 		}

@@ -16,11 +16,11 @@ public class Settings {
 	/* The static class containing all of the information about Andor */
 	public static class Information {
 		/* The version of Andor */
-		public static final String VERSION = "V0.0.2.2";
+		public static final String VERSION = "V0.0.2.3";
 		/* The build of Andor */
 		public static final String BUILD = "Development";
 		/* The date this build started development */
-		public static final String DATE = "24/08/2014";
+		public static final String DATE = "26/08/2014";
 	}
 	
 	/* The static class containing all of the settings required for the window */
@@ -52,6 +52,9 @@ public class Settings {
 		public static final int SCREEN_ORIENTATION_LANDSCAPE = 2;
 		/* The setting for the screen orientation */
 		public static int ScreenOrientation = SCREEN_ORIENTATION_PORTRAIT;
+		/* The setting that states whether sounds should be paused when
+		 * onPause() is called */
+		public static boolean PauseSoundsOnPause = true;
 	}
 	
 }

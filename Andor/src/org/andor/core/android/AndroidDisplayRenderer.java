@@ -38,6 +38,8 @@ public class AndroidDisplayRenderer implements GLSurfaceView.Renderer {
 		Settings.Window.Height = this.display.getHeight();
 		//Create the game
 		this.display.activity.game.create();
+		//Start the game
+		this.display.activity.game.start();
 	}
 	
 	/* The method called when this surface is changed */

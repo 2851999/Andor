@@ -1,4 +1,42 @@
 ------------------------------------------------------
+Release 2 | Beta 0 | Development 2 | Experimental 0
+
+* Added SystemInformation
+* Added AndroidSensor
+* Added AndroidInputListener
+* Added AndroidSensorListenerInterface
+* Added AndroidSensorListener
+* Added ActivityListener
+* Added AndroidAudio
+* Added AudioPC
+* Added AudioLoaderPC
+* Added AudioLoaderAndroid
+* Added a life time to a particle emitter
+
+------------------------------------------------------
+Release 2 | Beta 0 | Development 1 | Experimental 3
+
+* Added a life time to a particle emitter
+
+------------------------------------------------------
+Release 2 | Beta 0 | Development 1 | Experimental 2
+
+* Added ActivityListener
+* Added AndroidAudio
+* Added AudioPC
+* Added AudioLoaderPC
+* Added AudioLoaderAndroid
+
+------------------------------------------------------
+Release 2 | Beta 0 | Development 1 | Experimental 1
+
+* Added SystemInformation
+* Added AndroidSensor
+* Added AndroidInputListener
+* Added AndroidSensorListenerInterface
+* Added AndroidSensorListener
+
+------------------------------------------------------
 Release 2 | Beta 0 | Development 1 | Experimental 0
 
 * Added ImageLoaderPC
