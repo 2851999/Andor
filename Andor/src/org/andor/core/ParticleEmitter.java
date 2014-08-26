@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.andor.utils.Timer;
+
 public class ParticleEmitter extends RenderableObject3D {
 	
 	/* The amount of particles to produce each update */
@@ -47,6 +49,12 @@ public class ParticleEmitter extends RenderableObject3D {
 	/* The boolean that represents whether this should be run in 2D mode (Ignore the z coordinate) */
 	public boolean ignoreZ;
 	
+	/* The timer */
+	public Timer timer;
+	
+	/* The life time of this emitter */
+	public long emittingLifeTime;
+	
 	/* The constructor */
 	public ParticleEmitter() {
 		this(new Vector3D(), 20, new Vector3D(), 500, Colour.WHITE.clone(), null, 120);
@@ -69,10 +77,20 @@ public class ParticleEmitter extends RenderableObject3D {
 		this.renderer = Renderer.create(Renderer.POINTS, Renderer.VERTEX_VALUES_COUNT_3D);
 		this.renderer.setValues(new float[] { 0, 0, 0 }, new Colour(0.0f, 0.0f, 0.0f, 0.0f).getValuesRGBA());
 		this.renderer.setupBuffers();
+		this.emittingLifeTime = 0;
+		this.timer = new Timer();
+		this.timer.start();
 	}
 	
 	/* The method called to update this particle emitter */
 	public void update() {
+		//Make sure this doesn't go on for ever
+		if (this.emittingLifeTime != 0) {
+			//Check the timer
+			if (this.timer.hasTimePassed(emittingLifeTime))
+				//Stop emitting
+				this.emitting = false;
+		}
 		//Make sure this emitter is emitting
 		if (this.emitting) {
 			//Add as many particles as necessary
