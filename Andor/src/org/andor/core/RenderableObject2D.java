@@ -20,6 +20,9 @@ public class RenderableObject2D extends Object2D {
 	/* The renderer used to render this object */
 	public Renderer renderer;
 	
+	/* The clone of the previous matrix */
+	public float[] clone;
+	
 	/* The default constructor */
 	public RenderableObject2D() {
 		
@@ -81,6 +84,18 @@ public class RenderableObject2D extends Object2D {
 	
 	/* The method used to render this object */
 	public void render() {
+		//Update the view matrix
+		this.updateViewMatrix();
+		//Make sure the renderer has been initialised
+		if (this.renderer != null)
+			//Render the object using the renderer
+			this.renderer.render();
+		//Restore the view matrix
+		this.restoreViewMatrix();
+	}
+	
+	/* The method used to update the current view matrix */
+	public void updateViewMatrix() {
 		//Get the position
 		Vector2D p = this.getPosition();
 		//Get the rotation
@@ -103,15 +118,9 @@ public class RenderableObject2D extends Object2D {
 			
 			//Move to the correct position (For rendering)
 			GL11.glTranslatef(-this.width / 2, -this.height / 2, 0);
-			
-			//Render the object using the renderer
-			this.renderer.render();
-			
-			//Pop the current matrix
-			GL11.glPopMatrix();
 		} else {
 			//Save the current matrix
-			float[] clone = Arrays.copyOf(AndroidDisplayRenderer.mMVPMatrix, AndroidDisplayRenderer.mMVPMatrix.length);
+			clone = Arrays.copyOf(AndroidDisplayRenderer.mMVPMatrix, AndroidDisplayRenderer.mMVPMatrix.length);
 			//Move to the correct position
 			Matrix.translateM(AndroidDisplayRenderer.mMVPMatrix, 0, p.x + this.width / 2, p.y + this.height / 2, 0);
 			//Rotate by the specified amount
@@ -120,11 +129,18 @@ public class RenderableObject2D extends Object2D {
 			Matrix.scaleM(AndroidDisplayRenderer.mMVPMatrix, 0, s.x, s.y, 0);
 			//Move to the correct position (For rendering)
 			Matrix.translateM(AndroidDisplayRenderer.mMVPMatrix, 0, -this.width / 2, -this.height / 2, 0);
-			//Render the object using the renderer
-			this.renderer.render();
+		}
+	}
+	
+	/* The method used to restore the current view matrix */
+	public void restoreViewMatrix() {
+		//Check to see whether Andor is currently running on Android
+		if (! Settings.AndroidMode)
+			//Pop the current matrix
+			GL11.glPopMatrix();
+		else
 			//Restore the current matrix
 			AndroidDisplayRenderer.mMVPMatrix = clone;
-		}
 	}
 	
 	/* The method used to setup this object given the render mode

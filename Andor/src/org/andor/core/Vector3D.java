@@ -41,6 +41,22 @@ public class Vector3D {
 		this.z = vector.z;
 	}
 	
+	/* The constructor with a 2D vector given */
+	public Vector3D(Vector2D vector) {
+		//Assign the variables
+		this.x = vector.x;
+		this.y = vector.y;
+		this.z = 0;
+	}
+	
+	/* The constructor with a 2D vector and z value given */
+	public Vector3D(Vector2D vector, float z) {
+		//Assign the variables
+		this.x = vector.x;
+		this.y = vector.y;
+		this.z = z;
+	}
+	
 	/* The methods used to perform calculations given other vectors */
 	public void add(Vector3D vector) {
 		this.x += vector.x;

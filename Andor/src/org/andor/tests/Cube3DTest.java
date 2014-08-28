@@ -17,6 +17,7 @@ import org.andor.core.Colour;
 import org.andor.core.Font;
 import org.andor.core.Image;
 import org.andor.core.ImageLoader;
+import org.andor.core.ImageLoaderPC;
 import org.andor.core.ImageSet;
 import org.andor.core.Object3DBuilder;
 import org.andor.core.Particle;
@@ -162,6 +163,8 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		this.bitmapText = new BitmapText(ImageLoader.loadImage("C:/Andor/test2.png", true), 40, 16);
 		this.bitmapText.update("Hello World");
 		this.bitmapText.position = new Vector2D(100, 100);
+		
+		ImageLoaderPC.write(this.texture, "C:/Users/Joel/Desktop/test123.png", "PNG");
 	}
 	
 	/* The method called when the game loop has started */

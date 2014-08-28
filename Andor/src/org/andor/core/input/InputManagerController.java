@@ -19,7 +19,7 @@ import org.lwjgl.input.Controllers;
 public class InputManagerController {
 	
 	/* The controllers that are being monitored */
-	public static List<InputController> controllers;
+	public static List<InputController> controllers = new ArrayList<InputController>();;
 	
 	/* The static method used to create the controllers */
 	public static void create() {
@@ -27,8 +27,6 @@ public class InputManagerController {
 		try {
 			//Create the controllers
 			Controllers.create();
-			//Create the list of controllers
-			controllers = new ArrayList<InputController>();
 		} catch (LWJGLException e) {
 			//Log an error
 			Logger.log("InputManagerController create()" , "An error occurred when creating the Controllers" , Log.ERROR);
