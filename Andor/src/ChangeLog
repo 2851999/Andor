@@ -1,4 +1,34 @@
 ------------------------------------------------------
+Release 2 | Beta 0 | Development 2 | Experimental 2
+
+* Added Sprite2D
+* Added Matrix4D
+* Added Matrix
+
+* Found Bug: Higher resolutions make particle effects
+  harder to see (Particles are smaller)
+
+------------------------------------------------------
+Release 2 | Beta 0 | Development 2 | Experimental 1
+
+* Added PropertiesFile
+
+------------------------------------------------------
+Release 2 | Beta 0 | Development 2 | Experimental 0
+
+* Added SystemInformation
+* Added AndroidSensor
+* Added AndroidInputListener
+* Added AndroidSensorListenerInterface
+* Added AndroidSensorListener
+* Added ActivityListener
+* Added AndroidAudio
+* Added AudioPC
+* Added AudioLoaderPC
+* Added AudioLoaderAndroid
+* Added a life time to a particle emitter
+
+------------------------------------------------------
 Release 2 | Beta 0 | Development 1 | Experimental 3
 
 * Added a life time to a particle emitter

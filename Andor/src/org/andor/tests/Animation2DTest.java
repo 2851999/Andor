@@ -12,9 +12,9 @@ import org.andor.core.Animation2D;
 import org.andor.core.BaseGame;
 import org.andor.core.Font;
 import org.andor.core.Image;
-import org.andor.core.ImageEntity2D;
 import org.andor.core.ImageLoader;
 import org.andor.core.Settings;
+import org.andor.core.Sprite2D;
 import org.andor.core.Vector2D;
 import org.andor.core.Window;
 import org.andor.core.input.Keyboard;
@@ -25,7 +25,7 @@ import org.andor.utils.OpenGLUtils;
 
 public class Animation2DTest extends BaseGame {
 	
-	public Animation2D animation;
+	public Sprite2D animation;
 	
 	/* The font */
 	public Font font;
@@ -41,13 +41,12 @@ public class Animation2DTest extends BaseGame {
 	/* The method called when the loop has been created */
 	public void create() {
 		this.font = FontUtils.createFont("Arial", 12);
-		Image image = ImageLoader.loadImage("C:/Andor/Grass.png", true);
-		ImageEntity2D entity = new ImageEntity2D(image);
-		entity.position = new Vector2D(100, 100);
-		this.animation = new Animation2D(entity, new Image[] {
-				ImageLoader.loadImage("C:/Andor/Grass.png", true), ImageLoader.loadImage("C:/Andor/Dirt.png", true)
-		}, 1000);
-		this.animation.start();
+		Image grass = ImageLoader.loadImage("C:/Andor/Grass.png", true);
+		Image dirt = ImageLoader.loadImage("C:/Andor/Dirt.png", true);
+		this.animation = new Sprite2D(grass);
+		this.animation.position = new Vector2D(100, 100);
+		this.animation.add(new Animation2D(this.animation, new Image[] { grass, dirt }, 1000), "Animation", 1);
+		this.animation.start(1);
 	}
 	
 	/* The method called when the game loop has started */
@@ -69,7 +68,7 @@ public class Animation2DTest extends BaseGame {
 		OpenGLUtils.setupOrtho(-1, 1);
 		OpenGLUtils.disableTexture2D();
 		
-		this.animation.entity.render();
+		this.animation.render();
 		
 		OpenGLUtils.enableTexture2D();
 		

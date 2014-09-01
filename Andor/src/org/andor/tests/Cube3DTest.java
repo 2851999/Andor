@@ -48,6 +48,7 @@ import org.andor.utils.ControllerUtils;
 import org.andor.utils.FontUtils;
 import org.andor.utils.OpenGLUtils;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL20;
 
 public class Cube3DTest extends BaseGame implements ControlInputListener {
 	
@@ -169,7 +170,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 	
 	/* The method called when the game loop has started */
 	public void start() {
-		this.audio.play();
+		//this.audio.play();
 	}
 	
 	/* The method called when the game loop is updated */
@@ -198,7 +199,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		
 		this.particleEmitter.update();
 		
-		Vector3D change = new Vector3D(0, 0.1f, 0);
+		Vector3D change = new Vector3D(0, 0.06f, 0);
 		change.multiply(getDelta());
 		this.model.rotation.add(change);
 	}
@@ -219,6 +220,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		
 		OpenGLUtils.disableTexture2D();
 		test.use();
+		GL20.glUniform3f(this.test.getUniformLocation("camPos"), camera.rotation.x, camera.rotation.y, camera.rotation.z);
 		this.model.render();
 		test.stopUsing();
 		
@@ -289,6 +291,10 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		else if (e.getCode() == Keyboard.KEY_F11_CODE) {
 			Settings.Window.Fullscreen = ! Settings.Window.Fullscreen;
 			Window.updateDisplaySettings();
+		} else if (e.getCode() == Keyboard.KEY_F1_CODE) {
+			test = new Shader();
+			test.load("C:/Andor/light", true);
+			test.create();
 		}
 	}
 	
