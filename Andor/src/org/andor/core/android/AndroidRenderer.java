@@ -129,7 +129,7 @@ public class AndroidRenderer extends Renderer {
 		int normalAttribute = 0;
 		int colourAttribute = 0;
 		int texturesAttribute = 0;
-		int matrixAttribute = androidShader.getUniformLocation("andor_matrix");
+		int matrixAttribute = androidShader.getUniformLocation("andor_modelviewprojectionmatrix");
 		GLES20.glUniformMatrix4fv(matrixAttribute, 1, false, AndroidDisplayRenderer.mMVPMatrix, 0);
 		GLES20.glEnableVertexAttribArray(vertexPositionAttribute);
 		GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, this.verticesHandle);

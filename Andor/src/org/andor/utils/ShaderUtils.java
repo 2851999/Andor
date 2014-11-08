@@ -19,7 +19,7 @@ public class ShaderUtils {
 	    	"attribute vec3 andor_normal;",
 	    	"attribute vec2 andor_vtextureCoord;",
 		 	"attribute vec4 andor_vcolour;",
-		 	"uniform mat4 andor_matrix;",
+		 	"uniform mat4 andor_modelviewprojectionmatrix;",
 		 	"varying vec4 andor_colour;",
 		    "varying vec2 andor_textureCoord;",
 		    "void andor_main();",
@@ -53,24 +53,49 @@ public class ShaderUtils {
 		"void andor_main() {","}"
 	};
 	
-	/* The Android shader code */
+	/* The pc shader code */
 	public static final String[] pcVertexShaderCode = new String[] {
-	    	"varying vec4 andor_colour;",
-	    	"attribute vec3 andor_normal;",
-		    "void andor_main();",
-		    "void main() {",
-		    "  andor_colour = gl_Color;",
-		    "  andor_normal = vec3(gl_Normal);",
-		    "  gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;",
-		    "  andor_main();",
-		    "}" };
+		"attribute vec4 andor_vertexPosition;",
+    	"attribute vec3 andor_normal;",
+    	"attribute vec2 andor_vtextureCoord;",
+	 	"attribute vec4 andor_vcolour;",
+	 	"uniform mat4 andor_modelmatrix;",
+	 	"uniform mat4 andor_viewmatrix;",
+	 	"uniform mat4 andor_projectionmatrix;",
+	 	"uniform mat4 andor_modelviewprojectionmatrix;",
+	 	"varying vec4 andor_colour;",
+	    "varying vec2 andor_textureCoord;",
+	    "void andor_main();",
+	    "void main() {",
+	    "  andor_colour = andor_vcolour;",
+	    "  andor_textureCoord = andor_vtextureCoord;",
+	   // "  andor_modelviewprojectionmatrix = andor_modelmatrix * andor_viewmatrix * andor_projectionmatrix;",
+	    "  gl_Position = transpose(andor_modelviewprojectionmatrix) * andor_vertexPosition;",
+	    "  andor_main();",
+	    "}" };
 	
 	public static final String[] pcFragmentShaderCode = new String[] {
-	    	"varying vec4 andor_colour;",
-		    "void andor_main();",
-		    "void main() {",
-		    "  andor_main();",
-		    "}" };
+		"uniform sampler2D andor_texture;",
+		"uniform float andor_hasTexture;",
+	    "varying vec4 andor_colour;",
+	    "varying vec2 andor_textureCoord;",
+	    "void andor_main();",
+	    "void main() {",
+	    "  if (andor_hasTexture > 0.5) {",
+	    "    gl_FragColor = andor_colour * texture2D(andor_texture, andor_textureCoord);",
+	    "  } else {",
+	    "    gl_FragColor = andor_colour;",
+	    "  }",
+	    "  andor_main();",
+	    "}" };
+	
+	public static final String[] pcVertexAndorMain = new String[] {
+		"void andor_main() {","}"
+	};
+	
+	public static final String[] pcFragmentAndorMain = new String[] {
+		"void andor_main() {","}"
+	};
 	
 	/* The static method to create a shader from a file */
 	public static int createShader(String path, boolean external, int shaderType) {

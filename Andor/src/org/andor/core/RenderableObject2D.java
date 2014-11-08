@@ -10,11 +10,6 @@ package org.andor.core;
 
 import java.util.Arrays;
 
-import org.andor.core.android.AndroidDisplayRenderer;
-import org.lwjgl.opengl.GL11;
-
-import android.opengl.Matrix;
-
 public class RenderableObject2D extends Object2D {
 	
 	/* The renderer used to render this object */
@@ -102,45 +97,22 @@ public class RenderableObject2D extends Object2D {
 		float r = this.getRotation();
 		//Get the scale
 		Vector2D s = this.getScale();
-		//Check to see whether Andor is currently running on Android
-		if (! Settings.AndroidMode) {
-			//Push the current matrix
-			GL11.glPushMatrix();
-			
-			//Move to the correct position (For rotating)
-			GL11.glTranslatef(p.x + this.width / 2, p.y + this.height / 2, 0);
-			
-			//Rotate by the specified amount
-			GL11.glRotatef(r, 0, 0, 1);
-			
-			//Scale the object
-			GL11.glScalef(s.x, s.y, 1);
-			
-			//Move to the correct position (For rendering)
-			GL11.glTranslatef(-this.width / 2, -this.height / 2, 0);
-		} else {
-			//Save the current matrix
-			clone = Arrays.copyOf(AndroidDisplayRenderer.mMVPMatrix, AndroidDisplayRenderer.mMVPMatrix.length);
-			//Move to the correct position
-			Matrix.translateM(AndroidDisplayRenderer.mMVPMatrix, 0, p.x + this.width / 2, p.y + this.height / 2, 0);
-			//Rotate by the specified amount
-			Matrix.rotateM(AndroidDisplayRenderer.mMVPMatrix, 0, r, 0, 0, 1);
-			//Scale by the specified amount
-			Matrix.scaleM(AndroidDisplayRenderer.mMVPMatrix, 0, s.x, s.y, 0);
-			//Move to the correct position (For rendering)
-			Matrix.translateM(AndroidDisplayRenderer.mMVPMatrix, 0, -this.width / 2, -this.height / 2, 0);
-		}
+		//Save the current matrix
+		clone = Arrays.copyOf(Matrix.modelMatrix.getValues(), 16);
+		//Move to the correct position
+		Matrix.modelMatrix = Matrix.translate(Matrix.modelMatrix, new Vector3D(p.x + this.width / 2, p.y + this.height / 2, 0));
+		//Rotate by the specified amount
+		Matrix.modelMatrix = Matrix.rotate(Matrix.modelMatrix, r, 0, 0, 1);
+		//Scale by the specified amount
+		Matrix.modelMatrix = Matrix.scale(Matrix.modelMatrix, new Vector3D(s.x, s.y, 0));
+		//Move to the correct position (For rendering)
+		Matrix.modelMatrix = Matrix.translate(Matrix.modelMatrix, new Vector3D(-this.width / 2, -this.height / 2, 0));
 	}
 	
 	/* The method used to restore the current view matrix */
 	public void restoreViewMatrix() {
-		//Check to see whether Andor is currently running on Android
-		if (! Settings.AndroidMode)
-			//Pop the current matrix
-			GL11.glPopMatrix();
-		else
-			//Restore the current matrix
-			AndroidDisplayRenderer.mMVPMatrix = clone;
+		//Restore the current matrix
+		Matrix.modelMatrix.values = clone;
 	}
 	
 	/* The method used to setup this object given the render mode

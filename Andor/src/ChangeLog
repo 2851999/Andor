@@ -1,4 +1,11 @@
 ------------------------------------------------------
+Release 2 | Beta 0 | Development 2 | Experimental 3
+
+First of a series of fixes aimed to fix up the
+mess causes over the past two months when trying
+to switch to custom matrices classes
+
+------------------------------------------------------
 Release 2 | Beta 0 | Development 2 | Experimental 2
 
 * Added Sprite2D

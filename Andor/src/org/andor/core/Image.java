@@ -146,10 +146,11 @@ public class Image {
 	/* The method used to bind this image ready for OpenGL rendering */
 	public void bind() {
 		//Check to see whether Andor is currently running on Android
-		if (! Settings.AndroidMode)
+		if (! Settings.AndroidMode) {
 			//Bind the texture
+			Renderer.texture = this;
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.textureId);
-		else {
+		} else {
 			AndroidRenderer.texture = this;
 			GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, this.textureId);
 		}

@@ -48,7 +48,6 @@ import org.andor.utils.ControllerUtils;
 import org.andor.utils.FontUtils;
 import org.andor.utils.OpenGLUtils;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL20;
 
 public class Cube3DTest extends BaseGame implements ControlInputListener {
 	
@@ -212,17 +211,16 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		OpenGLUtils.clearDepthBuffer();
 		OpenGLUtils.setupRemoveAlpha();
 		
-		OpenGLUtils.setupPerspective(70f, 0.1f, 1000f);
+		OpenGLUtils.setupPerspective(70f, 1f, 1000f);
 		OpenGLUtils.enableDepthTest();
 		
 		//Use the camera's view on the world
 		this.camera.useView();
 		
 		OpenGLUtils.disableTexture2D();
-		test.use();
-		GL20.glUniform3f(this.test.getUniformLocation("camPos"), camera.rotation.x, camera.rotation.y, camera.rotation.z);
+		//test.use();
 		this.model.render();
-		test.stopUsing();
+		//test.stopUsing();
 		
 		OpenGLUtils.enableTexture2D();
 		
