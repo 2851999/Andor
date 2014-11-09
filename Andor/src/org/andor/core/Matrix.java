@@ -100,10 +100,10 @@ public class Matrix {
 		//The new values
 		float[][] newValues = new float[4][4];
 		//Go through the array
-		for (int y = 0; y < values.length; y++) {
-			for (int x = 0; x < values[y].length; x++) {
+		for (int x = 0; x < 4; x++) {
+			for (int y = 0; y < 4; y++) {
 				//Assign the new value
-				newValues[x][y] = values[y][x];
+				newValues[y][x] = values[x][y];
 			}
 		}
 		//Return the matrix
@@ -171,87 +171,39 @@ public class Matrix {
 	}
 	
 	/* The static method used to return an orthographic projection matrix */
-	public static Matrix4D ortho(float left, float right, float bottom, float top, float zfar, float znear) {
-//		Matrix4D mat = new Matrix4D();
-//		mat.values[0] = 2 / (right - left);
-//		mat.values[5] = 2 / (top - bottom);
-//		mat.values[10] = - 2 / (zfar - znear);
-//		mat.values[12] = - (right + left) / (right - left);
-//		mat.values[13] = -(top + bottom) / (top - bottom);
-//		mat.values[14] = -(zfar + znear) / (zfar - znear);
-//		return mat;
-//		return new Matrix4D(new float[][] {
-//				new float[] { 2 / (right - left), 0, 0, -((right + left) / (right - left)) },
-//				new float[] { 0, 2 / (top - bottom), 0, -((top + bottom) / (top - bottom)) },
-//				new float[] { 0, 0, -2 / (zfar - znear), -((zfar + znear) / (zfar - znear)) },
-//				new float[] { 0, 0, 0, 1 },
-//		});
-//		Matrix4D m = new Matrix4D();
-//        final float r_width  = 1.0f / (right - left);
-//        final float r_height = 1.0f / (top - bottom);
-//        final float r_depth  = 1.0f / (zfar - znear);
-//        final float x =  2.0f * (r_width);
-//        final float y =  2.0f * (r_height);
-//        final float z = -2.0f * (r_depth);
-//        final float tx = -(right + left) * r_width;
-//        final float ty = -(top + bottom) * r_height;
-//        final float tz = -(zfar + znear) * r_depth;
-//        m.values[0] = x;
-//        m.values[5] = y;
-//        m.values[10] = z;
-//        m.values[12] = tx;
-//        m.values[13] = ty;
-//        m.values[14] = tz;
-//        m.values[15] = 1.0f;
-//        m.values[1] = 0.0f;
-//        m.values[2] = 0.0f;
-//        m.values[3] = 0.0f;
-//        m.values[4] = 0.0f;
-//        m.values[6] = 0.0f;
-//        m.values[7] = 0.0f;
-//        m.values[8] = 0.0f;
-//        m.values[9] = 0.0f;
-//        m.values[11] = 0.0f;
-//        return m;
-		float x_max = (float) ((right - left) - 1.0);
-		float y_max = (float) ((bottom - top) - 1.0);
+	public static Matrix4D ortho(float left, float right, float bottom, float top, float zFar, float zNear) {
+		//Calculate the width and height
+		float width = (float) ((right - left));
+		float height = (float) ((bottom - top));
 		return new Matrix4D(new float[][] {
-			new float[] { 2 / x_max, 0, 0, -1 },
-			new float[] { 0, -2 / y_max, 0, 1 },
-			new float[] { 0, 0, 2 / (zfar - znear), (znear + zfar) / (znear - zfar) },
-			new float[] { 0, 0, 0, 1 },
+				new float[] { 2 / width, 0, 0, -1 },
+				new float[] { 0, -2 / height, 0, 1 },
+				new float[] { 0, 0, 2 / (zFar - zNear), (zNear + zFar) / (zNear - zFar) },
+				new float[] { 0, 0, 0, 1 },
 		});
 	}
 	
 	/* The static method used to return a perspective projection matrix */
 	public static Matrix4D perspective(float fov, float aspect, float zNear, float zFar) {
-		//Calculate the values that need to be calculated the most frequently
-		float f = 1.0f / (float) Math.tan(fov / 2 * (Math.PI / 360.0));
-		float rangeReciprocal = 1.0f / (zNear - zFar);
-		
-		Matrix4D matrix = new Matrix4D();
-		
-		//Set the matrix values
-		matrix.values[0] = f / aspect;
-		matrix.values[1] = 0.0f;
-		matrix.values[2] = 0.0f;
-		matrix.values[3] = 0.0f;
-		
-		matrix.values[4] = 0.0f;
-		matrix.values[5] = f;
-		matrix.values[6] = 0.0f;
-		matrix.values[7] = 0.0f;
-		
-		matrix.values[8] = 0.0f;
-		matrix.values[9] = 0.0f;
-		matrix.values[10] = (zFar + zNear) * rangeReciprocal;
-		matrix.values[11] = -1.0f;
-		
-		matrix.values[12] = 0.0f;
-		matrix.values[13] = 0.0f;
-		matrix.values[14] = 2.0f * zFar * zNear * rangeReciprocal;
-		matrix.values[15] = 1.0f;
-		return matrix;
+		//Calculate the scale
+		float scale = (float) (Math.tan(fov / 2 * (Math.PI / 360)));
+		//Calaulate the right, left, top and bottom values
+		float right = aspect * scale;
+		float left = -right;
+		float top = scale;
+		float bottom = -top;
+		//Return the result
+		return frustum(left, right, bottom, top, zNear, zFar);
+	}
+	
+	/* The static method used to return a frustum projection matrix */
+	public static Matrix4D frustum(float left, float right, float bottom, float top, float zNear, float zFar) {
+		return new Matrix4D(new float[][] {
+				new float[] { 2 * zNear / (right - left), 0, 0, 0 },
+				new float[] { 0, 2 * zNear / (top - bottom), 0, 0 },
+				new float[] { (right + left) / (right - left), (top + bottom) / (top - bottom), -(zFar + zNear) / (zFar - zNear), -1 },
+				new float[] { 0, 0, -2 * zFar * zNear / (zFar - zNear), 0 },
+		});
 	}
 	
 }

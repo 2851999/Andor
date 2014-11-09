@@ -40,7 +40,7 @@ public class Animation2DTest extends BaseGame {
 	
 	/* The method called when the loop has been created */
 	public void create() {
-		this.font = FontUtils.createFont("Arial", 12);
+		this.font = FontUtils.loadBitmapFont("C:/Andor/test2.png", true, 16, 12);
 		Image grass = ImageLoader.loadImage("C:/Andor/Grass.png", true);
 		Image dirt = ImageLoader.loadImage("C:/Andor/Dirt.png", true);
 		this.animation = new Sprite2D(grass);

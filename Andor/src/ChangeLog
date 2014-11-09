@@ -1,11 +1,24 @@
 ------------------------------------------------------
 Release 2 | Beta 0 | Development 2 | Experimental 3
 
+* Removed FontPC
+* NOTE: Can now only use BitmapFonts, a default font
+  will automatically be setup for GUI but on android
+  this should be set manually
+  (Settings.Engine.DefaultFont)
+
+Fix 3
+
+- Fixed rendering on Android
+
+------------------------------------------------------
+Release 2 | Beta 0 | Development 2 | Experimental 3
+
 Fix 2
 
 - Fixed colours when using 3D rendering
 - Fixed positions being out by 1
-* Fixed 2D rendering
+- Fixed 2D rendering
 
 ------------------------------------------------------
 Release 2 | Beta 0 | Development 2 | Experimental 3

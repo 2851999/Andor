@@ -63,21 +63,13 @@ public class Matrix4D {
 	
 	/* The method used to get the values in a 2D array */
 	public float[][] getValues2DArray() {
-		//The array
-		float[][] array = new float[4][4];
-		//Go through each value
-		int column = 0;
-		int row = 0;
-		while (column * row < array.length) {
-			row ++;
-			if (row >= 4) {
-				column++;
-				row = 0;
-			}
-			array[column][row] = this.values[column * row];
-		}
 		//Return the array
-		return array;
+		return new float[][] {
+				new float[] { this.values[0], this.values[1], this.values[2], this.values[3] },
+				new float[] { this.values[4], this.values[5], this.values[6], this.values[7] },
+				new float[] { this.values[8], this.values[9], this.values[10], this.values[11] },
+				new float[] { this.values[12], this.values[13], this.values[14], this.values[15] }
+		};
 	}
 	
 }

@@ -92,7 +92,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		this.camera = new Camera3D();
 		this.camera.flying = true;
 		//Load the font
-		this.font = FontUtils.createFont("Arial", 12);
+		this.font = FontUtils.loadBitmapFont("C:/Andor/test2.png", true, 16, 12);
 		//Load the texture and bind it
 		String path = "C:/Andor/";
 		//Create a skybox
@@ -167,7 +167,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 	
 	/* The method called when the game loop has started */
 	public void start() {
-		//this.audio.play();
+		this.audio.play();
 	}
 	
 	/* The method called when the game loop is updated */

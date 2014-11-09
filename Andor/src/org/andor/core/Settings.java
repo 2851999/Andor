@@ -57,4 +57,10 @@ public class Settings {
 		public static boolean PauseSoundsOnPause = true;
 	}
 	
+	/* The static class containing all of the Engine settings */
+	public static class Engine {
+		/* The default font that will be used (Initialised in the GameLoop class) */
+		public static Font DefaultFont;
+	}
+	
 }

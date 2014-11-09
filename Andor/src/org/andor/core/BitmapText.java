@@ -37,7 +37,7 @@ public class BitmapText extends RenderableObject2D {
 	public String currentText;
 	
 	/* The constructor of the font */
-	public BitmapText(Image image , float fontSize, int gridSize) {
+	public BitmapText(Image image, int gridSize, float fontSize) {
 		//Load the font image
 		this.image = image;
 		//Set the grid size

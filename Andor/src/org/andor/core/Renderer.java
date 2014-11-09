@@ -181,17 +181,15 @@ public class Renderer {
 	
 	/* The method used to draw the object */
 	public void render() {
-		//Multiply the matrices together
+		//Multiply the matrices together to get the final model view projection matrix
 		Matrix4D projectionViewMatrix = Matrix.multiplyMatrices(Matrix.projectionMatrix, Matrix.viewMatrix);
-		Matrix.modelViewProjectionMatrix = (Matrix.multiplyMatrices(projectionViewMatrix, Matrix.modelMatrix));
-		System.out.println("\n" + Matrix.modelViewProjectionMatrix.toString());
-		//Set the correct android shader
+		Matrix.modelViewProjectionMatrix = Matrix.transpose((Matrix.multiplyMatrices(projectionViewMatrix, Matrix.modelMatrix)));
+		//Set the correct shader
 		Shader shader = defaultShader;
 		if (currentShader != null)
 			shader = currentShader;
 		//Use the shader program
 		GL20.glUseProgram(shader.program);
-		//Enable the arrays as needed
 		int vertexPositionAttribute = shader.getAttributeLocation("andor_vertexPosition");
 		int normalAttribute = 0;
 		int colourAttribute = 0;
@@ -207,6 +205,7 @@ public class Renderer {
 		GL20.glEnableVertexAttribArray(vertexPositionAttribute);
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.verticesHandle);
 		GL20.glVertexAttribPointer(vertexPositionAttribute, this.vertexValuesCount, GL11.GL_FLOAT, false, 0, 0);
+		//Enable the arrays as needed
 		if (this.normalsData != null) {
 			normalAttribute = shader.getAttributeLocation("andor_normal");
 			GL20.glEnableVertexAttribArray(normalAttribute);
