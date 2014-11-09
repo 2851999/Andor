@@ -14,10 +14,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.andor.core.android.AndroidRenderer;
+import org.andor.core.android.AndroidShader;
 import org.andor.core.logger.Logger;
+import org.andor.utils.ArrayUtils;
 import org.andor.utils.BufferUtils;
+import org.andor.utils.ShaderUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
+import org.lwjgl.opengl.GL20;
 
 import android.opengl.GLES20;
 import android.util.Log;
@@ -72,6 +76,15 @@ public class Renderer {
 	/* The render mode */
 	public int renderMode;
 	
+	/* The active texture */
+	public static Image texture;
+	
+	/* The default shader */
+	public static Shader defaultShader;
+	
+	/* The current shader */
+	public static Shader currentShader;
+	
 	/* The constructor with the render mode and the 
 	 * number of vertex values given */
 	public Renderer(int renderMode, int vertexValuesCount) {
@@ -81,8 +94,24 @@ public class Renderer {
 		//Add this renderer to the list
 		allRenderers.add(this);
 		//Make sure Andor isn't currently running on Android
-		if (! Settings.AndroidMode)
+		if (! Settings.AndroidMode) {
 			usage = GL15.GL_STATIC_DRAW;
+			//Setup the shader
+			if (defaultShader == null) {
+				defaultShader = new Shader();
+				defaultShader.vertexShader = ShaderUtils.createShader(ArrayUtils.toStringList(ShaderUtils.pcVertexAndorMain), Shader.VERTEX_SHADER);
+				defaultShader.fragmentShader = ShaderUtils.createShader(ArrayUtils.toStringList(ShaderUtils.pcFragmentAndorMain), Shader.FRAGMENT_SHADER);
+				defaultShader.create();
+			}
+		} else {
+			//Setup the shader
+			if (defaultShader == null) {
+				defaultShader = new AndroidShader();
+				defaultShader.vertexShader = ShaderUtils.createShader(ArrayUtils.toStringList(ShaderUtils.androidVertexAndorMain), Shader.VERTEX_SHADER);
+				defaultShader.fragmentShader = ShaderUtils.createShader(ArrayUtils.toStringList(ShaderUtils.androidFragmentAndorMain), Shader.FRAGMENT_SHADER);
+				defaultShader.create();
+			}
+		}
 	}
 	
 	/* The method used to setup the buffers,
@@ -152,30 +181,56 @@ public class Renderer {
 	
 	/* The method used to draw the object */
 	public void render() {
-		//Enable the arrays as needed
-		GL11.glEnableClientState(GL11.GL_VERTEX_ARRAY);
+		//Multiply the matrices together to get the final model view projection matrix
+		Matrix4D projectionViewMatrix = Matrix.multiplyMatrices(Matrix.projectionMatrix, Matrix.viewMatrix);
+		Matrix.modelViewProjectionMatrix = Matrix.transpose((Matrix.multiplyMatrices(projectionViewMatrix, Matrix.modelMatrix)));
+		//Set the correct shader
+		Shader shader = defaultShader;
+		if (currentShader != null)
+			shader = currentShader;
+		//Use the shader program
+		GL20.glUseProgram(shader.program);
+		int vertexPositionAttribute = shader.getAttributeLocation("andor_vertexPosition");
+		int normalAttribute = 0;
+		int colourAttribute = 0;
+		int texturesAttribute = 0;
+		int modelMatrixAttribute = shader.getUniformLocation("andor_modelmatrix");
+		int viewMatrixAttribute = shader.getUniformLocation("andor_viewmatrix");
+		int projectionMatrixAttribute = shader.getUniformLocation("andor_projectionmatrix");
+		int matrixAttribute = shader.getUniformLocation("andor_modelviewprojectionmatrix");
+		GL20.glUniformMatrix4(modelMatrixAttribute, false, BufferUtils.createFlippedBuffer(Matrix.modelMatrix.getValues()));
+		GL20.glUniformMatrix4(viewMatrixAttribute, false, BufferUtils.createFlippedBuffer(Matrix.viewMatrix.getValues()));
+		GL20.glUniformMatrix4(projectionMatrixAttribute, false, BufferUtils.createFlippedBuffer(Matrix.projectionMatrix.getValues()));
+		GL20.glUniformMatrix4(matrixAttribute, false, BufferUtils.createFlippedBuffer(Matrix.modelViewProjectionMatrix.getValues()));
+		GL20.glEnableVertexAttribArray(vertexPositionAttribute);
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.verticesHandle);
-		GL11.glVertexPointer(this.vertexValuesCount, GL11.GL_FLOAT, 0, 0L);
-		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
+		GL20.glVertexAttribPointer(vertexPositionAttribute, this.vertexValuesCount, GL11.GL_FLOAT, false, 0, 0);
+		//Enable the arrays as needed
 		if (this.normalsData != null) {
-			GL11.glEnableClientState(GL11.GL_NORMAL_ARRAY);
+			normalAttribute = shader.getAttributeLocation("andor_normal");
+			GL20.glEnableVertexAttribArray(normalAttribute);
 			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.normalsHandle);
-			GL11.glNormalPointer(GL11.GL_FLOAT, 0, 0L);
-			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
+			GL20.glVertexAttribPointer(normalAttribute, this.vertexValuesCount, GL11.GL_FLOAT, false, 0, 0);
 		}
 		if (this.colourData != null) {
-			GL11.glEnableClientState(GL11.GL_COLOR_ARRAY);
+			colourAttribute = shader.getAttributeLocation("andor_vcolour");
+			GL20.glEnableVertexAttribArray(colourAttribute);
 			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.coloursHandle);
-			GL11.glColorPointer(this.colourValuesCount, GL11.GL_FLOAT, 0, 0L);
-			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
+			GL20.glVertexAttribPointer(colourAttribute, this.colourValuesCount, GL11.GL_FLOAT, false, 0, 0);
 		}
 		if (this.textureData != null) {
-			GL11.glEnableClientState(GL11.GL_TEXTURE_COORD_ARRAY);
+			texturesAttribute = shader.getAttributeLocation("andor_vtextureCoord");
 			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.texturesHandle);
-			GL11.glTexCoordPointer(this.textureValuesCount, GL11.GL_FLOAT, 0, 0L);
-			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
+			GL20.glEnableVertexAttribArray(texturesAttribute);
+			GL20.glVertexAttribPointer(texturesAttribute, this.textureValuesCount, GL11.GL_FLOAT, false, 0, 0);
+			GL20.glUniform1i(shader.getUniformLocation("andor_texture"), 0);
+			if (texture != null)
+				GL20.glUniform1f(shader.getUniformLocation("andor_hasTexture"), 1f);
+			else
+				GL20.glUniform1f(shader.getUniformLocation("andor_hasTexture"), 0f);
+		} else {
+			GL20.glUniform1f(shader.getUniformLocation("andor_hasTexture"), 0f);
 		}
-		//Check to see whether the draw order has been set
 		if (this.drawOrder != null) {
 			GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, this.drawOrderHandle);
 			GL11.glDrawElements(this.renderMode, this.drawOrder.length, GL11.GL_UNSIGNED_SHORT, 0);
@@ -186,12 +241,14 @@ public class Renderer {
 		}
 		//Disable the arrays as needed
 		if (this.normalsData != null)
-			GL11.glDisableClientState(GL11.GL_NORMAL_ARRAY);
+			GL20.glDisableVertexAttribArray(normalAttribute);
 		if (this.textureData != null)
-			GL11.glDisableClientState(GL11.GL_TEXTURE_COORD_ARRAY);
+			GL20.glDisableVertexAttribArray(texturesAttribute);
 		if (this.colourData != null)
-			GL11.glDisableClientState(GL11.GL_COLOR_ARRAY);
-		GL11.glDisableClientState(GL11.GL_VERTEX_ARRAY);
+			GL20.glDisableVertexAttribArray(colourAttribute);
+		GL20.glDisableVertexAttribArray(vertexPositionAttribute);
+		//Stop using the shader program
+		GL20.glUseProgram(0);
 	}
 	
 	/* The method used to update the vertices */

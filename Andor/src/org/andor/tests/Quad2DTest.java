@@ -47,7 +47,7 @@ public class Quad2DTest extends BaseGame {
 		image = ImageLoader.loadImage("C:/Andor/Grass_Side.png", true);
 		this.quad = Object2DBuilder.createQuad(image, 100, 100, new Colour[] { Colour.LIGHT_BLUE, Colour.LIGHT_GREY, Colour.ORANGE, Colour.WHITE });
 		this.quad.position = new Vector2D(100, 100);
-		this.font = FontUtils.createFont("Arial", 12);
+		this.font = FontUtils.loadBitmapFont("C:/Andor/test2.png", true, 16, 12);
 	}
 	
 	/* The method called when the game loop has started */

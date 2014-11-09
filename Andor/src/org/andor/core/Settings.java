@@ -16,11 +16,11 @@ public class Settings {
 	/* The static class containing all of the information about Andor */
 	public static class Information {
 		/* The version of Andor */
-		public static final String VERSION = "V0.0.2.3";
+		public static final String VERSION = "V0.0.2.4";
 		/* The build of Andor */
-		public static final String BUILD = "Development";
+		public static final String BUILD = "Beta";
 		/* The date this build started development */
-		public static final String DATE = "26/08/2014";
+		public static final String DATE = "09/11/2014";
 	}
 	
 	/* The static class containing all of the settings required for the window */
@@ -55,6 +55,12 @@ public class Settings {
 		/* The setting that states whether sounds should be paused when
 		 * onPause() is called */
 		public static boolean PauseSoundsOnPause = true;
+	}
+	
+	/* The static class containing all of the Engine settings */
+	public static class Engine {
+		/* The default font that will be used (Initialised in the GameLoop class) */
+		public static Font DefaultFont;
 	}
 	
 }

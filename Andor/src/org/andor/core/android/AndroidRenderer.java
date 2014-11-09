@@ -9,6 +9,8 @@
 package org.andor.core.android;
 
 import org.andor.core.Image;
+import org.andor.core.Matrix;
+import org.andor.core.Matrix4D;
 import org.andor.core.Renderer;
 import org.andor.core.Settings;
 import org.andor.core.Shader;
@@ -118,22 +120,31 @@ public class AndroidRenderer extends Renderer {
 	
 	/* The method used to draw the object */
 	public void render() {
+		//Multiply the matrices together to get the final model view projection matrix
+		Matrix4D projectionViewMatrix = Matrix.multiplyMatrices(Matrix.projectionMatrix, Matrix.viewMatrix);
+		Matrix.modelViewProjectionMatrix = Matrix.transpose((Matrix.multiplyMatrices(projectionViewMatrix, Matrix.modelMatrix)));
 		//Set the correct android shader
 		Shader androidShader = defaultAndroidShader;
 		if (currentShader != null)
 			androidShader = currentShader;
 		//Use the shader program
 		GLES20.glUseProgram(androidShader.program);
-		//Enable the arrays as needed
 		int vertexPositionAttribute = androidShader.getAttributeLocation("andor_vertexPosition");
 		int normalAttribute = 0;
 		int colourAttribute = 0;
 		int texturesAttribute = 0;
-		int matrixAttribute = androidShader.getUniformLocation("andor_matrix");
-		GLES20.glUniformMatrix4fv(matrixAttribute, 1, false, AndroidDisplayRenderer.mMVPMatrix, 0);
+		int modelMatrixAttribute = androidShader.getUniformLocation("andor_modelmatrix");
+		int viewMatrixAttribute = androidShader.getUniformLocation("andor_viewmatrix");
+		int projectionMatrixAttribute = androidShader.getUniformLocation("andor_projectionmatrix");
+		int matrixAttribute = androidShader.getUniformLocation("andor_modelviewprojectionmatrix");
+		GLES20.glUniformMatrix4fv(modelMatrixAttribute, 1, false, Matrix.modelMatrix.getValues(), 0);
+		GLES20.glUniformMatrix4fv(viewMatrixAttribute, 1, false, Matrix.viewMatrix.getValues(), 0);
+		GLES20.glUniformMatrix4fv(projectionMatrixAttribute, 1, false, Matrix.projectionMatrix.getValues(), 0);
+		GLES20.glUniformMatrix4fv(matrixAttribute, 1, false, Matrix.modelViewProjectionMatrix.getValues(), 0);
 		GLES20.glEnableVertexAttribArray(vertexPositionAttribute);
 		GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, this.verticesHandle);
 		GLES20.glVertexAttribPointer(vertexPositionAttribute, this.vertexValuesCount, GLES20.GL_FLOAT, false, 0, 0);
+		//Enable the arrays as needed
 		if (this.normalsData != null) {
 			normalAttribute = androidShader.getAttributeLocation("andor_normal");
 			GLES20.glEnableVertexAttribArray(normalAttribute);

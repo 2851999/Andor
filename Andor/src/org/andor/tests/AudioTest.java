@@ -49,7 +49,7 @@ public class AudioTest extends BaseGame {
 	public void create() {
 		this.quad = Object2DBuilder.createQuad(100, 100, new Colour[] { Colour.LIGHT_BLUE, Colour.LIGHT_GREY, Colour.ORANGE, Colour.WHITE });
 		this.quad.position = new Vector2D(100, 100);
-		this.font = FontUtils.createFont("Arial", 12);
+		this.font = FontUtils.loadBitmapFont("C:/Andor/test2.png", true, 16, 12);
 		this.audio = AudioLoader.load("C:/Andor/test2.wav", true);
 	}
 	

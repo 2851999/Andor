@@ -1,4 +1,67 @@
 ------------------------------------------------------
+Release 2 | Beta 0 | Development 3 | Experimental 0
+
+* Added PropertiesFile
+* Added Sprite2D
+* Added Matrix4D
+* Added Matrix
+
+* Removed FontPC
+
+* Found Bug: Higher resolutions make particle effects
+  harder to see (Particles are smaller)
+  
+* Removed FontPC
+* NOTE: Can now only use BitmapFonts, a default font
+  will automatically be setup for GUI but on android
+  this should be set manually
+  (Settings.Engine.DefaultFont)
+
+------------------------------------------------------
+Release 2 | Beta 0 | Development 2 | Experimental 3
+
+* Removed FontPC
+* NOTE: Can now only use BitmapFonts, a default font
+  will automatically be setup for GUI but on android
+  this should be set manually
+  (Settings.Engine.DefaultFont)
+
+Fix 3
+
+- Fixed rendering on Android
+
+------------------------------------------------------
+Release 2 | Beta 0 | Development 2 | Experimental 3
+
+Fix 2
+
+- Fixed colours when using 3D rendering
+- Fixed positions being out by 1
+- Fixed 2D rendering
+
+------------------------------------------------------
+Release 2 | Beta 0 | Development 2 | Experimental 3
+
+First of a series of fixes aimed to fix up the
+mess causes over the past two months when trying
+to switch to custom matrices classes
+
+------------------------------------------------------
+Release 2 | Beta 0 | Development 2 | Experimental 2
+
+* Added Sprite2D
+* Added Matrix4D
+* Added Matrix
+
+* Found Bug: Higher resolutions make particle effects
+  harder to see (Particles are smaller)
+
+------------------------------------------------------
+Release 2 | Beta 0 | Development 2 | Experimental 1
+
+* Added PropertiesFile
+
+------------------------------------------------------
 Release 2 | Beta 0 | Development 2 | Experimental 0
 
 * Added SystemInformation

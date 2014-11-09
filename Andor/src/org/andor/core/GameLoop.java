@@ -22,6 +22,7 @@ import org.andor.core.input.MouseEvent;
 import org.andor.core.input.MouseMotionEvent;
 import org.andor.core.input.ScrollEvent;
 import org.andor.utils.FPSCalculator;
+import org.andor.utils.FontUtils;
 
 public class GameLoop implements GameLoopInterface, InputListenerInterface {
 	
@@ -44,6 +45,8 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 		if (! Settings.AndroidMode) {
 			//Create the window
 			Window.create();
+			//Load the default font
+			Settings.Engine.DefaultFont = FontUtils.loadBitmapFont("/resources/andor/defaultfont.png", 12);
 			//Create the input
 			InputManager.create();
 			//Create the audio

@@ -9,6 +9,7 @@
 package org.andor.core;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -84,6 +85,30 @@ public class ImageLoaderPC {
 		
 		//Return the byte buffer
 		return pixels;
+	}
+	
+	/* The static method used to write an image */
+	public static void write(Image image, String path, String format) {
+		//Get the image's width and height
+		int imageWidth = image.getWidth();
+		int imageHeight = image.getHeight();
+		
+		//Create the array
+		byte[] data = new byte[image.texture.remaining()];
+		image.texture.get(data);
+		//Setup the image
+		BufferedImage i = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_4BYTE_ABGR);
+		//Put the data into image
+		i.getRaster().setDataElements(0, 0, imageWidth, imageHeight, data);
+		//Try and catch any errors
+        try {
+        	//Write the file
+			ImageIO.write(i, format, new File(path));
+		} catch (IOException e) {
+			//Log an error
+			Logger.log("Andor - ImageLoader write()", "An exception has occurred when writing the file: " + path);
+			e.printStackTrace();
+		}
 	}
 	
 }

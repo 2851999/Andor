@@ -15,7 +15,6 @@ import org.andor.core.Object2D;
 import org.andor.core.Object2DBuilder;
 import org.andor.core.RenderableObject2D;
 import org.andor.core.Settings;
-import org.andor.utils.FontUtils;
 import org.andor.utils.OpenGLUtils;
 import org.lwjgl.opengl.GL15;
 
@@ -52,7 +51,7 @@ public class GUIComponentRenderer {
 		//Assign the variables
 		this.entity = entity;
 		if (! Settings.AndroidMode && defaultFont == null)
-			this.font = FontUtils.createFont("Arial", 12);
+			this.font = Settings.Engine.DefaultFont;
 		else
 			this.font = defaultFont;
 		//Make sure the entity has been set

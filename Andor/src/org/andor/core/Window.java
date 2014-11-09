@@ -10,6 +10,7 @@ package org.andor.core;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+
 import java.nio.ByteBuffer;
 
 import org.andor.core.logger.Log;
@@ -31,6 +32,9 @@ public class Window {
 			setDisplayMode();
 			//Create the display
 			Display.create();
+			//Update OpenGL's resolution
+			GL11.glScissor(0, 0, (int) Settings.Window.Width, (int) Settings.Window.Height);
+			GL11.glViewport(0, 0, (int) Settings.Window.Width, (int) Settings.Window.Height);
 		} catch (LWJGLException e) {
 			//Log an error
 			Logger.log("Andor - Window", "An exception has occurred when creating the display", Log.ERROR);

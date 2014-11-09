@@ -21,10 +21,6 @@ public class AndroidDisplayRenderer implements GLSurfaceView.Renderer {
 	/* The display */
 	public AndroidDisplay display;
 	
-	public static float mVMatrix[] = new float[16];
-	public static float mProjMatrix[] = new float[16];
-	public static float mMVPMatrix[] = new float[16];
-	
 	/* The constructor */
 	public AndroidDisplayRenderer(AndroidDisplay display) {
 		//Assign the variables

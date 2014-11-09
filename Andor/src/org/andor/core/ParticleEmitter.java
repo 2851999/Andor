@@ -141,7 +141,7 @@ public class ParticleEmitter extends RenderableObject3D {
 		//The particle
 		Particle particle = null;
 		//The particle values
-		Vector3D particlePosition = this.position.clone();
+		Vector3D particlePosition = new Vector3D();
 		Vector3D particleVelocity = null;
 		//The random values
 		float randomX = this.randomGenerator.nextFloat() - 0.5f;
