@@ -1,4 +1,85 @@
 ------------------------------------------------------
+Release 2 | Beta 1 | Development 0 | Experimental 1
+
+* Added support for multiple buttons on the mouse
+
+* Fixed bug: Animation2D didn't repeat an animation
+  when 'repeat' was set to true
+* Fixed bug: GUITextBox would move the cursor no
+  matter what mouse button was pressed
+
+------------------------------------------------------
+Release 2 | Beta 1 | Development 0 | Experimental 0
+
+* Added ImageLoaderPC
+* Added ImageLoaderAndroid
+* Added FontPC
+* Added ImageSetPC
+* Added ImageSetAndroid
+* Added AndroidInput
+* Added AndroidInputListenerInterface
+* Added InputManagerAndroid
+* Added SystemInformation
+* Added AndroidSensor
+* Added AndroidInputListener
+* Added AndroidSensorListenerInterface
+* Added AndroidSensorListener
+* Added ActivityListener
+* Added AndroidAudio
+* Added AudioPC
+* Added AudioLoaderPC
+* Added AudioLoaderAndroid
+* Added PropertiesFile
+* Added Sprite2D
+* Added Matrix4D
+* Added Matrix
+* Added a life time to a particle emitter
+
+* Removed FontPC
+
+* Fixed bug: Android RenderableObject2D didn't rotate
+  around the centre of the object
+* Fixed bug: RenderableObject2D didn't render in the
+  correct place unless the width was equal to the
+  height on Android
+* Fixed bug: Bitmap font's were not rendering in
+  the correct place
+* Fixed some GUI bugs on Android
+* Fixed bug: Android normals were not set in the
+  default shader
+  
+* Found Bug: Higher resolutions make particle effects
+  harder to see (Particles are smaller)
+  
+* NOTE: When using Andor to create shaders using
+  GLSL, don't use the main method, instead use
+  andor_main instead to increase portability to
+  Android
+  
+* NOTE: Can now only use BitmapFonts, a default font
+  will automatically be setup for GUI but on android
+  this should be set manually
+  (Settings.Engine.DefaultFont)
+
+------------------------------------------------------
+Release 2 | Beta 0 | Development 3 | Experimental 0
+
+* Added PropertiesFile
+* Added Sprite2D
+* Added Matrix4D
+* Added Matrix
+
+* Removed FontPC
+
+* Found Bug: Higher resolutions make particle effects
+  harder to see (Particles are smaller)
+  
+* NOTE: Can now only use BitmapFonts, a default font
+  will automatically be setup for GUI but on android
+  this should be set manually
+  (Settings.Engine.DefaultFont)
+
+------------------------------------------------------
 Release 2 | Beta 0 | Development 2 | Experimental 3
 
 * Removed FontPC

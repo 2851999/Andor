@@ -43,43 +43,49 @@ public class InputManager {
 				Input.callMouseDragged(new MouseMotionEvent(Mouse.lastX, Mouse.lastY, Mouse.x, Mouse.y));
 		}
 		
-		//Check to see whether the left mouse button is down
-		if (org.lwjgl.input.Mouse.isButtonDown(0) && ! Mouse.leftButton) {
-			//Set the button as being down and call a mouse event
-			Mouse.leftButton = true;
-			Input.callMousePressed(new MouseEvent(true, false, false));
-		} else if (! org.lwjgl.input.Mouse.isButtonDown(0) && Mouse.leftButton) {
-			//Set the button as being up and call a mouse events
-			Mouse.leftButton = false;
-			MouseEvent e = new MouseEvent(true, false, false);
-			Input.callMouseReleased(e);
-			Input.callMouseClicked(e);
-		}
-		
-		//Check to see whether the right mouse button is down
-		if (org.lwjgl.input.Mouse.isButtonDown(1) && ! Mouse.rightButton) {
-			//Set the button as being down and call a mouse event
-			Mouse.rightButton = true;
-			Input.callMousePressed(new MouseEvent(false, true, false));
-		} else if (! org.lwjgl.input.Mouse.isButtonDown(1) && Mouse.rightButton) {
-			//Set the button as being up and call a mouse events
-			Mouse.rightButton = false;
-			MouseEvent e = new MouseEvent(false, true, false);
-			Input.callMouseReleased(e);
-			Input.callMouseClicked(e);
-		}
-		
-		//Check to see whether the middle mouse button is down
-		if (org.lwjgl.input.Mouse.isButtonDown(2) && ! Mouse.middleButton) {
-			//Set the button as being down and call a mouse event
-			Mouse.middleButton = true;
-			Input.callMousePressed(new MouseEvent(false, false, true));
-		} else if (! org.lwjgl.input.Mouse.isButtonDown(2) && Mouse.middleButton) {
-			//Set the button as being up and call a mouse events
-			Mouse.middleButton = false;
-			MouseEvent e = new MouseEvent(false, false, true);
-			Input.callMouseReleased(e);
-			Input.callMouseClicked(e);
+		//Get all of the mouse events
+		while (org.lwjgl.input.Mouse.next()) {
+			//Get the button
+			int button = org.lwjgl.input.Mouse.getEventButton();
+			//Check the current event
+			if (org.lwjgl.input.Mouse.isButtonDown(button)) {
+				//Make sure the button isn't already in the list
+				if (! Mouse.buttonsDown.contains(button)) {
+					//Add the button to the list
+					Mouse.buttonsDown.add(button);
+					//Check to see whether the left, right or middle mouse was the one that was pressed
+					if (button == 0)
+						//Set the button as being down
+						Mouse.leftButton = true;
+					else if (button == 1)
+						//Set the button as being down
+						Mouse.rightButton = true;
+					if (button == 2)
+						//Set the button as being down
+						Mouse.middleButton = true;
+					//Call an event
+					Input.callMousePressed(new MouseEvent(button));
+				}
+			} else {
+				//Check to see whether the button is already in the list
+				if (Mouse.buttonsDown.contains(button)) {
+					//Remove the button from the list
+					Mouse.buttonsDown.remove(Mouse.buttonsDown.indexOf(button));
+					//Check to see whether the left, right or middle mouse was the one that was released
+					if (button == 0)
+						//Set the button as being down
+						Mouse.leftButton = false;
+					else if (button == 1)
+						//Set the button as being down
+						Mouse.rightButton = false;
+					if (button == 2)
+						//Set the button as being down
+						Mouse.middleButton = false;
+					//Call an event
+					Input.callMouseReleased(new MouseEvent(button));
+					Input.callMouseClicked(new MouseEvent(button));
+				}
+			}
 		}
 		
 		//Check the scroll wheel

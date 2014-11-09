@@ -8,6 +8,9 @@
 
 package org.andor.core.input;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.andor.core.Settings;
 
 public class Mouse {
@@ -38,18 +41,8 @@ public class Mouse {
 	/* The current y position of the mouse */
 	public static float y = -1;
 	
-	/* The method used to check whether a certain button is pressed */
-	public static boolean isButtonDown(int button) {
-		//Check what button it is and return the value
-		if (button == LEFT_BUTTON)
-			return leftButton;
-		else if (button == RIGHT_BUTTON)
-			return rightButton;
-		else if (button == MIDDLE_BUTTON)
-			return middleButton;
-		else
-			return false;
-	}
+	/* The mouse button that is currently pressed */
+	public static List<Integer> buttonsDown = new ArrayList<Integer>();
 	
 	/* The static method used to lock the mouse */
 	public static void lock() {
@@ -116,6 +109,11 @@ public class Mouse {
 	public static void centre() {
 		//Set the position into the middle of the screen
 		setPosition(Settings.Window.Width / 2, Settings.Window.Height / 2);
+	}
+	
+	/* The static method that returns whether a certain button on the mouse is currently down */
+	public static boolean isButtonDown(int button) {
+		return Mouse.buttonsDown.contains(button);
 	}
 	
 }

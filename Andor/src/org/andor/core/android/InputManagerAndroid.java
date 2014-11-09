@@ -95,12 +95,16 @@ public class InputManagerAndroid implements GestureDetector.OnGestureListener , 
 			Input.callMouseDragged(new MouseMotionEvent(Mouse.lastX, Mouse.lastY, Mouse.x, Mouse.y));
 		}
 		if (e.getAction() == MotionEvent.ACTION_DOWN) {
+			//Add the button to the list
+			Mouse.buttonsDown.add(0);
 			Mouse.leftButton = true;
-			Input.callMousePressed(new MouseEvent(true, false, false));
+			Input.callMousePressed(new MouseEvent(Mouse.LEFT_BUTTON));
 		} else if (e.getAction() == MotionEvent.ACTION_UP) {
-			Input.callMouseReleased(new MouseEvent(false, false, false));
-			Input.callMouseClicked(new MouseEvent(false, false, false));
+			//Remove the button from the list
+			Mouse.buttonsDown.remove(Mouse.buttonsDown.indexOf(0));
 			Mouse.leftButton = false;
+			Input.callMouseReleased(new MouseEvent(Mouse.LEFT_BUTTON));
+			Input.callMouseClicked(new MouseEvent(Mouse.LEFT_BUTTON));
 		}
 		this.gestures.onTouchEvent(e);
 	}

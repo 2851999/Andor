@@ -16,6 +16,9 @@ public class ControlBindingButton extends InputListener {
 	/* The key code used with this binding */
 	public int keyCode;
 	
+	/* The mouse button with this binding */
+	public int mouseButton;
+	
 	/* The controller button used with this binding */
 	public ControllerButton controllerButton;
 	
@@ -40,6 +43,7 @@ public class ControlBindingButton extends InputListener {
 		//Assign the variables
 		this.expectingEvent = false;
 		this.keyCode = -1;
+		this.mouseButton = -1;
 		this.pressed = false;
 		this.controllerButton = null;
 	}
@@ -47,13 +51,37 @@ public class ControlBindingButton extends InputListener {
 	/* MOUSE STUFF */
 	
 	/* The method called when a button on the mouse is pressed */
-	public void onMousePressed(MouseEvent e) { }
+	public void onMousePressed(MouseEvent e) {
+		//Check the button
+		if (e.getButton() == this.mouseButton && Mouse.isButtonDown(e.getButton())) {
+			//Assign the value
+			this.pressed = true;
+			//Call an event
+			this.controlBinding.bindings.callButtonPressed(this);
+		}
+	}
 	
 	/* The method called when a button on the mouse is released */
-	public void onMouseReleased(MouseEvent e) { }
+	public void onMouseReleased(MouseEvent e) {
+		//Check the button
+		if (e.getButton() == this.mouseButton && ! Mouse.isButtonDown(e.getButton())) {
+			//Assign the value
+			this.pressed = false;
+			//Call an event
+			this.controlBinding.bindings.callButtonReleased(this);
+		}
+	}
 	
 	/* The method called when a button on the mouse is clicked */
-	public void onMouseClicked(MouseEvent e) { }
+	public void onMouseClicked(MouseEvent e) {
+		//Check to see whether this is expecting an event
+		if (this.expectingEvent) {
+			//Assign the key
+			this.mouseButton = e.getButton();
+			//Stop expecting this event
+			this.expectingEvent = false;
+		}
+	}
 	
 	/* The method called when the mouse moves */
 	public void onMouseMoved(MouseMotionEvent e) { }
