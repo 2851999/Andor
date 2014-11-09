@@ -91,11 +91,11 @@ public class GUITest extends BaseGame implements GUIComponentListener {
 		
 		this.radio.border = new GUIBorder(this.radio, 1f, new Colour[] { Colour.RED });
 		
-		this.textBox = new GUITextBox(Colour.WHITE, 100, 20);
+		this.textBox = new GUITextBox(Colour.WHITE, 200, 20);
 		this.textBox.position = new Vector2D(20, 300);
 		this.textBox.renderer.font.colour = Colour.BLACK;
 		this.textBox.defaultText = "Enter something";
-		this.textBox.defaultTextFont = FontUtils.createFont("Arial", 12, Colour.LIGHT_GREY);
+		this.textBox.defaultTextFont = FontUtils.loadBitmapFont("C:/Andor/test2.png", true, 16, 12);
 		this.textBox.border = new GUIBorder(this.textBox, 1f, new Colour[] { Colour.LIGHT_BLUE });
 		this.textBox.selection.renderer.colours = new Colour[] { new Colour(Colour.LIGHT_BLUE, 0.4f) };
 		

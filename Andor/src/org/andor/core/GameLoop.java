@@ -22,6 +22,7 @@ import org.andor.core.input.MouseEvent;
 import org.andor.core.input.MouseMotionEvent;
 import org.andor.core.input.ScrollEvent;
 import org.andor.utils.FPSCalculator;
+import org.andor.utils.FontUtils;
 
 public class GameLoop implements GameLoopInterface, InputListenerInterface {
 	
@@ -44,10 +45,12 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 		if (! Settings.AndroidMode) {
 			//Create the window
 			Window.create();
+			//Load the default font
+			Settings.Engine.DefaultFont = FontUtils.loadBitmapFont("/resources/andor/defaultfont.png", 12);
 			//Create the input
 			InputManager.create();
 			//Create the audio
-			Audio.create();
+			AudioPC.create();
 		}
 		//Add this input listener
 		Input.addListener(this);
@@ -63,10 +66,10 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 	
 	/* The method used to start the game loop */
 	private void startGameLoop() {
-		//Call the start method
-		this.start();
 		//Make sure Andor isn't currently running on Android
 		if (! Settings.AndroidMode) {
+			//Call the start method
+			this.start();
 			//Keep going until the window closes
 			while (! Window.shouldClose() && ! this.closeRequested)
 				//Run a cycle of the loop
@@ -105,7 +108,7 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 			//Destroy the input
 			InputManager.destroy();
 			//Destroy the audio
-			Audio.destroy();
+			AudioPC.destroy();
 			//Close the window
 			Window.close();
 		}

@@ -8,35 +8,28 @@
 
 package org.andor.core.android;
 
+import org.andor.core.Image;
+import org.andor.core.Matrix;
+import org.andor.core.Matrix4D;
 import org.andor.core.Renderer;
 import org.andor.core.Settings;
 import org.andor.core.Shader;
 import org.andor.utils.ArrayUtils;
 import org.andor.utils.BufferUtils;
 import org.andor.utils.ShaderUtils;
+
 import android.opengl.GLES20;
 
 public class AndroidRenderer extends Renderer {
 	
-	/* The Android shader code */
-	private static final String[] androidVertexShaderCode = new String[] {
-		 	"attribute vec4 colour;",
-		 	"varying vec4 fcolour;",
-		    "attribute vec4 vertexPosition;",
-		 	"uniform mat4 matrix;",
-		    "void main() {",
-		    "  fcolour = colour;",
-		    "  gl_Position = matrix * vertexPosition;",
-		    "}" };
+	/* The active texture */
+	public static Image texture;
 	
-	private static final String[] androidFragmentShaderCode = new String[] {
-		    "varying vec4 fcolour;",
-		    "void main() {",
-		    "  gl_FragColor = fcolour;",
-		    "}" };
+	/* The default Android shader */
+	public static Shader defaultAndroidShader;
 	
-	/* The Android shader */
-	public Shader androidShader;
+	/* The current shader */
+	public static Shader currentShader;
 	
 	/* The constructor with the render mode and the 
 	 * number of vertex values given */
@@ -45,10 +38,12 @@ public class AndroidRenderer extends Renderer {
 		//Set the default usage
 		usage = GLES20.GL_STATIC_DRAW;
 		//Setup the Android shader
-		this.androidShader = new AndroidShader();
-		this.androidShader.vertexShader = ShaderUtils.createShader(ArrayUtils.toStringList(androidVertexShaderCode), GLES20.GL_VERTEX_SHADER);
-		this.androidShader.fragmentShader = ShaderUtils.createShader(ArrayUtils.toStringList(androidFragmentShaderCode), GLES20.GL_FRAGMENT_SHADER);
-		this.androidShader.create();
+		if (defaultAndroidShader == null) {
+			defaultAndroidShader = new AndroidShader();
+			defaultAndroidShader.vertexShader = ShaderUtils.createShader(ArrayUtils.toStringList(ShaderUtils.androidVertexAndorMain), GLES20.GL_VERTEX_SHADER);
+			defaultAndroidShader.fragmentShader = ShaderUtils.createShader(ArrayUtils.toStringList(ShaderUtils.androidVertexAndorMain), GLES20.GL_FRAGMENT_SHADER);
+			defaultAndroidShader.create();
+		}
 	}
 	
 	/* The method used to setup the buffers,
@@ -77,7 +72,7 @@ public class AndroidRenderer extends Renderer {
 			
 			//Bind the normals buffer and give OpenGL the data
 			GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, this.normalsHandle);
-			GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, Float.BYTES * verticesData.length, this.normalsBuffer, this.usage);
+			GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, Float.BYTES * normalsData.length, this.normalsBuffer, this.usage);
 			GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, 0);
 		}
 		
@@ -125,34 +120,52 @@ public class AndroidRenderer extends Renderer {
 	
 	/* The method used to draw the object */
 	public void render() {
-		this.androidShader.use();
-		//Enable the arrays as needed
-		int vertexPositionAttribute = this.androidShader.getAtrrbuteLocation("vertexPosition");
+		//Multiply the matrices together to get the final model view projection matrix
+		Matrix4D projectionViewMatrix = Matrix.multiplyMatrices(Matrix.projectionMatrix, Matrix.viewMatrix);
+		Matrix.modelViewProjectionMatrix = Matrix.transpose((Matrix.multiplyMatrices(projectionViewMatrix, Matrix.modelMatrix)));
+		//Set the correct android shader
+		Shader androidShader = defaultAndroidShader;
+		if (currentShader != null)
+			androidShader = currentShader;
+		//Use the shader program
+		GLES20.glUseProgram(androidShader.program);
+		int vertexPositionAttribute = androidShader.getAttributeLocation("andor_vertexPosition");
 		int normalAttribute = 0;
 		int colourAttribute = 0;
 		int texturesAttribute = 0;
-		int matrixAttribute = this.androidShader.getUniformLocation("matrix");
-		GLES20.glUniformMatrix4fv(matrixAttribute, 1, false, AndroidDisplayRenderer.mMVPMatrix, 0);
+		int modelMatrixAttribute = androidShader.getUniformLocation("andor_modelmatrix");
+		int viewMatrixAttribute = androidShader.getUniformLocation("andor_viewmatrix");
+		int projectionMatrixAttribute = androidShader.getUniformLocation("andor_projectionmatrix");
+		int matrixAttribute = androidShader.getUniformLocation("andor_modelviewprojectionmatrix");
+		GLES20.glUniformMatrix4fv(modelMatrixAttribute, 1, false, Matrix.modelMatrix.getValues(), 0);
+		GLES20.glUniformMatrix4fv(viewMatrixAttribute, 1, false, Matrix.viewMatrix.getValues(), 0);
+		GLES20.glUniformMatrix4fv(projectionMatrixAttribute, 1, false, Matrix.projectionMatrix.getValues(), 0);
+		GLES20.glUniformMatrix4fv(matrixAttribute, 1, false, Matrix.modelViewProjectionMatrix.getValues(), 0);
 		GLES20.glEnableVertexAttribArray(vertexPositionAttribute);
 		GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, this.verticesHandle);
 		GLES20.glVertexAttribPointer(vertexPositionAttribute, this.vertexValuesCount, GLES20.GL_FLOAT, false, 0, 0);
+		//Enable the arrays as needed
 		if (this.normalsData != null) {
+			normalAttribute = androidShader.getAttributeLocation("andor_normal");
 			GLES20.glEnableVertexAttribArray(normalAttribute);
 			GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, this.normalsHandle);
-			GLES20.glVertexAttribPointer(normalAttribute, 2, GLES20.GL_FLOAT, false, 0, 0);
+			GLES20.glVertexAttribPointer(normalAttribute, this.vertexValuesCount, GLES20.GL_FLOAT, false, 0, 0);
 		}
 		if (this.colourData != null) {
-			colourAttribute = this.androidShader.getAtrrbuteLocation("colour");
+			colourAttribute = androidShader.getAttributeLocation("andor_vcolour");
 			GLES20.glEnableVertexAttribArray(colourAttribute);
 			GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, this.coloursHandle);
 			GLES20.glVertexAttribPointer(colourAttribute, this.colourValuesCount, GLES20.GL_FLOAT, false, 0, 0);
 		}
 		if (this.textureData != null) {
+			texturesAttribute = androidShader.getAttributeLocation("andor_vtextureCoord");
 			GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, this.texturesHandle);
 			GLES20.glEnableVertexAttribArray(texturesAttribute);
 			GLES20.glVertexAttribPointer(texturesAttribute, this.textureValuesCount, GLES20.GL_FLOAT, false, 0, 0);
+			GLES20.glUniform1i(androidShader.getUniformLocation("andor_texture"), 0);
+			if (texture != null)
+				GLES20.glUniform1f(androidShader.getUniformLocation("andor_hasTexture"), 1f);
 		}
-		//Check to see whether the draw order has been set
 		if (this.drawOrder != null) {
 			GLES20.glBindBuffer(GLES20.GL_ELEMENT_ARRAY_BUFFER, this.drawOrderHandle);
 			GLES20.glDrawElements(this.renderMode, this.drawOrder.length, GLES20.GL_UNSIGNED_SHORT, 0);
@@ -169,7 +182,8 @@ public class AndroidRenderer extends Renderer {
 		if (this.colourData != null)
 			GLES20.glDisableVertexAttribArray(colourAttribute);
 		GLES20.glDisableVertexAttribArray(vertexPositionAttribute);
-		this.androidShader.stopUsing();
+		//Stop using the android shader program
+		GLES20.glUseProgram(0);
 	}
 	
 	/* The method used to update the vertices */
@@ -193,7 +207,7 @@ public class AndroidRenderer extends Renderer {
 		if (! Settings.AndroidMode) {
 			//Bind the normals buffer and give OpenGL the data
 			GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, this.normalsHandle);
-			GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, Float.BYTES * verticesData.length, this.normalsBuffer, this.usage);
+			GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, Float.BYTES * normalsData.length, this.normalsBuffer, this.usage);
 		}
 	}
 	

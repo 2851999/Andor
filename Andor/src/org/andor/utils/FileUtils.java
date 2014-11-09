@@ -20,6 +20,8 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.andor.core.Settings;
+import org.andor.core.android.BaseActivity;
 import org.andor.core.logger.Log;
 import org.andor.core.logger.Logger;
 
@@ -129,7 +131,12 @@ public class FileUtils {
 				}
 			} else {
 				//Get the file reader instance
-				InputStreamReader fileReader = new InputStreamReader(FileUtils.class.getResourceAsStream(path));
+				InputStreamReader fileReader = null;
+				//Check to see whether Andor is currently running on Android
+				if (! Settings.AndroidMode)
+					fileReader = new InputStreamReader(FileUtils.class.getResourceAsStream(path));
+				else
+					fileReader = new InputStreamReader(BaseActivity.instance.getAssets().open(path));
 				//Create the buffered reader for the file reader
 				BufferedReader bufferedReader = new BufferedReader(fileReader);
 				//Read the file and get the text

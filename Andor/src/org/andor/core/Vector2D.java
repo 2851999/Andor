@@ -77,6 +77,20 @@ public class Vector2D {
 		this.y /= amount;
 	}
 	
+	/* The method used to get the length of this vector */
+	public float getLength() {
+		//Return the length
+		return (float) Math.sqrt((this.x * this.x) + (this.y * this.y));
+	}
+	
+	/* The method used to get the normalised vector */
+	public Vector2D normalise() {
+		//Get the length
+		float length = this.getLength();
+		//Return the new vector
+		return new Vector2D(this.x / length, this.y / length);
+	}
+	
 	/* The method used to create a new vector with the same values as
 	 * this one and then return it (Clones this vector) */
 	public Vector2D clone() {

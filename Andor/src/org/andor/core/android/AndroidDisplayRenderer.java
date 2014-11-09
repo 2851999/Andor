@@ -21,10 +21,6 @@ public class AndroidDisplayRenderer implements GLSurfaceView.Renderer {
 	/* The display */
 	public AndroidDisplay display;
 	
-	public static float mVMatrix[] = new float[16];
-	public static float mProjMatrix[] = new float[16];
-	public static float mMVPMatrix[] = new float[16];
-	
 	/* The constructor */
 	public AndroidDisplayRenderer(AndroidDisplay display) {
 		//Assign the variables
@@ -38,6 +34,8 @@ public class AndroidDisplayRenderer implements GLSurfaceView.Renderer {
 		Settings.Window.Height = this.display.getHeight();
 		//Create the game
 		this.display.activity.game.create();
+		//Start the game
+		this.display.activity.game.start();
 	}
 	
 	/* The method called when this surface is changed */

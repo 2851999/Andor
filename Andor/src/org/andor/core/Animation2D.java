@@ -117,6 +117,13 @@ public class Animation2D {
 		this.timer.resume();
 	}
 	
+	/* The method used to restart this animation */
+	public void restart() {
+		this.stop();
+		this.reset();
+		this.start();
+	}
+	
 	/* The method used to stop this animation */
 	public void stop() {
 		//Set running to false

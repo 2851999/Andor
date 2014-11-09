@@ -33,6 +33,9 @@ public class GUIWindow extends GUIComponent implements InputListenerInterface {
 	/* The close button */
 	private GUIButton closeButton;
 	
+	/* The boolean that states whether the mouse is currently pressed within the top bar */
+	private boolean mousePressed;
+	
 	/* The constructor */
 	public GUIWindow(String windowTitle, Colour colour, float width, float height) {
 		//Call the super constructor
@@ -43,6 +46,7 @@ public class GUIWindow extends GUIComponent implements InputListenerInterface {
 		this.topBar = new GUIFill(this);
 		this.topBar.width = this.width;
 		this.topBar.height = 20;
+		this.mousePressed = false;
 		Input.addListener(this);
 	}
 	
@@ -57,6 +61,7 @@ public class GUIWindow extends GUIComponent implements InputListenerInterface {
 		this.topBar = new GUIFill(this);
 		this.topBar.width = this.width;
 		this.topBar.height = 20;
+		this.mousePressed = false;
 		Input.addListener(this);
 	}
 	
@@ -71,6 +76,7 @@ public class GUIWindow extends GUIComponent implements InputListenerInterface {
 		this.topBar = new GUIFill(this);
 		this.topBar.width = this.width;
 		this.topBar.height = 20;
+		this.mousePressed = false;
 		Input.addListener(this);
 	}
 	
@@ -96,10 +102,20 @@ public class GUIWindow extends GUIComponent implements InputListenerInterface {
 	}
 	
 	/* The method called when a button on the mouse is pressed */
-	public void onMousePressed(MouseEvent e) { }
+	public void onMousePressed(MouseEvent e) {
+		//Make sure this is visible and active
+		if (this.visible && this.active) {
+			if (this.topBar.getBounds().contains(e.x, e.y))
+				this.mousePressed = true;
+		}
+	}
 	
 	/* The method called when a button on the mouse is released */
-	public void onMouseReleased(MouseEvent e) { }
+	public void onMouseReleased(MouseEvent e) {
+		//Make sure this is visible and active
+		if (this.visible && this.active)
+			this.mousePressed = false;
+	}
 	
 	/* The method called when a button on the mouse is clicked */
 	public void onMouseClicked(MouseEvent e) { }
@@ -111,9 +127,8 @@ public class GUIWindow extends GUIComponent implements InputListenerInterface {
 	public void onMouseDragged(MouseMotionEvent e) {
 		//Make sure this is visible and active
 		if (this.visible && this.active) {
-			if (this.topBar.getBounds().contains(e.startX, e.startY)) {
+			if (this.topBar.getBounds().contains(e.startX, e.startY) && this.mousePressed)
 				this.position.add(new Vector2D(e.dx, e.dy));
-			}
 		}
 	}
 	

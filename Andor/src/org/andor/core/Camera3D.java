@@ -8,11 +8,6 @@
 
 package org.andor.core;
 
-import org.andor.core.android.AndroidDisplayRenderer;
-import org.lwjgl.opengl.GL11;
-
-import android.opengl.Matrix;
-
 public class Camera3D extends Object3D {
 	
 	/* The variable used to stop the movement up and down when looking (Flying) */
@@ -79,30 +74,16 @@ public class Camera3D extends Object3D {
 		//Get the scale
 		Vector3D s = this.getScale();
 		
-		//Check to see whether Andor is currently running on Android
-		if (! Settings.AndroidMode) {
-			//Rotate by the specified amount
-			GL11.glRotatef(r.x, 1, 0, 0);
-			GL11.glRotatef(r.y, 0, 1, 0);
-			GL11.glRotatef(r.z, 0, 0, 1);
-			
-			//Move to the correct position
-			GL11.glTranslatef(p.x, p.y, p.z);
-			
-			//Scale by the correct amount
-			GL11.glScalef(s.x, s.y, s.z);
-		} else {
-			//Rotate by the specified amount
-			Matrix.rotateM(AndroidDisplayRenderer.mMVPMatrix, 0, r.x, 1, 0, 0);
-			Matrix.rotateM(AndroidDisplayRenderer.mMVPMatrix, 0, r.y, 0, 1, 0);
-			Matrix.rotateM(AndroidDisplayRenderer.mMVPMatrix, 0, r.z, 0, 0, 1);
-			
-			//Move to the correct position
-			Matrix.translateM(AndroidDisplayRenderer.mMVPMatrix, 0, p.x, p.y, p.z);
-			
-			//Scale by the correct amount
-			Matrix.scaleM(AndroidDisplayRenderer.mMVPMatrix, 0, s.x, s.y, s.z);
-		}
+		//Scale by the correct amount
+		Matrix.viewMatrix = Matrix.scale(Matrix.viewMatrix, s);
+		
+		//Rotate by the specified amount
+		Matrix.viewMatrix = Matrix.rotate(Matrix.viewMatrix, r.x, 1, 0, 0);
+		Matrix.viewMatrix = Matrix.rotate(Matrix.viewMatrix, r.y, 0, 1, 0);
+		Matrix.viewMatrix = Matrix.rotate(Matrix.viewMatrix, r.z, 0, 0, 1);
+		
+		//Move to the correct position
+		Matrix.viewMatrix = Matrix.translate(Matrix.viewMatrix, p);
 		
 		//Check to see whether the skybox should be used
 		if (this.skyBox != null && this.useSkyBoxIfAvailable) {

@@ -23,6 +23,7 @@ import org.andor.core.Particle;
 import org.andor.core.ParticleEffect;
 import org.andor.core.ParticleEmitter;
 import org.andor.core.RenderableObject3D;
+import org.andor.core.Renderer;
 import org.andor.core.Settings;
 import org.andor.core.Shader;
 import org.andor.core.SkyBox;
@@ -91,7 +92,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		this.camera = new Camera3D();
 		this.camera.flying = true;
 		//Load the font
-		this.font = FontUtils.createFont("Arial", 12);
+		this.font = FontUtils.loadBitmapFont("C:/Andor/test2.png", true, 16, 12);
 		//Load the texture and bind it
 		String path = "C:/Andor/";
 		//Create a skybox
@@ -123,7 +124,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		//Set wireframe to false
 		wireframe = false;
 		test = new Shader();
-		test.load("C:/Andor/light", true);
+		test.load("C:/Andor/light2", true);
 		test.create();
 		//Lock the mouse
 		Mouse.lock();
@@ -195,7 +196,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		
 		this.particleEmitter.update();
 		
-		Vector3D change = new Vector3D(0, 0.1f, 0);
+		Vector3D change = new Vector3D(0, 0.06f, 0);
 		change.multiply(getDelta());
 		this.model.rotation.add(change);
 	}
@@ -208,16 +209,16 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		OpenGLUtils.clearDepthBuffer();
 		OpenGLUtils.setupRemoveAlpha();
 		
-		OpenGLUtils.setupPerspective(70f, 0.1f, 1000f);
+		OpenGLUtils.setupPerspective(70f, 1f, 1000f);
 		OpenGLUtils.enableDepthTest();
 		
 		//Use the camera's view on the world
 		this.camera.useView();
 		
 		OpenGLUtils.disableTexture2D();
-		test.use();
+		Renderer.currentShader = test;
 		this.model.render();
-		test.stopUsing();
+		Renderer.currentShader = Renderer.defaultShader;
 		
 		OpenGLUtils.enableTexture2D();
 		
@@ -286,6 +287,10 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		else if (e.getCode() == Keyboard.KEY_F11_CODE) {
 			Settings.Window.Fullscreen = ! Settings.Window.Fullscreen;
 			Window.updateDisplaySettings();
+		} else if (e.getCode() == Keyboard.KEY_F1_CODE) {
+			test = new Shader();
+			test.load("C:/Andor/light2", true);
+			test.create();
 		}
 	}
 	
