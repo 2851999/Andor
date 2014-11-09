@@ -1,6 +1,15 @@
 ------------------------------------------------------
 Release 2 | Beta 0 | Development 2 | Experimental 3
 
+Fix 2
+
+- Fixed colours when using 3D rendering
+- Fixed positions being out by 1
+* Fixed 2D rendering
+
+------------------------------------------------------
+Release 2 | Beta 0 | Development 2 | Experimental 3
+
 First of a series of fixes aimed to fix up the
 mess causes over the past two months when trying
 to switch to custom matrices classes

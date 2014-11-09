@@ -20,9 +20,9 @@ public class Matrix {
 	public static void loadIdentity(Matrix4D matrix) {
 		//Load the identity matrix
 		matrix.load(new float[][] {
-				new float[] { 1, 0, 0, 1 },
-				new float[] { 0, 1, 0, 1 },
-				new float[] { 0, 0, 1, 1 },
+				new float[] { 1, 0, 0, 0 },
+				new float[] { 0, 1, 0, 0 },
+				new float[] { 0, 0, 1, 0 },
 				new float[] { 0, 0, 0, 1 },
 		});
 	}
@@ -180,11 +180,46 @@ public class Matrix {
 //		mat.values[13] = -(top + bottom) / (top - bottom);
 //		mat.values[14] = -(zfar + znear) / (zfar - znear);
 //		return mat;
+//		return new Matrix4D(new float[][] {
+//				new float[] { 2 / (right - left), 0, 0, -((right + left) / (right - left)) },
+//				new float[] { 0, 2 / (top - bottom), 0, -((top + bottom) / (top - bottom)) },
+//				new float[] { 0, 0, -2 / (zfar - znear), -((zfar + znear) / (zfar - znear)) },
+//				new float[] { 0, 0, 0, 1 },
+//		});
+//		Matrix4D m = new Matrix4D();
+//        final float r_width  = 1.0f / (right - left);
+//        final float r_height = 1.0f / (top - bottom);
+//        final float r_depth  = 1.0f / (zfar - znear);
+//        final float x =  2.0f * (r_width);
+//        final float y =  2.0f * (r_height);
+//        final float z = -2.0f * (r_depth);
+//        final float tx = -(right + left) * r_width;
+//        final float ty = -(top + bottom) * r_height;
+//        final float tz = -(zfar + znear) * r_depth;
+//        m.values[0] = x;
+//        m.values[5] = y;
+//        m.values[10] = z;
+//        m.values[12] = tx;
+//        m.values[13] = ty;
+//        m.values[14] = tz;
+//        m.values[15] = 1.0f;
+//        m.values[1] = 0.0f;
+//        m.values[2] = 0.0f;
+//        m.values[3] = 0.0f;
+//        m.values[4] = 0.0f;
+//        m.values[6] = 0.0f;
+//        m.values[7] = 0.0f;
+//        m.values[8] = 0.0f;
+//        m.values[9] = 0.0f;
+//        m.values[11] = 0.0f;
+//        return m;
+		float x_max = (float) ((right - left) - 1.0);
+		float y_max = (float) ((bottom - top) - 1.0);
 		return new Matrix4D(new float[][] {
-				new float[] { 2 / (right - left), 0, 0, -((right + left) / (right - left)) },
-				new float[] { 0, 2 / (top - bottom), 0, -((top + bottom) / (top - bottom)) },
-				new float[] { 0, 0, -2 / (zfar - znear), -((zfar + znear) / (zfar - znear)) },
-				new float[] { 0, 0, 0, 1 },
+			new float[] { 2 / x_max, 0, 0, -1 },
+			new float[] { 0, -2 / y_max, 0, 1 },
+			new float[] { 0, 0, 2 / (zfar - znear), (znear + zfar) / (znear - zfar) },
+			new float[] { 0, 0, 0, 1 },
 		});
 	}
 	

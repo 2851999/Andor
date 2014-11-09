@@ -17,13 +17,13 @@ import org.andor.core.Colour;
 import org.andor.core.Font;
 import org.andor.core.Image;
 import org.andor.core.ImageLoader;
-import org.andor.core.ImageLoaderPC;
 import org.andor.core.ImageSet;
 import org.andor.core.Object3DBuilder;
 import org.andor.core.Particle;
 import org.andor.core.ParticleEffect;
 import org.andor.core.ParticleEmitter;
 import org.andor.core.RenderableObject3D;
+import org.andor.core.Renderer;
 import org.andor.core.Settings;
 import org.andor.core.Shader;
 import org.andor.core.SkyBox;
@@ -124,7 +124,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		//Set wireframe to false
 		wireframe = false;
 		test = new Shader();
-		test.load("C:/Andor/light", true);
+		test.load("C:/Andor/light2", true);
 		test.create();
 		//Lock the mouse
 		Mouse.lock();
@@ -163,8 +163,6 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		this.bitmapText = new BitmapText(ImageLoader.loadImage("C:/Andor/test2.png", true), 40, 16);
 		this.bitmapText.update("Hello World");
 		this.bitmapText.position = new Vector2D(100, 100);
-		
-		ImageLoaderPC.write(this.texture, "C:/Users/Joel/Desktop/test123.png", "PNG");
 	}
 	
 	/* The method called when the game loop has started */
@@ -218,9 +216,9 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		this.camera.useView();
 		
 		OpenGLUtils.disableTexture2D();
-		//test.use();
+		Renderer.currentShader = test;
 		this.model.render();
-		//test.stopUsing();
+		Renderer.currentShader = Renderer.defaultShader;
 		
 		OpenGLUtils.enableTexture2D();
 		
@@ -291,7 +289,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 			Window.updateDisplaySettings();
 		} else if (e.getCode() == Keyboard.KEY_F1_CODE) {
 			test = new Shader();
-			test.load("C:/Andor/light", true);
+			test.load("C:/Andor/light2", true);
 			test.create();
 		}
 	}

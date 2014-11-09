@@ -69,7 +69,6 @@ public class ShaderUtils {
 	    "void main() {",
 	    "  andor_colour = andor_vcolour;",
 	    "  andor_textureCoord = andor_vtextureCoord;",
-	   // "  andor_modelviewprojectionmatrix = andor_modelmatrix * andor_viewmatrix * andor_projectionmatrix;",
 	    "  gl_Position = transpose(andor_modelviewprojectionmatrix) * andor_vertexPosition;",
 	    "  andor_main();",
 	    "}" };

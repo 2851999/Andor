@@ -184,23 +184,7 @@ public class Renderer {
 		//Multiply the matrices together
 		Matrix4D projectionViewMatrix = Matrix.multiplyMatrices(Matrix.projectionMatrix, Matrix.viewMatrix);
 		Matrix.modelViewProjectionMatrix = (Matrix.multiplyMatrices(projectionViewMatrix, Matrix.modelMatrix));
-		
-		//Sky box in relatively the right place
-//		Matrix4D modelViewMatrix = Matrix.multiply(Matrix.modelMatrix, Matrix.viewMatrix);
-//		Matrix.modelViewProjectionMatrix = (Matrix.multiply(modelViewMatrix, Matrix.projectionMatrix));
-		
-//		Matrix4D modelProjectionMatrix = Matrix.multiply(Matrix.modelMatrix, Matrix.projectionMatrix);
-//		Matrix.modelViewProjectionMatrix = (Matrix.multiply(Matrix.viewMatrix, modelProjectionMatrix));
-		
-//		Matrix4D modelViewMatrix = Matrix.multiply(Matrix.modelMatrix, Matrix.viewMatrix);
-//		Matrix.modelViewProjectionMatrix = (modelViewMatrix);
-		
-//		//TEST
-//		for (int a = 0; a < 16; a++) {
-//			//2D WORKS!!!!! Kind of...
-//			Matrix.modelViewProjectionMatrix.values[a] = Matrix.modelMatrix.values[a] * Matrix.projectionMatrix.values[a] * Matrix.viewMatrix.values[a];
-//		}
-		System.out.println(Matrix.modelViewProjectionMatrix.toString() + "\n");
+		System.out.println("\n" + Matrix.modelViewProjectionMatrix.toString());
 		//Set the correct android shader
 		Shader shader = defaultShader;
 		if (currentShader != null)
@@ -243,6 +227,10 @@ public class Renderer {
 			GL20.glUniform1i(shader.getUniformLocation("andor_texture"), 0);
 			if (texture != null)
 				GL20.glUniform1f(shader.getUniformLocation("andor_hasTexture"), 1f);
+			else
+				GL20.glUniform1f(shader.getUniformLocation("andor_hasTexture"), 0f);
+		} else {
+			GL20.glUniform1f(shader.getUniformLocation("andor_hasTexture"), 0f);
 		}
 		if (this.drawOrder != null) {
 			GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, this.drawOrderHandle);

@@ -74,6 +74,9 @@ public class Camera3D extends Object3D {
 		//Get the scale
 		Vector3D s = this.getScale();
 		
+		//Scale by the correct amount
+		Matrix.viewMatrix = Matrix.scale(Matrix.viewMatrix, s);
+		
 		//Rotate by the specified amount
 		Matrix.viewMatrix = Matrix.rotate(Matrix.viewMatrix, r.x, 1, 0, 0);
 		Matrix.viewMatrix = Matrix.rotate(Matrix.viewMatrix, r.y, 0, 1, 0);
@@ -81,9 +84,6 @@ public class Camera3D extends Object3D {
 		
 		//Move to the correct position
 		Matrix.viewMatrix = Matrix.translate(Matrix.viewMatrix, p);
-		
-		//Scale by the correct amount
-		Matrix.viewMatrix = Matrix.scale(Matrix.viewMatrix, s);
 		
 		//Check to see whether the skybox should be used
 		if (this.skyBox != null && this.useSkyBoxIfAvailable) {
