@@ -36,10 +36,15 @@ public class BitmapText extends RenderableObject2D {
 	/* The current text */
 	public String currentText;
 	
+	/* The colours */
+	public Colour[] colour;
+	
 	/* The constructor of the font */
-	public BitmapText(Image image, int gridSize, float fontSize) {
+	public BitmapText(Image image, int gridSize, float fontSize, Colour[] colour) {
 		//Load the font image
 		this.image = image;
+		//Set the colour
+		this.colour = colour;
 		//Set the grid size
 		this.gridWidth = gridSize;
 		this.gridHeight = gridSize;
@@ -51,12 +56,21 @@ public class BitmapText extends RenderableObject2D {
 		this.renderer.setupBuffers();
 	}
 	
+	/* The constructor of the font */
+	public BitmapText(Image image, int gridSize, float fontSize, Colour colour) {
+		this(image, gridSize, fontSize, new Colour[] { colour });
+	}
+	
+	/* The constructor of the font */
+	public BitmapText(Image image, int gridSize, float fontSize) {
+		this(image, gridSize, fontSize, new Colour[] { Colour.WHITE });
+	}
+	
 	/* The method that updates the text */
 	public void update(String text) {
 		//Set the current text
 		this.currentText = text;
 		List<Float> vertices = new ArrayList<Float>();
-		float[] colours = Object2DBuilder.createColourArray(text.length() * 4, Colour.WHITE);
 		List<Float> textures = new ArrayList<Float>();
 		List<Short> drawOrder = new ArrayList<Short>();
 		float x = 0;
@@ -107,7 +121,7 @@ public class BitmapText extends RenderableObject2D {
 		}
 		//Update the renderer
 		this.renderer.updateVertices(ArrayUtils.toFloatArray(vertices));
-		this.renderer.updateColours(colours);
+		this.renderer.updateColours(Object2DBuilder.createColourArray(text.length() * 4, this.colour));
 		this.renderer.updateTextures(ArrayUtils.toFloatArray(textures));
 		this.renderer.updateDrawOrder(ArrayUtils.toShortArray(drawOrder));
 	}
@@ -134,6 +148,14 @@ public class BitmapText extends RenderableObject2D {
 	}
 	
 	/* The get/set methods */
+	public void setColour(Colour[] colour) {
+		this.colour = colour;
+		this.renderer.updateColours(Object2DBuilder.createColourArray(this.currentText.length() * 4, this.colour));
+	}
+	public void setColour(Colour colour) {
+		this.setColour(new Colour[] { colour });
+	}
 	public String getCurrentText() { return this.currentText; }
+	public Colour[] getColour() { return this.colour; }
 	
 }

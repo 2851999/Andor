@@ -15,23 +15,32 @@ public class ShaderUtils {
 	
 	/* The Android shader code */
 	public static final String[] androidVertexShaderCode = new String[] {
+		//The vertex/normal/texture coordinate/colour data for the vertex
 		"attribute vec4 andor_vertexPosition;",
-    	"attribute vec3 andor_normal;",
-    	"attribute vec2 andor_vtextureCoord;",
-	 	"attribute vec4 andor_vcolour;",
-	 	"uniform mat4 andor_modelmatrix;",
-	 	"uniform mat4 andor_viewmatrix;",
-	 	"uniform mat4 andor_projectionmatrix;",
-	 	"uniform mat4 andor_modelviewprojectionmatrix;",
-	 	"varying vec4 andor_colour;",
-	    "varying vec2 andor_textureCoord;",
-	    "void andor_main();",
-	    "void main() {",
-	    "  andor_colour = andor_vcolour;",
-	    "  andor_textureCoord = andor_vtextureCoord;",
-	    "  gl_Position = (andor_modelviewprojectionmatrix) * andor_vertexPosition;",
-	    "  andor_main();",
-	    "}"
+		"attribute vec3 andor_normal;",
+		"attribute vec2 andor_vtextureCoord;",
+		"attribute vec4 andor_vcolour;",
+		//The matrices
+		"uniform mat4 andor_modelmatrix;",
+		"uniform mat4 andor_viewmatrix;",
+		"uniform mat4 andor_projectionmatrix;",
+		"uniform mat4 andor_modelviewprojectionmatrix;",
+		"uniform mat4 andor_normalmatrix;",
+		//The colour and texture coordinate passed to the fragment shader
+		"varying vec4 andor_colour;",
+		"varying vec2 andor_textureCoord;",
+		//Declare the andor_main method
+		"void andor_main();",
+		//The main method
+		"void main() {",
+		//Assign the colour and texture coordinate to be passed to the fragment shader
+		"  andor_colour = andor_vcolour;",
+		"  andor_textureCoord = andor_vtextureCoord;",
+		//Calculate the correct position for the current vertex
+		"  gl_Position = andor_modelviewprojectionmatrix * andor_vertexPosition;",
+		//Call the andor_main method
+		"  andor_main();",
+		"}"
 	};
 	
 	public static final String[] androidVertexAndorMain = new String[] {
@@ -39,15 +48,21 @@ public class ShaderUtils {
 	};
 	
 	public static final String[] androidFragmentShaderCode = new String[] {
+		//The texture/colour/texture coordinate variables
 		"uniform sampler2D andor_texture;",
 		"uniform float andor_hasTexture;",
 	    "varying vec4 andor_colour;",
 	    "varying vec2 andor_textureCoord;",
+	    //Declare the andor_main method
 	    "void andor_main();",
+	    //The main method
 	    "void main() {",
+	    //Check to see whether a texture has been set
 	    "  if (andor_hasTexture > 0.5) {",
+	    //Calculate the fragment colour based on the texture and the colour given from the vertex shader
 	    "    gl_FragColor = andor_colour * texture2D(andor_texture, andor_textureCoord);",
 	    "  } else {",
+	    //Calculate the fragment colour based on the colour given from the vertex shader
 	    "    gl_FragColor = andor_colour;",
 	    "  }",
 	    "  andor_main();",
@@ -60,35 +75,50 @@ public class ShaderUtils {
 	
 	/* The pc shader code */
 	public static final String[] pcVertexShaderCode = new String[] {
+		//The vertex/normal/texture coordinate/colour data for the vertex
 		"attribute vec4 andor_vertexPosition;",
-    	"attribute vec3 andor_normal;",
-    	"attribute vec2 andor_vtextureCoord;",
-	 	"attribute vec4 andor_vcolour;",
-	 	"uniform mat4 andor_modelmatrix;",
-	 	"uniform mat4 andor_viewmatrix;",
-	 	"uniform mat4 andor_projectionmatrix;",
-	 	"uniform mat4 andor_modelviewprojectionmatrix;",
-	 	"varying vec4 andor_colour;",
-	    "varying vec2 andor_textureCoord;",
-	    "void andor_main();",
-	    "void main() {",
-	    "  andor_colour = andor_vcolour;",
-	    "  andor_textureCoord = andor_vtextureCoord;",
-	    "  gl_Position = (andor_modelviewprojectionmatrix) * andor_vertexPosition;",
-	    "  andor_main();",
-	    "}"
+		"attribute vec3 andor_normal;",
+		"attribute vec2 andor_vtextureCoord;",
+		"attribute vec4 andor_vcolour;",
+		//The matrices
+		"uniform mat4 andor_modelmatrix;",
+		"uniform mat4 andor_viewmatrix;",
+		"uniform mat4 andor_projectionmatrix;",
+		"uniform mat4 andor_modelviewprojectionmatrix;",
+		"uniform mat4 andor_normalmatrix;",
+		//The colour and texture coordinate passed to the fragment shader
+		"varying vec4 andor_colour;",
+		"varying vec2 andor_textureCoord;",
+		//Declare the andor_main method
+		"void andor_main();",
+		//The main method
+		"void main() {",
+		//Assign the colour and texture coordinate to be passed to the fragment shader
+		"  andor_colour = andor_vcolour;",
+		"  andor_textureCoord = andor_vtextureCoord;",
+		//Calculate the correct position for the current vertex
+		"  gl_Position = andor_modelviewprojectionmatrix * andor_vertexPosition;",
+		//Call the andor_main method
+		"  andor_main();",
+		"}"
 	};
 	
 	public static final String[] pcFragmentShaderCode = new String[] {
+		//The texture/colour/texture coordinate variables
 		"uniform sampler2D andor_texture;",
 		"uniform float andor_hasTexture;",
 	    "varying vec4 andor_colour;",
 	    "varying vec2 andor_textureCoord;",
+	    //Declare the andor_main method
 	    "void andor_main();",
+	    //The main method
 	    "void main() {",
+	    //Check to see whether a texture has been set
 	    "  if (andor_hasTexture > 0.5) {",
+	    //Calculate the fragment colour based on the texture and the colour given from the vertex shader
 	    "    gl_FragColor = andor_colour * texture2D(andor_texture, andor_textureCoord);",
 	    "  } else {",
+	    //Calculate the fragment colour based on the colour given from the vertex shader
 	    "    gl_FragColor = andor_colour;",
 	    "  }",
 	    "  andor_main();",

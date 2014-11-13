@@ -15,6 +15,7 @@ public class Matrix {
 	public static Matrix4D viewMatrix = new Matrix4D();
 	public static Matrix4D projectionMatrix = new Matrix4D();
 	public static Matrix4D modelViewProjectionMatrix = new Matrix4D();
+	public static Matrix4D normalMatrix = new Matrix4D();
 	
 	/* The static method used to load an identity matrix */
 	public static void loadIdentity(Matrix4D matrix) {
@@ -51,17 +52,19 @@ public class Matrix {
 		return matrix;
 	}
 	
-	/* The static method used to multiply two matrices together */
-	//2D works here also (But translation doesn't work)
-	public static Matrix4D multiply(Matrix4D matrixA, Matrix4D matrixB) {
+	/* The static method used to multiply a matrix by a single scalar quantity */
+	public static Matrix4D multiply(Matrix4D matrix, float value) {
+		//The result matrix
 		Matrix4D result = new Matrix4D();
-		for (int a = 0; a < result.values.length; a++)
-			result.values[a] = matrixA.values[a] * matrixB.values[a];
+		//Go through each value within the matrix
+		for (int a = 0; a < matrix.values.length; a++)
+			result.values[a] = matrix.values[a] * value;
+		//Return the result
 		return result;
 	}
 	
 	/* The static method used to multiply two matrices together */
-	public static Matrix4D multiplyMatrices(Matrix4D matrixA, Matrix4D matrixB) {
+	public static Matrix4D multiply(Matrix4D matrixA, Matrix4D matrixB) {
 		//Create a new matrix
 		Matrix4D matrix = new Matrix4D(new float[][] {
 				new float[] {
@@ -120,7 +123,7 @@ public class Matrix {
 				new float[] { 0, 0, 0, 1 },
 		});
 		//Add onto the matrix and return the result
-		return multiplyMatrices(matrix, transform);
+		return multiply(matrix, transform);
 	}
 	
 	/* The static method used to rotate a matrix */
@@ -154,7 +157,7 @@ public class Matrix {
 			});
 		}
 		//Add onto the matrix and return the result
-		return multiplyMatrices(matrix, transform);
+		return multiply(matrix, transform);
 	}
 	
 	/* The static method used to scale a matrix */
@@ -167,7 +170,7 @@ public class Matrix {
 				new float[] { 0, 0, 0, 1 },
 		});
 		//Add onto the matrix and return the result
-		return multiplyMatrices(matrix, transform);
+		return multiply(matrix, transform);
 	}
 	
 	/* The static method used to return an orthographic projection matrix */
@@ -204,6 +207,110 @@ public class Matrix {
 				new float[] { (right + left) / (right - left), (top + bottom) / (top - bottom), -(zFar + zNear) / (zFar - zNear), -1 },
 				new float[] { 0, 0, -2 * zFar * zNear / (zFar - zNear), 0 },
 		});
+	}
+	
+	/* The static method used to calculate the inverse of a matrix */
+	public static Matrix4D invert(Matrix4D matrix) {
+		//Get the values of the matrix (Transposed)
+		float mat0 = matrix.values[0];
+		float mat4 = matrix.values[1];
+		float mat8 = matrix.values[2];
+		float mat12 = matrix.values[3];
+		
+		float mat1 = matrix.values[4];
+		float mat5 = matrix.values[5];
+		float mat9 = matrix.values[6];
+		float mat13 = matrix.values[7];
+		
+		float mat2 = matrix.values[8];
+		float mat6 = matrix.values[9];
+		float mat10 = matrix.values[10];
+		float mat14 = matrix.values[11];
+		
+		float mat3  = matrix.values[12];
+		float mat7  = matrix.values[13];
+		float mat11 = matrix.values[14];
+		float mat15 = matrix.values[15];
+
+		//Calculate the pairs
+		float mp0 = mat10 * mat15;
+		float mp1 = mat11 * mat14;
+		float mp2 = mat9 * mat15;
+		float mp3 = mat11 * mat13;
+		float mp4 = mat9 * mat14;
+		float mp5 = mat10 * mat13;
+		float mp6 = mat8 * mat15;
+		float mp7 = mat11 * mat12;
+		float mp8 = mat8 * mat14;
+		float mp9 = mat10 * mat12;
+		float mp10 = mat8 * mat13;
+		float mp11 = mat9 * mat12;
+		
+		float scof0 = mat2 * mat7;
+		float scof1 = mat3 * mat6;
+		float scof2 = mat1 * mat7;
+		float scof3 = mat3 * mat5;
+		float scof4 = mat1 * mat6;
+		float scof5 = mat2 * mat5;
+		float scof6 = mat0 * mat7;
+		float scof7 = mat3 * mat4;
+		float scof8 = mat0 * mat6;
+		float scof9 = mat2 * mat4;
+		float scof10 = mat0 * mat5;
+		float scof11 = mat1 * mat4;
+	
+		//Calculate cofactors
+		float fcof0 = (mp0 * mat5 + mp3 * mat6 + mp4 * mat7) - (mp1 * mat5 + mp2 * mat6 + mp5 * mat7);
+		float fcof1 = (mp1 * mat4 + mp6 * mat6 + mp9 * mat7) - (mp0 * mat4 + mp7 * mat6 + mp8 * mat7);
+		float fcof2 = (mp2 * mat4 + mp7 * mat5 + mp10 * mat7) - (mp3 * mat4 + mp6 * mat5 + mp11 * mat7);
+		float fcof3 = (mp5 * mat4 + mp8 * mat5 + mp11 * mat6) - (mp4 * mat4 + mp9 * mat5 + mp10 * mat6);
+		float fcof4 = (mp1 * mat1 + mp2 * mat2 + mp5 * mat3) - (mp0 * mat1 + mp3 * mat2 + mp4 * mat3);
+		float fcof5 = (mp0 * mat0 + mp7 * mat2 + mp8 * mat3) - (mp1 * mat0 + mp6 * mat2 + mp9 * mat3);
+		float fcof6 = (mp3 * mat0 + mp6 * mat1 + mp11 * mat3) - (mp2 * mat0 + mp7 * mat1 + mp10 * mat3);
+		float fcof7 = (mp4 * mat0 + mp9 * mat1 + mp10 * mat2) - (mp5 * mat0 + mp8 * mat1 + mp11 * mat2);
+	
+		float fcof8 = (scof0 * mat13 + scof3 * mat14 + scof4 * mat15) - (scof1 * mat13 + scof2 * mat14 + scof5 * mat15);
+		float fcof9 = (scof1 * mat12 + scof6 * mat14 + scof9 * mat15) - (scof0 * mat12 + scof7 * mat14 + scof8 * mat15);
+		float fcof10 = (scof2 * mat12 + scof7 * mat13 + scof10 * mat15) - (scof3 * mat12 + scof6 * mat13 + scof11 * mat15);
+		float fcof11 = (scof5 * mat12 + scof8 * mat13 + scof11 * mat14) - (scof4 * mat12 + scof9 * mat13 + scof10 * mat14);
+		float fcof12 = (scof2 * mat10 + scof5 * mat11 + scof1 * mat9 ) - (scof4 * mat11 + scof0 * mat9 + scof3 * mat10);
+		float fcof13 = (scof8 * mat11 + scof0 * mat8 + scof7 * mat10) - (scof6 * mat10 + scof9 * mat11 + scof1 * mat8);
+		float fcof14 = (scof6 * mat9 + scof11 * mat11 + scof3 * mat8) - (scof10 * mat11 + scof2 * mat8 + scof7 * mat9);
+		float fcof15 = (scof10 * mat10 + scof4 * mat8 + scof9 * mat9) - (scof8 * mat9 + scof11 * mat10 + scof5 * mat8);
+
+		//Calculate the determinant
+		float determinant = mat0 * fcof0 + mat1 * fcof1 + mat2 * fcof2 + mat3 * fcof3;
+		
+		//Make sure the determinant isn't 0
+		if (determinant == 0.0f)
+			//Return nothing
+			return new Matrix4D();
+		
+		//The inverted matrix
+		Matrix4D inverse = new Matrix4D();
+
+		//Calculate the matrix inverse
+		float value = 1.0f / determinant;
+		inverse.values[0] = fcof0 * value;
+		inverse.values[1] = fcof1 * value;
+		inverse.values[2] = fcof2 * value;
+		inverse.values[3] = fcof3 * value;
+
+		inverse.values[4] = fcof4 * value;
+		inverse.values[5] = fcof5 * value;
+		inverse.values[6] = fcof6 * value;
+		inverse.values[7] = fcof7 * value;
+
+		inverse.values[8] = fcof8 * value;
+		inverse.values[9] = fcof9 * value;
+		inverse.values[10] = fcof10 * value;
+		inverse.values[11] = fcof11 * value;
+
+		inverse.values[12] = fcof12 * value;
+		inverse.values[13] = fcof13 * value;
+		inverse.values[14] = fcof14 * value;
+		inverse.values[15] = fcof15 * value;
+		return inverse;
 	}
 	
 }

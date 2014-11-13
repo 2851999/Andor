@@ -13,14 +13,10 @@ public class Font {
 	/* The bitmap font */
 	public BitmapText bitmapFont;
 	
-	/* The colour */
-	public Colour colour;
-	
 	/* The constructor with the font */
 	public Font(BitmapText bitmapFont) {
 		//Assign the variables
 		this.bitmapFont = bitmapFont;
-		this.colour = Colour.WHITE;
 	}
 	
 	/* The method used to render some text */
