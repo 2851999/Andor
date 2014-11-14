@@ -20,11 +20,12 @@ import org.andor.core.input.InputController;
 import org.andor.core.input.InputManagerController;
 import org.andor.core.input.MouseEvent;
 import org.andor.utils.Console;
+import org.andor.utils.ControlBindingUtils;
 import org.andor.utils.ControllerUtils;
 
 public class ControllerTest extends BaseGame implements ControlInputListener {
 	
-	public static final String PATH = "C:/Users/Joel/Desktop/config.txt";
+	public static final String PATH = "";
 	
 	/* The controller */
 	public InputController controller;
@@ -47,10 +48,11 @@ public class ControllerTest extends BaseGame implements ControlInputListener {
 		this.controller = controllers[controllers.length - 1];
 		//Add the controller
 		InputManagerController.addController(this.controller);
-		bindings = new ControlBindings();
-		bindings.addListener(this);
 		//bindings.add("Test", ControlBinding.TYPE_AXIS, controller);
-		bindings.load("C:/Andor/config.txt", true, controller);
+		ControlBindingUtils.currentController = controller;
+		
+		bindings = ControlBindingUtils.load("C:/Andor/config.txt", true);
+		bindings.addListener(this);
 	}
 	
 	/* The method called to update the game */
@@ -86,7 +88,7 @@ public class ControllerTest extends BaseGame implements ControlInputListener {
 		else if (e.rightButton)
 			bindings.get("Test").bindingAxis.setNeg();
 		else if (e.middleButton)
-			bindings.save(PATH);
+			ControlBindingUtils.save(bindings, PATH);
 	}
 	
 	public void onAxisChange(ControlBindingAxis binding) {

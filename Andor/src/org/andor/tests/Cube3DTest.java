@@ -44,6 +44,7 @@ import org.andor.core.model.Model;
 import org.andor.core.model.OBJLoader;
 import org.andor.utils.ClampUtils;
 import org.andor.utils.Console;
+import org.andor.utils.ControlBindingUtils;
 import org.andor.utils.ControllerUtils;
 import org.andor.utils.FontUtils;
 import org.andor.utils.OpenGLUtils;
@@ -124,14 +125,14 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		//Set wireframe to false
 		wireframe = false;
 		test = new Shader();
-		test.load("C:/Andor/light2", true);
+		test.load("C:/Andor/lighting/directional", true);
 		test.create();
 		//Lock the mouse
 		Mouse.lock();
 		
 		//Get all of the available controllers
 		InputController[] controllers = ControllerUtils.getAvailableControllers();
-		//Go through the controllers
+		//Go through the controllers`
 		for (InputController controller : controllers) {
 			//Print out some information
 			Console.println("Name: " + controller.name);
@@ -142,12 +143,8 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 			if (controller.getName().equals("SPEEDLINK Strike 2 Gamepad"))
 				this.controller = controller;
 		}
-		//Add the controller
-		InputManagerController.addController(this.controller);
-		bindings = new ControlBindings();
-		bindings.addListener(this);
-		bindings.load("C:/Andor/gamepadconfig.txt", true, controller);
-		bindings.setController(this.controller);
+		if (this.controller != null)
+			InputManagerController.addController(this.controller);
 		
 		audio = AudioLoader.load("C:/Andor/test2.wav", true);
 		
@@ -163,6 +160,11 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		this.bitmapText = new BitmapText(ImageLoader.loadImage("C:/Andor/test2.png", true), 40, 16);
 		this.bitmapText.update("Hello World");
 		this.bitmapText.position = new Vector2D(100, 100);
+		
+		//ControlBindingUtils.save(this.bindings, "C:/Andor/Controller/gamepad.txt");
+		ControlBindingUtils.currentController = this.controller;
+		this.bindings = ControlBindingUtils.load("C:/Andor/Controller/gamepad.txt", true);
+		this.bindings.addListener(this);
 	}
 	
 	/* The method called when the game loop has started */
