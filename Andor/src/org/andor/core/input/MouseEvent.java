@@ -24,33 +24,34 @@ public class MouseEvent extends Event {
 	public boolean rightButton = false;
 	public boolean middleButton = false;
 	
+	/* The mouse button that was pressed */
+	public int mouseButton;
+	
 	/* The position of the mouse at the time of this event */
 	public float x;
 	public float y;
 	
 	/* The constructor */
-	public MouseEvent(boolean leftButton, boolean rightButton, boolean middleButton) {
+	public MouseEvent(int button) {
 		//Call the super constructor
 		super(EVENT_NAME, EVENT_DESCRIPTION);
 		//Assign the variables
-		this.leftButton = leftButton;
-		this.rightButton = rightButton;
-		this.middleButton = middleButton;
+		this.leftButton = Mouse.leftButton;
+		this.rightButton = Mouse.rightButton;
+		this.middleButton = Mouse.middleButton;
+		this.mouseButton = button;
 		this.x = Mouse.x;
 		this.y = Mouse.y;
 	}
 	
 	/* The method used to check whether a certain button was pressed */
 	public boolean wasButtonDown(int button) {
-		//Check what button it is and return the value
-		if (button == Mouse.LEFT_BUTTON)
-			return leftButton;
-		else if (button == Mouse.RIGHT_BUTTON)
-			return rightButton;
-		else if (button == Mouse.MIDDLE_BUTTON)
-			return middleButton;
-		else
-			return false;
+		return this.mouseButton == button;
+	}
+	
+	/* The method that returns the button that was pressed at the time of this event */
+	public int getButton() {
+		return this.mouseButton;
 	}
 	
 }

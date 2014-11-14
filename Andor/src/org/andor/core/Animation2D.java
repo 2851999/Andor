@@ -52,7 +52,6 @@ public class Animation2D {
 		this.images = images;
 		this.timeBetweenFrame = timeBetweenFrame;
 		this.repeat = repeat;
-		this.repeat = false;
 		this.timer = new Timer();
 		//Reset the animation
 		this.reset();

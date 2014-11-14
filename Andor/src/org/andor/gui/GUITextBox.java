@@ -23,6 +23,7 @@ import org.andor.core.input.KeyboardEvent;
 import org.andor.core.input.KeyboardShortcut;
 import org.andor.core.input.KeyboardShortcutListener;
 import org.andor.core.input.KeyboardShortcuts;
+import org.andor.core.input.Mouse;
 import org.andor.core.input.MouseEvent;
 import org.andor.core.input.MouseMotionEvent;
 import org.andor.core.input.ScrollEvent;
@@ -365,7 +366,7 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface, 
 		if (! this.mouseHoveringInside)
 			//Set selected to false
 			this.selected = false;
-		else if (this.selected) {
+		else if (this.selected && e.getButton() == Mouse.LEFT_BUTTON) {
 			this.moveCursor(e.x);
 			//Reset the selection
 			this.resetSelection();

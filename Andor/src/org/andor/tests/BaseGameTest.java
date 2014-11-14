@@ -54,17 +54,17 @@ public class BaseGameTest extends BaseGame {
 	
 	/* The method called when a button on the mouse is pressed */
 	public void onMousePressed(MouseEvent e) {
-		Logger.log("BaseGameTest", "The mouse was pressed");
+		Logger.log("BaseGameTest", "The mouse was pressed " + e.getButton());
 	}
 	
 	/* The method called when a button on the mouse is released */
 	public void onMouseReleased(MouseEvent e)  {
-		Logger.log("BaseGameTest", "The mouse was released");
+		Logger.log("BaseGameTest", "The mouse was released " + e.getButton());
 	}
 	
 	/* The method called when a button on the mouse is clicked */
 	public void onMouseClicked(MouseEvent e) {
-		Logger.log("BaseGameTest", "The mouse was clicked");
+		Logger.log("BaseGameTest", "The mouse was clicked " + e.getButton());
 	}
 	
 	/* The method called when the mouse moves */
