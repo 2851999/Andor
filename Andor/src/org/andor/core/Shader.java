@@ -9,7 +9,6 @@
 package org.andor.core;
 
 import org.andor.utils.BufferUtils;
-import org.andor.utils.ShaderUtils;
 import org.lwjgl.opengl.GL20;
 
 public class Shader {
@@ -72,12 +71,6 @@ public class Shader {
 		GL20.glDetachShader(this.program , shader);
 	}
 	
-	/* The method used to load the shaders and attach it to this program */
-	public void load(String path, boolean external) {
-		this.vertexShader = ShaderUtils.createShader(path + ".vs", external, Shader.VERTEX_SHADER);
-		this.fragmentShader = ShaderUtils.createShader(path + ".fs", external, Shader.FRAGMENT_SHADER);
-	}
-	
 	/* The method used to set a specific value in this shader */
 	public void setUniformf(String variableName, float v1) {
 		//Set the value in the shader
@@ -117,13 +110,13 @@ public class Shader {
 	/* The method used to set a specific value in this shader */
 	public void setUniformi(String variableName, int[] arrayValues) {
 		//Set the value in the shader
-		GL20.glUniform1(this.getUniformLocation(variableName), BufferUtils.createBuffer(arrayValues));
+		GL20.glUniform1(this.getUniformLocation(variableName), BufferUtils.createFlippedBuffer(arrayValues));
 	}
 
 	/* The method used to set a specific value in this shader */
 	public void setUniformf(String variableName, float[] arrayValues) {
 		//Set the value in the shader
-		GL20.glUniform1(this.getUniformLocation(variableName), BufferUtils.createBuffer(arrayValues));
+		GL20.glUniform1(this.getUniformLocation(variableName), BufferUtils.createFlippedBuffer(arrayValues));
 	}
 	
 	/* The method used to get the location of a uniform variable */

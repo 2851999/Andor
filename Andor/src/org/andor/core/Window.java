@@ -26,6 +26,8 @@ public class Window {
 	public static void create() {
 		//Catch any errors
 		try {
+			//Set the undecorated property
+			System.setProperty("org.lwjgl.opengl.Window.undecorated", "" + Settings.Window.Undecorated);
 			//Set the displays title
 			Display.setTitle(Settings.Window.Title);
 			//Set the correct display mode

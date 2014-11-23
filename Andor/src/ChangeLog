@@ -1,4 +1,31 @@
 ------------------------------------------------------
+Release 2 | Beta 1 | Development 1 | Experimental 1
+
+* Added Light3D
+* Added Resources in Settings
+* Added 'Undecorated' setting in the window settings
+
+* NOTE: When using Android, you should put the
+  resources folder into the assets folder
+
+------------------------------------------------------
+Release 2 | Beta 1 | Development 1 | Experimental 0
+
+* Added ControlBindingUtils
+* Added support for multiplied buttons on the mouse
+* Added normal matrix to the vertex shader
+* Added colours to font
+
+* Changed control binding saving/loading
+
+* Fixed bug: Animation2D didn't repeat an animation
+  when 'repeat' was set to true
+* Fixed bug: GUITextBox would move the cursor no
+  matter what mouse button was pressed
+* Fixed bug: 3D sound system didn't take notice
+  of direction
+
+------------------------------------------------------
 Release 2 | Beta 1 | Development 0 | Experimental 3
 
 * Added ControlBindingUtils

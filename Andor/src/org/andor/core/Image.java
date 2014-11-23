@@ -103,6 +103,7 @@ public class Image {
 		//Set the minification and magnification values
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST);
+		
 		//Add this image to the list
 		allImages.add(this);
 	}
@@ -125,20 +126,21 @@ public class Image {
 		this.textureId = h[0];
 		
 		//Bind the texture
-		GLES20.glBindTexture(GL11.GL_TEXTURE_2D, this.textureId);
+		GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, this.textureId);
 		
 		//Enable 2D textures
-		GLES20.glEnable(GL11.GL_TEXTURE_2D);
+		GLES20.glEnable(GLES20.GL_TEXTURE_2D);
 		
 		//Setup this image
-		GLUtils.texImage2D(GL11.GL_TEXTURE_2D, 0, this.bitmap, 0);
+		GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, this.bitmap, 0);
 		
 		//The bitmap is no longer needed so recycle it
 		this.bitmap.recycle();
 		
 		//Set the minification and magnification values
-		GLES20.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
-		GLES20.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST);
+		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_NEAREST);
+		GLES20.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_NEAREST);
+		
 		//Add this image to the list
 		allImages.add(this);
 	}
