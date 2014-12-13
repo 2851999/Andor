@@ -24,7 +24,6 @@ import org.andor.core.ParticleEffect;
 import org.andor.core.ParticleEmitter;
 import org.andor.core.RenderableObject3D;
 import org.andor.core.Settings;
-import org.andor.core.Shader;
 import org.andor.core.SkyBox;
 import org.andor.core.Vector2D;
 import org.andor.core.Vector3D;
@@ -48,7 +47,6 @@ import org.andor.utils.ControlBindingUtils;
 import org.andor.utils.ControllerUtils;
 import org.andor.utils.FontUtils;
 import org.andor.utils.OpenGLUtils;
-import org.andor.utils.ShaderUtils;
 import org.lwjgl.opengl.GL11;
 
 public class Cube3DTest extends BaseGame implements ControlInputListener {
@@ -70,8 +68,6 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 	
 	/* The font */
 	public Font font;
-	
-	public Shader test;
 	
 	/* The boolean that determine whether wireframe is on or off */
 	public boolean wireframe;
@@ -130,7 +126,6 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		
 		//Set wireframe to false
 		wireframe = false;
-		test = ShaderUtils.createShader("C:/Andor/lighting/forward/directionallight", true);
 		//Lock the mouse
 		Mouse.lock();
 		
@@ -150,7 +145,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		if (this.controller != null)
 			InputManagerController.addController(this.controller);
 		
-		audio = AudioLoader.load("C:/Andor/test3.wav", true);
+		audio = AudioLoader.load("C:/Andor/test2.wav", true);
 		
 		this.particleEmitter = new ParticleEmitter();
 		this.particleEmitter.particleColour = Colour.RED;
@@ -170,9 +165,9 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		this.bindings = ControlBindingUtils.load("C:/Andor/Controller/gamepad.txt", true);
 		this.bindings.addListener(this);
 		
-		this.light0 = new Light3D(Light3D.TYPE_DIRECTIONAL, 0, new Vector3D(1, 1, 1), new Vector3D(0.1f, 0.1f, 0.1f), new Vector3D(1, 0, 0), new Vector3D(1, 1, 1));
-		this.light1 = new Light3D(Light3D.TYPE_DIRECTIONAL, 1, new Vector3D(1, -1, 1), new Vector3D(0.1f, 0.1f, 0.1f), new Vector3D(0, 1, 0), new Vector3D(1, 1, 1));
-		this.light2 = new Light3D(Light3D.TYPE_DIRECTIONAL, 2, new Vector3D(1, 1, -1), new Vector3D(0.1f, 0.1f, 0.1f), new Vector3D(0, 0, 1), new Vector3D(1, 1, 1));
+		this.light0 = Light3D.createVertexSpot(0, new Vector3D(0, 8, -10), new Colour(0.1f, 0.1f, 0.1f), new Colour(1, 0, 0), new Colour(1, 1, 1), new Vector3D(0, -1, 0), 50);
+		this.light1 = Light3D.createVertexDirectional(1, new Vector3D(1, 0, 1), new Colour(0.1f, 0.1f, 0.1f), new Colour(0, 1, 0), new Colour(1, 1, 1));
+		this.light2 = Light3D.createVertexPoint(2, new Vector3D(0, 3, -7), new Colour(0.1f, 0.1f, 0.1f), new Colour(0, 0, 1), new Colour(1, 1, 1));
 	}
 	
 	/* The method called when the game loop has started */
@@ -206,9 +201,9 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		
 		this.particleEmitter.update();
 		
-		//Vector3D change = new Vector3D(0, 0.06f, 0);
-		//change.multiply(getDelta());
-		//this.model.rotation.add(change);
+		Vector3D change = new Vector3D(0, 0.06f, 0);
+		change.multiply(getDelta());
+		this.model.rotation.add(change);
 	}
 	
 	/* The method called when the game loop is rendered */
@@ -301,8 +296,6 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		else if (e.getCode() == Keyboard.KEY_F11_CODE) {
 			Settings.Window.Fullscreen = ! Settings.Window.Fullscreen;
 			Window.updateDisplaySettings();
-		} else if (e.getCode() == Keyboard.KEY_F1_CODE) {
-			test = ShaderUtils.createShader("C:/Andor/lighting/directionallight", true);
 		}
 	}
 	
