@@ -101,7 +101,7 @@ public class ShaderUtils {
 				if (GL20.glGetShaderi(shader, GL20.GL_COMPILE_STATUS) == GL11.GL_FALSE) {
 					//Log an error message
 					Logger.log("Andor - ShaderUtils createShader()", "Error compiling the shader", Log.ERROR);
-					Logger.log("Andor - ShaderInformation", getLogInformation(shader), Log.ERROR);
+					Logger.log("Andor - ShaderInformation", getShaderLogInformation(shader), Log.ERROR);
 				}
 			} else {
 				//Convert the shader type
@@ -160,10 +160,16 @@ public class ShaderUtils {
 		return shader;
 	}
 
-	/* The static method used to get any log information */
-	public static String getLogInformation(int shader) {
+	/* The static method used to get any log information from a shader */
+	public static String getShaderLogInformation(int shader) {
 		//Return the information
-		return GL20.glGetShaderInfoLog(shader, 1000);
+		return GL20.glGetShaderInfoLog(shader, GL20.glGetShaderi(shader, GL20.GL_INFO_LOG_LENGTH));
+	}
+	
+	/* The static method used to get any log information from a program */
+	public static String getProgramLogInformation(int shader) {
+		//Return the information
+		return GL20.glGetProgramInfoLog(shader, GL20.glGetProgrami(shader, GL20.GL_INFO_LOG_LENGTH));
 	}
 	
 	/* The static method used to combine two pieces of shader code */

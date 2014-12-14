@@ -22,6 +22,9 @@ public class Light3D extends Object3D {
 	public static final int TYPE_VERTEX_DIRECTIONAL = 1;
 	public static final int TYPE_VERTEX_POINT = 2;
 	public static final int TYPE_VERTEX_SPOT = 3;
+	public static final int TYPE_FRAGMENT_DIRECTIONAL = 4;
+	public static final int TYPE_FRAGMENT_POINT = 5;
+	public static final int TYPE_FRAGMENT_SPOT = 6;
 	
 	/* The ambient, diffuse and specular values of this light */
 	public Colour ambient;

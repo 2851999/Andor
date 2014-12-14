@@ -8,7 +8,11 @@
 
 package org.andor.core;
 
+import org.andor.core.logger.Log;
+import org.andor.core.logger.Logger;
 import org.andor.utils.BufferUtils;
+import org.andor.utils.ShaderUtils;
+import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 
 public class Shader {
@@ -62,6 +66,12 @@ public class Shader {
 		//Attach the shader to the program
 		GL20.glAttachShader(this.program , shader);
 		GL20.glLinkProgram(this.program);
+		//Check for an error
+		if (GL20.glGetProgrami(this.program, GL20.GL_LINK_STATUS) == GL11.GL_FALSE) {
+			//Log an error message
+			Logger.log("Andor - ShaderUtils createShader()", "Error linking the shader", Log.ERROR);
+			Logger.log("Andor - ShaderInformation", ShaderUtils.getProgramLogInformation(this.program), Log.ERROR);
+		}
 		GL20.glValidateProgram(this.program);
 	}
 	

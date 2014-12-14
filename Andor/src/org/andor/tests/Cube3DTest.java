@@ -120,9 +120,10 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		}, 1, 1, 1, Colour.WHITE);
 		bigCube = Object3DBuilder.createCube(10, 10, 10, new Colour(130f / 255f, 176f / 255f, 255f / 255f, 0.8f));
 		//Load the model
-		this.model = OBJLoader.loadModel(path + "sphere.obj", true);
+		this.model = OBJLoader.loadModel(path + "dragon.obj", true);
 		this.model.prepare();
 		this.model.position.z = -10;
+		this.model.scale.multiply(4f);
 		
 		//Set wireframe to false
 		wireframe = false;
@@ -131,7 +132,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		
 		//Get all of the available controllers
 		InputController[] controllers = ControllerUtils.getAvailableControllers();
-		//Go through the controllers`
+		//Go through the controllers
 		for (InputController controller : controllers) {
 			//Print out some information
 			Console.println("Name: " + controller.name);
@@ -199,11 +200,11 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		this.audio.sourcePosition.multiply(new Vector3D(1, 1, -1));
 		this.audio.update();
 		
-		this.particleEmitter.update();
+		//this.particleEmitter.update();
 		
 		Vector3D change = new Vector3D(0, 0.06f, 0);
 		change.multiply(getDelta());
-		this.model.rotation.add(change);
+		//this.model.rotation.add(change);
 	}
 	
 	/* The method called when the game loop is rendered */
@@ -296,6 +297,14 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		else if (e.getCode() == Keyboard.KEY_F11_CODE) {
 			Settings.Window.Fullscreen = ! Settings.Window.Fullscreen;
 			Window.updateDisplaySettings();
+		} else if (e.getCode() == Keyboard.KEY_LBRACKET_CODE) {
+			this.light0.type = Light3D.TYPE_VERTEX_SPOT;
+			this.light1.type = Light3D.TYPE_VERTEX_DIRECTIONAL;
+			this.light2.type = Light3D.TYPE_VERTEX_POINT;
+		} else if (e.getCode() == Keyboard.KEY_RBRACKET_CODE) {
+			this.light0.type = Light3D.TYPE_FRAGMENT_SPOT;
+			this.light1.type = Light3D.TYPE_FRAGMENT_DIRECTIONAL;
+			this.light2.type = Light3D.TYPE_FRAGMENT_POINT;
 		}
 	}
 	
@@ -335,7 +344,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 	public static void main(String[] args) {
 		//Make the game fullscreen
 		Settings.Window.Fullscreen = false;
-		Settings.Window.Undecorated = true;
+		Settings.Window.Undecorated = false;
 		//Enable VSync
 		Settings.Video.VSync = true;
 		Settings.Video.MaxFPS = 60;

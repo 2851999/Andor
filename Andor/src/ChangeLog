@@ -1,4 +1,17 @@
 ------------------------------------------------------
+Release 2 | Beta 1 | Development 1 | Experimental 3
+
+* Added fragment lighting
+
+* Fixed bug: Scaling a 3D object resulted in it's
+  position being changed
+* Fixed bug: Controllers didn't work properly with
+  ControlBindings unless the controller was manually
+  set
+* NOTE: Linker errors are now also detected in
+  shader programs
+
+------------------------------------------------------
 Release 2 | Beta 1 | Development 1 | Experimental 2
 
 * Added point light to Light3D

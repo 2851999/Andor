@@ -114,8 +114,13 @@ public class ControlBindingUtils {
 				//Get the type
 				int bindingType = Integer.parseInt(fileText.get(index).split(" ")[1]);
 				index++;
-				//Add a new binding
-				bindings.add(bindingName, bindingType);
+				//Check to see whether the controller has been set
+				if (currentController != null)
+					//Add a new binding using the controller
+					bindings.add(bindingName, bindingType, currentController);
+				else
+					//Add a new binding
+					bindings.add(bindingName, bindingType);
 				//Check for a binding axis or button
 				if (fileText.get(index).startsWith("Binding Axis: ")) {
 					//Get the data

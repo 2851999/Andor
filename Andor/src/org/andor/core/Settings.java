@@ -69,7 +69,7 @@ public class Settings {
 	public static class Resources {
 		public static String FONT_DEFAULT = "/resources/andor/defaultfont.png";
 		public static String SHADER_FORWARD_DEFAULT = "/resources/andor/shaders/render/forward/andorshader";
-		public static String SHADER_FORWARD_LIGHT = "/resources/andor/shaders/render/forward/lighting/light";
+		public static String SHADER_FORWARD_LIGHT = "/resources/andor/shaders/render/forward/lighting/lightfrag";
 	}
 	
 }
