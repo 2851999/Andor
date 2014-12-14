@@ -28,9 +28,6 @@ public class AndroidRenderer extends Renderer {
 	/* The default Android shader */
 	public static Shader defaultAndroidShader;
 	
-	/* The current shader */
-	public static Shader currentShader;
-	
 	/* The constructor with the render mode and the 
 	 * number of vertex values given */
 	public AndroidRenderer(int renderMode, int vertexValuesCount) {
@@ -40,8 +37,8 @@ public class AndroidRenderer extends Renderer {
 		//Setup the Android shader
 		if (defaultAndroidShader == null) {
 			defaultAndroidShader = new AndroidShader();
-			defaultAndroidShader.vertexShader = ShaderUtils.createShader(ArrayUtils.toStringList(ShaderUtils.androidVertexAndorMain), GLES20.GL_VERTEX_SHADER);
-			defaultAndroidShader.fragmentShader = ShaderUtils.createShader(ArrayUtils.toStringList(ShaderUtils.androidVertexAndorMain), GLES20.GL_FRAGMENT_SHADER);
+			defaultAndroidShader.vertexShader = ShaderUtils.createShader(ArrayUtils.toStringList(ShaderUtils.vertexAndorMain), GLES20.GL_VERTEX_SHADER);
+			defaultAndroidShader.fragmentShader = ShaderUtils.createShader(ArrayUtils.toStringList(ShaderUtils.vertexAndorMain), GLES20.GL_FRAGMENT_SHADER);
 			defaultAndroidShader.create();
 		}
 	}

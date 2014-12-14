@@ -99,14 +99,14 @@ public class RenderableObject3D extends Object3D {
 		Vector3D s = this.getScale();
 		//Save the current matrix
 		clone = Arrays.copyOf(Matrix.modelMatrix.getValues(), 16);
-		//Scale by the specified amount
-		Matrix.modelMatrix = Matrix.scale(Matrix.modelMatrix, s);
 		//Move to the correct position
 		Matrix.modelMatrix = Matrix.translate(Matrix.modelMatrix, p);
 		//Rotate by the specified amount
 		Matrix.modelMatrix = Matrix.rotate(Matrix.modelMatrix, r.x, 1, 0, 0);
 		Matrix.modelMatrix = Matrix.rotate(Matrix.modelMatrix, r.y, 0, 1, 0);
 		Matrix.modelMatrix = Matrix.rotate(Matrix.modelMatrix, r.z, 0, 0, 1);
+		//Scale by the specified amount
+		Matrix.modelMatrix = Matrix.scale(Matrix.modelMatrix, s);
 	}
 	
 	/* The method used to restore the current view matrix */

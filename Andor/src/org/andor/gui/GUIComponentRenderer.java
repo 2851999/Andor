@@ -50,7 +50,7 @@ public class GUIComponentRenderer {
 	public GUIComponentRenderer(RenderableObject2D entity) {
 		//Assign the variables
 		this.entity = entity;
-		if (! Settings.AndroidMode && defaultFont == null)
+		if (defaultFont == null)
 			this.font = Settings.Engine.DefaultFont;
 		else
 			this.font = defaultFont;

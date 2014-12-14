@@ -12,6 +12,7 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 import org.andor.core.Settings;
+import org.andor.utils.FontUtils;
 
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
@@ -32,6 +33,8 @@ public class AndroidDisplayRenderer implements GLSurfaceView.Renderer {
 		//Set the settings values
 		Settings.Window.Width = this.display.getWidth();
 		Settings.Window.Height = this.display.getHeight();
+		//Load the default font
+		Settings.Engine.DefaultFont = FontUtils.loadBitmapFont("resources/andor/defaultfont.png", 12);
 		//Create the game
 		this.display.activity.game.create();
 		//Start the game

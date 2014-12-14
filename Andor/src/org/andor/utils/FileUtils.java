@@ -135,8 +135,13 @@ public class FileUtils {
 				//Check to see whether Andor is currently running on Android
 				if (! Settings.AndroidMode)
 					fileReader = new InputStreamReader(FileUtils.class.getResourceAsStream(path));
-				else
+				else {
+					//Make sure the file path doesn't start with a forward slash
+					if (path.startsWith("/"))
+						//Remove the forward slash
+						path = path.substring(1);
 					fileReader = new InputStreamReader(BaseActivity.instance.getAssets().open(path));
+				}
 				//Create the buffered reader for the file reader
 				BufferedReader bufferedReader = new BufferedReader(fileReader);
 				//Read the file and get the text

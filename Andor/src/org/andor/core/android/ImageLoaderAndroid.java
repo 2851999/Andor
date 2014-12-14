@@ -34,6 +34,10 @@ public class ImageLoaderAndroid {
 			if (external) {
 				return null;
 			} else {
+				//Make sure the file path doesn't start with a forward slash
+				if (filePath.startsWith("/"))
+					//Remove the forward slash
+					filePath = filePath.substring(1);
 				//Load the image assuming it is in the 'assets' folder
 				return BitmapFactory.decodeStream(BaseActivity.instance.getAssets().open(filePath));
 			}

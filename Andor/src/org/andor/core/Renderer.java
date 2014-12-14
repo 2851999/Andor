@@ -99,16 +99,16 @@ public class Renderer {
 			//Setup the shader
 			if (defaultShader == null) {
 				defaultShader = new Shader();
-				defaultShader.vertexShader = ShaderUtils.createShader(ArrayUtils.toStringList(ShaderUtils.pcVertexAndorMain), Shader.VERTEX_SHADER);
-				defaultShader.fragmentShader = ShaderUtils.createShader(ArrayUtils.toStringList(ShaderUtils.pcFragmentAndorMain), Shader.FRAGMENT_SHADER);
+				defaultShader.vertexShader = ShaderUtils.createShader(ArrayUtils.toStringList(ShaderUtils.vertexAndorMain), Shader.VERTEX_SHADER);
+				defaultShader.fragmentShader = ShaderUtils.createShader(ArrayUtils.toStringList(ShaderUtils.fragmentAndorMain), Shader.FRAGMENT_SHADER);
 				defaultShader.create();
 			}
 		} else {
 			//Setup the shader
 			if (defaultShader == null) {
 				defaultShader = new AndroidShader();
-				defaultShader.vertexShader = ShaderUtils.createShader(ArrayUtils.toStringList(ShaderUtils.androidVertexAndorMain), Shader.VERTEX_SHADER);
-				defaultShader.fragmentShader = ShaderUtils.createShader(ArrayUtils.toStringList(ShaderUtils.androidFragmentAndorMain), Shader.FRAGMENT_SHADER);
+				defaultShader.vertexShader = ShaderUtils.createShader(ArrayUtils.toStringList(ShaderUtils.vertexAndorMain), Shader.VERTEX_SHADER);
+				defaultShader.fragmentShader = ShaderUtils.createShader(ArrayUtils.toStringList(ShaderUtils.fragmentAndorMain), Shader.FRAGMENT_SHADER);
 				defaultShader.create();
 			}
 		}

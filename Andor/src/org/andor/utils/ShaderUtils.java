@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.andor.core.Settings;
 import org.andor.core.Shader;
+import org.andor.core.android.AndroidShader;
 import org.andor.core.logger.Log;
 import org.andor.core.logger.Logger;
 import org.lwjgl.opengl.GL11;
@@ -13,125 +14,40 @@ import android.opengl.GLES20;
 
 public class ShaderUtils {
 	
-	/* The Android shader code */
-	public static final String[] androidVertexShaderCode = new String[] {
-		//The vertex/normal/texture coordinate/colour data for the vertex
-		"attribute vec4 andor_vertexPosition;",
-		"attribute vec3 andor_normal;",
-		"attribute vec2 andor_vtextureCoord;",
-		"attribute vec4 andor_vcolour;",
-		//The matrices
-		"uniform mat4 andor_modelmatrix;",
-		"uniform mat4 andor_viewmatrix;",
-		"uniform mat4 andor_projectionmatrix;",
-		"uniform mat4 andor_modelviewprojectionmatrix;",
-		"uniform mat4 andor_normalmatrix;",
-		//The colour and texture coordinate passed to the fragment shader
-		"varying vec4 andor_colour;",
-		"varying vec2 andor_textureCoord;",
-		//Declare the andor_main method
-		"void andor_main();",
-		//The main method
-		"void main() {",
-		//Assign the colour and texture coordinate to be passed to the fragment shader
-		"  andor_colour = andor_vcolour;",
-		"  andor_textureCoord = andor_vtextureCoord;",
-		//Calculate the correct position for the current vertex
-		"  gl_Position = andor_modelviewprojectionmatrix * andor_vertexPosition;",
-		//Call the andor_main method
-		"  andor_main();",
-		"}"
-	};
+	/* The shader code */
+	public static String[] vertexShaderCode;
+	public static String[] fragmentShaderCode;
 	
-	public static final String[] androidVertexAndorMain = new String[] {
+	public static final String[] vertexAndorMain = new String[] {
 		"void andor_main() {","}"
 	};
 	
-	public static final String[] androidFragmentShaderCode = new String[] {
-		//The texture/colour/texture coordinate variables
-		"uniform sampler2D andor_texture;",
-		"uniform float andor_hasTexture;",
-	    "varying vec4 andor_colour;",
-	    "varying vec2 andor_textureCoord;",
-	    //Declare the andor_main method
-	    "void andor_main();",
-	    //The main method
-	    "void main() {",
-	    //Check to see whether a texture has been set
-	    "  if (andor_hasTexture > 0.5) {",
-	    //Calculate the fragment colour based on the texture and the colour given from the vertex shader
-	    "    gl_FragColor = andor_colour * texture2D(andor_texture, andor_textureCoord);",
-	    "  } else {",
-	    //Calculate the fragment colour based on the colour given from the vertex shader
-	    "    gl_FragColor = andor_colour;",
-	    "  }",
-	    "  andor_main();",
-	    "}"
-	};
-	
-	public static final String[] androidFragmentAndorMain = new String[] {
+	public static final String[] fragmentAndorMain = new String[] {
 		"void andor_main() {","}"
 	};
 	
-	/* The pc shader code */
-	public static final String[] pcVertexShaderCode = new String[] {
-		//The vertex/normal/texture coordinate/colour data for the vertex
-		"attribute vec4 andor_vertexPosition;",
-		"attribute vec3 andor_normal;",
-		"attribute vec2 andor_vtextureCoord;",
-		"attribute vec4 andor_vcolour;",
-		//The matrices
-		"uniform mat4 andor_modelmatrix;",
-		"uniform mat4 andor_viewmatrix;",
-		"uniform mat4 andor_projectionmatrix;",
-		"uniform mat4 andor_modelviewprojectionmatrix;",
-		"uniform mat4 andor_normalmatrix;",
-		//The colour and texture coordinate passed to the fragment shader
-		"varying vec4 andor_colour;",
-		"varying vec2 andor_textureCoord;",
-		//Declare the andor_main method
-		"void andor_main();",
-		//The main method
-		"void main() {",
-		//Assign the colour and texture coordinate to be passed to the fragment shader
-		"  andor_colour = andor_vcolour;",
-		"  andor_textureCoord = andor_vtextureCoord;",
-		//Calculate the correct position for the current vertex
-		"  gl_Position = andor_modelviewprojectionmatrix * andor_vertexPosition;",
-		//Call the andor_main method
-		"  andor_main();",
-		"}"
-	};
+	/* The static method used to load the shaders and create a program */
+	public static Shader createShader(String path, boolean external) {
+		int vertexShader = ShaderUtils.createShader(path + ".vs", external, Shader.VERTEX_SHADER);
+		int fragmentShader = ShaderUtils.createShader(path + ".fs", external, Shader.FRAGMENT_SHADER);
+		//The shader
+		Shader shader;
+		//Check the Android setting
+		if (Settings.AndroidMode)
+			//Assign the shader
+			shader = new AndroidShader();
+		else
+			//Assign the shader
+			shader = new Shader();
+		//Attach the shaders
+		shader.vertexShader = vertexShader;
+		shader.fragmentShader = fragmentShader;
+		//Create the shader
+		shader.create();
+		//Return the shader
+		return shader;
+	}
 	
-	public static final String[] pcFragmentShaderCode = new String[] {
-		//The texture/colour/texture coordinate variables
-		"uniform sampler2D andor_texture;",
-		"uniform float andor_hasTexture;",
-	    "varying vec4 andor_colour;",
-	    "varying vec2 andor_textureCoord;",
-	    //Declare the andor_main method
-	    "void andor_main();",
-	    //The main method
-	    "void main() {",
-	    //Check to see whether a texture has been set
-	    "  if (andor_hasTexture > 0.5) {",
-	    //Calculate the fragment colour based on the texture and the colour given from the vertex shader
-	    "    gl_FragColor = andor_colour * texture2D(andor_texture, andor_textureCoord);",
-	    "  } else {",
-	    //Calculate the fragment colour based on the colour given from the vertex shader
-	    "    gl_FragColor = andor_colour;",
-	    "  }",
-	    "  andor_main();",
-	    "}"
-	};
-	
-	public static final String[] pcVertexAndorMain = new String[] {
-		"void andor_main() {","}"
-	};
-	
-	public static final String[] pcFragmentAndorMain = new String[] {
-		"void andor_main() {","}"
-	};
 	
 	/* The static method to create a shader from a file */
 	public static int createShader(String path, boolean external, int shaderType) {
@@ -141,6 +57,8 @@ public class ShaderUtils {
 	
 	/* The static method to create a shader */
 	public static int createShader(List<String> shaderCode, int shaderType) {
+		//Load the default shaders
+		loadDefaultShaders();
 		//The shader
 		int shader = 0;
 		//Try and catch statement
@@ -165,9 +83,9 @@ public class ShaderUtils {
 				String[] source1 = ArrayUtils.toStringArray(shaderCode);
 				String[] shaderSourceArray = null;
 				if (shaderType == GL20.GL_VERTEX_SHADER)
-					shaderSourceArray = combine(ShaderUtils.pcVertexShaderCode, source1);
+					shaderSourceArray = combine(ShaderUtils.vertexShaderCode, source1);
 				else if (shaderType == GL20.GL_FRAGMENT_SHADER)
-					shaderSourceArray = combine(ShaderUtils.pcFragmentShaderCode, source1);
+					shaderSourceArray = combine(ShaderUtils.fragmentShaderCode, source1);
 				//The shader source
 				StringBuilder shaderSource = new StringBuilder();
 				//Look at all of the shader file text
@@ -183,7 +101,7 @@ public class ShaderUtils {
 				if (GL20.glGetShaderi(shader, GL20.GL_COMPILE_STATUS) == GL11.GL_FALSE) {
 					//Log an error message
 					Logger.log("Andor - ShaderUtils createShader()", "Error compiling the shader", Log.ERROR);
-					Logger.log("Andor - ShaderInformation", getLogInformation(shader), Log.ERROR);
+					Logger.log("Andor - ShaderInformation", getShaderLogInformation(shader), Log.ERROR);
 				}
 			} else {
 				//Convert the shader type
@@ -205,9 +123,9 @@ public class ShaderUtils {
 				String[] source1 = ArrayUtils.toStringArray(shaderCode);
 				String[] shaderSourceArray = null;
 				if (shaderType == GLES20.GL_VERTEX_SHADER)
-					shaderSourceArray = combine(ShaderUtils.androidVertexShaderCode, source1);
+					shaderSourceArray = combine(ShaderUtils.vertexShaderCode, source1);
 				else if (shaderType == GLES20.GL_FRAGMENT_SHADER)
-					shaderSourceArray = combine(ShaderUtils.androidFragmentShaderCode, source1);
+					shaderSourceArray = combine(ShaderUtils.fragmentShaderCode, source1);
 				//The shader source
 				StringBuilder shaderSource = new StringBuilder();
 				//Look at all of the shader file text
@@ -242,10 +160,16 @@ public class ShaderUtils {
 		return shader;
 	}
 
-	/* The static method used to get any log information */
-	public static String getLogInformation(int shader) {
+	/* The static method used to get any log information from a shader */
+	public static String getShaderLogInformation(int shader) {
 		//Return the information
-		return GL20.glGetShaderInfoLog(shader, 1000);
+		return GL20.glGetShaderInfoLog(shader, GL20.glGetShaderi(shader, GL20.GL_INFO_LOG_LENGTH));
+	}
+	
+	/* The static method used to get any log information from a program */
+	public static String getProgramLogInformation(int shader) {
+		//Return the information
+		return GL20.glGetProgramInfoLog(shader, GL20.glGetProgrami(shader, GL20.GL_INFO_LOG_LENGTH));
 	}
 	
 	/* The static method used to combine two pieces of shader code */
@@ -254,6 +178,17 @@ public class ShaderUtils {
 		List<String> src2 = ArrayUtils.toStringList(source2);
 		src1.addAll(src2);
 		return ArrayUtils.toStringArray(src1);
+	}
+	
+	/* The static method used to load the default shaders */
+	public static void loadDefaultShaders() {
+		//Check to see whether they need loading
+		if (vertexShaderCode == null)
+			//Load the code
+			vertexShaderCode = ArrayUtils.toStringArray(FileUtils.read(Settings.Resources.SHADER_FORWARD_DEFAULT + ".vs", false));
+		else if (fragmentShaderCode == null)
+			//Load the code
+			fragmentShaderCode = ArrayUtils.toStringArray(FileUtils.read(Settings.Resources.SHADER_FORWARD_DEFAULT + ".fs", false));
 	}
 	
 }

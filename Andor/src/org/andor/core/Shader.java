@@ -8,8 +8,11 @@
 
 package org.andor.core;
 
+import org.andor.core.logger.Log;
+import org.andor.core.logger.Logger;
 import org.andor.utils.BufferUtils;
 import org.andor.utils.ShaderUtils;
+import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 
 public class Shader {
@@ -63,6 +66,12 @@ public class Shader {
 		//Attach the shader to the program
 		GL20.glAttachShader(this.program , shader);
 		GL20.glLinkProgram(this.program);
+		//Check for an error
+		if (GL20.glGetProgrami(this.program, GL20.GL_LINK_STATUS) == GL11.GL_FALSE) {
+			//Log an error message
+			Logger.log("Andor - ShaderUtils createShader()", "Error linking the shader", Log.ERROR);
+			Logger.log("Andor - ShaderInformation", ShaderUtils.getProgramLogInformation(this.program), Log.ERROR);
+		}
 		GL20.glValidateProgram(this.program);
 	}
 	
@@ -70,12 +79,6 @@ public class Shader {
 	public void detach(int shader) {
 		//Detach the shader from the program
 		GL20.glDetachShader(this.program , shader);
-	}
-	
-	/* The method used to load the shaders and attach it to this program */
-	public void load(String path, boolean external) {
-		this.vertexShader = ShaderUtils.createShader(path + ".vs", external, Shader.VERTEX_SHADER);
-		this.fragmentShader = ShaderUtils.createShader(path + ".fs", external, Shader.FRAGMENT_SHADER);
 	}
 	
 	/* The method used to set a specific value in this shader */
@@ -117,13 +120,13 @@ public class Shader {
 	/* The method used to set a specific value in this shader */
 	public void setUniformi(String variableName, int[] arrayValues) {
 		//Set the value in the shader
-		GL20.glUniform1(this.getUniformLocation(variableName), BufferUtils.createBuffer(arrayValues));
+		GL20.glUniform1(this.getUniformLocation(variableName), BufferUtils.createFlippedBuffer(arrayValues));
 	}
 
 	/* The method used to set a specific value in this shader */
 	public void setUniformf(String variableName, float[] arrayValues) {
 		//Set the value in the shader
-		GL20.glUniform1(this.getUniformLocation(variableName), BufferUtils.createBuffer(arrayValues));
+		GL20.glUniform1(this.getUniformLocation(variableName), BufferUtils.createFlippedBuffer(arrayValues));
 	}
 	
 	/* The method used to get the location of a uniform variable */

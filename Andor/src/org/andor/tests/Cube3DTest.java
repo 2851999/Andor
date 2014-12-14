@@ -23,9 +23,7 @@ import org.andor.core.Particle;
 import org.andor.core.ParticleEffect;
 import org.andor.core.ParticleEmitter;
 import org.andor.core.RenderableObject3D;
-import org.andor.core.Renderer;
 import org.andor.core.Settings;
-import org.andor.core.Shader;
 import org.andor.core.SkyBox;
 import org.andor.core.Vector2D;
 import org.andor.core.Vector3D;
@@ -40,6 +38,7 @@ import org.andor.core.input.Keyboard;
 import org.andor.core.input.KeyboardEvent;
 import org.andor.core.input.Mouse;
 import org.andor.core.input.MouseMotionEvent;
+import org.andor.core.lighting.Light3D;
 import org.andor.core.model.Model;
 import org.andor.core.model.OBJLoader;
 import org.andor.utils.ClampUtils;
@@ -70,8 +69,6 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 	/* The font */
 	public Font font;
 	
-	public Shader test;
-	
 	/* The boolean that determine whether wireframe is on or off */
 	public boolean wireframe;
 	
@@ -81,6 +78,10 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 	public ParticleEmitter particleEmitter;
 	
 	public BitmapText bitmapText;
+	
+	public Light3D light0;
+	public Light3D light1;
+	public Light3D light2;
 	
 	/* The constructor */
 	public Cube3DTest() {
@@ -119,20 +120,19 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		}, 1, 1, 1, Colour.WHITE);
 		bigCube = Object3DBuilder.createCube(10, 10, 10, new Colour(130f / 255f, 176f / 255f, 255f / 255f, 0.8f));
 		//Load the model
-		this.model = OBJLoader.loadModel(path + "monkey.obj", true);
+		this.model = OBJLoader.loadModel(path + "dragon.obj", true);
 		this.model.prepare();
 		this.model.position.z = -10;
+		this.model.scale.multiply(4f);
+		
 		//Set wireframe to false
 		wireframe = false;
-		test = new Shader();
-		test.load("C:/Andor/lighting/directional", true);
-		test.create();
 		//Lock the mouse
 		Mouse.lock();
 		
 		//Get all of the available controllers
 		InputController[] controllers = ControllerUtils.getAvailableControllers();
-		//Go through the controllers`
+		//Go through the controllers
 		for (InputController controller : controllers) {
 			//Print out some information
 			Console.println("Name: " + controller.name);
@@ -157,7 +157,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		this.particleEmitter.uniformity = 10;
 		this.particleEmitter.particleEffect = new FireEffect();
 		
-		this.bitmapText = new BitmapText(ImageLoader.loadImage("C:/Andor/test2.png", true), 40, 16);
+		this.bitmapText = new BitmapText(ImageLoader.loadImage("C:/Andor/test2.png", true), 16, 40);
 		this.bitmapText.update("Hello World");
 		this.bitmapText.position = new Vector2D(100, 100);
 		
@@ -165,6 +165,10 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		ControlBindingUtils.currentController = this.controller;
 		this.bindings = ControlBindingUtils.load("C:/Andor/Controller/gamepad.txt", true);
 		this.bindings.addListener(this);
+		
+		this.light0 = Light3D.createVertexSpot(0, new Vector3D(0, 8, -10), new Colour(0.1f, 0.1f, 0.1f), new Colour(1, 0, 0), new Colour(1, 1, 1), new Vector3D(0, -1, 0), 50);
+		this.light1 = Light3D.createVertexDirectional(1, new Vector3D(1, 0, 1), new Colour(0.1f, 0.1f, 0.1f), new Colour(0, 1, 0), new Colour(1, 1, 1));
+		this.light2 = Light3D.createVertexPoint(2, new Vector3D(0, 3, -7), new Colour(0.1f, 0.1f, 0.1f), new Colour(0, 0, 1), new Colour(1, 1, 1));
 	}
 	
 	/* The method called when the game loop has started */
@@ -196,11 +200,11 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		this.audio.sourcePosition.multiply(new Vector3D(1, 1, -1));
 		this.audio.update();
 		
-		this.particleEmitter.update();
+		//this.particleEmitter.update();
 		
 		Vector3D change = new Vector3D(0, 0.06f, 0);
 		change.multiply(getDelta());
-		this.model.rotation.add(change);
+		//this.model.rotation.add(change);
 	}
 	
 	/* The method called when the game loop is rendered */
@@ -218,9 +222,13 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		this.camera.useView();
 		
 		OpenGLUtils.disableTexture2D();
-		Renderer.currentShader = test;
-		this.model.render();
-		Renderer.currentShader = Renderer.defaultShader;
+		this.light0.use();
+		this.light1.use();
+		this.light2.use();
+		model.render();
+		this.light2.stopUsing();
+		this.light1.stopUsing();
+		this.light0.stopUsing();
 		
 		OpenGLUtils.enableTexture2D();
 		
@@ -289,10 +297,14 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		else if (e.getCode() == Keyboard.KEY_F11_CODE) {
 			Settings.Window.Fullscreen = ! Settings.Window.Fullscreen;
 			Window.updateDisplaySettings();
-		} else if (e.getCode() == Keyboard.KEY_F1_CODE) {
-			test = new Shader();
-			test.load("C:/Andor/light2", true);
-			test.create();
+		} else if (e.getCode() == Keyboard.KEY_LBRACKET_CODE) {
+			this.light0.type = Light3D.TYPE_VERTEX_SPOT;
+			this.light1.type = Light3D.TYPE_VERTEX_DIRECTIONAL;
+			this.light2.type = Light3D.TYPE_VERTEX_POINT;
+		} else if (e.getCode() == Keyboard.KEY_RBRACKET_CODE) {
+			this.light0.type = Light3D.TYPE_FRAGMENT_SPOT;
+			this.light1.type = Light3D.TYPE_FRAGMENT_DIRECTIONAL;
+			this.light2.type = Light3D.TYPE_FRAGMENT_POINT;
 		}
 	}
 	
@@ -332,9 +344,12 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 	public static void main(String[] args) {
 		//Make the game fullscreen
 		Settings.Window.Fullscreen = false;
+		Settings.Window.Undecorated = false;
 		//Enable VSync
 		Settings.Video.VSync = true;
-		Settings.Video.MaxFPS = 0;
+		Settings.Video.MaxFPS = 60;
+		Settings.Window.Width = 1024;
+		Settings.Window.Height = 768;
 		//Create a new instance of this test
 		new Cube3DTest();
 	}
