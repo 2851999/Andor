@@ -1,4 +1,37 @@
 ------------------------------------------------------
+Release 2 | Beta 1 | Development 2 | Experimental 1
+
+* Added ZipUtils
+* Added ParserUtils
+* Added ML
+* Added MLSyntax
+* Added MLTree
+* Added MLObject
+
+* Created org.andor.core.parset.ml
+* Created org.andor.core.parser.utils
+
+------------------------------------------------------
+Release 2 | Beta 1 | Development 2 | Experimental 0
+
+* Added Light3D
+* Added Resources in Settings
+* Added 'Undecorated' setting in the window settings
+
+* Created the package org.andor.core.lighting
+
+* Fixed bug: Scaling a 3D object resulted in it's
+  position being changed
+* Fixed bug: Controllers didn't work properly with
+  ControlBindings unless the controller was manually
+  set
+
+* NOTE: When using Android, you should put the
+  resources folder into the assets folder
+* NOTE: Linker errors are now also detected in
+  shader programs
+
+------------------------------------------------------
 Release 2 | Beta 1 | Development 1 | Experimental 3
 
 * Added fragment lighting

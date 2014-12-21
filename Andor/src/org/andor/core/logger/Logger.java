@@ -42,6 +42,12 @@ public class Logger {
 	public static List<String> warningLogs = new ArrayList<String>();
 	public static List<String> errorLogs = new ArrayList<String>();
 	
+	/* The static method used to quickly print a debug message */
+	public static void debug(String message) {
+		//Log the log
+		log(new Log("DEBUG MESSAGE", message));
+	}
+	
 	/* The static method used to log a message
 	 * assumes the log is supposed to be a debug */
 	public static void log(String source, String message) {

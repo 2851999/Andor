@@ -200,7 +200,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		this.audio.sourcePosition.multiply(new Vector3D(1, 1, -1));
 		this.audio.update();
 		
-		//this.particleEmitter.update();
+		this.particleEmitter.update();
 		
 		Vector3D change = new Vector3D(0, 0.06f, 0);
 		change.multiply(getDelta());
