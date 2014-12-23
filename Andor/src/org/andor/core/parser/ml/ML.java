@@ -17,7 +17,7 @@ public class ML {
 	public static final String DESCRIPTION = "ML (Markup Language) is a simple way to present text in a format that"
 											+"can be used to create config files, that may be used to define GUI's";
 	public static final String VERSION = "V0.0.1";
-	public static final String DATE = "20/12/2014";
+	public static final String DATE = "21/12/2014";
 	
 	/* The boolean that represents whether full verbose logs should be used */
 	public static final boolean VERBOSE = true;

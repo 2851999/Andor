@@ -11,10 +11,10 @@ package org.andor.core.parser.ml;
 public class MLParameter {
 	
 	/* The name of this parameter */
-	public String name;
+	private String name;
 	
 	/* The value of this parameter */
-	public String value;
+	private String value;
 	
 	/* The constructor */
 	public MLParameter(String name, String value) {

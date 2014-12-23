@@ -8,6 +8,7 @@
 
 package org.andor.core.parser.ml;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MLObject {
@@ -19,17 +20,30 @@ public class MLObject {
 	public String name;
 	
 	/* The parameters in this object */
-	public List<MLParameter> parameters;
+	private List<MLParameter> parameters;
 	
 	/* The other objects within this object */
-	public List<MLObject> objects;
+	private List<MLObject> objects;
 	
 	/* The constructor */
-	public MLObject(String type, String name, List<MLParameter> parameters) {
+	public MLObject(String type, String name) {
 		//Assign the variables
 		this.type = type;
 		this.name = name;
-		this.parameters = parameters;
+		this.parameters = new ArrayList<MLParameter>();
+		this.objects = new ArrayList<MLObject>();
+	}
+	
+	/* The method used to add a parameter */
+	public void add(MLParameter parameter) {
+		//Add the parameter to the list
+		this.parameters.add(parameter);
+	}
+	
+	/* The method used to add an object */
+	public void add(MLObject object) {
+		//Add the object to the list
+		this.objects.add(object);
 	}
 	
 	/* The method used to get a parameter with a specific name */
