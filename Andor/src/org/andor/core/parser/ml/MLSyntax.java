@@ -23,7 +23,6 @@ public class MLSyntax {
 	public static final String TAG_START = "<";
 	public static final String TAG_END = ">";
 	public static final String OBJECT_END = "/>";
-	public static final String OBJECT_REFERENCE = "#";
 	public static final String PARAMETER_ASSIGNMENT = "=";
 	public static final String NAME_ASSIGNMENT = ":";
 	public static final String STRING_DEFINITION = "\"";
