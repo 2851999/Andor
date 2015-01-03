@@ -47,6 +47,7 @@ import org.andor.utils.ControlBindingUtils;
 import org.andor.utils.ControllerUtils;
 import org.andor.utils.FontUtils;
 import org.andor.utils.OpenGLUtils;
+import org.andor.utils.ScreenResolution;
 import org.lwjgl.opengl.GL11;
 
 public class Cube3DTest extends BaseGame implements ControlInputListener {
@@ -171,7 +172,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		this.light2 = Light3D.createVertexPoint(2, new Vector3D(0, 3, -7), new Colour(0.1f, 0.1f, 0.1f), new Colour(0, 0, 1), new Colour(1, 1, 1));
 	}
 	
-	/* The method called when the game loop has started t*/
+	/* The method called when the game loop has started */
 	public void start() {
 		this.audio.play();
 	}
@@ -342,14 +343,18 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 	
 	/* The main method */
 	public static void main(String[] args) {
+		String[] s = ScreenResolution.getSupportedResolutions();
+		for (String c : s)
+			System.out.println(c);
 		//Make the game fullscreen
-		Settings.Window.Fullscreen = false;
+		Settings.Window.Fullscreen = true;
 		Settings.Window.Undecorated = false;
 		//Enable VSync
 		Settings.Video.VSync = true;
 		Settings.Video.MaxFPS = 60;
 		Settings.Window.Width = 1024;
 		Settings.Window.Height = 768;
+		Settings.Video.Resolution = ScreenResolution.RES_4K;
 		//Create a new instance of this test
 		new Cube3DTest();
 	}

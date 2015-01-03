@@ -8,6 +8,8 @@
 
 package org.andor.core;
 
+import org.andor.utils.ScreenResolution;
+
 public class Settings {
 	
 	/* The static boolean that states whether Andor is running on Android */
@@ -20,7 +22,7 @@ public class Settings {
 		/* The build of Andor */
 		public static final String BUILD = "Experimental";
 		/* The date this build started development */
-		public static final String DATE = "01/01/2015";
+		public static final String DATE = "03/01/2015";
 	}
 	
 	/* The static class containing all of the settings required for the window */
@@ -44,6 +46,8 @@ public class Settings {
 		public static boolean AntiAliasing = false;
 		/* The maximum FPS */
 		public static int MaxFPS = 60;
+		/* The preffered resolution (Fullscreen only) */
+		public static ScreenResolution Resolution = ScreenResolution.RES_NATIVE;
 	}
 	
 	/* The static class containing all of the Android settings */

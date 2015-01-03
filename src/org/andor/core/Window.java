@@ -10,11 +10,11 @@ package org.andor.core;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
-
 import java.nio.ByteBuffer;
 
 import org.andor.core.logger.Log;
 import org.andor.core.logger.Logger;
+import org.andor.utils.ScreenResolution;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
@@ -53,7 +53,7 @@ public class Window {
 			//Check to see whether the display should be fullscreen
 			if (Settings.Window.Fullscreen) {
 				//Get the screens dimensions
-				Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+				ScreenResolution screenSize = Settings.Video.Resolution;
 				//Get all of the available display modes
 				DisplayMode[] availableDisplayModes = Display.getAvailableDisplayModes();
 				//Go through each available display mode
