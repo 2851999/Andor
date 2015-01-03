@@ -94,9 +94,9 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		this.camera = new Camera3D();
 		this.camera.flying = true;
 		//Load the font
-		this.font = FontUtils.loadBitmapFont("C:/Andor/test2.png", true, 16, 12);
+		this.font = FontUtils.loadBitmapFont("H:/Andor/test2.png", true, 16, 12);
 		//Load the texture and bind it
-		String path = "C:/Andor/";
+		String path = "H:/Andor/";
 		//Create a skybox
 		SkyBox skybox = new SkyBox(path, new String[] {
 				"front.png",
@@ -146,7 +146,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		if (this.controller != null)
 			InputManagerController.addController(this.controller);
 		
-		audio = AudioLoader.load("C:/Andor/test2.wav", true);
+		audio = AudioLoader.load("H:/Andor/test2.wav", true);
 		
 		this.particleEmitter = new ParticleEmitter();
 		this.particleEmitter.particleColour = Colour.RED;
@@ -157,13 +157,13 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		this.particleEmitter.uniformity = 10;
 		this.particleEmitter.particleEffect = new FireEffect();
 		
-		this.bitmapText = new BitmapText(ImageLoader.loadImage("C:/Andor/test2.png", true), 16, 40);
+		this.bitmapText = new BitmapText(ImageLoader.loadImage("H:/Andor/test2.png", true), 16, 40);
 		this.bitmapText.update("Hello World");
 		this.bitmapText.position = new Vector2D(100, 100);
 		
-		//ControlBindingUtils.save(this.bindings, "C:/Andor/Controller/gamepad.txt");
+		//ControlBindingUtils.save(this.bindings, "H:/Andor/Controller/gamepad.txt");
 		ControlBindingUtils.currentController = this.controller;
-		this.bindings = ControlBindingUtils.load("C:/Andor/Controller/gamepad.txt", true);
+		this.bindings = ControlBindingUtils.load("H:/Andor/Controller/gamepad.txt", true);
 		this.bindings.addListener(this);
 		
 		this.light0 = Light3D.createVertexSpot(0, new Vector3D(0, 8, -10), new Colour(0.1f, 0.1f, 0.1f), new Colour(1, 0, 0), new Colour(1, 1, 1), new Vector3D(0, -1, 0), 50);
