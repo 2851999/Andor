@@ -1,4 +1,18 @@
 ------------------------------------------------------
+Release 2 | Beta 1 | Development 2 | Experimental 4
+
+* Added MLInterpretedObject
+* Added MLInterpreter
+* Added MLInterpreterObject
+
+* Removed InterpreterObject
+* Removed MLGUI
+
+* Created the package org.andor.core.interpreter.ml
+
+* NOTE: Moving to new PC
+
+------------------------------------------------------
 Release 2 | Beta 1 | Development 2 | Experimental 3
 
 * Added GUIInterpreter

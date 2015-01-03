@@ -8,32 +8,43 @@
 
 package org.andor.core.interpreter.gui;
 
+import java.util.List;
+
+import org.andor.core.interpreter.ml.MLInterpretedObject;
+import org.andor.core.interpreter.ml.MLInterpreter;
+import org.andor.core.interpreter.ml.MLInterpreterObject;
 import org.andor.core.parser.ml.MLObject;
 import org.andor.gui.GUIComponent;
 
 public class GUIInterpreterObjects {
 	
 	/* The array of available objects */
-	public static GUIInterpreterObject[] objects = new GUIInterpreterObject[] {
+	public static MLInterpreterObject[] objects = new MLInterpreterObject[] {
 		
 	};
 	
 	/* The static method used to interpret an object and return the component */
-	public static GUIComponent interpret(MLObject currentObject) {
+	public static GUIComponent interpret(MLObject currentObject, List<MLInterpretedObject> interpretedObjects) {
 		//The component
 		GUIComponent component = null;
 		//Get the object the current object represents
-		GUIInterpreterObject object = getObject(currentObject.getType());
+		MLInterpreterObject object = getObject(currentObject.getType());
 		//Make sure the object was found
-		if (object != null)
+		if (object != null) { 
 			//Interpret the object
-			component = object.interpret(currentObject);
+			MLInterpretedObject interpretedObject = object.interpret(currentObject);
+			//Add the object to the list
+			interpretedObjects.add(interpretedObject);
+			//Assign the component if possible
+			if (interpretedObject.getObject() instanceof GUIComponent)
+				component = ((GUIComponent) interpretedObject.getObject());
+		}
 		//Return the component
 		return component;
 	}
 	
 	/* The static method used to get an object with a specific name */
-	public static GUIInterpreterObject getObject(String name) {
+	public static MLInterpreterObject getObject(String name) {
 		//Go through each object
 		for (int a = 0; a < objects.length; a++) {
 			//Check the name of the current object
@@ -42,7 +53,7 @@ public class GUIInterpreterObjects {
 				return objects[a];
 		}
 		//Log a message
-		MLGUI.log("Object with the name " + name + " does not exist");
+		MLInterpreter.log("Object with the name " + name + " does not exist");
 		//Return nothing
 		return null;
 	}

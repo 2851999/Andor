@@ -6,24 +6,23 @@
  * COPYRIGHT @ 2014
  **********************************************/
 
-package org.andor.core.interpreter.gui;
+package org.andor.core.interpreter.ml;
 
 import org.andor.core.parser.ml.MLObject;
-import org.andor.gui.GUIComponent;
 
-public abstract class GUIInterpreterObject {
+public abstract class MLInterpreterObject {
 	
 	/* The reference for this object */
 	public String name;
 	
 	/* The constructor */
-	public GUIInterpreterObject(String name) {
+	public MLInterpreterObject(String name) {
 		//Assign the variables
 		this.name = name;
 	}
 	
 	/* The method used to interpret a specific object */
-	public abstract GUIComponent interpret(MLObject currentObject);
+	public abstract MLInterpretedObject interpret(MLObject currentObject);
 	
 	/* The method used to get the name */
 	public String getName() { return this.name; }
