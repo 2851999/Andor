@@ -3,13 +3,14 @@
  * 
  * USE - EDUCATIONAL PURPOSES ONLY
  *
- * COPYRIGHT @ 2014
+ * COPYRIGHT @ 2014-2015
  **********************************************/
 
 package org.andor.core.interpreter.gui;
 
 import java.util.List;
 
+import org.andor.core.interpreter.gui.objects.IntObj_GUIColour;
 import org.andor.core.interpreter.ml.MLInterpretedObject;
 import org.andor.core.interpreter.ml.MLInterpreter;
 import org.andor.core.interpreter.ml.MLInterpreterObject;
@@ -20,7 +21,7 @@ public class GUIInterpreterObjects {
 	
 	/* The array of available objects */
 	public static MLInterpreterObject[] objects = new MLInterpreterObject[] {
-		
+		new IntObj_GUIColour()
 	};
 	
 	/* The static method used to interpret an object and return the component */
@@ -32,7 +33,7 @@ public class GUIInterpreterObjects {
 		//Make sure the object was found
 		if (object != null) { 
 			//Interpret the object
-			MLInterpretedObject interpretedObject = object.interpret(currentObject);
+			MLInterpretedObject interpretedObject = object.interpret(currentObject, interpretedObjects);
 			//Add the object to the list
 			interpretedObjects.add(interpretedObject);
 			//Assign the component if possible

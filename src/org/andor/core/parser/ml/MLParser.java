@@ -3,7 +3,7 @@
  * 
  * USE - EDUCATIONAL PURPOSES ONLY
  *
- * COPYRIGHT @ 2014
+ * COPYRIGHT @ 2014-2015
  **********************************************/
 
 package org.andor.core.parser.ml;
@@ -67,7 +67,7 @@ public class MLParser {
 					//Go through each parameter
 					for (int a = 0; a < parameters.length; a++) {
 						//Parse the parameter
-						MLParameter parameter = new MLParameter(parameters[a].substring(0, parameters[0].indexOf(MLSyntax.PARAMETER_ASSIGNMENT)), ParserUtils.getString(parameters[a].substring(parameters[a].indexOf(MLSyntax.PARAMETER_ASSIGNMENT) + 1)));
+						MLParameter parameter = new MLParameter(parameters[a].substring(0, parameters[a].indexOf(MLSyntax.PARAMETER_ASSIGNMENT)), ParserUtils.getString(parameters[a].substring(parameters[a].indexOf(MLSyntax.PARAMETER_ASSIGNMENT) + 1)));
 						//Log some verbose
 						ML.log("Parsed parameter with the name " + parameter.getName() + " and the value " + parameter.getValue());
 						//Add the parameter to the object

@@ -3,7 +3,7 @@
  * 
  * USE - EDUCATIONAL PURPOSES ONLY
  *
- * COPYRIGHT @ 2014
+ * COPYRIGHT @ 2014-2015
  **********************************************/
 
 package org.andor.core.interpreter.gui;

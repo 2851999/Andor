@@ -3,7 +3,7 @@
  * 
  * USE - EDUCATIONAL PURPOSES ONLY
  *
- * COPYRIGHT @ 2014
+ * COPYRIGHT @ 2014-2015
  **********************************************/
 
 package org.andor.core.parser.ml;
@@ -46,6 +46,17 @@ public class MLObject {
 		this.objects.add(object);
 	}
 	
+	/* The method that returns a boolean representing whether a specific parameter is present */
+	public boolean doesParameterExist(String name) {
+		//Go through each of the parameters
+		for (int a = 0; a < this.parameters.size(); a++) {
+			//Check the current parameter
+			if (this.parameters.get(a).getName().endsWith(name))
+				return true;
+		}
+		return false;
+	}
+	
 	/* The method used to get a parameter with a specific name */
 	public MLParameter getParameter(String name) {
 		//The parameter
@@ -71,6 +82,7 @@ public class MLObject {
 	/* The 'get' methods */
 	public String getType() { return this.type; }
 	public String getName() { return this.name; }
+	public MLParameter getParameter(int i) { return this.parameters.get(i); }
 	public List<MLParameter> getParameters() { return this.parameters; }
 	public List<MLObject> getObjects() { return this.objects; }
 	

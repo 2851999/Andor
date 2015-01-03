@@ -1,11 +1,47 @@
 ------------------------------------------------------
+Release 2 | Beta 1 | Development 2 | Experimental 6
+
+* Added IntObj_GUIColour
+
+* Fixed Bug: ML didn't work properly when parsing
+  parameter names when there were more than one
+  of them
+
+* Found Bug: Mouse behaves strangely when locked
+  when using DSR (May just be 4K)
+
+------------------------------------------------------
+Release 2 | Beta 1 | Development 2 | Experimental 5
+
+* Added ScreenResolution
+
+* NOTE: Support for DSR (Dynamic Super Resolution)
+* NOTE: Normally a development build would have
+  been released by now, however there are still
+  features that are unfinished and would not be
+  appropriate for the Beta build, so the
+  experimental builds will keep coming until
+  everything is ready for the next release. This
+  means that the first release of Andor in 2015 will
+  be quite a big update and will prepare for new
+  features that will be added in later 2015. These
+  features may include things like:
+  - Defferred Rendering
+  - Special Effects
+  - Better particle system
+  - Physics
+  - SDK (With alternative scripting language)
+  - More efficient shaders
+  - Other general optermisations
+
+------------------------------------------------------
 Release 2 | Beta 1 | Development 2 | Experimental 4
 
 * Added MLInterpretedObject
 * Added MLInterpreter
 * Added MLInterpreterObject
 
-* Removed InterpreterObject
+* Removed GUIInterpreterObject
 * Removed MLGUI
 
 * Created the package org.andor.core.interpreter.ml

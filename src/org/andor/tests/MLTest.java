@@ -3,13 +3,16 @@
  * 
  * USE - EDUCATIONAL PURPOSES ONLY
  *
- * COPYRIGHT @ 2014
+ * COPYRIGHT @ 2014-2015
  **********************************************/
 
 package org.andor.tests;
 
+import org.andor.core.interpreter.gui.GUIInterpreter;
 import org.andor.core.parser.ml.MLParser;
 import org.andor.core.parser.utils.ParserUtils;
+import org.andor.utils.ArrayUtils;
+import org.andor.utils.FileUtils;
 
 public class MLTest {
 	
@@ -24,7 +27,7 @@ public class MLTest {
 	};
 	
 	public MLTest() {
-		MLParser.parse(ParserUtils.cleanUp(text));
+		GUIInterpreter.interpret("hello", false, MLParser.parse(ParserUtils.cleanUp(ArrayUtils.toStringArray(FileUtils.read("H:/Storage/Users/Joel/Desktop/GUITest.ml", true)))));
 	}
 	
 	public static void main(String[] args) {
