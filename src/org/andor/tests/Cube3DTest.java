@@ -171,7 +171,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		this.light2 = Light3D.createVertexPoint(2, new Vector3D(0, 3, -7), new Colour(0.1f, 0.1f, 0.1f), new Colour(0, 0, 1), new Colour(1, 1, 1));
 	}
 	
-	/* The method called when the game loop has started */
+	/* The method called when the game loop has started t*/
 	public void start() {
 		this.audio.play();
 	}
