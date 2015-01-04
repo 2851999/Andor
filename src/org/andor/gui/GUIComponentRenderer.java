@@ -76,11 +76,13 @@ public class GUIComponentRenderer {
 			this.entity.scale = object.getScale();
 			this.entity.width = object.width;
 			this.entity.height = object.height;
-			
+			//Can be optimised ----------------------------------------------------------------------------------------------------
 			//Make sure the component is active
 			if (active || (! this.shouldUseInactiveImage()) || (!this.shouldUseInactiveColour())) {
 				//Check whether images or colours should be used
 				if (this.shouldUseImages()) {
+					//Setup the textures
+					this.entity.renderer.updateTextures(Object2DBuilder.createQuadT(this.images[this.componentIndex]));
 					//Enable textures
 					OpenGLUtils.enableTexture2D();
 					//Bind the correct image
@@ -89,6 +91,9 @@ public class GUIComponentRenderer {
 					if (this.shouldUseColours())
 						//Update the colours (Assumes the GUI component is 4 - Sided)
 						this.entity.renderer.updateColours(Object2DBuilder.createColourArray(4, this.colours[this.componentIndex]));
+					else
+						//Set the colour to white
+						this.entity.renderer.updateColours(Object2DBuilder.createColourArray(4, Colour.WHITE));
 				} else if (this.shouldUseColours()) {
 					//Update the colours (Assumes the GUI component is 4 - Sided)
 					this.entity.renderer.updateColours(Object2DBuilder.createColourArray(4, this.colours[this.componentIndex]));

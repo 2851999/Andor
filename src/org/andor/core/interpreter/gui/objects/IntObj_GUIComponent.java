@@ -11,6 +11,8 @@ package org.andor.core.interpreter.gui.objects;
 import java.util.List;
 
 import org.andor.core.Colour;
+import org.andor.core.Font;
+import org.andor.core.Image;
 import org.andor.core.Object2DBuilder;
 import org.andor.core.interpreter.ml.MLInterpretedObject;
 import org.andor.core.interpreter.ml.MLInterpreter;
@@ -18,6 +20,7 @@ import org.andor.core.interpreter.ml.MLInterpreterObject;
 import org.andor.core.parser.ml.MLObject;
 import org.andor.gui.GUIComponent;
 import org.andor.gui.GUIComponentRenderer;
+import org.andor.gui.GUIToolTip;
 
 public class IntObj_GUIComponent extends MLInterpreterObject {
 
@@ -47,9 +50,6 @@ public class IntObj_GUIComponent extends MLInterpreterObject {
 				component.repeatClickedEvents = currentObject.getParameter(i).getBooleanValue();
 			else if (currentObject.getParameter(i).getName().equals("borderEnabled"))
 				component.borderEnabled = currentObject.getParameter(i).getBooleanValue();
-			else if (currentObject.getParameter(i).getName().equals("colours")) {
-				
-			}
 		}
 		//Return the object
 		return new MLInterpretedObject(currentObject.getName(), component);
@@ -57,13 +57,13 @@ public class IntObj_GUIComponent extends MLInterpreterObject {
 	
 	/* The static method used to setup a component */
 	public static void interpret(MLObject currentObject, List<MLInterpretedObject> interpretedObjects, GUIComponent component) {
-		//The parameters that are expected to be found
-		float width = currentObject.getParameter("width").getFloatValue();
-		float height = currentObject.getParameter("height").getFloatValue();
+		//Make sure the width and height have been assigned
+		if (currentObject.doesParameterExist("width"))
+			component.width = currentObject.getParameter("width").getFloatValue();
+		if (currentObject.doesParameterExist("height"))
+			component.height = currentObject.getParameter("height").getFloatValue();
 		//Assign the other values
 		component.name = currentObject.getName();
-		component.width = width;
-		component.height = height;
 		//Go through each parameter
 		for (int i = 0; i < currentObject.getParameters().size(); i++) {
 			//Check the name and assign the values
@@ -79,6 +79,11 @@ public class IntObj_GUIComponent extends MLInterpreterObject {
 				component.repeatClickedEvents = currentObject.getParameter(i).getBooleanValue();
 			else if (currentObject.getParameter(i).getName().equals("borderEnabled"))
 				component.borderEnabled = currentObject.getParameter(i).getBooleanValue();
+			else if (currentObject.getParameter(i).getName().equals("toolTip")) {
+				component.toolTip = ((GUIToolTip) MLInterpreter.getObject(currentObject.getParameter(i).getValue(), interpretedObjects).getObject());
+				component.toolTip.setComponent(component);
+			} else if (currentObject.getParameter(i).getName().equals("font"))
+				component.renderer.font = ((Font) MLInterpreter.getObject(currentObject.getParameter(i).getValue(), interpretedObjects).getObject());
 		}
 	}
 	
@@ -100,8 +105,20 @@ public class IntObj_GUIComponent extends MLInterpreterObject {
 				//Assign the current colour
 				colours[a] = ((Colour) MLInterpreter.getObject(objects[a], interpretedObjects).getObject());
 			//Setup the renderer
-			renderer = new GUIComponentRenderer(Object2DBuilder.createQuad(width, height, Colour.WHITE));
+			renderer = new GUIComponentRenderer(Object2DBuilder.createQuad(width, height));
 			renderer.set(colours);
+		} else if (currentObject.doesParameterExist("images")) {
+			//Get the array of objects that were referenced
+			String[] objects = currentObject.getParameter("images").getValue().split(",");
+			//Setup the images array
+			Image[] images = new Image[objects.length];
+			//Go through each object
+			for (int a = 0; a < objects.length; a++)
+				//Assign the current image
+				images[a] = ((Image) MLInterpreter.getObject(objects[a], interpretedObjects).getObject());
+			//Setup the renderer
+			renderer = new GUIComponentRenderer(Object2DBuilder.createQuad(width, height));
+			renderer.set(images);
 		}
 		//Return the renderer
 		return renderer;

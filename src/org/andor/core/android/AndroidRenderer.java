@@ -12,7 +12,6 @@ import org.andor.core.Image;
 import org.andor.core.Matrix;
 import org.andor.core.Matrix4D;
 import org.andor.core.Renderer;
-import org.andor.core.Settings;
 import org.andor.core.Shader;
 import org.andor.utils.ArrayUtils;
 import org.andor.utils.BufferUtils;
@@ -193,6 +192,13 @@ public class AndroidRenderer extends Renderer {
 		this.verticesData = verticesData;
 		//Create the vertices buffer
 		this.verticesBuffer = BufferUtils.createFlippedBuffer(this.verticesData);
+		//Check to see whether the handle has been setup
+		if (this.verticesHandle == -2) {
+			int[] h = new int[1];
+			GLES20.glGenBuffers(1, h, 0);
+			//Setup the texture coordinates handle
+			this.verticesHandle = h[0];
+		}
 		//Bind the vertices buffer and give OpenGL the data
 		GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, this.verticesHandle);
 		GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, Float.BYTES * verticesData.length, this.verticesBuffer, this.usage);
@@ -204,12 +210,16 @@ public class AndroidRenderer extends Renderer {
 		this.normalsData = normalsData;
 		//Create the normals buffer
 		this.normalsBuffer = BufferUtils.createFlippedBuffer(this.normalsData);
-		//Make sure Andor isn't currently running on Android
-		if (! Settings.AndroidMode) {
-			//Bind the normals buffer and give OpenGL the data
-			GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, this.normalsHandle);
-			GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, Float.BYTES * normalsData.length, this.normalsBuffer, this.usage);
+		//Check to see whether the handle has been setup
+		if (this.normalsHandle == -2) {
+			int[] h = new int[1];
+			GLES20.glGenBuffers(1, h, 0);
+			//Setup the texture coordinates handle
+			this.normalsHandle = h[0];
 		}
+		//Bind the normals buffer and give OpenGL the data
+		GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, this.normalsHandle);
+		GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, Float.BYTES * normalsData.length, this.normalsBuffer, this.usage);
 	}
 	
 	/* The method used to update the colours */
@@ -218,6 +228,13 @@ public class AndroidRenderer extends Renderer {
 		this.colourData = colourData;
 		//Create the colour buffer
 		this.coloursBuffer = BufferUtils.createFlippedBuffer(this.colourData);
+		//Check to see whether the handle has been setup
+		if (this.coloursHandle == -2) {
+			int[] h = new int[1];
+			GLES20.glGenBuffers(1, h, 0);
+			//Setup the texture coordinates handle
+			this.coloursHandle = h[0];
+		}
 		//Bind the colours buffer and give OpenGL the data
 		GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, this.coloursHandle);
 		GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, Float.BYTES * this.colourData.length, this.coloursBuffer, this.usage);
@@ -229,6 +246,13 @@ public class AndroidRenderer extends Renderer {
 		this.textureData = textureData;
 		//Create the colour buffer
 		this.texturesBuffer = BufferUtils.createFlippedBuffer(this.textureData);
+		//Check to see whether the handle has been setup
+		if (this.texturesHandle == -2) {
+			int[] h = new int[1];
+			GLES20.glGenBuffers(1, h, 0);
+			//Setup the texture coordinates handle
+			this.texturesHandle = h[0];
+		}
 		//Bind the texture coordinates buffer and give OpenGL the data
 		GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, this.texturesHandle);
 		GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, Float.BYTES * this.textureData.length, this.texturesBuffer, this.usage);
@@ -240,6 +264,13 @@ public class AndroidRenderer extends Renderer {
 		this.drawOrder = drawOrder;
 		//Create the draw order buffer
 		this.drawOrderBuffer = BufferUtils.createFlippedBuffer(this.drawOrder);
+		//Check to see whether the handle has been setup
+		if (this.drawOrderHandle == -2) {
+			int[] h = new int[1];
+			GLES20.glGenBuffers(1, h, 0);
+			//Setup the texture coordinates handle
+			this.drawOrderHandle = h[0];
+		}
 		//Bind the texture coordinates buffer and give OpenGL the data
 		GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, this.drawOrderHandle);
 		GLES20.glBufferData(GLES20.GL_ARRAY_BUFFER, Short.BYTES * this.drawOrder.length, this.drawOrderBuffer, this.usage);

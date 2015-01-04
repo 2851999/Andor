@@ -30,16 +30,27 @@ public class GUIToolTip implements GUIComponentListener {
 	/* The boolean that states whether this tool tip is showing */
 	public boolean showing;
 	
-	/* The constructor */
-	public GUIToolTip(GUIComponent component, String text) {
-		//Assign the variables
-		component.addListener(this);
-		this.component = component;
+	/* The constructor without the component - assumes it will be set later */
+	public GUIToolTip(String text) {
 		this.label = new GUILabel(text);
 		this.label.border = new GUIBorder(this.label, 1f, new Colour[] { Colour.LIGHT_GREY });
 		this.timer = new Timer();
 		this.time = 1000;
 		this.showing = false;
+	}
+	
+	/* The constructor */
+	public GUIToolTip(GUIComponent component, String text) {
+		//Setup
+		this(text);
+		setComponent(component);
+	}
+	
+	/* The method used to set the component that is being used */
+	public void setComponent(GUIComponent component) {
+		//Assign the variables
+		component.addListener(this);
+		this.component = component;
 	}
 	
 	/* The method used to update this tool tip */

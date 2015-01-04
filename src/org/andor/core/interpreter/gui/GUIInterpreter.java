@@ -23,13 +23,21 @@ public class GUIInterpreter {
 	/* Here are some parts of the syntax used when interpreting a GUI from ML */
 	public static final String OBJECT_REFERENCE = "#";
 	
+	/* The current working directory */
+	public static String WORKING_DIRECTORY = "";
+	public static boolean WORKING_INFOLDER = false;
+	
+	/* The static method used to create a GUIPanel given an MLTree object and working directory */
+	public static GUIPanel interpret(String panelName, boolean autoUpdate, MLTree tree, String workingDirectory, boolean workingInFolder) {
+		//Assign the working directory
+		WORKING_DIRECTORY = workingDirectory;
+		WORKING_INFOLDER = workingInFolder;
+		//Return the panel
+		return interpret(panelName, autoUpdate, tree);
+	}
+	
 	/* The static method used to create a GUIPanel given an MLTree object */
 	public static GUIPanel interpret(String panelName, boolean autoUpdate, MLTree tree) {
-		//Future update: could separate into two stages:
-		//1. Create objects
-		//2. Arrange objects
-		//Could also add interpreter system for ML and the GUI one extends that system
-		
 		//The GUIPanel
 		GUIPanel panel = new GUIPanel(panelName, autoUpdate);
 		//The objects that have been currently interpreted

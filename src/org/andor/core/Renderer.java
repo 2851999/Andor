@@ -91,6 +91,12 @@ public class Renderer {
 		//Assign the variables
 		this.renderMode = convert(renderMode);
 		this.vertexValuesCount = vertexValuesCount;
+		//Assign the default values
+		this.verticesHandle = -2;
+		this.normalsHandle = -2;
+		this.coloursHandle = -2;
+		this.texturesHandle = -2;
+		this.drawOrderHandle = -2;
 		//Add this renderer to the list
 		allRenderers.add(this);
 		//Make sure Andor isn't currently running on Android
@@ -261,6 +267,10 @@ public class Renderer {
 		this.verticesData = verticesData;
 		//Create the vertices buffer
 		this.verticesBuffer = BufferUtils.createFlippedBuffer(this.verticesData);
+		//Check to see whether the handle has been setup
+		if (this.verticesHandle == -2)
+			//Setup the handle
+			this.verticesHandle = GL15.glGenBuffers();
 		//Bind the vertices buffer and give OpenGL the data
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.verticesHandle);
 		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, this.verticesBuffer, this.usage);
@@ -272,12 +282,13 @@ public class Renderer {
 		this.normalsData = normalsData;
 		//Create the normals buffer
 		this.normalsBuffer = BufferUtils.createFlippedBuffer(this.normalsData);
-		//Make sure Andor isn't currently running on Android
-		if (! Settings.AndroidMode) {
-			//Bind the normals buffer and give OpenGL the data
-			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.normalsHandle);
-			GL15.glBufferData(GL15.GL_ARRAY_BUFFER, this.normalsBuffer, this.usage);
-		}
+		//Check to see whether the handle has been setup
+		if (this.normalsHandle == -2)
+			//Setup the handle
+			this.normalsHandle = GL15.glGenBuffers();
+		//Bind the normals buffer and give OpenGL the data
+		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.normalsHandle);
+		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, this.normalsBuffer, this.usage);
 	}
 	
 	/* The method used to update the colours */
@@ -286,6 +297,10 @@ public class Renderer {
 		this.colourData = colourData;
 		//Create the colour buffer
 		this.coloursBuffer = BufferUtils.createFlippedBuffer(this.colourData);
+		//Check to see whether the handle has been setup
+		if (this.coloursHandle == -2)
+			//Setup the handle
+			this.coloursHandle = GL15.glGenBuffers();
 		//Bind the colours buffer and give OpenGL the data
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.coloursHandle);
 		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, this.coloursBuffer, this.usage);
@@ -297,6 +312,10 @@ public class Renderer {
 		this.textureData = textureData;
 		//Create the textures buffer
 		this.texturesBuffer = BufferUtils.createFlippedBuffer(this.textureData);
+		//Check to see whether the handle has been setup
+		if (this.texturesHandle == -2)
+			//Setup the handle
+			this.texturesHandle = GL15.glGenBuffers();
 		//Bind the texture coordinates buffer and give OpenGL the data
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.texturesHandle);
 		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, this.texturesBuffer, this.usage);
@@ -308,6 +327,10 @@ public class Renderer {
 		this.drawOrder = drawOrder;
 		//Create the draw order buffer
 		this.drawOrderBuffer = BufferUtils.createFlippedBuffer(this.drawOrder);
+		//Check to see whether the handle has been setup
+		if (this.drawOrderHandle == -2)
+			//Setup the handle
+			this.drawOrderHandle = GL15.glGenBuffers();
 		//Bind the texture coordinates buffer and give OpenGL the data
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.drawOrderHandle);
 		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, this.drawOrderBuffer, this.usage);

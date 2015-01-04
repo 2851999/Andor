@@ -10,9 +10,13 @@ package org.andor.core.interpreter.gui;
 
 import java.util.List;
 
+import org.andor.core.interpreter.gui.objects.IntObj_Colour;
+import org.andor.core.interpreter.gui.objects.IntObj_Font;
 import org.andor.core.interpreter.gui.objects.IntObj_GUIButton;
-import org.andor.core.interpreter.gui.objects.IntObj_GUIColour;
 import org.andor.core.interpreter.gui.objects.IntObj_GUIComponent;
+import org.andor.core.interpreter.gui.objects.IntObj_GUILabel;
+import org.andor.core.interpreter.gui.objects.IntObj_GUIToolTip;
+import org.andor.core.interpreter.gui.objects.IntObj_Image;
 import org.andor.core.interpreter.ml.MLInterpretedObject;
 import org.andor.core.interpreter.ml.MLInterpreter;
 import org.andor.core.interpreter.ml.MLInterpreterObject;
@@ -23,9 +27,13 @@ public class GUIInterpreterObjects {
 	
 	/* The array of available objects */
 	public static MLInterpreterObject[] objects = new MLInterpreterObject[] {
-		new IntObj_GUIColour(),
+		new IntObj_Colour(),
 		new IntObj_GUIComponent(),
-		new IntObj_GUIButton()
+		new IntObj_GUIButton(),
+		new IntObj_Image(),
+		new IntObj_GUILabel(),
+		new IntObj_GUIToolTip(),
+		new IntObj_Font()
 	};
 	
 	/* The static method used to interpret an object and return the component */

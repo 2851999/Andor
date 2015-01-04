@@ -36,14 +36,13 @@ public class MLTest extends BaseGame {
 	}
 	
 	public void create() {
-		panel = GUIInterpreter.interpret("hello", true, MLParser.parse(ParserUtils.cleanUp(ArrayUtils.toStringArray(FileUtils.read("H:/Andor/GUITest.ml", true)))));
+		panel = GUIInterpreter.interpret("hello", true, MLParser.parse(ParserUtils.cleanUp(ArrayUtils.toStringArray(FileUtils.read("H:/Andor/GUITest.ml", true)))), "H:/Andor", true);
 	}
 	
 	public void render() {
 		//Setup OpenGL
 		OpenGLUtils.clearColourBuffer();
 		OpenGLUtils.setupRemoveAlpha();
-		
 		OpenGLUtils.setupOrtho(-1, 1);
 		panel.render();
 	}

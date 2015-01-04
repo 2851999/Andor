@@ -1,4 +1,22 @@
 ------------------------------------------------------
+Release 2 | Beta 1 | Development 2 | Experimental 8
+
+* Added IntObj_Image
+* Added IntObj_Label
+* Added IntObj_ToolTip
+* Added IntObj_Font
+
+* Renamed IntObj_GUIColour to IntObj_Colour
+
+* Fixed bug: On android updating a Renderer's normals
+  wouldn't have worked properly
+* Fixed bug: Colours and Textures had to be set as
+  the renderer was created otherwise they would
+  not work and would result in a OpenGL exception
+  this may have effected GUIComponent's and stopped
+  them from working when using images to render them
+
+------------------------------------------------------
 Release 2 | Beta 1 | Development 2 | Experimental 7
 
 * Added IntObj_GUIButton
