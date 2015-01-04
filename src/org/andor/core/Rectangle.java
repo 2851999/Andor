@@ -1,0 +1,74 @@
+/* *********************************************
+ * ANDOR
+ * 
+ * USE - EDUCATIONAL PURPOSES ONLY
+ *
+ * COPYRIGHT @ 2014-2015
+ **********************************************/
+
+package org.andor.core;
+
+public class Rectangle {
+
+	/* The rectangles x position */
+	public float x;
+
+	/* The rectangles y position */
+	public float y;
+
+	/* The rectangles width */
+	public float width;
+
+	/* The rectangles height */
+	public float height;
+
+	/* The constructor */
+	public Rectangle() {
+		//Set the variables
+		this.x = 0;
+		this.y = 0;
+		this.width = 0;
+		this.height = 0;
+	}
+
+	/* The constructor with the position, width and height given */
+	public Rectangle(float x , float y , float width , float height) {
+		//Set the variables
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height = height;
+	}
+
+	/* The method to check whether a point is contained within the rectangle */
+	public boolean contains(float x , float y) {
+		//Return whether the coordinates are contained within this rectangle
+		return (x > this.x && y > this.y && x < this.x + this.width && y < this.y + this.height);
+	}
+
+	/* The method to check whether another rectangle intersects this rectangle */
+	public boolean intersects(Rectangle other) {
+		//Check if the rectangle's points are contained in this rectangle
+		if (this.contains(other.x , other.y)
+				|| this.contains(other.x + other.width , other.y)
+				|| this.contains(other.x + other.width , other.y + other.height)
+				|| this.contains(other.x , other.y + other.height)) {
+			return true;
+		} else
+			return false;
+	}
+
+	/* The 'get' and 'set' methods */
+	public void setX(float x) { this.x = x; }
+	public void setY(float y) { this.y = y; }
+	public void setPosition(float x , float y) { this.x = x; this.y = y; }
+	public void setWidth(float width) { this.width = width; }
+	public void setHeight(float height) { this.height = height; }
+	public void setSize(float width , float height) { this.width = width; this.height = height; }
+
+	public float getX() { return this.x; }
+	public float getY() { return this.y; }
+	public float getWidth() { return this.width; }
+	public float getHeight() { return this.height; }
+
+}
