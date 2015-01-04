@@ -32,6 +32,12 @@ public class GUIDropDownList extends GUIDropDownMenu {
 		//Call the super constructor
 		super(menuButton);
 		//Setup the overlay
+		this.setupOverlay(overlayImage);
+	}
+	
+	/* The method used to setup the overlay */
+	public void setupOverlay(Image overlayImage) {
+		//Setup the overlay
 		this.overlayImage = overlayImage;
 		this.overlay = Object2DBuilder.createQuad(this.overlayImage, menuButton.width, menuButton.height, Colour.WHITE);
 	}

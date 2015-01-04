@@ -24,13 +24,14 @@ public class GUILoadingBar extends GUIComponent {
 	public GUIFill barFill;
 
 	/* The constructor */
-	public GUILoadingBar(int loadingStages, int width, int height) {
+	public GUILoadingBar(int loadingStages, float width, float height) {
 		//Call the super constructor
 		super(Object2DBuilder.createQuad(width, height, Colour.WHITE), width, height);
 		//Assign the variables
 		this.loadingStages = loadingStages;
 		this.currentLoadingStage = 0;
-		this.barFill = new GUIFill(this, Colour.BLACK);
+		this.renderer.colours = new Colour[] { Colour.WHITE };
+		this.barFill = new GUIFill(this, Colour.WHITE);
 	}
 	
 	/* The constructor */
@@ -42,7 +43,7 @@ public class GUILoadingBar extends GUIComponent {
 		this.loadingStages = loadingStages;
 		this.currentLoadingStage = 0;
 		this.renderer.colours = new Colour[] { colour };
-		this.barFill = new GUIFill(this, Colour.BLACK);
+		this.barFill = new GUIFill(this, Colour.WHITE);
 	}
 	
 	/* The constructor */
@@ -54,7 +55,7 @@ public class GUILoadingBar extends GUIComponent {
 		this.currentLoadingStage = 0;
 		this.renderer.colours = new Colour[] { Colour.WHITE };
 		this.renderer.images = new Image[] { image };
-		this.barFill = new GUIFill(this, Colour.BLACK);
+		this.barFill = new GUIFill(this, Colour.WHITE);
 	}
 	
 	/* The constructor */
@@ -66,7 +67,7 @@ public class GUILoadingBar extends GUIComponent {
 		this.currentLoadingStage = 0;
 		this.renderer.images = new Image[] { image };
 		this.renderer.colours = new Colour[] { colour };
-		this.barFill = new GUIFill(this, Colour.BLACK);
+		this.barFill = new GUIFill(this, Colour.WHITE);
 	}
 
 	/* The overrideable method called when the current stage has changed */
@@ -114,5 +115,11 @@ public class GUILoadingBar extends GUIComponent {
 		//Return the percentage
 		return (float)((float) this.currentLoadingStage / (float) this.loadingStages) * 100;
 	}
-
+	
+	/* The methods used to set the colour/images for the loading bar */
+	public void setBackgroundColour(Colour backgroundColour) { this.renderer.colours = new Colour[] { backgroundColour }; }
+	public void setFillColour(Colour fillColour) { this.barFill.colour = fillColour; }
+	public void setBackgroundImage(Image backgroundImage) { this.renderer.images = new Image[] { backgroundImage }; }
+	public void setFillImage(Image fillImage) { this.barFill.image = fillImage; }
+	
 }

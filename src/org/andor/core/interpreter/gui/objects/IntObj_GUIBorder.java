@@ -10,46 +10,48 @@ package org.andor.core.interpreter.gui.objects;
 
 import java.util.List;
 
-import org.andor.core.BitmapText;
 import org.andor.core.Colour;
-import org.andor.core.Font;
 import org.andor.core.Image;
+import org.andor.core.interpreter.gui.GUIInterpreter;
 import org.andor.core.interpreter.ml.MLInterpretedObject;
 import org.andor.core.interpreter.ml.MLInterpreter;
 import org.andor.core.interpreter.ml.MLInterpreterObject;
 import org.andor.core.parser.ml.MLObject;
+import org.andor.gui.GUIBorder;
 
-public class IntObj_Font extends MLInterpreterObject {
+public class IntObj_GUIBorder extends MLInterpreterObject {
 
 	/* The constructor */
-	public IntObj_Font() {
+	public IntObj_GUIBorder() {
 		//Call the super constructor
-		super("Font");
+		super("GUIBorder");
 	}
 	
 	/* The method used to interpret a specific object */
 	public MLInterpretedObject interpret(MLObject currentObject, List<MLInterpretedObject> interpretedObjects) {
 		//The parameters that are expected to be found
 		Image image = null;
-		int fontSize = 12;
-		int gridSize = 16;
-		Colour colour = Colour.WHITE;
+		Colour colour = Colour.BLACK;
+		float thickness = 1;
 		//Go through each parameter
 		for (int i = 0; i < currentObject.getParameters().size(); i++) {
 			//Check the name and assign the values
 			if (currentObject.getParameter(i).getName().equals("image"))
 				image = ((Image) MLInterpreter.getObject(currentObject.getParameter(i).getValue(), interpretedObjects).getObject());
-			else if (currentObject.getParameter(i).getName().equals("fontSize"))
-				fontSize = currentObject.getParameter(i).getIntegerValue();
-			else if (currentObject.getParameter(i).getName().equals("gridSize"))
-				gridSize = currentObject.getParameter(i).getIntegerValue();
+			else if (currentObject.getParameter(i).getName().equals("thickness"))
+				thickness = currentObject.getParameter(i).getFloatValue();
 			else if (currentObject.getParameter(i).getName().equals("colour"))
-				colour = ((Colour) MLInterpreter.getObject(currentObject.getParameter(i).getValue(), interpretedObjects).getObject());
+				colour = ((Colour) GUIInterpreter.interpret(currentObject.getParameter(i).getValue(), interpretedObjects));
 		}
-		//Create the font
-		Font font = new Font(new BitmapText(image, gridSize, fontSize, colour));
+		//The border
+		GUIBorder border = null;
+		//Create the border
+		if (image == null)
+			border = new GUIBorder(thickness, colour);
+		else
+			border = new GUIBorder(thickness, image);
 		//Return the object
-		return new MLInterpretedObject(currentObject.getName(), font);
+		return new MLInterpretedObject(currentObject.getName(), border);
 	}
 	
 }

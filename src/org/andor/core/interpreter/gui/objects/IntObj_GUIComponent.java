@@ -14,12 +14,15 @@ import org.andor.core.Colour;
 import org.andor.core.Font;
 import org.andor.core.Image;
 import org.andor.core.Object2DBuilder;
+import org.andor.core.interpreter.gui.GUIInterpreter;
 import org.andor.core.interpreter.ml.MLInterpretedObject;
 import org.andor.core.interpreter.ml.MLInterpreter;
 import org.andor.core.interpreter.ml.MLInterpreterObject;
 import org.andor.core.parser.ml.MLObject;
+import org.andor.gui.GUIBorder;
 import org.andor.gui.GUIComponent;
 import org.andor.gui.GUIComponentRenderer;
+import org.andor.gui.GUIPosition;
 import org.andor.gui.GUIToolTip;
 
 public class IntObj_GUIComponent extends MLInterpreterObject {
@@ -84,16 +87,25 @@ public class IntObj_GUIComponent extends MLInterpreterObject {
 				component.toolTip.setComponent(component);
 			} else if (currentObject.getParameter(i).getName().equals("font"))
 				component.renderer.font = ((Font) MLInterpreter.getObject(currentObject.getParameter(i).getValue(), interpretedObjects).getObject());
+			else if (currentObject.getParameter(i).getName().equals("border")) {
+				component.border = ((GUIBorder) MLInterpreter.getObject(currentObject.getParameter(i).getValue(), interpretedObjects).getObject());
+				component.border.setup(component);
+			} else if (currentObject.getParameter(i).getName().equals("position"))
+				GUIInterpreter.positionPreference = GUIPosition.valueOf(currentObject.getParameter(i).getValue());
+			else if (currentObject.getParameter(i).getName().equals("inactiveColour"))
+				component.renderer.inactiveColour = ((Colour) MLInterpreter.getObject(currentObject.getParameter(i).getValue(), interpretedObjects).getObject());
+			else if (currentObject.getParameter(i).getName().equals("inactiveImage"))
+				component.renderer.inactiveImage = ((Image) MLInterpreter.getObject(currentObject.getParameter(i).getValue(), interpretedObjects).getObject());
 		}
 	}
 	
 	/* The static method used to return a GUIComponentRenderer */
 	public static GUIComponentRenderer interpretRenderer(MLObject currentObject, List<MLInterpretedObject> interpretedObjects) {
-		//The renderer
-		GUIComponentRenderer renderer = null;
 		//The parameters that are expected to be found
 		float width = currentObject.getParameter("width").getFloatValue();
 		float height = currentObject.getParameter("height").getFloatValue();
+		//Create the renderer
+		GUIComponentRenderer renderer = new GUIComponentRenderer(Object2DBuilder.createQuad(width, height));
 		//Check for the colours or textures
 		if (currentObject.doesParameterExist("colours")) {
 			//Get the array of objects that were referenced
@@ -104,10 +116,10 @@ public class IntObj_GUIComponent extends MLInterpreterObject {
 			for (int a = 0; a < objects.length; a++)
 				//Assign the current colour
 				colours[a] = ((Colour) MLInterpreter.getObject(objects[a], interpretedObjects).getObject());
-			//Setup the renderer
-			renderer = new GUIComponentRenderer(Object2DBuilder.createQuad(width, height));
+			//Setup the colours
 			renderer.set(colours);
-		} else if (currentObject.doesParameterExist("images")) {
+		}
+		if (currentObject.doesParameterExist("images")) {
 			//Get the array of objects that were referenced
 			String[] objects = currentObject.getParameter("images").getValue().split(",");
 			//Setup the images array
@@ -116,8 +128,7 @@ public class IntObj_GUIComponent extends MLInterpreterObject {
 			for (int a = 0; a < objects.length; a++)
 				//Assign the current image
 				images[a] = ((Image) MLInterpreter.getObject(objects[a], interpretedObjects).getObject());
-			//Setup the renderer
-			renderer = new GUIComponentRenderer(Object2DBuilder.createQuad(width, height));
+			//Set the textures
 			renderer.set(images);
 		}
 		//Return the renderer

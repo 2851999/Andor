@@ -10,37 +10,37 @@ package org.andor.core.interpreter.gui.objects;
 
 import java.util.List;
 
-import org.andor.core.Colour;
 import org.andor.core.interpreter.ml.MLInterpretedObject;
 import org.andor.core.interpreter.ml.MLInterpreterObject;
 import org.andor.core.parser.ml.MLObject;
+import org.andor.gui.GUICheckBox;
 
-public class IntObj_Colour extends MLInterpreterObject {
+public class IntObj_GUICheckBox extends MLInterpreterObject {
 
 	/* The constructor */
-	public IntObj_Colour() {
+	public IntObj_GUICheckBox() {
 		//Call the super constructor
-		super("Colour");
+		super("GUICheckBox");
 	}
 	
 	/* The method used to interpret a specific object */
 	public MLInterpretedObject interpret(MLObject currentObject, List<MLInterpretedObject> interpretedObjects) {
 		//The parameters that are expected to be found
-		float r = 0, g = 0, b = 0, a = 0;
+		String text = null;
 		//Go through each parameter
 		for (int i = 0; i < currentObject.getParameters().size(); i++) {
 			//Check the name and assign the values
-			if (currentObject.getParameter(i).getName().equals("r"))
-				r = currentObject.getParameter(i).getIntegerValue() / 255;
-			else if (currentObject.getParameter(i).getName().equals("g"))
-				g = currentObject.getParameter(i).getIntegerValue() / 255;
-			else if (currentObject.getParameter(i).getName().equals("b"))
-				b = currentObject.getParameter(i).getIntegerValue() / 255;
-			else if (currentObject.getParameter(i).getName().equals("a"))
-				a = currentObject.getParameter(i).getIntegerValue() / 255;
+			if (currentObject.getParameter(i).getName().equals("text"))
+				text = currentObject.getParameter(i).getValue();
 		}
+		//Create the object
+		GUICheckBox checkBox = new GUICheckBox(IntObj_GUIComponent.interpretRenderer(currentObject, interpretedObjects));
+		//Assign the variables
+		checkBox.text = text;
+		//Setup the rest of the component
+		IntObj_GUIComponent.interpret(currentObject, interpretedObjects, checkBox);
 		//Return the object
-		return new MLInterpretedObject(currentObject.getName(), new Colour(r, g, b, a));
+		return new MLInterpretedObject(currentObject.getName(), checkBox);
 	}
 	
 }

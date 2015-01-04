@@ -25,6 +25,14 @@ public class ParserUtils {
 		return line;
 	}
 	
+	/* The static method used to remove any whitespace from the beginning and end of parameters */
+	public static void removeWhitespace(String[] parameters) {
+		//Remove the whitespace
+		for (int a = 0; a < parameters.length; a++)
+			//Clean up the current line
+			parameters[a] = removeWhitespace(parameters[a]);
+	}
+	
 	/* The static method for calculating a string */
 	public static String getString(String s) {
 		//Return the string

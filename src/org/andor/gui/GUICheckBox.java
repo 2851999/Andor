@@ -22,6 +22,13 @@ public class GUICheckBox extends GUIComponent {
 	public String text;
 	
 	/* The constructor */
+	public GUICheckBox(GUIComponentRenderer renderer) {
+		//Setup this component
+		this.setup(renderer);
+		this.checked = false;
+	}
+	
+	/* The constructor */
 	public GUICheckBox(Colour[] colours, float width, float height) {
 		//Call the super constructor
 		super(Object2DBuilder.createQuad(width, height, Colour.WHITE), width, height);

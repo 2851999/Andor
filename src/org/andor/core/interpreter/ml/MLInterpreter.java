@@ -17,6 +17,9 @@ public class MLInterpreter {
 	
 	/* Some of the syntax for interpreting */
 	public static final String OBJECT_REFERENCE = "#";
+	public static final String METHOD_REFERENCE = "$";
+	public static final String METHOD_PARAMETERS_OPEN = "(";
+	public static final String METHOD_PARAMETERS_CLOSE = ")";
 	
 	/* The static method used to log an error when interpreting an ML tree */
 	public static void log(String message) {

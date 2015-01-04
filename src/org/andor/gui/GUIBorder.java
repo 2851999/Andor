@@ -22,6 +22,15 @@ public class GUIBorder extends Object2D {
 	/* The renderer */
 	public GUIComponentRenderer renderer;
 	
+	/* The thickness */
+	private float thickness;
+	
+	/* The colours */
+	private Colour[] colours;
+	
+	/* The images */
+	private Image[] images;
+	
 	/* The default constructor */
 	public GUIBorder() {
 		
@@ -29,35 +38,81 @@ public class GUIBorder extends Object2D {
 	
 	/* The constructor */
 	public GUIBorder(GUIComponent component, float thickness) {
-		//Setup this boarder
-		this.setup(component, thickness);
+		//Assign the variables
+		this.thickness = thickness;
+		//Setup this border
+		this.setup(component);
 		//Set the colour to white
-		this.renderer.colours = new Colour[] { Colour.WHITE };
+		this.colours = new Colour[] { Colour.WHITE };
+	}
+	
+	/* The constructor */
+	public GUIBorder(float thickness, Colour colour) {
+		//Assign the variables
+		this.thickness = thickness;
+		//Set the colours
+		this.colours = new Colour[] { colour };
+	}
+	
+	/* The constructor */
+	public GUIBorder(float thickness, Image image) {
+		//Assign the variables
+		this.thickness = thickness;
+		//Set the images
+		this.images = new Image[] { image };
+	}
+	
+	/* The constructor */
+	public GUIBorder(GUIComponent component, float thickness, Colour colour) {
+		//Assign the variables
+		this.thickness = thickness;
+		//Setup this border
+		this.setup(component);
+		//Set the colours
+		this.colours = new Colour[] { colour };
+	}
+	
+	/* The constructor */
+	public GUIBorder(GUIComponent component, float thickness, Image image) {
+		//Assign the variables
+		this.thickness = thickness;
+		//Setup this border
+		this.setup(component);
+		//Set the images
+		this.images = new Image[] { image };
 	}
 	
 	/* The constructor */
 	public GUIBorder(GUIComponent component, float thickness, Colour[] colours) {
-		//Setup this boarder
-		this.setup(component, thickness);
+		//Assign the variables
+		this.thickness = thickness;
+		//Setup this border
+		this.setup(component);
 		//Set the colours
-		this.renderer.colours = colours;
+		this.colours = colours;
 	}
 	
 	/* The constructor */
 	public GUIBorder(GUIComponent component, float thickness, Image[] images) {
-		//Setup this boarder
-		this.setup(component, thickness);
+		//Assign the variables
+		this.thickness = thickness;
+		//Setup this border
+		this.setup(component);
 		//Set the images
-		this.renderer.images = images;
+		this.images = images;
 	}
 	
 	/* The method used to setup this boarder */
-	public void setup(GUIComponent component, float thickness) {
+	public void setup(GUIComponent component) {
 		//Assign the variables
 		this.component = component;
-		this.renderer = new GUIComponentRenderer(Object2DBuilder.createQuad(this.component.width + (thickness * 2), this.component.height + (thickness * 2), Colour.WHITE));
-		this.position = new Vector2D(-thickness, -thickness);
+		this.renderer = new GUIComponentRenderer(Object2DBuilder.createQuad(this.component.width + (this.thickness * 2), this.component.height + (this.thickness * 2), Colour.WHITE));
+		this.position = new Vector2D(-this.thickness, -this.thickness);
 		this.component.link(this);
+		if (this.colours != null)
+			this.renderer.colours = this.colours;
+		else if (this.images != null)
+			this.renderer.images = this.images;
 	}
 	
 	/* The method used to render this boarder */

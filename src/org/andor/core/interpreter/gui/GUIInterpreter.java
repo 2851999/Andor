@@ -12,11 +12,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.andor.core.interpreter.ml.MLInterpretedObject;
+import org.andor.core.interpreter.ml.MLInterpreter;
+import org.andor.core.interpreter.ml.MLInterpreterMethods;
 import org.andor.core.parser.ml.MLObject;
 import org.andor.core.parser.ml.MLTree;
+import org.andor.gui.GUIButton;
 import org.andor.gui.GUIComponent;
+import org.andor.gui.GUIDropDownMenu;
 import org.andor.gui.GUIGroup;
 import org.andor.gui.GUIPanel;
+import org.andor.gui.GUIPosition;
 
 public class GUIInterpreter {
 	
@@ -26,6 +31,9 @@ public class GUIInterpreter {
 	/* The current working directory */
 	public static String WORKING_DIRECTORY = "";
 	public static boolean WORKING_INFOLDER = false;
+	
+	/* The GUIPosition */
+	public static GUIPosition positionPreference;
 	
 	/* The static method used to create a GUIPanel given an MLTree object and working directory */
 	public static GUIPanel interpret(String panelName, boolean autoUpdate, MLTree tree, String workingDirectory, boolean workingInFolder) {
@@ -55,13 +63,16 @@ public class GUIInterpreter {
 			//Interpret the current object
 			interpretObject(object, objects.get(a), interpretedObjects);
 			//Interpret the objects within the current object
-			interpretObjects(object, objects.get(a).getObjects(), interpretedObjects);
+			interpretObjects(interpretedObjects.get(interpretedObjects.size() - 1).getObject(), objects.get(a).getObjects(), interpretedObjects);
 		}
 	}
 	
 	/* The static method used to interpret an object */
 	public static void interpretObject(Object object, MLObject currentObject, List<MLInterpretedObject> interpretedObjects) {
 		//Interpret the object
+		
+		//Setup the position preference
+		positionPreference = GUIPosition.NONE;
 		
 		//The GUIComponent
 		GUIComponent component = GUIInterpreterObjects.interpret(currentObject, interpretedObjects);
@@ -72,13 +83,30 @@ public class GUIInterpreter {
 			if (object instanceof GUIPanel)
 				//Cast the object and add the component
 				((GUIPanel) object).add(component);
+			else if (object instanceof GUIDropDownMenu)
+				//Cast the object and add the component
+				((GUIDropDownMenu) object).addButton((GUIButton) component);
 			else if (object instanceof GUIGroup)
 				//Cast the object and add the component
 				((GUIGroup) object).add(component);
 			else if (object instanceof GUIComponent)
 				//Cast the object and add the component
-				((GUIComponent) object).add(component);
+				((GUIComponent) object).add(component, positionPreference);
 		}
+	}
+	
+	/* The static method used to interpret a value */
+	public static Object interpret(String value, List<MLInterpretedObject> interpretedObjects) {
+		//Check the value to see whether it is referencing an object
+		if (value.startsWith(MLInterpreter.OBJECT_REFERENCE))
+			//Return the object
+			return MLInterpreter.getObject(value, interpretedObjects).getObject();
+		else if (value.startsWith(MLInterpreter.METHOD_REFERENCE))
+			//Return the object
+			return MLInterpreterMethods.interpret(value);
+		else
+			//Return the value
+			return value;
 	}
 	
 }

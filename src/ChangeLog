@@ -1,4 +1,20 @@
 ------------------------------------------------------
+Release 2 | Beta 1 | Development 2 | Experimental 9
+
+* Added IntObj_GUIBorder
+* Added IntObj_GUICheckBox
+* Added IntObj_GUIDropDownList
+* Added IntObj_GUIDropDownMenu
+* Added IntObj_GUILoadingBar
+* Added MLInterpreterMethod
+* Added MLInterpreterMethods
+* Added IntMethod_RGB
+* Added IntMethod_RGBA
+
+* Created the package
+  org.andor.core.interpreter.ml.methods
+
+------------------------------------------------------
 Release 2 | Beta 1 | Development 2 | Experimental 8
 
 * Added IntObj_Image
