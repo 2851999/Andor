@@ -44,6 +44,19 @@ public class MLParameter {
 		}
 	}
 	
+	public Long getLongValue() {
+		//Make sure the value is an integer
+		try {
+			//Try an parse the value
+			return Long.parseLong(this.getValue());
+		} catch (NumberFormatException e) {
+			//Log an error
+			MLInterpreter.log("Parameter with the name " + this.name + " has a value of " + this.value + " which is not an integer");
+			//Return 0
+			return 0L;
+		}
+	}
+	
 	public float getFloatValue() {
 		//Make sure the value is a float
 		try {
@@ -73,6 +86,11 @@ public class MLParameter {
 	public boolean getBooleanValue() {
 		//Parse the value
 		return Boolean.parseBoolean(this.getValue());
+	}
+	
+	public char getCharacterValue() {
+		//Parse the value
+		return this.getValue().charAt(0);
 	}
 	
 }

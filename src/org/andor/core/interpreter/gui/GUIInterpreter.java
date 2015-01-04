@@ -22,6 +22,7 @@ import org.andor.gui.GUIDropDownMenu;
 import org.andor.gui.GUIGroup;
 import org.andor.gui.GUIPanel;
 import org.andor.gui.GUIPosition;
+import org.andor.gui.GUIWindow;
 
 public class GUIInterpreter {
 	
@@ -89,6 +90,9 @@ public class GUIInterpreter {
 			else if (object instanceof GUIGroup)
 				//Cast the object and add the component
 				((GUIGroup) object).add(component);
+			else if (object instanceof GUIWindow)
+				//Cast the object and add the component
+				((GUIWindow) object).add(component);
 			else if (object instanceof GUIComponent)
 				//Cast the object and add the component
 				((GUIComponent) object).add(component, positionPreference);

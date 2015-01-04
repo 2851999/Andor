@@ -9,6 +9,7 @@
 package org.andor.gui;
 
 import org.andor.core.Colour;
+import org.andor.core.Image;
 import org.andor.core.Object2D;
 import org.andor.core.Object2DBuilder;
 import org.andor.core.Vector2D;
@@ -31,11 +32,23 @@ public class GUITextBoxCursor extends Object2D {
 	/* The boolean that states whether this cursor should be shown */
 	public boolean cursorShown;
 	
+	/* The default constructor */
+	public GUITextBoxCursor() {
+		
+	}
+	
 	/* The constructor */
 	public GUITextBoxCursor(GUITextBox textBox, float thickness) {
 		//Assign the variables
-		this.textBox = textBox;
 		this.width = thickness;
+		//Setup
+		setup(textBox);
+	}
+	
+	/* The method used to setup this cursor */
+	public void setup(GUITextBox textBox) {
+		//Assign the variables
+		this.textBox = textBox;
 		this.height = this.textBox.renderer.font.getHeight("A");
 		this.renderer = new GUIComponentRenderer(Object2DBuilder.createQuad(this.width, this.height, Colour.WHITE));
 		this.renderer.colours = new Colour[] { Colour.BLACK };
@@ -44,6 +57,12 @@ public class GUITextBoxCursor extends Object2D {
 		this.timeBetweenBlink = 600;
 		this.cursorShown = false;
 	}
+	
+	/* The method used to set the colour */
+	public void setColour(Colour colour) { this.renderer.colours = new Colour[] { Colour.BLACK }; }
+	
+	/* The method used to set the image */
+	public void setImage(Image image) { this.renderer.images = new Image[] { image }; }
 	
 	/* The method used to render this cursor */
 	public void render() {

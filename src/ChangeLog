@@ -1,4 +1,23 @@
 ------------------------------------------------------
+Release 2 | Beta 1 | Development 2 | Experimental 10
+
+* Added IntObj_GUIGroup
+* Added IntObj_GUIRadioCheckBox
+* Added IntObj_GUISlider
+* Added IntObj_GUITextBox
+* Added IntObj_GUITextBoxCursor
+* Added IntObj_GUITextBoxSelection
+* Added IntObj_GUIWindow
+
+* Fixed bug: StringIndexOutOfBoundsException thrown
+  when MLParser parsed an object declaration without
+  any parameters
+  
+* Found bug: Strange positioning issue with GUIWindow
+  and positioning components using a position
+  preference
+
+------------------------------------------------------
 Release 2 | Beta 1 | Development 2 | Experimental 9
 
 * Added IntObj_GUIBorder

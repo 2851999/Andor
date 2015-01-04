@@ -37,6 +37,19 @@ public class GUIWindow extends GUIComponent implements InputListenerInterface {
 	private boolean mousePressed;
 	
 	/* The constructor */
+	public GUIWindow(String windowTitle, float width, float height) {
+		//Call the super constructor
+		super(Object2DBuilder.createQuad(width, height, Colour.WHITE), width, height);
+		//Assign the variables
+		this.windowTitle = windowTitle;
+		this.topBar = new GUIFill(this);
+		this.topBar.width = this.width;
+		this.topBar.height = 20;
+		this.mousePressed = false;
+		Input.addListener(this);
+	}
+	
+	/* The constructor */
 	public GUIWindow(String windowTitle, Colour colour, float width, float height) {
 		//Call the super constructor
 		super(Object2DBuilder.createQuad(width, height, Colour.WHITE), width, height);
@@ -79,6 +92,18 @@ public class GUIWindow extends GUIComponent implements InputListenerInterface {
 		this.mousePressed = false;
 		Input.addListener(this);
 	}
+	
+	/* The method used to assign the colour */
+	public void setColour(Colour colour) { this.renderer.colours = new Colour[] { colour }; }
+	
+	/* The method used to assign the image */
+	public void setImage(Image image) { this.renderer.images = new Image[] { image }; }
+	
+	/* The method used to assign the top bar colour */
+	public void setTopColour(Colour colour) { this.topBar.colour = colour; }
+	
+	/* The method used to assign the image */
+	public void setTopImage(Image image) { this.topBar.image = image; }
 	
 	/* The method called to update this component */
 	protected void updateComponent() {

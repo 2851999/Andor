@@ -18,9 +18,16 @@ import org.andor.core.interpreter.gui.objects.IntObj_GUICheckBox;
 import org.andor.core.interpreter.gui.objects.IntObj_GUIComponent;
 import org.andor.core.interpreter.gui.objects.IntObj_GUIDropDownList;
 import org.andor.core.interpreter.gui.objects.IntObj_GUIDropDownMenu;
+import org.andor.core.interpreter.gui.objects.IntObj_GUIGroup;
 import org.andor.core.interpreter.gui.objects.IntObj_GUILabel;
 import org.andor.core.interpreter.gui.objects.IntObj_GUILoadingBar;
+import org.andor.core.interpreter.gui.objects.IntObj_GUIRadioCheckBox;
+import org.andor.core.interpreter.gui.objects.IntObj_GUISlider;
+import org.andor.core.interpreter.gui.objects.IntObj_GUITextBox;
+import org.andor.core.interpreter.gui.objects.IntObj_GUITextBoxCursor;
+import org.andor.core.interpreter.gui.objects.IntObj_GUITextBoxSelection;
 import org.andor.core.interpreter.gui.objects.IntObj_GUIToolTip;
+import org.andor.core.interpreter.gui.objects.IntObj_GUIWindow;
 import org.andor.core.interpreter.gui.objects.IntObj_Image;
 import org.andor.core.interpreter.ml.MLInterpretedObject;
 import org.andor.core.interpreter.ml.MLInterpreter;
@@ -43,7 +50,14 @@ public class GUIInterpreterObjects {
 		new IntObj_GUICheckBox(),
 		new IntObj_GUIDropDownMenu(),
 		new IntObj_GUIDropDownList(),
-		new IntObj_GUILoadingBar()
+		new IntObj_GUILoadingBar(),
+		new IntObj_GUIGroup(),
+		new IntObj_GUIRadioCheckBox(),
+		new IntObj_GUISlider(),
+		new IntObj_GUITextBox(),
+		new IntObj_GUITextBoxCursor(),
+		new IntObj_GUITextBoxSelection(),
+		new IntObj_GUIWindow()
 	};
 	
 	/* The static method used to interpret an object and return the component */

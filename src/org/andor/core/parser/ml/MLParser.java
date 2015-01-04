@@ -55,24 +55,37 @@ public class MLParser {
 					ML.log("Found object declaration " + objectDeclaration);
 					//Get the objects type and name
 					String objectType = objectDeclaration.substring(0, objectDeclaration.indexOf(MLSyntax.NAME_ASSIGNMENT));
-					String objectName = objectDeclaration.substring(objectDeclaration.indexOf(MLSyntax.NAME_ASSIGNMENT) + 1, objectDeclaration.indexOf(" "));
+					//The object name
+					String objectName = "";
+					//The object
+					MLObject object = null;
+					//Check to see whether there are any parameters
+					if (objectDeclaration.contains(" ")) {
+						//Assign the object name
+						objectName = objectDeclaration.substring(objectDeclaration.indexOf(MLSyntax.NAME_ASSIGNMENT) + 1, objectDeclaration.indexOf(" "));
+						//Assign the object
+						object = new MLObject(objectType, objectName);
+						//Get the parameters
+						String objectParameters = objectDeclaration.substring(objectDeclaration.indexOf(" ") + 1);
+						//Split up each parameter
+						String[] parameters = splitWithStrings(objectParameters);
+						//Go through each parameter
+						for (int a = 0; a < parameters.length; a++) {
+							//Parse the parameter
+							MLParameter parameter = new MLParameter(parameters[a].substring(0, parameters[a].indexOf(MLSyntax.PARAMETER_ASSIGNMENT)), ParserUtils.getString(parameters[a].substring(parameters[a].indexOf(MLSyntax.PARAMETER_ASSIGNMENT) + 1)));
+							//Log some verbose
+							ML.log("Parsed parameter with the name " + parameter.getName() + " and the value " + parameter.getValue());
+							//Add the parameter to the object
+							object.add(parameter);
+						}
+					} else {
+						//Assign the object name
+						objectName = objectDeclaration.substring(objectDeclaration.indexOf(MLSyntax.NAME_ASSIGNMENT) + 1);
+						//Assign the object
+						object = new MLObject(objectType, objectName);
+					}
 					//Log some verbose
 					ML.log("Found object type " + objectType + " and name " + objectName);
-					//Get the parameters
-					String objectParameters = objectDeclaration.substring(objectDeclaration.indexOf(" ") + 1);
-					//Split up each parameter
-					String[] parameters = splitWithStrings(objectParameters);
-					//Create the object
-					MLObject object = new MLObject(objectType, objectName);
-					//Go through each parameter
-					for (int a = 0; a < parameters.length; a++) {
-						//Parse the parameter
-						MLParameter parameter = new MLParameter(parameters[a].substring(0, parameters[a].indexOf(MLSyntax.PARAMETER_ASSIGNMENT)), ParserUtils.getString(parameters[a].substring(parameters[a].indexOf(MLSyntax.PARAMETER_ASSIGNMENT) + 1)));
-						//Log some verbose
-						ML.log("Parsed parameter with the name " + parameter.getName() + " and the value " + parameter.getValue());
-						//Add the parameter to the object
-						object.add(parameter);
-					}
 					//Add the object to the object stack
 					objectStack.add(object);
 				}

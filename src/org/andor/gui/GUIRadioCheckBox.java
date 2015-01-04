@@ -14,6 +14,12 @@ import org.andor.core.Image;
 public class GUIRadioCheckBox extends GUICheckBox {
 	
 	/* The constructor */
+	public GUIRadioCheckBox(GUIComponentRenderer renderer) {
+		//Call the super constructor
+		super(renderer);
+	}
+	
+	/* The constructor */
 	public GUIRadioCheckBox(Colour[] colours, float width, float height) {
 		//Call the super constructor
 		super(colours, width, height);

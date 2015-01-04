@@ -35,26 +35,26 @@ public class GUIFill extends Object2D {
 	/* The constructor */
 	public GUIFill(GUIComponent component) {
 		//Setup this fill
-		this.setup(component, null);
+		this.setup(component);
 	}
 	
 	/* The constructor */
 	public GUIFill(GUIComponent component, Colour colour) {
 		//Setup this fill
-		this.setup(component, null);
+		this.setup(component);
 		this.colour = colour;
 	}
 	
 	/* The constructor */
 	public GUIFill(GUIComponent component, Image image) {
 		//Setup this fill
-		this.setup(component, image);
+		this.setup(component);
 		//Set the image
 		this.image = image;
 	}
 	
 	/* The method used to setup this fill */
-	public void setup(GUIComponent component, Image image) {
+	public void setup(GUIComponent component) {
 		//Assign the variables
 		this.component = component;
 		this.component.link(this);

@@ -94,6 +94,10 @@ public class GUISlider extends GUIComponent implements InputListenerInterface {
 		Input.addListener(this);
 	}
 	
+	/* The method used to set the colour */
+	public void setColour(Colour colour) { this.renderer.colours = new Colour[] { colour }; }
+	public void setImage(Image image) { this.renderer.images = new Image[] { image }; }
+	
 	/* The method called to update this component */
 	protected void updateComponent() {
 		//Update the button

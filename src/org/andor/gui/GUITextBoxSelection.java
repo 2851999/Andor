@@ -9,6 +9,7 @@
 package org.andor.gui;
 
 import org.andor.core.Colour;
+import org.andor.core.Image;
 import org.andor.core.Object2D;
 import org.andor.core.Object2DBuilder;
 import org.andor.core.Vector2D;
@@ -21,6 +22,11 @@ public class GUITextBoxSelection extends Object2D {
 	/* The renderer */
 	public GUIComponentRenderer renderer;
 	
+	/* The default constructor */
+	public GUITextBoxSelection() {
+		
+	}
+	
 	/* The constructor */
 	public GUITextBoxSelection(GUITextBox textBox) {
 		//Assign the variables
@@ -30,6 +36,18 @@ public class GUITextBoxSelection extends Object2D {
 		this.renderer = new GUIComponentRenderer(Object2DBuilder.createQuad(this.width, this.height, Colour.WHITE));
 		this.renderer.colours = new Colour[] { Colour.BLACK };
 	}
+	
+	/* The method used to setup this */
+	public void setup(GUITextBox textBox) {
+		//Assign the variables
+		this.textBox = textBox;
+	}
+	
+	/* The method used to set the colour */
+	public void setColour(Colour colour) { this.renderer.colours = new Colour[] { colour }; }
+	
+	/* The method used to set the image */
+	public void setImage(Image image) { this.renderer.images = new Image[] { image }; }
 	
 	/* The method used to render this cursor */
 	public void render() {

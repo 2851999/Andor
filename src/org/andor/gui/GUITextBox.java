@@ -76,6 +76,14 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface, 
 	/* The shortcuts */
 	public KeyboardShortcuts shortcuts;
 	
+	/* The constructor - should set either images or colour when using this */
+	public GUITextBox(float width, float height) {
+		//Call the super constructor
+		super(Object2DBuilder.createQuad(width, height, Colour.WHITE), width, height);
+		//Setup all of the variables
+		this.setup();
+	}
+	
 	/* The constructor */
 	public GUITextBox(Colour colour, float width, float height) {
 		//Call the super constructor
@@ -106,6 +114,10 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface, 
 		//Setup all of the variables
 		this.setup();
 	}
+	
+	/* The methods used to assign the background colour */
+	public void setColour(Colour colour) { this.renderer.colours = new Colour[] { colour }; }
+	public void setImage(Image image) { this.renderer.images = new Image[] { image }; }
 	
 	/* The method used to setup all of the variables */
 	public void setup() {
