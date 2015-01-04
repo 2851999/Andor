@@ -70,4 +70,9 @@ public class MLParameter {
 		}
 	}
 	
+	public boolean getBooleanValue() {
+		//Parse the value
+		return Boolean.parseBoolean(this.getValue());
+	}
+	
 }

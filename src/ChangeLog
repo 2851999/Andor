@@ -1,4 +1,10 @@
 ------------------------------------------------------
+Release 2 | Beta 1 | Development 2 | Experimental 7
+
+* Added IntObj_GUIButton
+* Added IntObj_GUIComponent
+
+------------------------------------------------------
 Release 2 | Beta 1 | Development 2 | Experimental 6
 
 * Added IntObj_GUIColour

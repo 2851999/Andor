@@ -64,6 +64,9 @@ public class GUIComponent extends Object2D {
 	/* The tool tip */
 	public GUIToolTip toolTip;
 	
+	/* The default constructor - should only be used when the renderer will be setup separately */
+	public GUIComponent() {}
+	
 	/* The constructor */
 	public GUIComponent(RenderableObject2D object) {
 		this.setup(object);
@@ -76,10 +79,25 @@ public class GUIComponent extends Object2D {
 		this.setup(object);
 	}
 	
+	/* The method used to setup this component with the renderer */
+	public void setup(GUIComponentRenderer renderer) {
+		//Assign the renderer
+		this.renderer = renderer;
+		//Set the defaults
+		this.setDefaults();
+	}
+	
 	/* The method used to setup this */
 	public void setup(RenderableObject2D object) {
 		//Assign the variables
 		this.renderer = new GUIComponentRenderer(object);
+		//Set the defaults
+		this.setDefaults();
+	}
+	
+	/* The method used to setup the default values */
+	public void setDefaults() {
+		//Assign the default values
 		this.name = "";
 		this.visible = true;
 		this.active = true;

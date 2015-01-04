@@ -26,6 +26,8 @@ public class MLInterpreter {
 	
 	/* The static method used to find a ML Object with a specific name given the list of objects */
 	public static MLInterpretedObject getObject(String name, List<MLInterpretedObject> interpretedObjects) {
+		//Remove the object reference
+		name = name.replace(OBJECT_REFERENCE, "");
 		//Go through each object
 		for (int a = 0; a < interpretedObjects.size(); a++) {
 			//Check the name

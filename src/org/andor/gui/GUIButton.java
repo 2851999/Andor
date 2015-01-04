@@ -18,6 +18,12 @@ public class GUIButton extends GUIComponent {
 	public String text;
 	
 	/* The constructor */
+	public GUIButton(GUIComponentRenderer renderer) {
+		//Setup this component
+		this.setup(renderer);
+	}
+	
+	/* The constructor */
 	public GUIButton(Colour[] colours, float width, float height) {
 		//Call the super constructor
 		//If using a colour, the colour must be used to colour VBO setup properly (Same for images)
