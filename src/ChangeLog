@@ -1,4 +1,169 @@
 ------------------------------------------------------
+Release 2 | Beta 2 | Development 0 | Experimental 1
+
+* Added the method 'write' in MLParser so it can now
+  save MLTree's to a list that can then be written to
+  a file
+* Added the methods to scale GUIComponents
+
+------------------------------------------------------
+Release 2 | Beta 2 | Development 0 | Experimental 0
+
+* Added ControlBindingUtils
+* Added Light3D
+
+* Added ZipUtils
+* Added ParserUtils
+* Added ML
+* Added MLSyntax
+* Added MLTree
+* Added MLObject
+* Added MLConfig
+* Added MLParser
+* Added MLTest
+* Added GUIInterpreter
+* Added GUIInterpreterObjects
+* Added MLInterpretedObject
+* Added MLInterpreter
+* Added MLInterpreterObject
+* Added ScreenResolution
+* Added IntObj_Colour
+* Added IntObj_GUIButton
+* Added IntObj_GUIComponent
+* Added IntObj_Image
+* Added IntObj_Label
+* Added IntObj_ToolTip
+* Added IntObj_Font
+* Added IntObj_GUIBorder
+* Added IntObj_GUICheckBox
+* Added IntObj_GUIDropDownList
+* Added IntObj_GUIDropDownMenu
+* Added IntObj_GUILoadingBar
+* Added MLInterpreterMethod
+* Added MLInterpreterMethods
+* Added IntMethod_RGB
+* Added IntMethod_RGBA
+* Added IntObj_GUIGroup
+* Added IntObj_GUIRadioCheckBox
+* Added IntObj_GUISlider
+* Added IntObj_GUITextBox
+* Added IntObj_GUITextBoxCursor
+* Added IntObj_GUITextBoxSelection
+* Added IntObj_GUIWindow
+* Added Resources in Settings
+* Added 'Undecorated' setting in the window settings
+* Added support for multiple buttons on the mouse
+* Added normal matrix to the vertex shader
+* Added colours to font
+
+
+* Created the package org.andor.core.lighting
+* Created org.andor.core.parser.ml
+* Created org.andor.core.parser.utils
+* Created the package org.andor.core.interpreter.gui
+* Created the package org.andor.core.interpreter.ml
+* Created the package org.andor.core.interpreter.ml.objects
+* Created the package org.andor.core.interpreter.ml.methods
+
+* Changed control binding saving/loading
+
+* Fixed bug: On android updating a Renderer's normals
+  wouldn't have worked properly
+* Fixed bug: Colours and Textures had to be set as
+  the renderer was created otherwise they would
+  not work and would result in a OpenGL exception
+  this may have effected GUIComponent's and stopped
+  them from working when using images to render them
+* Fixed bug: Animation2D didn't repeat an animation
+  when 'repeat' was set to true
+* Fixed bug: GUITextBox would move the cursor no
+  matter what mouse button was pressed
+* Fixed bug: 3D sound system didn't take notice
+  of direction
+* Fixed bug: Scaling a 3D object resulted in it's
+  position being changed
+* Fixed bug: Controllers didn't work properly with
+  ControlBindings unless the controller was manually
+  set
+
+* Found Bug: Mouse behaves strangely when locked
+  when using DSR (May just be 4K)
+* Found bug: Strange positioning issue with GUIWindow
+  and positioning components using a position
+  preference
+
+* NOTE: When using Android, you should put the
+  resources folder into the assets folder
+* NOTE: Linker errors are now also detected in
+  shader programs
+* NOTE: Support for DSR (Dynamic Super Resolution)
+
+------------------------------------------------------
+Release 2 | Beta 1 | Development 3 | Experimental 0
+
+* Added ZipUtils
+* Added ParserUtils
+* Added ML
+* Added MLSyntax
+* Added MLTree
+* Added MLObject
+* Added MLConfig
+* Added MLParser
+* Added MLTest
+* Added GUIInterpreter
+* Added GUIInterpreterObjects
+* Added MLInterpretedObject
+* Added MLInterpreter
+* Added MLInterpreterObject
+* Added ScreenResolution
+* Added IntObj_Colour
+* Added IntObj_GUIButton
+* Added IntObj_GUIComponent
+* Added IntObj_Image
+* Added IntObj_Label
+* Added IntObj_ToolTip
+* Added IntObj_Font
+* Added IntObj_GUIBorder
+* Added IntObj_GUICheckBox
+* Added IntObj_GUIDropDownList
+* Added IntObj_GUIDropDownMenu
+* Added IntObj_GUILoadingBar
+* Added MLInterpreterMethod
+* Added MLInterpreterMethods
+* Added IntMethod_RGB
+* Added IntMethod_RGBA
+* Added IntObj_GUIGroup
+* Added IntObj_GUIRadioCheckBox
+* Added IntObj_GUISlider
+* Added IntObj_GUITextBox
+* Added IntObj_GUITextBoxCursor
+* Added IntObj_GUITextBoxSelection
+* Added IntObj_GUIWindow
+
+* Created org.andor.core.parser.ml
+* Created org.andor.core.parser.utils
+* Created the package org.andor.core.interpreter.gui
+* Created the package org.andor.core.interpreter.ml
+* Created the package org.andor.core.interpreter.ml.objects
+* Created the package org.andor.core.interpreter.ml.methods
+
+* Fixed bug: On android updating a Renderer's normals
+  wouldn't have worked properly
+* Fixed bug: Colours and Textures had to be set as
+  the renderer was created otherwise they would
+  not work and would result in a OpenGL exception
+  this may have effected GUIComponent's and stopped
+  them from working when using images to render them
+
+* Found Bug: Mouse behaves strangely when locked
+  when using DSR (May just be 4K)
+* Found bug: Strange positioning issue with GUIWindow
+  and positioning components using a position
+  preference
+
+* NOTE: Support for DSR (Dynamic Super Resolution)
+
+------------------------------------------------------
 Release 2 | Beta 1 | Development 2 | Experimental 10
 
 * Added IntObj_GUIGroup
@@ -190,7 +355,7 @@ Release 2 | Beta 1 | Development 1 | Experimental 1
 Release 2 | Beta 1 | Development 1 | Experimental 0
 
 * Added ControlBindingUtils
-* Added support for multiplied buttons on the mouse
+* Added support for multiple buttons on the mouse
 * Added normal matrix to the vertex shader
 * Added colours to font
 

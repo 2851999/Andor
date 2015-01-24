@@ -18,7 +18,7 @@ public class Settings {
 	/* The static class containing all of the information about Andor */
 	public static class Information {
 		/* The version of Andor */
-		public static final String VERSION = "V0.0.2.7";
+		public static final String VERSION = "V0.0.2.9";
 		/* The build of Andor */
 		public static final String BUILD = "Experimental";
 		/* The date this build started development */
@@ -46,7 +46,7 @@ public class Settings {
 		public static boolean AntiAliasing = false;
 		/* The maximum FPS */
 		public static int MaxFPS = 60;
-		/* The preffered resolution (Fullscreen only) */
+		/* The preferred resolution (Fullscreen only) */
 		public static ScreenResolution Resolution = ScreenResolution.RES_NATIVE;
 	}
 	
