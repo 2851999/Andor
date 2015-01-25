@@ -14,6 +14,8 @@ import org.andor.core.Colour;
 import org.andor.core.interpreter.ml.MLInterpretedObject;
 import org.andor.core.interpreter.ml.MLInterpreterObject;
 import org.andor.core.parser.ml.MLObject;
+import org.andor.core.parser.ml.MLParameter;
+import org.andor.gui.GUIComponent;
 
 public class IntObj_Colour extends MLInterpreterObject {
 
@@ -41,6 +43,20 @@ public class IntObj_Colour extends MLInterpreterObject {
 		}
 		//Return the object
 		return new MLInterpretedObject(currentObject.getName(), new Colour(r, g, b, a));
+	}
+	
+	/* The method used to write a component */
+	public void write(MLObject object, GUIComponent component) {
+		
+	}
+	
+	/* The static method used to write a colour to an object */
+	public static void write(MLObject object, Colour colour) {
+		//Add the parameters to the object
+		object.add(new MLParameter("r", "" + (int) (colour.r * 255)));
+		object.add(new MLParameter("g", "" + (int) (colour.g * 255)));
+		object.add(new MLParameter("b", "" + (int) (colour.b * 255)));
+		object.add(new MLParameter("a", "" + (int) (colour.a * 255)));
 	}
 	
 }

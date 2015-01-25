@@ -14,11 +14,13 @@ import org.andor.core.Colour;
 import org.andor.core.Font;
 import org.andor.core.Image;
 import org.andor.core.Object2DBuilder;
+import org.andor.core.Settings;
 import org.andor.core.interpreter.gui.GUIInterpreter;
 import org.andor.core.interpreter.ml.MLInterpretedObject;
 import org.andor.core.interpreter.ml.MLInterpreter;
 import org.andor.core.interpreter.ml.MLInterpreterObject;
 import org.andor.core.parser.ml.MLObject;
+import org.andor.core.parser.ml.MLParameter;
 import org.andor.gui.GUIBorder;
 import org.andor.gui.GUIComponent;
 import org.andor.gui.GUIComponentRenderer;
@@ -133,6 +135,121 @@ public class IntObj_GUIComponent extends MLInterpreterObject {
 		}
 		//Return the renderer
 		return renderer;
+	}
+	
+	/* The method used to write a component */
+	public void write(MLObject object, GUIComponent component) {
+		
+	}
+	
+	/* The static method used to write a component to an object */
+	public static void writeObject(MLObject object, GUIComponent component) {
+		//Write all of the parameters to the object
+		object.add(new MLParameter("width", "" + component.getWidth()));
+		object.add(new MLParameter("height", "" + component.getHeight()));
+		object.add(new MLParameter("x", "" + component.position.x));
+		object.add(new MLParameter("y", "" + component.position.y));
+		object.add(new MLParameter("visible", "" + component.visible));
+		object.add(new MLParameter("active", "" + component.active));
+		object.add(new MLParameter("repeatClickedEvents", "" + component.repeatClickedEvents));
+		object.add(new MLParameter("borderEnabled", "" + component.borderEnabled));
+		//Write additional objects that are needed
+		if (component.renderer.font != null && component.renderer.font.bitmapFont.image != Settings.Engine.DefaultFont.bitmapFont.image) {
+			//Create the object
+			MLObject o = new MLObject("Font", object.name + "_font");
+			//Write the data to the object
+			IntObj_Font.write(o, component.renderer.font);
+			//Add the object
+			GUIInterpreter.addAdditionalObject(o);
+			//Add the parameter
+			object.add(new MLParameter("font",GUIInterpreter.OBJECT_REFERENCE + o.getName()));
+		}
+		if (component.border != null) {
+			//Create the object
+			MLObject o = new MLObject("GUIBorder", object.name + "_border");
+			//Write the data to the object
+			IntObj_GUIBorder.write(o, component.border);
+			//Add the object
+			GUIInterpreter.addAdditionalObject(o);
+			//Add the parameter
+			object.add(new MLParameter("border", GUIInterpreter.OBJECT_REFERENCE + o.getName()));
+		}
+		if (component.positionPreference != GUIPosition.NONE)
+			//Add the parameter
+			object.add(new MLParameter("position", component.positionPreference.toString()));
+		if (component.renderer.inactiveColour != null) {
+			//Create the object
+			MLObject o = new MLObject("Colour", object.name + "_inactiveColour");
+			//Write the data to the object
+			IntObj_Colour.write(o, component.renderer.inactiveColour);
+			//Add the object
+			GUIInterpreter.addAdditionalObject(o);
+			//Add the parameter
+			object.add(new MLParameter("inactiveColour", GUIInterpreter.OBJECT_REFERENCE + o.getName()));
+		}
+		if (component.renderer.inactiveImage != null) {
+			//Create the object
+			MLObject o = new MLObject("Image", object.name + "_inactiveImage");
+			//Write the data to the object
+			IntObj_Image.write(o, component.renderer.inactiveImage);
+			//Add the object
+			GUIInterpreter.addAdditionalObject(o);
+			//Add the parameter
+			object.add(new MLParameter("inactiveImage", GUIInterpreter.OBJECT_REFERENCE + o.getName()));
+		}
+		if (component.toolTip != null) {
+			//Create the object
+			MLObject o = new MLObject("GUIToolTip", object.name + "_toolTip");
+			//Write the data to the object
+			IntObj_GUIToolTip.write(o, component.toolTip);
+			//Add the object
+			GUIInterpreter.addAdditionalObject(o);
+			//Add the parameter
+			object.add(new MLParameter("toolTip", GUIInterpreter.OBJECT_REFERENCE + o.getName()));
+		}
+		
+		//Write all of the parameters needed for the renderer
+		if (component.renderer.colours != null) {
+			//The current value of the parameter
+			String parameterValue = "";
+			//Go through each of the colours
+			for (int a = 0; a < component.renderer.colours.length; a++) {
+				//Create the object
+				MLObject o = new MLObject("Colour", object.name + "_colours" + a);
+				//Write the data to the object
+				IntObj_Colour.write(o, component.renderer.colours[a]);
+				//Add the object
+				GUIInterpreter.addAdditionalObject(o);
+				//Add the value to the parameter
+				if (parameterValue.equals(""))
+					parameterValue = GUIInterpreter.OBJECT_REFERENCE + o.getName();
+				else
+					parameterValue += "," + GUIInterpreter.OBJECT_REFERENCE + o.getName();
+			}
+			//Add the parameter to the object
+			object.add(new MLParameter("colours", parameterValue));
+		}
+		//Write all of the parameters needed for the renderer
+		if (component.renderer.images != null) {
+			//The current value of the parameter
+			String parameterValue = "";
+			//Go through each of the colours
+			for (int a = 0; a < component.renderer.images.length; a++) {
+				//Create the object
+				MLObject o = new MLObject("Image", object.name + "_images" + a);
+				//Write the data to the object
+				IntObj_Image.write(o, component.renderer.images[a]);
+				//Add the object
+				GUIInterpreter.addAdditionalObject(o);
+				//Add the value to the parameter
+				if (parameterValue.equals(""))
+					parameterValue = GUIInterpreter.OBJECT_REFERENCE + o.getName();
+				else
+					parameterValue += "," + GUIInterpreter.OBJECT_REFERENCE + o.getName();
+			}
+			//Add the parameter to the object
+			object.add(new MLParameter("images", parameterValue));
+		}
 	}
 	
 }

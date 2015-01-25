@@ -16,6 +16,8 @@ import org.andor.core.interpreter.gui.GUIInterpreter;
 import org.andor.core.interpreter.ml.MLInterpretedObject;
 import org.andor.core.interpreter.ml.MLInterpreterObject;
 import org.andor.core.parser.ml.MLObject;
+import org.andor.core.parser.ml.MLParameter;
+import org.andor.gui.GUIComponent;
 
 public class IntObj_Image extends MLInterpreterObject {
 
@@ -52,6 +54,18 @@ public class IntObj_Image extends MLInterpreterObject {
 			image = ImageLoader.loadImage(path, true);
 		//Return the object
 		return new MLInterpretedObject(currentObject.getName(), image);
+	}
+	
+	/* The method used to write a component */
+	public void write(MLObject object, GUIComponent component) {
+		
+	}
+	
+	/* The static method used to write an image */
+	public static void write(MLObject object, Image image) {
+		//Write the parameters to the object
+		object.add(new MLParameter("path", GUIInterpreter.save(image, object.getName())));
+		object.add(new MLParameter("location", "SAME"));
 	}
 	
 }

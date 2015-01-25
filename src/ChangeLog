@@ -1,4 +1,14 @@
 ------------------------------------------------------
+Release 2 | Beta 2 | Development 0 | Experimental 2
+
+* Added a GUI writing system
+
+* Fixed bug: StackOverflowError when calling
+  GUIDropDownMenu.getButtons()
+* Fixed bug: Null Pointer in some cases using the
+  GUI system when interpreting a drop down menu
+
+------------------------------------------------------
 Release 2 | Beta 2 | Development 0 | Experimental 1
 
 * Added the method 'write' in MLParser so it can now

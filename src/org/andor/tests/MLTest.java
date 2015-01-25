@@ -39,9 +39,10 @@ public class MLTest extends BaseGame {
 	}
 	
 	public void create() {
-		MLTree tree = MLParser.parse(ParserUtils.cleanUp(ArrayUtils.toStringArray(FileUtils.read("H:/Andor/GUITest.ml", true))));
-		panel = GUIInterpreter.interpret("hello", true, tree, "H:/Andor", true);
+		MLTree tree = MLParser.parse(ParserUtils.cleanUp(ArrayUtils.toStringArray(FileUtils.read("H:/hello.txt", true))));
+		panel = GUIInterpreter.interpret("hello", true, tree, "H:/", true);
 		panel.setResolution(new Vector2D(Settings.Window.Width, Settings.Window.Height));
+		//FileUtils.write("H:/hello.txt", ArrayUtils.toStringArray(MLParser.write(GUIInterpreter.write(panel, "H:/"))));
 	}
 	
 	public void render() {

@@ -122,4 +122,17 @@ public class GUIBorder extends Object2D {
 			this.renderer.render(this, this.component.active);
 	}
 	
+	/* The methods used to return values */
+	public float getThickness() { return this.thickness; }
+	
+	/* The methods used to get and set the colour/image of this border */
+	public void setColour(Colour colour) { this.colours = new Colour[] { colour }; }
+	public void setImage(Image image) { this.images = new Image[] { image }; }
+	public Colour getColour() { return this.colours[0]; }
+	public Image getImage() { return this.images[0]; }
+	
+	/* The methods used to check whether the colours/images have been set */
+	public boolean hasColour() { return this.colours != null; }
+	public boolean hasImage() { return this.images != null; }
+	
 }

@@ -43,7 +43,7 @@ public class GUIComponentRenderer {
 	/* The entity this renders */
 	public RenderableObject2D entity;
 	
-	/* The default font */
+	/* The font */
 	public Font font;
 	
 	/* The constructor */

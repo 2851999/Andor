@@ -94,9 +94,13 @@ public class GUISlider extends GUIComponent implements InputListenerInterface {
 		Input.addListener(this);
 	}
 	
-	/* The method used to set the colour */
+	/* The methods used to set the colour/image and check whether they are set/return them */
 	public void setColour(Colour colour) { this.renderer.colours = new Colour[] { colour }; }
 	public void setImage(Image image) { this.renderer.images = new Image[] { image }; }
+	public Colour getColour() { return this.renderer.colours[0]; }
+	public Image getImage() { return this.renderer.images[0]; }
+	public boolean hasColour() { return this.renderer.colours != null; }
+	public boolean hasImage() { return this.renderer.images != null; }
 	
 	/* The method called to update this component */
 	protected void updateComponent() {
@@ -198,6 +202,6 @@ public class GUISlider extends GUIComponent implements InputListenerInterface {
 	
 	/* The get methods */
 	public int getSliderDirection() { return this.sliderDirection; }
-	public GUIButton getSiderButton() { return this.sliderButton; }
+	public GUIButton getSliderButton() { return this.sliderButton; }
 	public float getSliderValue() { return this.sliderValue; }
 }

@@ -115,9 +115,13 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface, 
 		this.setup();
 	}
 	
-	/* The methods used to assign the background colour */
+	/* The methods used to set the colour/image and check whether they are set/return them */
 	public void setColour(Colour colour) { this.renderer.colours = new Colour[] { colour }; }
 	public void setImage(Image image) { this.renderer.images = new Image[] { image }; }
+	public Colour getColour() { return this.renderer.colours[0]; }
+	public Image getImage() { return this.renderer.images[0]; }
+	public boolean hasColour() { return this.renderer.colours != null; }
+	public boolean hasImage() { return this.renderer.images != null; }
 	
 	/* The method used to setup all of the variables */
 	public void setup() {
