@@ -22,6 +22,10 @@ public class GUITextBoxSelection extends Object2D {
 	/* The renderer */
 	public GUIComponentRenderer renderer;
 	
+	/* The colour and image */
+	public Colour colour;
+	public Image image;
+	
 	/* The default constructor */
 	public GUITextBoxSelection() {
 		
@@ -29,25 +33,32 @@ public class GUITextBoxSelection extends Object2D {
 	
 	/* The constructor */
 	public GUITextBoxSelection(GUITextBox textBox) {
-		//Assign the variables
-		this.textBox = textBox;
-		this.width = 0;
-		this.height = 0;
-		this.renderer = new GUIComponentRenderer(Object2DBuilder.createQuad(this.width, this.height, Colour.WHITE));
-		this.renderer.colours = new Colour[] { Colour.BLACK };
+		//Setup
+		this.setup(textBox);
 	}
 	
 	/* The method used to setup this */
 	public void setup(GUITextBox textBox) {
 		//Assign the variables
 		this.textBox = textBox;
+		this.width = 0;
+		this.height = 0;
+		this.renderer = new GUIComponentRenderer(Object2DBuilder.createQuad(this.width, this.height, Colour.WHITE));
+		this.renderer.colours = new Colour[] { Colour.BLACK };
+		//Set the colour and image
+		if (this.colour != null)
+			this.setColour(colour);
+		if (this.image != null)
+			this.setImage(image);
 	}
 	
-	/* The method used to set the colour */
+	/* The methods used to set the colour/image and check whether they are set/return them */
 	public void setColour(Colour colour) { this.renderer.colours = new Colour[] { colour }; }
-	
-	/* The method used to set the image */
 	public void setImage(Image image) { this.renderer.images = new Image[] { image }; }
+	public Colour getColour() { return this.renderer.colours[0]; }
+	public Image getImage() { return this.renderer.images[0]; }
+	public boolean hasColour() { return this.renderer.colours != null; }
+	public boolean hasImage() { return this.renderer.images != null; }
 	
 	/* The method used to render this cursor */
 	public void render() {

@@ -95,6 +95,7 @@ public class Object2D {
 	/* The methods used to set and return the position, rotation, scale, width, height and bounds */
 	public void setPosition(Vector2D position) { this.position = position; }
 	public void setRotation(float rotation) { this.rotation = rotation; }
+	public void setScale(float scale) { this.setScale(new Vector2D(scale, scale)); }
 	public void setScale(Vector2D scale) { this.scale = scale; }
 	public void setWidth(float width) { this.width = width; }
 	public void setHeight(float height) { this.height = height; }

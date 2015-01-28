@@ -13,6 +13,8 @@ import java.util.List;
 import org.andor.core.interpreter.ml.MLInterpretedObject;
 import org.andor.core.interpreter.ml.MLInterpreterObject;
 import org.andor.core.parser.ml.MLObject;
+import org.andor.core.parser.ml.MLParameter;
+import org.andor.gui.GUIComponent;
 import org.andor.gui.GUIToolTip;
 
 public class IntObj_GUIToolTip extends MLInterpreterObject {
@@ -39,6 +41,19 @@ public class IntObj_GUIToolTip extends MLInterpreterObject {
 		IntObj_GUIComponent.interpret(currentObject, interpretedObjects, toolTip.label);
 		//Return the object
 		return new MLInterpretedObject(currentObject.getName(), toolTip);
+	}
+	
+	/* The method used to write a component */
+	public void write(MLObject object, GUIComponent component) {
+		
+	}
+	
+	/* The static method used to write a tool tip to an object */
+	public static void write(MLObject object, GUIToolTip toolTip) {
+		//Add the parameters
+		object.add(new MLParameter("text", toolTip.label.getText()));
+		//Write the component's variables
+		IntObj_GUIComponent.writeObject(object, toolTip.label);
 	}
 	
 }

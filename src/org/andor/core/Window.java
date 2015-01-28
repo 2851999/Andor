@@ -102,6 +102,10 @@ public class Window {
 	
 	/* The static method used to update the display's settings */
 	public static void updateDisplaySettings() {
+		//Set the displays title
+		Display.setTitle(Settings.Window.Title);
+		//Set the undecorated property
+		System.setProperty("org.lwjgl.opengl.Window.undecorated", "" + Settings.Window.Undecorated);
 		//Reset the display mode
 		setDisplayMode();
 		//Update OpenGL's resolution

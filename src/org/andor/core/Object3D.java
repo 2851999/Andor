@@ -93,6 +93,10 @@ public class Object3D {
 	public void setPosition(Vector3D position) { this.position = position; }
 	public void setRotation(Vector3D rotation) { this.rotation = rotation; }
 	public void setScale(Vector3D scale) { this.scale = scale; }
+	public void setScale(float scale) { this.setScale(new Vector3D(scale, scale, scale)); }
+	public void setWidth(float width) { this.width = width; }
+	public void setHeight(float height) { this.height = height; }
+	public void setDepth(float depth) { this.depth = depth; }
 	
 	public Vector3D getPosition() {
 		//Make sure this isn't linked to another object
@@ -134,6 +138,18 @@ public class Object3D {
 			//Return the new scale
 			return parentScale;
 		}
+	}
+	
+	public float getWidth() {
+		return this.width;
+	}
+	
+	public float getHeight() {
+		return this.height;
+	}
+	
+	public float getDepth() {
+		return this.depth;
 	}
 	
 	public boolean isLinked() { return this.parent != null; }

@@ -9,8 +9,11 @@
 package org.andor.tests;
 
 import org.andor.core.BaseGame;
+import org.andor.core.Settings;
+import org.andor.core.Vector2D;
 import org.andor.core.interpreter.gui.GUIInterpreter;
 import org.andor.core.parser.ml.MLParser;
+import org.andor.core.parser.ml.MLTree;
 import org.andor.core.parser.utils.ParserUtils;
 import org.andor.gui.GUIPanel;
 import org.andor.utils.ArrayUtils;
@@ -36,7 +39,10 @@ public class MLTest extends BaseGame {
 	}
 	
 	public void create() {
-		panel = GUIInterpreter.interpret("hello", true, MLParser.parse(ParserUtils.cleanUp(ArrayUtils.toStringArray(FileUtils.read("H:/Andor/GUITest.ml", true)))), "H:/Andor", true);
+		MLTree tree = MLParser.parse(ParserUtils.cleanUp(ArrayUtils.toStringArray(FileUtils.read("H:/hello.txt", true))));
+		panel = GUIInterpreter.interpret("hello", true, tree, "H:/", true);
+		panel.setResolution(new Vector2D(Settings.Window.Width, Settings.Window.Height));
+		//FileUtils.write("H:/hello.txt", ArrayUtils.toStringArray(MLParser.write(GUIInterpreter.write(panel, "H:/"))));
 	}
 	
 	public void render() {
@@ -48,6 +54,8 @@ public class MLTest extends BaseGame {
 	}
 	
 	public static void main(String[] args) {
+		Settings.Window.Width = 1000;
+		Settings.Window.Height = 600;
 		new MLTest();
 	}
 	

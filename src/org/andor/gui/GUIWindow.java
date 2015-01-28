@@ -31,7 +31,7 @@ public class GUIWindow extends GUIComponent implements InputListenerInterface {
 	public GUIFill topBar;
 	
 	/* The close button */
-	private GUIButton closeButton;
+	public GUIButton closeButton;
 	
 	/* The boolean that states whether the mouse is currently pressed within the top bar */
 	private boolean mousePressed;
@@ -99,11 +99,21 @@ public class GUIWindow extends GUIComponent implements InputListenerInterface {
 	/* The method used to assign the image */
 	public void setImage(Image image) { this.renderer.images = new Image[] { image }; }
 	
+	public Colour getColour() { return this.renderer.colours[0]; }
+	public Image getImage() { return this.renderer.images[0]; }
+	public boolean hasColour() { return this.renderer.colours != null; }
+	public boolean hasImage() { return this.renderer.images != null; }
+	
 	/* The method used to assign the top bar colour */
 	public void setTopColour(Colour colour) { this.topBar.colour = colour; }
 	
 	/* The method used to assign the image */
 	public void setTopImage(Image image) { this.topBar.image = image; }
+	
+	public Colour getTopColour() { return this.topBar.colour; }
+	public Image getTopImage() { return this.topBar.image; }
+	public boolean hasTopColour() { return this.topBar.colour != null; }
+	public boolean hasTopImage() { return this.topBar.image != null; }
 	
 	/* The method called to update this component */
 	protected void updateComponent() {

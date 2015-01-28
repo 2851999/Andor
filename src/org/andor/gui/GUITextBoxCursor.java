@@ -32,6 +32,10 @@ public class GUITextBoxCursor extends Object2D {
 	/* The boolean that states whether this cursor should be shown */
 	public boolean cursorShown;
 	
+	/* The colour and image */
+	public Colour colour;
+	public Image image;
+	
 	/* The default constructor */
 	public GUITextBoxCursor() {
 		
@@ -56,13 +60,20 @@ public class GUITextBoxCursor extends Object2D {
 		this.timer.start();
 		this.timeBetweenBlink = 600;
 		this.cursorShown = false;
+		//Set the colour and image
+		if (this.colour != null)
+			this.setColour(colour);
+		if (this.image != null)
+			this.setImage(image);
 	}
 	
-	/* The method used to set the colour */
-	public void setColour(Colour colour) { this.renderer.colours = new Colour[] { Colour.BLACK }; }
-	
-	/* The method used to set the image */
+	/* The methods used to set the colour/image and check whether they are set/return them */
+	public void setColour(Colour colour) { this.renderer.colours = new Colour[] { colour }; }
 	public void setImage(Image image) { this.renderer.images = new Image[] { image }; }
+	public Colour getColour() { return this.renderer.colours[0]; }
+	public Image getImage() { return this.renderer.images[0]; }
+	public boolean hasColour() { return this.renderer.colours != null; }
+	public boolean hasImage() { return this.renderer.images != null; }
 	
 	/* The method used to render this cursor */
 	public void render() {

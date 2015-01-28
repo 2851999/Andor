@@ -334,6 +334,16 @@ public class GUIComponent extends Object2D {
 		return list;
 	}
 	
+	/* The method used to change the scale of this component */
+	public void scale(Vector2D amount) {
+		//Assign the scale of this component
+		this.scale.multiply(amount);
+		//Go through each component within this one
+		for (int a = 0; a < this.components.size(); a++)
+			//Change the scale of the current component
+			this.components.get(a).scale(amount);
+	}
+	
 	/* The methods used to set/toggle/return some values */
 	public void setName(String name) { this.name = name; }
 	public void setVisible(boolean visible) { this.visible = visible; }

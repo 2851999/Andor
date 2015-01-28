@@ -18,11 +18,11 @@ public class Settings {
 	/* The static class containing all of the information about Andor */
 	public static class Information {
 		/* The version of Andor */
-		public static final String VERSION = "V0.0.2.8";
+		public static final String VERSION = "V0.0.2.9";
 		/* The build of Andor */
 		public static final String BUILD = "Development";
 		/* The date this build started development */
-		public static final String DATE = "04/01/2015";
+		public static final String DATE = "28/01/2015";
 	}
 	
 	/* The static class containing all of the settings required for the window */
@@ -46,7 +46,7 @@ public class Settings {
 		public static boolean AntiAliasing = false;
 		/* The maximum FPS */
 		public static int MaxFPS = 60;
-		/* The preffered resolution (Fullscreen only) */
+		/* The preferred resolution (Fullscreen only) */
 		public static ScreenResolution Resolution = ScreenResolution.RES_NATIVE;
 	}
 	
@@ -74,6 +74,12 @@ public class Settings {
 		public static String FONT_DEFAULT = "/resources/andor/defaultfont.png";
 		public static String SHADER_FORWARD_DEFAULT = "/resources/andor/shaders/render/forward/andorshader";
 		public static String SHADER_FORWARD_LIGHT = "/resources/andor/shaders/render/forward/lighting/lightfrag";
+	}
+	
+	/* The static class containing all of the debugging settings */
+	public static class Debugging {
+		/* The setting for turning on, on screen information */
+		public static boolean ShowInformation = false;
 	}
 	
 }

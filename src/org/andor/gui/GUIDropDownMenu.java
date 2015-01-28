@@ -167,7 +167,7 @@ public class GUIDropDownMenu extends GUIComponent implements GUIComponentListene
 	public void setOpen(boolean menuOpen) { this.menuOpen = menuOpen; }
 	public void toggleOpen() { this.menuOpen = ! this.menuOpen; }
 	public boolean isOpen() { return this.menuOpen; }
-	public List<GUIButton> getButtons() { return this.getButtons(); }
+	public List<GUIButton> getButtons() { return this.buttons; }
 	
 	public Rectangle getMenuBounds() {
 		//The positions

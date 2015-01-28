@@ -13,6 +13,7 @@ import java.util.List;
 import org.andor.core.interpreter.ml.MLInterpretedObject;
 import org.andor.core.interpreter.ml.MLInterpreterObject;
 import org.andor.core.parser.ml.MLObject;
+import org.andor.gui.GUIComponent;
 import org.andor.gui.GUIGroup;
 
 public class IntObj_GUIGroup extends MLInterpreterObject {
@@ -31,6 +32,12 @@ public class IntObj_GUIGroup extends MLInterpreterObject {
 		IntObj_GUIComponent.interpret(currentObject, interpretedObjects, group);
 		//Return the object
 		return new MLInterpretedObject(currentObject.getName(), group);
+	}
+	
+	/* The method used to write a component */
+	public void write(MLObject object, GUIComponent component) {
+		//Write the component
+		IntObj_GUIComponent.writeObject(object, component);
 	}
 	
 }
