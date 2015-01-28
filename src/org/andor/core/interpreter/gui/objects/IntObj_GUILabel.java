@@ -14,7 +14,6 @@ import org.andor.core.interpreter.ml.MLInterpretedObject;
 import org.andor.core.interpreter.ml.MLInterpreterObject;
 import org.andor.core.parser.ml.MLObject;
 import org.andor.core.parser.ml.MLParameter;
-import org.andor.gui.GUIButton;
 import org.andor.gui.GUIComponent;
 import org.andor.gui.GUILabel;
 
@@ -47,7 +46,7 @@ public class IntObj_GUILabel extends MLInterpreterObject {
 	/* The method used to write a component */
 	public void write(MLObject object, GUIComponent component) {
 		//Add the parameters
-		object.add(new MLParameter("text", ((GUIButton) component).text));
+		object.add(new MLParameter("text", ((GUILabel) component).getText()));
 		//Write the component's variables
 		IntObj_GUIComponent.writeObject(object, component);
 	}

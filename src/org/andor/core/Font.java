@@ -52,6 +52,11 @@ public class Font {
 		this.render(text, textX, textY);
 	}
 	
+	/* The method used to set the font size */
+	public void setSize(float size) {
+		this.bitmapFont.fontSize = size;
+	}
+	
 	/* The method used to get the width/height of some text */
 	public float getWidth(String text) {
 		return this.bitmapFont.getWidth(text);

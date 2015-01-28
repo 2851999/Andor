@@ -1,4 +1,19 @@
 ------------------------------------------------------
+Release 2 | Beta 2 | Development 0 | Experimental 3
+
+* Added Settings.Debugging
+
+* Fixed bug: Window didn't update the undecorated
+  property when updateSettings() was called
+* Fixed bug: Window didn't update the title
+  property when updateSettings() was called
+  
+* NOTE: Will not be adding Android support for some
+  new features, to make future updates easier to
+  produce, ready to start experimenting with new
+  rendering methods.
+
+------------------------------------------------------
 Release 2 | Beta 2 | Development 0 | Experimental 2
 
 * Added a GUI writing system

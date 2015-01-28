@@ -13,7 +13,7 @@ import org.andor.core.Font;
 public class GUILabel extends GUIComponent {
 	
 	/* The text */
-	protected String text;
+	private String text;
 	
 	/* The constructor */
 	public GUILabel(String text) {
