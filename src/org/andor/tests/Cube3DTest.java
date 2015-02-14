@@ -249,7 +249,6 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		OpenGLUtils.enableTexture2D();
 		OpenGLUtils.disableDepthTest();
 		
-		
 		OpenGLUtils.setupOrtho(-1, 1);
 		
 		this.bitmapText.image.bind();

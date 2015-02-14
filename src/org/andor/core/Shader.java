@@ -129,6 +129,12 @@ public class Shader {
 		GL20.glUniform1(this.getUniformLocation(variableName), BufferUtils.createFlippedBuffer(arrayValues));
 	}
 	
+	/* The method used to set a specific value in this shader */
+	public void setUniformMatrix(String variableName, Matrix4D matrix) {
+		//Set the value in the shader
+		GL20.glUniformMatrix4(this.getUniformLocation(variableName), false, BufferUtils.createFlippedBuffer(matrix.getValues()));
+	}
+	
 	/* The method used to get the location of a uniform variable */
 	public int getUniformLocation(String name) {
 		return GL20.glGetUniformLocation(this.program, name);
