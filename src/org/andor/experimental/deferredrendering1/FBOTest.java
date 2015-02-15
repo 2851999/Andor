@@ -92,12 +92,12 @@ public class FBOTest extends BaseGame {
         //Switch to rendering on frame buffer
         GL30.glBindFramebuffer(GL30.GL_FRAMEBUFFER, 0);
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.colourBufferPointer);
-        Renderer.texture = new Image(0, 0);
+        Renderer.globalTexture = new Image(0, 0);
 		OpenGLUtils.setupOrtho(1, -1);
 		
 		//GL11.glColor3f(1.0f, 1.0f, 1.0f);
         test.render();
-        Renderer.texture = null;
+        Renderer.globalTexture = null;
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
         GL11.glDisable(GL11.GL_TEXTURE_2D);
         GL11.glFlush();

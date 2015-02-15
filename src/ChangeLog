@@ -1,4 +1,62 @@
 ------------------------------------------------------
+Release 2 | Beta 2 | Development 1 | Experimental 2
+
+* Added DeferredScene
+* Added GeometryBuffer
+* Added DeferredTest
+* Added the Shaders class within Settings.Resource
+* Added deferred rendering
+
+* Rewritten the entire rendering system
+
+* NOTE: Haven't tested rendering on Android yet
+* NOTE: Lighting system not working yet
+
+------------------------------------------------------
+Release 2 | Beta 2 | Development 1 | Experimental 1
+
+* Added some predefined array colours
+
+* Created the package org.andor.experimental
+
+------------------------------------------------------
+Release 2 | Beta 2 | Development 1 | Experimental 0
+
+* Added Settings.Debugging
+* Added the method 'write' in MLParser so it can now
+  save MLTree's to a list that can then be written to
+  a file
+* Added the methods to scale GUIComponents
+* Added a GUI writing system
+
+* Fixed bug: StackOverflowError when calling
+  GUIDropDownMenu.getButtons()
+* Fixed bug: Null Pointer in some cases using the
+  GUI system when interpreting a drop down menu
+* Fixed bug: Window didn't update the undecorated
+  property when updateSettings() was called
+* Fixed bug: Window didn't update the title
+  property when updateSettings() was called
+  
+* NOTE: Will not be adding Android support for some
+  new features, to make future updates easier to
+  produce, ready to start experimenting with new
+  rendering methods.
+  
+* NOTE: This game engine has been in development for
+  7 months now. I have managed to achieve the things I
+  set out to do with this engine. It is for this
+  reason, I will now start adding new features, and
+  improve on the current ones. In the hope that I
+  will continue to improve this engine, even if this
+  involve rewriting parts of it. This also includes
+  optimisations that I will start making, when I am
+  ready to, so that the engine will run much faster
+  and be more intuitive to use. I have learn a lot to
+  get this far, and hope I will continue to learn
+  more.
+
+------------------------------------------------------
 Release 2 | Beta 2 | Development 0 | Experimental 3
 
 * Added Settings.Debugging

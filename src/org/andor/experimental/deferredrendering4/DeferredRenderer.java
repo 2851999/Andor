@@ -6,27 +6,24 @@
  * COPYRIGHT @ 2014-2015
  **********************************************/
 
-package org.andor.core;
+package org.andor.experimental.deferredrendering4;
 
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
-import java.util.ArrayList;
-import java.util.List;
 
-import org.andor.core.android.AndroidRenderer;
+import org.andor.core.Image;
+import org.andor.core.Matrix;
+import org.andor.core.Settings;
+import org.andor.core.Shader;
 import org.andor.core.logger.Log;
 import org.andor.core.logger.Logger;
-import org.andor.experimental.deferredrendering4.GeometryBuffer;
-import org.andor.utils.ArrayUtils;
 import org.andor.utils.BufferUtils;
 import org.andor.utils.ShaderUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
 
-import android.opengl.GLES20;
-
-public class Renderer {
+public class DeferredRenderer {
 	
 	/* The different shapes that can be rendered */
 	public static final int QUADS = 1;
@@ -40,9 +37,6 @@ public class Renderer {
 	/* The default number of colour, or texture coordinate values */
 	public static final int DEFAULT_COLOUR_VALUES_COUNT = 4;
 	public static final int DEFAULT_TEXTURE_COORD_VALUES_COUNT = 2;
-	
-	/* The list of renderer's that have been created */
-	protected static List<Renderer> allRenderers = new ArrayList<Renderer>();
 	
 	/* The data arrays */
 	public float[] vertices;
@@ -77,66 +71,28 @@ public class Renderer {
 	public int textureCoordValuesCount;
 	
 	/* The shaders */
-	public static Shader forwardRenderShader;
-	public static Shader deferredShaderGeometry;
-	public static Shader deferredShaderFinal;
-	
-	/* The custom shader */
-	public static Shader customShader;
+	public Shader geometryShader;
+	public Shader finalShader;
 	
 	/* The geometry buffer */
-	public static GeometryBuffer geometryBuffer;
+	public GeometryBuffer geometryBuffer;
 	
-	/* The boolean that turns deferred rendering mode on or off */
-	public static boolean deferredRender = false;
-	
-	/* The global image - Used to temporarily allow the image to be found */
-	public static Image globalTexture;
-	
-	/* The current texture (If any) */
 	public Image texture;
 	
 	/* The constructor */
-	public Renderer(int renderMode, int vertexValuesCount) {
+	public DeferredRenderer(int renderMode, int vertexValuesCount) {
 		//Assign the values
 		this.renderMode = convert(renderMode);
 		this.vertexValuesCount = vertexValuesCount;
 		this.colourValuesCount = DEFAULT_COLOUR_VALUES_COUNT;
 		this.textureCoordValuesCount = DEFAULT_TEXTURE_COORD_VALUES_COUNT;
 		this.usage = GL15.GL_STATIC_DRAW;
-		//Assign the default values
-		this.verticesHandle = -2;
-		this.normalsHandle = -2;
-		this.coloursHandle = -2;
-		this.texturesHandle = -2;
-		//Check to see whether running using deferred rendering
-		if (! Settings.Video.DeferredRendering) {
-			//Load and assign the shaders
-			if (forwardRenderShader == null) {
-				forwardRenderShader = new Shader();
-				forwardRenderShader.vertexShader = ShaderUtils.createRenderShader(ArrayUtils.toStringList(ShaderUtils.vertexAndorMain), Shader.VERTEX_SHADER);
-				forwardRenderShader.fragmentShader = ShaderUtils.createRenderShader(ArrayUtils.toStringList(ShaderUtils.fragmentAndorMain), Shader.FRAGMENT_SHADER);
-				forwardRenderShader.create();
-			}
-		} else {
-			//Load and assign the shaders
-			if (deferredShaderGeometry == null) {
-				deferredShaderGeometry = new Shader();
-				deferredShaderGeometry.vertexShader = ShaderUtils.createRenderShader(ArrayUtils.toStringList(ShaderUtils.vertexAndorMain), Shader.VERTEX_SHADER);
-				deferredShaderGeometry.fragmentShader = ShaderUtils.createRenderShader(ArrayUtils.toStringList(ShaderUtils.fragmentAndorMain), Shader.FRAGMENT_SHADER);
-				deferredShaderGeometry.create();
-			}
-			if (deferredShaderFinal == null) {
-				deferredShaderFinal = new Shader();
-				deferredShaderFinal.vertexShader = ShaderUtils.createDeferredRenderShader(ArrayUtils.toStringList(ShaderUtils.vertexAndorMain), Shader.VERTEX_SHADER, Shader.FINAL_SHADER);
-				deferredShaderFinal.fragmentShader = ShaderUtils.createDeferredRenderShader(ArrayUtils.toStringList(ShaderUtils.fragmentAndorMain), Shader.FRAGMENT_SHADER, Shader.FINAL_SHADER);
-				deferredShaderFinal.create();
-			}
-			//Setup the geometry buffer if it has not already been setup
-			if (geometryBuffer == null) geometryBuffer = new GeometryBuffer();
-		}
-		//Add this renderer to the list
-		allRenderers.add(this);
+		this.renderMode = GL11.GL_TRIANGLES;
+		//Load and assign the shaders
+		this.geometryShader = ShaderUtils.createShader(Settings.Resources.Shaders.DEFERRED_GEOMETRY_PASS, false);
+		this.finalShader = ShaderUtils.createShader(Settings.Resources.Shaders.DEFERRED_FINAL_PASS, false);
+		//Setup the geometry buffer
+		this.geometryBuffer = new GeometryBuffer();
 	}
 	
 	/* The method used to setup the buffers */
@@ -182,45 +138,23 @@ public class Renderer {
 	}
 	
 	/* The method used to render the geometry to the geometry buffer */
-	public void render() {
-		//Check to see whether deferred rendering is on
-		if (deferredRender && ! Settings.AndroidMode && Settings.Video.DeferredRendering) {
-			//Deferred render
-			this.deferredRender();
-		} else {
-			//Forward render
-			this.forwardRender();
-		}
-	}
-	
-	/* The method used to forward render */
-	public void forwardRender() {
+	public void renderGeometry() {
 		//Calculate the matrices for rendering
 		Matrix.calculateRenderMatrices();
-		//The shader
-		Shader shader = null;
-		//Check what shader to use
-		if (customShader != null)
-			shader = customShader;
-		else {
-			//Check to see whether deferred rendering is enabled
-			if (Settings.Video.DeferredRendering)
-				shader = deferredShaderGeometry;
-			else
-				shader = forwardRenderShader;
-		}
-		//Use the selected shader
-		shader.use();
+		//Bind the geometry buffer
+		geometryBuffer.bindWriting();
+		//Use the geometry shader
+		geometryShader.use();
 		
 		//The attributes within the shader
-		int vertexAttribute = shader.getAttributeLocation("andor_vertex");
-		int colourAttribute = shader.getAttributeLocation("andor_colour");
-		int normalAttribute = shader.getAttributeLocation("andor_normal");
-		int textureCoordsAttribute = shader.getAttributeLocation("andor_textureCoord");
+		int vertexAttribute = geometryShader.getAttributeLocation("vertex");
+		int colourAttribute = geometryShader.getAttributeLocation("colour");
+		int normalAttribute = geometryShader.getAttributeLocation("normal");
+		int textureCoordsAttribute = geometryShader.getAttributeLocation("textureCoord");
 		
 		//Give the shader the matrices
-		shader.setUniformMatrix("andor_modelViewProjectionMatrix", Matrix.modelViewProjectionMatrix);
-		shader.setUniformMatrix("andor_normalMatrix", Matrix.normalMatrix);
+		this.geometryShader.setUniformMatrix("modelViewProjectionMatrix", Matrix.modelViewProjectionMatrix);
+		this.geometryShader.setUniformMatrix("normalMatrix", Matrix.normalMatrix);
 		
 		if (this.vertices != null) {
 			GL20.glEnableVertexAttribArray(vertexAttribute);
@@ -244,17 +178,11 @@ public class Renderer {
 			GL20.glEnableVertexAttribArray(textureCoordsAttribute);
 			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.texturesHandle);
 			GL20.glVertexAttribPointer(textureCoordsAttribute, this.textureCoordValuesCount, GL11.GL_FLOAT, false, 0, 0);
-			shader.setUniformf("andor_hasTexture", 1.0f);
-		} else {
-			shader.setUniformf("andor_hasTexture", 0.0f);
 		}
 		
-		if (this.texture != null) {
-			this.texture.bind();
-			shader.setUniformi("andor_texture", 0);
-		} else if (globalTexture  != null) {
-			globalTexture.bind();
-			shader.setUniformi("andor_texture", 0);
+		if (texture != null) {
+			texture.bind();
+			this.geometryShader.setUniformi("texture", 0);
 		}
 		
 		if (this.drawOrder != null) {
@@ -275,25 +203,71 @@ public class Renderer {
 			GL20.glDisableVertexAttribArray(vertexAttribute);
 		
 		//Stop using the shader
-		shader.stopUsing();
+		geometryShader.stopUsing();
+		//Unbind the geometry buffer
+		this.geometryBuffer.unbind();
 	}
 	
-	/* The method used to apply deferred rendering */
-	public void deferredRender() {
-		//Make sure deferred rendering is enabled
-		if (! Settings.AndroidMode && Settings.Video.DeferredRendering) {
-			//Assign the custom shader
-			if (customShader == null) {
-				customShader = deferredShaderFinal;
-				//Render
-				this.forwardRender();
-				//Reset the custom shader
-				customShader = null;
-			} else {
-				//Custom shader already set, just render
-				this.forwardRender();
-			}
+	/* The method used to render normally without the geometry buffer */
+	public void render() {
+		Matrix.calculateRenderMatrices();
+		finalShader.use();
+		
+		int vertexAttribute = finalShader.getAttributeLocation("vertex");
+		int colourAttribute = finalShader.getAttributeLocation("colour");
+		int normalAttribute = finalShader.getAttributeLocation("normal");
+		int textureCoordsAttribute = finalShader.getAttributeLocation("textureCoord");
+		
+		this.finalShader.setUniformMatrix("modelViewProjectionMatrix", Matrix.modelViewProjectionMatrix);
+		this.finalShader.setUniformMatrix("normalMatrix", Matrix.normalMatrix);
+		
+		if (this.vertices != null) {
+			GL20.glEnableVertexAttribArray(vertexAttribute);
+			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.verticesHandle);
+			GL20.glVertexAttribPointer(vertexAttribute, this.vertexValuesCount, GL11.GL_FLOAT, false, 0, 0);
 		}
+		
+		if (this.colours != null) {
+			GL20.glEnableVertexAttribArray(colourAttribute);
+			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.coloursHandle);
+			GL20.glVertexAttribPointer(colourAttribute, this.colourValuesCount, GL11.GL_FLOAT, false, 0, 0);
+		}
+		
+		if (this.normals != null) {
+			GL20.glEnableVertexAttribArray(normalAttribute);
+			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.normalsHandle);
+			GL20.glVertexAttribPointer(normalAttribute, this.vertexValuesCount, GL11.GL_FLOAT, false, 0, 0);
+		}
+		
+		if (this.textureCoords != null) {
+			GL20.glEnableVertexAttribArray(textureCoordsAttribute);
+			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, this.texturesHandle);
+			GL20.glVertexAttribPointer(textureCoordsAttribute, this.textureCoordValuesCount, GL11.GL_FLOAT, false, 0, 0);
+		}
+		
+		if (texture != null) {
+			texture.bind();
+			this.finalShader.setUniformi("texture", 0);
+		}
+		
+		if (this.drawOrder != null) {
+			GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, this.drawOrderHandle);
+			GL11.glDrawElements(this.renderMode, this.drawOrder.length, GL11.GL_UNSIGNED_SHORT, 0);
+			GL15.glBindBuffer(GL15.GL_ELEMENT_ARRAY_BUFFER, 0);
+		} else {
+			GL11.glDrawArrays(this.renderMode, 0, this.vertices.length / this.vertexValuesCount);
+		}
+		
+		if (this.textureCoords != null)
+			GL20.glDisableVertexAttribArray(textureCoordsAttribute);
+		if (this.normals != null)
+			GL20.glDisableVertexAttribArray(normalAttribute);
+		if (this.colours != null)
+			GL20.glDisableVertexAttribArray(colourAttribute);
+		if (this.vertices != null)
+			GL20.glDisableVertexAttribArray(vertexAttribute);
+		
+		finalShader.stopUsing();
 	}
 	
 	/* The method used to update the vertices */
@@ -390,45 +364,6 @@ public class Renderer {
 			GL15.glDeleteBuffers(this.drawOrderHandle);
 	}
 	
-	/* The method used to set the vertices */
-	public void setValues(float[] vertices) {
-		this.vertices = vertices;
-	}
-	
-	/* The method used to set the vertices and the colours */
-	public void setValues(float[] vertices, float[] colours) {
-		this.vertices = vertices;
-		this.colours = colours;
-	}
-	
-	/* The method used to set the vertices, colours and the texture coordinates */
-	public void setValues(float[] vertices, float[] colours, float[] textureCoords) {
-		this.vertices = vertices;
-		this.colours = colours;
-		this.textureCoords = textureCoords;
-	}
-	
-	/* The method used to set the vertices and the draw orders */
-	public void setValues(float[] vertices, short[] drawOrder) {
-		this.vertices = vertices;
-		this.drawOrder = drawOrder;
-	}
-	
-	/* The method used to set the vertices, colours and the draw order */
-	public void setValues(float[] vertices, float[] colours, short[] drawOrder) {
-		this.vertices = vertices;
-		this.colours = colours;
-		this.drawOrder = drawOrder;
-	}
-	
-	/* The method used to set the vertices, colours, texture coordinates and the draw order */
-	public void setValues(float[] vertices, float[] colours, float[] textureCoords, short[] drawOrder) {
-		this.vertices = vertices;
-		this.colours = colours;
-		this.textureCoords = textureCoords;
-		this.drawOrder = drawOrder;
-	}
-	
 	/* The static method used to convert the render mode */
 	private static int convert(int renderMode) {
 		//Check to see whether Andor is currently running on android
@@ -442,45 +377,13 @@ public class Renderer {
 				return GL11.GL_POINTS;
 			else {
 				//Log an error
-				Logger.log("Andor - Renderer", "Invalid render mode: " + renderMode, Log.ERROR);
-				//Return -1
-				return -1;
-			}
-		} else {
-			//Check the render mode
-			if (renderMode == QUADS)
-				return GLES20.GL_TRIANGLE_FAN;
-			else if (renderMode == TRIANGLES)
-				return GLES20.GL_TRIANGLES;
-			else if (renderMode == POINTS)
-				return GLES20.GL_POINTS;
-			else {
-				//Log an error
-				Logger.log("Andor - Renderer", "Invalid render mode: " + renderMode, Log.ERROR);
+				Logger.log("Andor - DeferredRenderer", "Invalid render mode: " + renderMode, Log.ERROR);
 				//Return -1
 				return -1;
 			}
 		}
-	}
-	
-	/* The static method used to create a renderer instance appropriate for the current
-	 * platform */
-	public static Renderer create(int renderMode, int vertexValuesCount) {
-		//Check to see whether Andor is currently running on Android
-		if (! Settings.AndroidMode)
-			//Return the default renderer
-			return new Renderer(renderMode, vertexValuesCount);
-		else
-			//Return the Android renderer
-			return new AndroidRenderer(renderMode, vertexValuesCount);
-	}
-	
-	/* The static method used to release all of the renderer's that have been created */
-	public static void releaseAll() {
-		//Go through each renderer
-		for (int a = 0; a < allRenderers.size(); a++)
-			//Delete the current renderer
-			allRenderers.get(a).release();
+		//Return -1
+		return -1;
 	}
 	
 }

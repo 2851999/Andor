@@ -12,7 +12,6 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.andor.core.android.AndroidRenderer;
 import org.andor.core.logger.Logger;
 import org.lwjgl.opengl.GL11;
 
@@ -41,11 +40,21 @@ public class Image {
 	public float left;
 	public float right;
 	
-	/* The texture ID */
-	public int textureId;
+	/* The texture pointer */
+	public int pointer;
 	
 	/* The bitmap (Android) */
 	public Bitmap bitmap;
+	
+	/* The constructor with the pointer given */
+	public Image(int pointer) {
+		//Assign the pointer
+		this.pointer = pointer;
+		this.top = 0f;
+		this.bottom = 1f;
+		this.left = 0f;
+		this.right = 1f;
+	}
 	
 	/* The constructor with only the width and height given */
 	public Image(int width, int height) {
@@ -73,10 +82,10 @@ public class Image {
 		this.right = 1f;
 		
 		//Setup the texture ID
-		this.textureId = GL11.glGenTextures();
+		this.pointer = GL11.glGenTextures();
 		
 		//Bind the texture
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.textureId);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.pointer);
 		
 		//Enable 2D textures
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
@@ -123,10 +132,10 @@ public class Image {
 		//Setup the texture ID
 		int[] h = new int[1];
 		GLES20.glGenTextures(1, h, 0);
-		this.textureId = h[0];
+		this.pointer = h[0];
 		
 		//Bind the texture
-		GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, this.textureId);
+		GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, this.pointer);
 		
 		//Enable 2D textures
 		GLES20.glEnable(GLES20.GL_TEXTURE_2D);
@@ -150,11 +159,9 @@ public class Image {
 		//Check to see whether Andor is currently running on Android
 		if (! Settings.AndroidMode) {
 			//Bind the texture
-			Renderer.texture = this;
-			GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.textureId);
+			GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.pointer);
 		} else {
-			AndroidRenderer.texture = this;
-			GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, this.textureId);
+			GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, this.pointer);
 		}
 	}
 	
@@ -174,9 +181,9 @@ public class Image {
 		//Check to see whether Andor is currently running on Android
 		if (! Settings.AndroidMode)
 			//Delete this texture
-			GL11.glDeleteTextures(this.textureId);
+			GL11.glDeleteTextures(this.pointer);
 		else
-			GLES20.glDeleteTextures(0, new int[] { this.textureId }, 0);
+			GLES20.glDeleteTextures(0, new int[] { this.pointer }, 0);
 	}
 	
 	/* The 'get' methods */

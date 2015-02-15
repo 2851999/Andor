@@ -21,6 +21,10 @@ public class Shader {
 	public static final int VERTEX_SHADER = 1;
 	public static final int FRAGMENT_SHADER = 2;
 	
+	/* The two types of deferred shaders */
+	public static final int GEOMETRY_SHADER = 3;
+	public static final int FINAL_SHADER = 4;
+	
 	/* The shader program this shader uses */
 	public int program;
 	

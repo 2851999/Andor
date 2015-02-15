@@ -102,7 +102,7 @@ public class FBOTest extends BaseGame {
 		
 		//GL11.glColor3f(1.0f, 1.0f, 1.0f);
 		DeferredRenderer.texture = new Image(0, 0);
-		DeferredRenderer.texture.textureId = this.colourBufferPointer;
+		DeferredRenderer.texture.pointer = this.colourBufferPointer;
         quad.render();
 	}
 	
