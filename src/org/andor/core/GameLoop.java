@@ -95,24 +95,29 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 		this.render();
 		this.interfaceRender();
 		//Check to see whether any information should be shown
-		if (Settings.Debugging.ShowInformation) {
-			//Setup
-			OpenGLUtils.setupRemoveAlpha();
-			OpenGLUtils.enableTexture2D();
-			OpenGLUtils.setupOrtho(-1, 1);
-			//Render the FPS
-			Settings.Engine.DefaultFont.render("DEBUGGING", 10, 10);
-			Settings.Engine.DefaultFont.render("Andor Version: " + Settings.Information.VERSION, 10, 24);
-			Settings.Engine.DefaultFont.render("Andor Build: " + Settings.Information.BUILD, 10, 38);
-			Settings.Engine.DefaultFont.render("Current FPS: " + this.getFPS(), 10, 52);
-			Settings.Engine.DefaultFont.render("Window Size: " + Settings.Window.Width + "x" + Settings.Window.Height, 10, 66);
-			Settings.Engine.DefaultFont.render("VSync: " + Settings.Video.VSync, 10, 80);
-			OpenGLUtils.disableTexture2D();
-		}
+		if (Settings.Debugging.ShowInformation)
+			//Render the information
+			this.renderInformation();
 		//Make sure Andor isn't currently running on Android
 		if (! Settings.AndroidMode)
 			//Update the display
 			Window.updateDisplay();
+	}
+	
+	/* The method used to render some information */
+	public void renderInformation() {
+		//Setup
+		OpenGLUtils.setupRemoveAlpha();
+		OpenGLUtils.enableTexture2D();
+		OpenGLUtils.setupOrtho(-1, 1);
+		//Render the FPS
+		Settings.Engine.DefaultFont.render("DEBUGGING", 10, 10);
+		Settings.Engine.DefaultFont.render("Andor Version: " + Settings.Information.VERSION, 10, 24);
+		Settings.Engine.DefaultFont.render("Andor Build: " + Settings.Information.BUILD, 10, 38);
+		Settings.Engine.DefaultFont.render("Current FPS: " + this.getFPS(), 10, 52);
+		Settings.Engine.DefaultFont.render("Window Size: " + Settings.Window.Width + "x" + Settings.Window.Height, 10, 66);
+		Settings.Engine.DefaultFont.render("VSync: " + Settings.Video.VSync, 10, 80);
+		OpenGLUtils.disableTexture2D();
 	}
 	
 	/* The method used to shutdown the game loop */

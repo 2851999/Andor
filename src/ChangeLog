@@ -1,4 +1,46 @@
 ------------------------------------------------------
+Release 2 | Beta 2 | Development 2 | Experimental 0
+
+* Added DeferredScene
+* Added GeometryBuffer
+* Added DeferredTest
+* Added the Shaders class within Settings.Resource
+* Added deferred rendering
+* Added some predefined array colours
+
+* Created the package org.andor.experimental
+
+* Rewritten the entire rendering system
+
+* NOTE: Haven't tested rendering on Android yet
+
+------------------------------------------------------
+Release 2 | Beta 2 | Development 1 | Experimental 3
+
+* Cleaned up code
+
+------------------------------------------------------
+Release 2 | Beta 2 | Development 1 | Experimental 2
+
+* Added DeferredScene
+* Added GeometryBuffer
+* Added DeferredTest
+* Added the Shaders class within Settings.Resource
+* Added deferred rendering
+
+* Rewritten the entire rendering system
+
+* NOTE: Haven't tested rendering on Android yet
+* NOTE: Lighting system not working yet
+
+------------------------------------------------------
+Release 2 | Beta 2 | Development 1 | Experimental 1
+
+* Added some predefined array colours
+
+* Created the package org.andor.experimental
+
+------------------------------------------------------
 Release 2 | Beta 2 | Development 1 | Experimental 0
 
 * Added Settings.Debugging

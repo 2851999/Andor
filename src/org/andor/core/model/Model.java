@@ -66,13 +66,13 @@ public class Model extends RenderableObject3D {
 		//Create the renderer
 		this.renderer = Renderer.create(Renderer.TRIANGLES, Renderer.VERTEX_VALUES_COUNT_3D);
 		//Prepare the values
-		this.renderer.verticesData = new float[this.calculateNumberOfVertices() * Renderer.VERTEX_VALUES_COUNT_3D];
+		this.renderer.vertices = new float[this.calculateNumberOfVertices() * Renderer.VERTEX_VALUES_COUNT_3D];
 		//Check to see whether the normals have been set
 		if (this.normals.size() > 0)
-			this.renderer.normalsData = new float[this.calculateNumberOfNormals() * Renderer.VERTEX_VALUES_COUNT_3D];
+			this.renderer.normals = new float[this.calculateNumberOfNormals() * Renderer.VERTEX_VALUES_COUNT_3D];
 		//Check to see whether the textures have been set
 		if (this.textures.size() > 0)
-			this.renderer.textureData = new float[this.calculateNumberOfVertices() * 2];
+			this.renderer.textureCoords = new float[this.calculateNumberOfVertices() * 2];
 		//Go through the faces
 		for (int a = 0; a < this.faces.size(); a++)
 			//Prepare the current face
@@ -101,9 +101,9 @@ public class Model extends RenderableObject3D {
 			//Get the normal
 			Vector3D n = this.normals.get(face.normals.get(a).intValue() - 1);
 			//Set the normal values
-			this.renderer.normalsData[this.currentNormal] = n.x;
-			this.renderer.normalsData[this.currentNormal + 1] = n.y;
-			this.renderer.normalsData[this.currentNormal + 2] = n.z;
+			this.renderer.normals[this.currentNormal] = n.x;
+			this.renderer.normals[this.currentNormal + 1] = n.y;
+			this.renderer.normals[this.currentNormal + 2] = n.z;
 		}
 		
 		//Check to see whether the textures for this face exists
@@ -111,16 +111,16 @@ public class Model extends RenderableObject3D {
 			//Get the texture
 			Vector3D t = this.textures.get(face.textures.get(a).intValue() - 1);
 			//Set the texture values
-			this.renderer.textureData[this.currentTexture] = t.x;
-			this.renderer.textureData[this.currentTexture + 1] = t.y;
+			this.renderer.textureCoords[this.currentTexture] = t.x;
+			this.renderer.textureCoords[this.currentTexture + 1] = t.y;
 		}
 		
 		//Get the vertex
 		Vector3D v = this.vertices.get(face.vertices.get(a).intValue() - 1);
 		//Set the vertex values
-		this.renderer.verticesData[this.currentVertex] = v.x;
-		this.renderer.verticesData[this.currentVertex + 1] = v.y;
-		this.renderer.verticesData[this.currentVertex + 2] = v.z;
+		this.renderer.vertices[this.currentVertex] = v.x;
+		this.renderer.vertices[this.currentVertex + 1] = v.y;
+		this.renderer.vertices[this.currentVertex + 2] = v.z;
 	}
 	
 	/* The method used to find out the total amount of vertices that are needed */

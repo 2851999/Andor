@@ -9,8 +9,8 @@
 package org.andor.utils;
 
 import org.andor.core.Matrix;
+import org.andor.core.Renderer;
 import org.andor.core.Settings;
-import org.andor.core.android.AndroidRenderer;
 import org.lwjgl.opengl.GL11;
 
 import android.opengl.GLES20;
@@ -68,7 +68,7 @@ public class OpenGLUtils {
 		if (! Settings.AndroidMode)
 			GL11.glDisable(GL11.GL_TEXTURE_2D);
 		else {
-			AndroidRenderer.texture = null;
+			Renderer.globalTexture = null;
 			GLES20.glDisable(GLES20.GL_TEXTURE_2D);
 		}
 	}

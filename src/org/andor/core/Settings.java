@@ -18,11 +18,11 @@ public class Settings {
 	/* The static class containing all of the information about Andor */
 	public static class Information {
 		/* The version of Andor */
-		public static final String VERSION = "V0.0.3.0";
+		public static final String VERSION = "V0.0.3.1";
 		/* The build of Andor */
 		public static final String BUILD = "Development";
 		/* The date this build started development */
-		public static final String DATE = "28/01/2015";
+		public static final String DATE = "16/02/2015";
 	}
 	
 	/* The static class containing all of the settings required for the window */
@@ -48,6 +48,8 @@ public class Settings {
 		public static int MaxFPS = 60;
 		/* The preferred resolution (Fullscreen only) */
 		public static ScreenResolution Resolution = ScreenResolution.RES_NATIVE;
+		/* Whether any renderers should setup for deferred rendering */
+		public static boolean DeferredRendering = false;
 	}
 	
 	/* The static class containing all of the Android settings */
@@ -72,14 +74,21 @@ public class Settings {
 	/* The static class containing all of the places and names of all of the resources needed by Andor */
 	public static class Resources {
 		public static String FONT_DEFAULT = "/resources/andor/defaultfont.png";
-		public static String SHADER_FORWARD_DEFAULT = "/resources/andor/shaders/render/forward/andorshader";
-		public static String SHADER_FORWARD_LIGHT = "/resources/andor/shaders/render/forward/lighting/lightfrag";
+		public static class Shaders {
+			public static String FORWARD_DEFAULT = "/resources/andor/shaders/render/forward/andorshader";
+			public static String FORWARD_LIGHT = "/resources/andor/shaders/render/forward/lighting/lightfrag";
+			public static String DEFERRED_GEOMETRY_PASS = "/resources/andor/shaders/render/deferred/GeometryPass";
+			public static String DEFERRED_DEFAULT_PASS = "/resources/andor/shaders/render/deferred/DefaultPass";
+			public static String DEFERRED_LIGHT_PASS = "/resources/andor/shaders/render/deferred/LightPass";
+		}
 	}
 	
 	/* The static class containing all of the debugging settings */
 	public static class Debugging {
 		/* The setting for turning on, on screen information */
 		public static boolean ShowInformation = false;
+		/* The setting for showing all of the buffers when deferred rendering */
+		public static boolean ShowDeferredRenderingBuffers = false;
 	}
 	
 }

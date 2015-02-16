@@ -28,6 +28,7 @@ import org.andor.core.SkyBox;
 import org.andor.core.Vector2D;
 import org.andor.core.Vector3D;
 import org.andor.core.Window;
+import org.andor.core.deferredrendering.DeferredScene;
 import org.andor.core.input.ControlBindingAxis;
 import org.andor.core.input.ControlBindingButton;
 import org.andor.core.input.ControlBindings;
@@ -84,6 +85,8 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 	public Light3D light1;
 	public Light3D light2;
 	
+	public DeferredScene scene;
+	
 	/* The constructor */
 	public Cube3DTest() {
 		
@@ -106,7 +109,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 				"right.png",
 				"top.png",
 				"bottom.png"
-		}, true);
+		}, true, 500);
 		this.camera.setSkyBox(skybox);
 		//Create the images
 		ImageSet images = new ImageSet();
@@ -123,6 +126,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		//Load the model
 		this.model = OBJLoader.loadModel(path + "dragon.obj", true);
 		this.model.prepare();
+		this.model.renderer.updateColours(Object3DBuilder.createColourArray(this.model.renderer.vertices.length, Colour.WHITE));
 		this.model.position.z = -10;
 		this.model.scale.multiply(4f);
 		
@@ -167,9 +171,10 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		this.bindings = ControlBindingUtils.load("H:/Andor/Controller/gamepad.txt", true);
 		this.bindings.addListener(this);
 		
-		this.light0 = Light3D.createVertexSpot(0, new Vector3D(0, 8, -10), new Colour(0.1f, 0.1f, 0.1f), new Colour(1, 0, 0), new Colour(1, 1, 1), new Vector3D(0, -1, 0), 50);
-		this.light1 = Light3D.createVertexDirectional(1, new Vector3D(1, 0, 1), new Colour(0.1f, 0.1f, 0.1f), new Colour(0, 1, 0), new Colour(1, 1, 1));
-		this.light2 = Light3D.createVertexPoint(2, new Vector3D(0, 3, -7), new Colour(0.1f, 0.1f, 0.1f), new Colour(0, 0, 1), new Colour(1, 1, 1));
+		//this.light0 = Light3D.createVertexSpot(0, new Vector3D(0, 8, -10), new Colour(0.1f, 0.1f, 0.1f), new Colour(1, 0, 0), new Colour(1, 1, 1), new Vector3D(0, -1, 0), 50);
+		//this.light1 = Light3D.createVertexDirectional(1, new Vector3D(1, 0, 1), new Colour(0.1f, 0.1f, 0.1f), new Colour(0, 1, 0), new Colour(1, 1, 1));
+		//this.light2 = Light3D.createVertexPoint(2, new Vector3D(0, 3, -7), new Colour(0.1f, 0.1f, 0.1f), new Colour(0, 0, 1), new Colour(1, 1, 1));
+		scene = new DeferredScene();
 	}
 	
 	/* The method called when the game loop has started */
@@ -201,7 +206,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		this.audio.sourcePosition.multiply(new Vector3D(1, 1, -1));
 		this.audio.update();
 		
-		this.particleEmitter.update();
+		//this.particleEmitter.update();
 		
 		Vector3D change = new Vector3D(0, 0.06f, 0);
 		change.multiply(getDelta());
@@ -210,6 +215,9 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 	
 	/* The method called when the game loop is rendered */
 	public void render() {
+		OpenGLUtils.clearColourBuffer();
+		OpenGLUtils.clearDepthBuffer();
+		scene.startRendering();
 		GL11.glPointSize(4);
 		//Setup OpenGL
 		OpenGLUtils.clearColourBuffer();
@@ -223,13 +231,15 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		this.camera.useView();
 		
 		OpenGLUtils.disableTexture2D();
-		this.light0.use();
-		this.light1.use();
-		this.light2.use();
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
+		
+		//this.light0.use();
+		//this.light1.use();
+		//this.light2.use();
 		model.render();
-		this.light2.stopUsing();
-		this.light1.stopUsing();
-		this.light0.stopUsing();
+		//this.light2.stopUsing();
+		//this.light1.stopUsing();
+		//this.light0.stopUsing();
 		
 		OpenGLUtils.enableTexture2D();
 		
@@ -249,7 +259,6 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		OpenGLUtils.enableTexture2D();
 		OpenGLUtils.disableDepthTest();
 		
-		
 		OpenGLUtils.setupOrtho(-1, 1);
 		
 		this.bitmapText.image.bind();
@@ -259,6 +268,8 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		this.font.render("Current FPS: " + this.getFPS(), 10, 10);
 		this.font.render("Object Face Count: " + this.model.faces.size(), 10, 26);
 		this.font.render("Particle Count: " + this.particleEmitter.particles.size(), 10, 42);
+		scene.stopRendering();
+		scene.renderToScreen();
 	}
 	
 	/* The method called when the game loop is stopped */
@@ -347,7 +358,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		for (String c : s)
 			System.out.println(c);
 		//Make the game fullscreen
-		Settings.Window.Fullscreen = true;
+		Settings.Window.Fullscreen = false;
 		Settings.Window.Undecorated = false;
 		//Enable VSync
 		Settings.Video.VSync = true;
@@ -355,6 +366,8 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		Settings.Window.Width = 1024;
 		Settings.Window.Height = 768;
 		Settings.Video.Resolution = ScreenResolution.RES_4K;
+		Settings.Debugging.ShowDeferredRenderingBuffers = true;
+		Settings.Video.DeferredRendering = true;
 		//Create a new instance of this test
 		new Cube3DTest();
 	}
