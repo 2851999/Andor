@@ -124,7 +124,7 @@ public class Light3D extends Object3D {
 	public void loadShader() {
 		//Load the shader
 		if (shader == null)
-			shader = ShaderUtils.createShader(Settings.Resources.Shaders.FORWARD_LIGHT, false);
+			shader = ShaderUtils.createRenderShader(Settings.Resources.Shaders.FORWARD_LIGHT, false);
 	}
 	
 	/* The method used to start using this light */

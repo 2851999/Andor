@@ -23,7 +23,8 @@ public class Shader {
 	
 	/* The two types of deferred shaders */
 	public static final int GEOMETRY_SHADER = 3;
-	public static final int FINAL_SHADER = 4;
+	public static final int LIGHT_SHADER = 4;
+	public static final int DEFAULT_SHADER = 5;
 	
 	/* The shader program this shader uses */
 	public int program;

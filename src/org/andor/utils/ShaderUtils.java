@@ -28,8 +28,10 @@ public class ShaderUtils {
 	public static List<String> forwardFragmentShaderCode;
 	public static List<String> deferredGeometryVertexShaderCode;
 	public static List<String> deferredGeometryFragmentShaderCode;
-	public static List<String> deferredFinalVertexShaderCode;
-	public static List<String> deferredFinalFragmentShaderCode;
+	public static List<String> deferredDefaultVertexShaderCode;
+	public static List<String> deferredDefaultFragmentShaderCode;
+	public static List<String> deferredLightVertexShaderCode;
+	public static List<String> deferredLightFragmentShaderCode;
 	
 	public static final String[] vertexAndorMain = new String[] {
 		"void andor_main() {","}"
@@ -61,11 +63,39 @@ public class ShaderUtils {
 		return shader;
 	}
 	
+	/* The static method used to load the render shaders and create a program */
+	public static Shader createRenderShader(String path, boolean external) {
+		int vertexShader = ShaderUtils.createRenderShader(path + ".vs", external, Shader.VERTEX_SHADER);
+		int fragmentShader = ShaderUtils.createRenderShader(path + ".fs", external, Shader.FRAGMENT_SHADER);
+		//The shader
+		Shader shader;
+		//Check the Android setting
+		if (Settings.AndroidMode)
+			//Assign the shader
+			shader = new AndroidShader();
+		else
+			//Assign the shader
+			shader = new Shader();
+		//Attach the shaders
+		shader.vertexShader = vertexShader;
+		shader.fragmentShader = fragmentShader;
+		//Create the shader
+		shader.create();
+		//Return the shader
+		return shader;
+	}
+	
 	
 	/* The static method to create a shader from a file */
 	public static int createShader(String path, boolean external, int shaderType) {
 		//Return the shader
 		return createShader(FileUtils.read(path, external), shaderType);
+	}
+	
+	/* The static method to create a render shader from a file */
+	public static int createRenderShader(String path, boolean external, int shaderType) {
+		//Return the shader
+		return createRenderShader(FileUtils.read(path, external), shaderType);
 	}
 	
 	/* The static method used to create a shader for rendering */
@@ -95,14 +125,18 @@ public class ShaderUtils {
 				//Check the deferred type
 				if (deferredType == Shader.GEOMETRY_SHADER)
 					return createShader(combine(deferredGeometryVertexShaderCode, shaderCode), type);
+				else if (deferredType == Shader.DEFAULT_SHADER)
+					return createShader(combine(deferredDefaultVertexShaderCode, shaderCode), type);
 				else
-					return createShader(combine(deferredFinalVertexShaderCode, shaderCode), type);
+					return createShader(combine(deferredLightVertexShaderCode, shaderCode), type);
 			} else if (type == Shader.FRAGMENT_SHADER) {
 				//Check the deferred type
 				if (deferredType == Shader.GEOMETRY_SHADER)
 					return createShader(combine(deferredGeometryFragmentShaderCode, shaderCode), type);
+				else if (deferredType == Shader.DEFAULT_SHADER)
+					return createShader(combine(deferredDefaultFragmentShaderCode, shaderCode), type);
 				else
-					return createShader(combine(deferredFinalFragmentShaderCode, shaderCode), type);
+					return createShader(combine(deferredLightFragmentShaderCode, shaderCode), type);
 			}
 		}
 		return -2;
@@ -232,10 +266,14 @@ public class ShaderUtils {
 			deferredGeometryVertexShaderCode = FileUtils.read(Settings.Resources.Shaders.DEFERRED_GEOMETRY_PASS + ".vs", false);
 		if (deferredGeometryFragmentShaderCode == null)
 			deferredGeometryFragmentShaderCode = FileUtils.read(Settings.Resources.Shaders.DEFERRED_GEOMETRY_PASS + ".fs", false);
-		if (deferredFinalVertexShaderCode == null)
-			deferredFinalVertexShaderCode = FileUtils.read(Settings.Resources.Shaders.DEFERRED_FINAL_PASS + ".vs", false);
-		if (deferredFinalFragmentShaderCode == null)
-			deferredFinalFragmentShaderCode = FileUtils.read(Settings.Resources.Shaders.DEFERRED_FINAL_PASS + ".fs", false);
+		if (deferredDefaultVertexShaderCode == null)
+			deferredDefaultVertexShaderCode = FileUtils.read(Settings.Resources.Shaders.DEFERRED_DEFAULT_PASS + ".vs", false);
+		if (deferredDefaultFragmentShaderCode == null)
+			deferredDefaultFragmentShaderCode = FileUtils.read(Settings.Resources.Shaders.DEFERRED_DEFAULT_PASS + ".fs", false);
+		if (deferredLightVertexShaderCode == null)
+			deferredLightVertexShaderCode = FileUtils.read(Settings.Resources.Shaders.DEFERRED_LIGHT_PASS + ".vs", false);
+		if (deferredLightFragmentShaderCode == null)
+			deferredLightFragmentShaderCode = FileUtils.read(Settings.Resources.Shaders.DEFERRED_LIGHT_PASS + ".fs", false);
 	}
 	
 }

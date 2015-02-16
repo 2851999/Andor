@@ -20,7 +20,7 @@ public class SkyBox {
 	public RenderableObject3D box;
 	
 	/* The constructor */
-	public SkyBox(String filePath, String[] fileNames, boolean external) {
+	public SkyBox(String filePath, String[] fileNames, boolean external, float size) {
 		//Create the image set
 		this.imageSet = new ImageSet();
 		//The images
@@ -35,7 +35,7 @@ public class SkyBox {
 		//Load the texture
 		this.texture = this.imageSet.joinImages();
 		//Setup the cube
-		this.box = Object3DBuilder.createCube(images, 100, 100, 100, Colour.WHITE);
+		this.box = Object3DBuilder.createCube(images, size, size, size, Colour.WHITE);
 	}
 	
 	/* The method used to render this skybox */

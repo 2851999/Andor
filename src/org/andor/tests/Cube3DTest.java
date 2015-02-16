@@ -23,7 +23,6 @@ import org.andor.core.Particle;
 import org.andor.core.ParticleEffect;
 import org.andor.core.ParticleEmitter;
 import org.andor.core.RenderableObject3D;
-import org.andor.core.Renderer;
 import org.andor.core.Settings;
 import org.andor.core.SkyBox;
 import org.andor.core.Vector2D;
@@ -110,7 +109,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 				"right.png",
 				"top.png",
 				"bottom.png"
-		}, true);
+		}, true, 500);
 		this.camera.setSkyBox(skybox);
 		//Create the images
 		ImageSet images = new ImageSet();
@@ -127,6 +126,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		//Load the model
 		this.model = OBJLoader.loadModel(path + "dragon.obj", true);
 		this.model.prepare();
+		this.model.renderer.updateColours(Object3DBuilder.createColourArray(this.model.renderer.vertices.length, Colour.WHITE));
 		this.model.position.z = -10;
 		this.model.scale.multiply(4f);
 		
@@ -217,7 +217,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 	public void render() {
 		OpenGLUtils.clearColourBuffer();
 		OpenGLUtils.clearDepthBuffer();
-		Renderer.geometryBuffer.bindWriting();
+		scene.startRendering();
 		GL11.glPointSize(4);
 		//Setup OpenGL
 		OpenGLUtils.clearColourBuffer();
@@ -231,6 +231,8 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		this.camera.useView();
 		
 		OpenGLUtils.disableTexture2D();
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
+		
 		//this.light0.use();
 		//this.light1.use();
 		//this.light2.use();
@@ -266,7 +268,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		this.font.render("Current FPS: " + this.getFPS(), 10, 10);
 		this.font.render("Object Face Count: " + this.model.faces.size(), 10, 26);
 		this.font.render("Particle Count: " + this.particleEmitter.particles.size(), 10, 42);
-		Renderer.geometryBuffer.unbind();
+		scene.stopRendering();
 		scene.renderToScreen();
 	}
 	
@@ -356,7 +358,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		for (String c : s)
 			System.out.println(c);
 		//Make the game fullscreen
-		Settings.Window.Fullscreen = true;
+		Settings.Window.Fullscreen = false;
 		Settings.Window.Undecorated = false;
 		//Enable VSync
 		Settings.Video.VSync = true;
