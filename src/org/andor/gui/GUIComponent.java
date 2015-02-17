@@ -204,6 +204,11 @@ public class GUIComponent extends Object2D {
 		Vector2D p = this.getPosition();
 		this.renderer.font.render(text, p.x, p.y);
 	}
+	public void renderText(String text, Vector2D offset) {
+		//Get the position
+		Vector2D p = this.getPosition();
+		this.renderer.font.render(text, p.x + offset.x, p.y + offset.y);
+	}
 	public void renderText(String text, float x, float y) { this.renderer.font.render(text, x, y); }
 	public void renderTextAtCentre(String text) { this.renderer.font.renderAtCentre(text, this); }
 	public void renderTextAtCentre(String text, Vector2D offset) { this.renderer.font.renderAtCentre(text, this, offset); }

@@ -1,4 +1,38 @@
 ------------------------------------------------------
+Release 2 | Beta 2 | Development 2 | Experimental 1
+
+* Added GUITextDisplayArea
+* Added IntObj_TextDisplayArea
+* Added FontUtilsPC
+* Added FontPC
+* Added BitmapFontUtilsPC
+* Added BitmapFontUtilsAndroid
+* Added FontAndroid
+* Added FontUtilsAndroid
+* Added TrueTypeFont
+
+* Fixed bug: Android didn't render anything
+
+* NOTE: You can now load true type fonts from files
+  and use installed fonts
+
+------------------------------------------------------
+Release 2 | Beta 2 | Development 2 | Experimental 0
+
+* Added DeferredScene
+* Added GeometryBuffer
+* Added DeferredTest
+* Added the Shaders class within Settings.Resource
+* Added deferred rendering
+* Added some predefined array colours
+
+* Created the package org.andor.experimental
+
+* Rewritten the entire rendering system
+
+* NOTE: Haven't tested rendering on Android yet
+
+------------------------------------------------------
 Release 2 | Beta 2 | Development 1 | Experimental 3
 
 * Cleaned up code
