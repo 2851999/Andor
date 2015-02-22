@@ -125,6 +125,7 @@ public class GUILoadingBar extends GUIComponent {
 	public Image getBackgroundImage() { return this.renderer.images[0]; }
 	public void setFillImage(Image fillImage) { this.barFill.image = fillImage; }
 	public Image getFillImage() { return this.barFill.image; }
+	public int getCurrentStage() { return this.currentLoadingStage; }
 	
 	public boolean hasBackgroundColour() { return this.renderer.colours != null; }
 	public boolean hasBackgroundImage() { return this.renderer.images != null; }

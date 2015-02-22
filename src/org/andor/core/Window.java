@@ -11,6 +11,8 @@ package org.andor.core;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.andor.core.logger.Log;
 import org.andor.core.logger.Logger;
@@ -21,6 +23,9 @@ import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 
 public class Window {
+	
+	/* The list of window event listeners */
+	public static List<WindowEventListenerInterface> eventListeners = new ArrayList<WindowEventListenerInterface>();
 	
 	/* The static method used to create the window */
 	public static void create() {
@@ -93,6 +98,8 @@ public class Window {
 			//Set the windows width and height values
 			Settings.Window.Width = target.getWidth();
 			Settings.Window.Height = target.getHeight();
+			//Set the resizable value
+			setResizable(Settings.Window.Resizable);
 		} catch (LWJGLException e) {
 			//Log an error
 			Logger.log("Andor - Window", "An exception has occurred when setting the display mode", Log.ERROR);
@@ -119,6 +126,17 @@ public class Window {
 		Display.update();
 		//Sync the display with the maximum FPS
 		Display.sync(Settings.Video.MaxFPS);
+		//Check the window size
+		if (Display.wasResized()) {
+			//Assign the size
+			Settings.Window.Width = Display.getWidth();
+			Settings.Window.Height = Display.getHeight();
+			//Update OpenGL's resolution
+			GL11.glScissor(0, 0, (int) Settings.Window.Width, (int) Settings.Window.Height);
+			GL11.glViewport(0, 0, (int) Settings.Window.Width, (int) Settings.Window.Height);
+			//Call a resized event
+			
+		}
 	}
 	
 	/* The static method to centre the window */
@@ -129,10 +147,31 @@ public class Window {
 		setPosition((screenSize.width / 2) - (Settings.Window.Width / 2), (screenSize.height / 2) - (Settings.Window.Height / 2));
 	}
 	
+	/* The static method used to return the centre x value */
+	public static float getCentreX() {
+		//Get the screen size
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		//Set the position of the window
+		return (screenSize.width / 2) - (Settings.Window.Width / 2);
+	}
+	
+	/* The static method used to return the centre x value */
+	public static float getCentreY() {
+		//Get the screen size
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		//Set the position of the window
+		return (screenSize.height / 2) - (Settings.Window.Height / 2);
+	}
+	
 	/* The static method used to set the position of this window */
 	public static void setPosition(float x, float y) {
 		//Set the position of the window
 		Display.setLocation((int) x, (int) y);
+	}
+	
+	/* The static method used to set the window as resizable */
+	public static void setResizable(boolean resizable) {
+		Display.setResizable(resizable);
 	}
 	
 	/* The static method used to set the window icon given a list of images */
@@ -152,6 +191,20 @@ public class Window {
 	public static void close() {
 		//Destroy the display
 		Display.destroy();
+	}
+	
+	/* The static method used to call a window resized event */
+	public static void callOnWindowResized(WindowSizeEvent e) {
+		//Go through the listeners
+		for (int a = 0; a < eventListeners.size(); a++)
+			//Call the event in the current listener
+			eventListeners.get(a).onWindowResized(e);
+	}
+	
+	/* The static method used to add a window event listener */
+	public static void addWindowEventListener(WindowEventListenerInterface listener) {
+		//Add the listener to the list
+		eventListeners.add(listener);
 	}
 	
 }

@@ -18,7 +18,10 @@ import org.andor.core.ImageLoaderPC;
 public class BitmapFontUtilsPC {
 	
 	/* The static method used to generate a bitmap font image given a font */
-	public static Image generateBitmapFontImage(FontPC font, float cellSize) {
+	public static Image generateBitmapFontImage(FontPC font) {
+		//Calculate the cell size and then assign the font size
+		float cellSize = font.fontSize;
+		font.fontSize = cellSize / 1.7f;
 		//32 - 127
 		//Define the sizes
 		int gridSize = 16;

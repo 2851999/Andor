@@ -65,58 +65,53 @@ public class FontUtils {
 	}
 	
 	/* The static method used to create a bitmap front given the name of a font */
-	public static Font createBitmapFont(String font, Colour colour, float fontSize, float cellSize, int gridSize) {
-		return new Font(new BitmapText(generateBitmapFontImage(createFont(font, Colour.WHITE, 16), cellSize), gridSize, fontSize, colour));
+	public static Font createBitmapFont(String font, Colour colour, float fontSize, int gridSize) {
+		return new Font(new BitmapText(generateBitmapFontImage(createFont(font, Colour.WHITE, fontSize)), gridSize, fontSize, colour));
 	}
 	
 	/* The static method used to create a bitmap front given the name of a font */
-	public static Font createBitmapFont(String font, Colour[] colours, float fontSize, float cellSize, int gridSize) {
-		return new Font(new BitmapText(generateBitmapFontImage(createFont(font, Colour.WHITE, 16), cellSize), gridSize, fontSize, colours));
+	public static Font createBitmapFont(String font, Colour[] colours, float fontSize, int gridSize) {
+		return new Font(new BitmapText(generateBitmapFontImage(createFont(font, Colour.WHITE, fontSize)), gridSize, fontSize, colours));
 	}
 	
 	/* The static method used to create a bitmap front given the name of a font */
 	public static Font createBitmapFont(String font, Colour colour, float fontSize) {
-		return createBitmapFont(font, colour, fontSize, fontSize, 16);
+		return createBitmapFont(font, colour, fontSize, 16);
 	}
 	
 	/* The static method used to create a bitmap front given the name of a font */
 	public static Font createBitmapFont(String font, Colour[] colours, float fontSize) {
-		return createBitmapFont(font, colours, fontSize, fontSize, 16);
+		return createBitmapFont(font, colours, fontSize, 16);
 	}
 	
 	/* The static method used to create a bitmap front given the name of a font */
 	public static Font createBitmapFont(String font, float fontSize) {
-		return createBitmapFont(font, Colour.WHITE, fontSize, fontSize, 16);
+		return createBitmapFont(font, Colour.WHITE, fontSize, 16);
 	}
 	
 	/* The static method used to create a bitmap front given the name of a font */
-	public static Font createBitmapFont(String path, boolean external, Colour colour, float fontSize, float cellSize, int gridSize) {
-		return new Font(new BitmapText(generateBitmapFontImage(createFont(path, external, Colour.WHITE, 16), cellSize), gridSize, fontSize, colour));
-	}
-	
-	/* The static method used to create a bitmap front given the name of a font */
-	public static Font createBitmapFont(String path, boolean external, Colour colour, float fontSize, float cellSize) {
-		return createBitmapFont(path, external, colour, fontSize, cellSize, 16);
+	public static Font createBitmapFont(String path, boolean external, Colour colour, float fontSize, int gridSize) {
+		return new Font(new BitmapText(generateBitmapFontImage(createFont(path, external, Colour.WHITE, fontSize)), gridSize, fontSize, colour));
 	}
 	
 	/* The static method used to create a bitmap front given the name of a font */
 	public static Font createBitmapFont(String path, boolean external, Colour colour, float fontSize) {
-		return createBitmapFont(path, external, colour, fontSize, fontSize, 16);
+		return createBitmapFont(path, external, colour, fontSize, 16);
 	}
 	
 	/* The static method used to create a bitmap front given the name of a font */
 	public static Font createBitmapFont(String path, boolean external, float fontSize) {
-		return createBitmapFont(path, external, Colour.WHITE, fontSize, fontSize, 16);
+		return createBitmapFont(path, external, Colour.WHITE, fontSize, 16);
 	}
 	
 	/* The static method used to generate an image of a bitmap font */
-	public static Image generateBitmapFontImage(TrueTypeFont font, float cellSize) {
+	public static Image generateBitmapFontImage(TrueTypeFont font) {
 		//Check the Android setting
 		if (! Settings.AndroidMode)
 			//Return the image
-			return BitmapFontUtilsPC.generateBitmapFontImage(font.pcFont, cellSize);
+			return BitmapFontUtilsPC.generateBitmapFontImage(font.pcFont);
 		else
-			return BitmapFontUtilsAndroid.generateBitmapFontImage(font.androidFont, cellSize);
+			return BitmapFontUtilsAndroid.generateBitmapFontImage(font.androidFont);
 	}
 	
 	/* The static method used to create a font */

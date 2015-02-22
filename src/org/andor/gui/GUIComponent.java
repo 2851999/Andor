@@ -11,6 +11,7 @@ package org.andor.gui;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.andor.core.Font;
 import org.andor.core.Object2D;
 import org.andor.core.RenderableObject2D;
 import org.andor.core.Settings;
@@ -362,6 +363,7 @@ public class GUIComponent extends Object2D {
 	public void toggleVisible() { this.visible = ! this.visible; }
 	public void toggleActive() { this.active = ! this.active; }
 	public void toggleBorder() { this.borderEnabled = ! this.borderEnabled; }
+	public void setFont(Font font) { this.renderer.setFont(font); }
 	public String getName() { return this.name; }
 	public boolean isVisible() { return this.visible; }
 	public boolean isActive() { return this.active; }
@@ -373,5 +375,6 @@ public class GUIComponent extends Object2D {
 	public boolean isBorderEnabled() { return this.borderEnabled; }
 	public List<GUIComponent> getComponents() { return this.components; }
 	public GUIPosition getPositionPreference() { return this.positionPreference; }
+	public boolean isClicked() { return this.clicked; }
 	
 }

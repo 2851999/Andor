@@ -29,12 +29,14 @@ public class FontPC {
 	
 	/* The method to get the width of a string */
 	public float getWidth(String text, Graphics2D g2d) {
+		g2d.setFont(font.deriveFont((float) fontSize));
 		FontMetrics metrics = g2d.getFontMetrics(font.deriveFont((float) fontSize));
 		return (float) metrics.getStringBounds(text , g2d).getWidth();
 	}
 	
 	/* The method to get the height of a string */
 	public float getHeight(String text, Graphics2D g2d) {
+		g2d.setFont(font.deriveFont((float) fontSize));
 		FontMetrics metrics = g2d.getFontMetrics(font.deriveFont((float) fontSize));
 		return (float) metrics.getStringBounds(text , g2d).getHeight();
 	}

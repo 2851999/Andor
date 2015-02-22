@@ -22,7 +22,7 @@ public class Settings {
 		/* The build of Andor */
 		public static final String BUILD = "Experimental";
 		/* The date this build started development */
-		public static final String DATE = "16/02/2015";
+		public static final String DATE = "17/02/2015";
 	}
 	
 	/* The static class containing all of the settings required for the window */
@@ -36,6 +36,8 @@ public class Settings {
 		public static boolean Fullscreen = false;
 		/* The boolean that states whether the window should be undecorated */
 		public static boolean Undecorated = false;
+		/* The boolean that states whether the window should be resizable */
+		public static boolean Resizable = false;
 	}
 	
 	/* The static class containing all of the video settings */

@@ -1,4 +1,18 @@
 ------------------------------------------------------
+Release 2 | Beta 2 | Development 2 | Experimental 2
+
+* Added WindowEventListener
+* Added WindowEventListenerInterface
+* Added WindowSizeEvent
+* Added a resizable setting to the window settings
+
+* Fixed bug: Running the engine on PC with with
+  undecorated set to false, meant that using
+  an orphographic projection had 0, 0 at the top
+  left of the window instead of the viewable area
+* Fixed some issues with the new fonts
+
+------------------------------------------------------
 Release 2 | Beta 2 | Development 2 | Experimental 1
 
 * Added GUITextDisplayArea
