@@ -128,14 +128,18 @@ public class Window {
 		Display.sync(Settings.Video.MaxFPS);
 		//Check the window size
 		if (Display.wasResized()) {
+			//Create the old window size
+			Vector2D oldSize = new Vector2D(Settings.Window.Width, Settings.Window.Height);
 			//Assign the size
 			Settings.Window.Width = Display.getWidth();
 			Settings.Window.Height = Display.getHeight();
 			//Update OpenGL's resolution
 			GL11.glScissor(0, 0, (int) Settings.Window.Width, (int) Settings.Window.Height);
 			GL11.glViewport(0, 0, (int) Settings.Window.Width, (int) Settings.Window.Height);
+			//Create the new window size
+			Vector2D newSize = new Vector2D(Settings.Window.Width, Settings.Window.Height);
 			//Call a resized event
-			
+			callOnWindowResized(new WindowSizeEvent(oldSize, newSize));
 		}
 	}
 	

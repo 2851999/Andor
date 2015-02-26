@@ -46,6 +46,8 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 		if (! Settings.AndroidMode) {
 			//Create the window
 			Window.create();
+			//Set the icons
+			Window.setIcon(new Image[] { ImageLoader.loadImage(Settings.Resources.Icons.ICON_16, false), ImageLoader.loadImage(Settings.Resources.Icons.ICON_32, false) });
 			//Load the default font
 			Settings.Engine.DefaultFont = FontUtils.loadBitmapFont("/resources/andor/defaultfont.png", 12);
 			//Create the input

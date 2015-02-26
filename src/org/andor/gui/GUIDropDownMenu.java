@@ -164,6 +164,13 @@ public class GUIDropDownMenu extends GUIComponent implements GUIComponentListene
 		this.height = bounds.height;
 	}
 	
+	public void addButton(GUIButton button, String name) {
+		//Assign the name
+		button.setName(name);
+		//Add the button
+		this.addButton(button);
+	}
+	
 	public void setOpen(boolean menuOpen) { this.menuOpen = menuOpen; }
 	public void toggleOpen() { this.menuOpen = ! this.menuOpen; }
 	public boolean isOpen() { return this.menuOpen; }

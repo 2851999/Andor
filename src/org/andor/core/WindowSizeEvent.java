@@ -32,7 +32,7 @@ public class WindowSizeEvent extends Event {
 	/* The method used to calculate the scale and return it */
 	public Vector2D getScale() {
 		//Return the value
-		return new Vector2D(this.newSize.x / this.oldSize.y, this.newSize.y / this.oldSize.y);
+		return new Vector2D(this.newSize.x / this.oldSize.x, this.newSize.y / this.oldSize.y);
 	}
 	
 	/* The methods used to 'get' various values */

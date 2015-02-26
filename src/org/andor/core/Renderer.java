@@ -492,6 +492,11 @@ public class Renderer {
 		this.drawOrder = drawOrder;
 	}
 	
+	/* The method used to assign the texture */
+	public void setTexture(Image texture) {
+		this.texture = texture;
+	}
+	
 	/* The static method used to convert the render mode */
 	private static int convert(int renderMode) {
 		//Check to see whether Andor is currently running on android

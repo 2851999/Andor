@@ -181,4 +181,9 @@ public class RenderableObject3D extends Object3D {
 		this.renderer.setupBuffers();
 	}
 	
+	/* The method used to assign the texture */
+	public void setTexture(Image texture) {
+		this.renderer.setTexture(texture);
+	}
+	
 }

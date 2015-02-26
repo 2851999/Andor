@@ -91,9 +91,11 @@ public class Object3D {
 	
 	/* The methods used to set and return the position, rotation and scale */
 	public void setPosition(Vector3D position) { this.position = position; }
+	public void setPosition(float x, float y, float z) { this.position = new Vector3D(x, y, z); }
 	public void setRotation(Vector3D rotation) { this.rotation = rotation; }
 	public void setScale(Vector3D scale) { this.scale = scale; }
 	public void setScale(float scale) { this.setScale(new Vector3D(scale, scale, scale)); }
+	public void setScale(float x, float y, float z) { this.scale = new Vector3D(x, y, z); }
 	public void setWidth(float width) { this.width = width; }
 	public void setHeight(float height) { this.height = height; }
 	public void setDepth(float depth) { this.depth = depth; }
