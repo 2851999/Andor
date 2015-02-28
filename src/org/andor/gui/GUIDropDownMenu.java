@@ -15,7 +15,6 @@ import org.andor.core.Rectangle;
 import org.andor.core.Vector2D;
 import org.andor.core.input.ControllerAxisEvent;
 import org.andor.core.input.ControllerButtonEvent;
-import org.andor.core.input.ControllerPovEvent;
 import org.andor.core.input.Input;
 import org.andor.core.input.InputListenerInterface;
 import org.andor.core.input.KeyboardEvent;
@@ -147,9 +146,6 @@ public class GUIDropDownMenu extends GUIComponent implements GUIComponentListene
 	
 	/* The method called when a button is released */
 	public void onButtonReleased(ControllerButtonEvent e) { }
-	
-	/* The method called when the pov is changed */
-	public void onPovChange(ControllerPovEvent e) { }
 	
 	/* The methods used to add/set/toggle/return values */
 	public void addButton(GUIButton button) {

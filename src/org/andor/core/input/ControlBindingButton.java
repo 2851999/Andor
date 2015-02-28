@@ -177,9 +177,6 @@ public class ControlBindingButton extends InputListener {
 		}
 	}
 	
-	/* The method called when the pov is changed */
-	public void onPovChange(ControllerPovEvent e) { }
-	
 	/* The 'get' methods */
 	public ControlBinding getControlBinding() { return this.controlBinding; }
 	public int getKeyCode() { return this.keyCode; }

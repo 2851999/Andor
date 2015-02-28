@@ -1,4 +1,23 @@
 ------------------------------------------------------
+Release 2 | Beta 2 | Development 2 | Experimental 4
+
+* Removed ControllerTest
+* Removed ControllerUtils
+* Removed ControllerRumbler
+* Removed ControllerPov
+* Removed ControllerPovEvent
+
+* Updated to LWJGL 3
+
+------------------------------------------------------
+Release 2 | Beta 2 | Development 2 | Experimental 3
+
+* Added new methods in the object classes
+
+* Changed the default value of external to false, in
+  ImageLoader
+
+------------------------------------------------------
 Release 2 | Beta 2 | Development 2 | Experimental 2
 
 * Added WindowEventListener

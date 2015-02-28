@@ -10,111 +10,187 @@ package org.andor.core;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.andor.core.logger.Log;
-import org.andor.core.logger.Logger;
-import org.andor.utils.ScreenResolution;
-import org.lwjgl.LWJGLException;
-import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.DisplayMode;
+import org.andor.core.input.Input;
+import org.andor.core.input.Keyboard;
+import org.andor.core.input.KeyboardEvent;
+import org.andor.core.input.Mouse;
+import org.andor.core.input.MouseEvent;
+import org.andor.core.input.MouseMotionEvent;
+import org.andor.core.input.ScrollEvent;
+import org.andor.utils.OpenGLUtils;
+import org.lwjgl.glfw.GLFW;
+import org.lwjgl.glfw.GLFWCursorPosCallback;
+import org.lwjgl.glfw.GLFWKeyCallback;
+import org.lwjgl.glfw.GLFWMouseButtonCallback;
+import org.lwjgl.glfw.GLFWScrollCallback;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GLContext;
 
 public class Window {
+	
+	/* The window instance */
+	public static long instance = -1;
 	
 	/* The list of window event listeners */
 	public static List<WindowEventListenerInterface> eventListeners = new ArrayList<WindowEventListenerInterface>();
 	
+	/* Callback references */
+	public static GLFWKeyCallback keyCallback;
+	public static GLFWMouseButtonCallback mouseButtonCallback;
+	public static GLFWCursorPosCallback mousePosCallback;
+	public static GLFWScrollCallback scrollCallback;
+	
 	/* The static method used to create the window */
 	public static void create() {
-		//Catch any errors
-		try {
-			//Set the undecorated property
-			System.setProperty("org.lwjgl.opengl.Window.undecorated", "" + Settings.Window.Undecorated);
-			//Set the displays title
-			Display.setTitle(Settings.Window.Title);
-			//Set the correct display mode
-			setDisplayMode();
-			//Create the display
-			Display.create();
-			//Update OpenGL's resolution
-			GL11.glScissor(0, 0, (int) Settings.Window.Width, (int) Settings.Window.Height);
-			GL11.glViewport(0, 0, (int) Settings.Window.Width, (int) Settings.Window.Height);
-		} catch (LWJGLException e) {
-			//Log an error
-			Logger.log("Andor - Window", "An exception has occurred when creating the display", Log.ERROR);
-			e.printStackTrace();
-		}
+		//Initialise GLFW
+		GLFW.glfwInit();
+		//Assign the values
+		setResizable(Settings.Window.Resizable);
+		//The monitor
+		long monitor = 0;
+		//Check the fullscreen value
+		if (Settings.Window.Fullscreen)
+			monitor = GLFW.glfwGetPrimaryMonitor();
+		//Set the instance
+		instance = GLFW.glfwCreateWindow((int) Settings.Window.Width, (int) Settings.Window.Height, Settings.Window.Title, monitor, 0L);
+		
+		//Move to centre
+		centre();
+		
+		//Create input
+		GLFW.glfwSetKeyCallback(instance, keyCallback = new GLFWKeyCallback() {
+			public void invoke(long window, int key, int scancode, int action, int mods) {
+				//Check the action
+				if (action == GLFW.GLFW_PRESS) {
+					//Get the correct key code
+					int keyCode = Keyboard.convertKeyCode(key);
+					//Get the correct character
+					char keyCharacter = (char) key;
+					//The keyboard event
+					KeyboardEvent e = new KeyboardEvent(keyCharacter , keyCode);
+					//Call the key event
+					Keyboard.onKeyPressed(e);
+					//Call a keyboard event
+					Input.callKeyPressed(e);
+					//Set the last keyboard event
+					Keyboard.lastKeyboardEvent = e;
+				} else if (action == GLFW.GLFW_RELEASE) {
+					//Get the correct key code
+					int keyCode = Keyboard.convertKeyCode(key);
+					//Get the correct character
+					char keyCharacter = (char) key;
+					//The keyboard event
+					KeyboardEvent e = new KeyboardEvent(keyCharacter , keyCode);
+					//Call the key event
+					Keyboard.onKeyReleased(e);
+					//Call the keyboard events
+					Input.callKeyReleased(e);
+					Input.callKeyTyped(e);
+					//Set the last keyboard event
+					Keyboard.lastKeyboardEvent = e;
+				}
+			}
+		});
+		
+		GLFW.glfwSetMouseButtonCallback(instance, mouseButtonCallback = new GLFWMouseButtonCallback() {
+			public void invoke(long window, int button, int action, int mods) {
+				//Check the current event
+				if (action == GLFW.GLFW_PRESS) {
+					//Make sure the button isn't already in the list
+					if (! Mouse.buttonsDown.contains(button)) {
+						//Add the button to the list
+						Mouse.buttonsDown.add(button);
+						//Check to see whether the left, right or middle mouse was the one that was pressed
+						if (button == 0)
+							//Set the button as being down
+							Mouse.leftButton = true;
+						else if (button == 1)
+							//Set the button as being down
+							Mouse.rightButton = true;
+						if (button == 2)
+							//Set the button as being down
+							Mouse.middleButton = true;
+						//Call an event
+						Input.callMousePressed(new MouseEvent(button));
+					}
+				} else if (action == GLFW.GLFW_RELEASE) {
+					//Check to see whether the button is already in the list
+					if (Mouse.buttonsDown.contains(button)) {
+						//Remove the button from the list
+						Mouse.buttonsDown.remove(Mouse.buttonsDown.indexOf(button));
+						//Check to see whether the left, right or middle mouse was the one that was released
+						if (button == 0)
+							//Set the button as being down
+							Mouse.leftButton = false;
+						else if (button == 1)
+							//Set the button as being down
+							Mouse.rightButton = false;
+						if (button == 2)
+							//Set the button as being down
+							Mouse.middleButton = false;
+						//Call an event
+						Input.callMouseReleased(new MouseEvent(button));
+						Input.callMouseClicked(new MouseEvent(button));
+					}
+				}
+			}
+		});
+		
+		GLFW.glfwSetCursorPosCallback(instance, mousePosCallback = new GLFWCursorPosCallback() {
+			public void invoke(long window, double x, double y) {
+				//Set the last and new position values
+				Mouse.lastX = Mouse.x;
+				Mouse.lastY = Mouse.y;
+				Mouse.x = (float) x;
+				Mouse.y = (float) y;
+				
+				//Call a mouse moved event
+				Input.callMouseMoved(new MouseMotionEvent(Mouse.lastX, Mouse.lastY, Mouse.x, Mouse.y));
+				
+				//Check to see whether the mouse button is pressed
+				if (Mouse.isButtonDown(0))
+					//Call a mouse dragged event
+					Input.callMouseDragged(new MouseMotionEvent(Mouse.lastX, Mouse.lastY, Mouse.x, Mouse.y));
+			}
+		});
+		
+		GLFW.glfwSetScrollCallback(instance, scrollCallback = new GLFWScrollCallback() {
+			public void invoke(long window, double xOffset, double yOffset) {
+				if (yOffset != 0)
+					//Call a scroll event
+					Input.callScroll(new ScrollEvent((float) yOffset));
+			}
+		});
+		
+		//Set the correct display mode
+		setDisplayMode();
+		//Make the OpenGL context current
+		GLFW.glfwMakeContextCurrent(instance);
+		//Create the OpenGL context
+		GLContext.createFromCurrent();
+		//Update OpenGL's resolution
+		GL11.glScissor(0, 0, (int) Settings.Window.Width, (int) Settings.Window.Height);
+		GL11.glViewport(0, 0, (int) Settings.Window.Width, (int) Settings.Window.Height);
 	}
 	
 	/* The static method used to get the fullscreen display mode */
 	public static void setDisplayMode() {
-		//Catch any errors
-		try {
-			//The target display mode
-			DisplayMode target = null;
-			//Check to see whether the display should be fullscreen
-			if (Settings.Window.Fullscreen) {
-				//Get the screens dimensions
-				ScreenResolution screenSize = Settings.Video.Resolution;
-				//Get all of the available display modes
-				DisplayMode[] availableDisplayModes = Display.getAvailableDisplayModes();
-				//Go through each available display mode
-				for (int a = 0; a < availableDisplayModes.length; a++) {
-					//Get the current display mode
-					DisplayMode current = availableDisplayModes[a];
-					//Check the current display mode against the target size
-					if ((current.getWidth() == screenSize.width) && (current.getHeight() == screenSize.height)) {
-						//Check to see whether the current display has a higher frequency than the last one
-						if ((target == null) || (current.getFrequency() >= target.getFrequency())) {
-							//Check to see whether the bits per pixel value is higher than the last one
-							if ((target == null) || (current.getBitsPerPixel() > target.getBitsPerPixel())) {
-								//Set the target display mode
-								target = current;
-							}
-						}
-						//Get the desktop's display mode
-						DisplayMode desktopDisplayMode = Display.getDesktopDisplayMode();
-						//Check the current display mode against the desktop one
-						if ((current.getBitsPerPixel() == desktopDisplayMode.getBitsPerPixel()) && current.getFrequency() == desktopDisplayMode.getFrequency()) {
-							//This one is the same as the desktop's so it should be the most compatible display mode
-							target = current;
-							break;
-						}
-					}
-				}
-			} else {
-				//Set the target display mode
-				target = new DisplayMode((int) Settings.Window.Width, (int) Settings.Window.Height);
-			}
-			//Set the display mode to the target
-			Display.setDisplayMode(target);
-			//Make the display fullscreen if necessary
-			Display.setFullscreen(Settings.Window.Fullscreen);
-			//Set VSync if needed
-			Display.setVSyncEnabled(Settings.Video.VSync);
-			//Set the windows width and height values
-			Settings.Window.Width = target.getWidth();
-			Settings.Window.Height = target.getHeight();
-			//Set the resizable value
-			setResizable(Settings.Window.Resizable);
-		} catch (LWJGLException e) {
-			//Log an error
-			Logger.log("Andor - Window", "An exception has occurred when setting the display mode", Log.ERROR);
-			e.printStackTrace();
-		}
+		//Set the resizable value
+		setResizable(Settings.Window.Resizable);
 	}
 	
 	/* The static method used to update the display's settings */
 	public static void updateDisplaySettings() {
 		//Set the displays title
-		Display.setTitle(Settings.Window.Title);
+		GLFW.glfwSetWindowTitle(instance, Settings.Window.Title);
 		//Set the undecorated property
-		System.setProperty("org.lwjgl.opengl.Window.undecorated", "" + Settings.Window.Undecorated);
+		//System.setProperty("org.lwjgl.opengl.Window.undecorated", "" + Settings.Window.Undecorated);
 		//Reset the display mode
 		setDisplayMode();
+		setVSync(Settings.Video.VSync);
 		//Update OpenGL's resolution
 		GL11.glScissor(0, 0, (int) Settings.Window.Width, (int) Settings.Window.Height);
 		GL11.glViewport(0, 0, (int) Settings.Window.Width, (int) Settings.Window.Height);
@@ -122,12 +198,12 @@ public class Window {
 	
 	/* The static method used to update the display */
 	public static void updateDisplay() {
-		//Update the display
-		Display.update();
-		//Sync the display with the maximum FPS
-		Display.sync(Settings.Video.MaxFPS);
+		//Swap the buffers
+		GLFW.glfwSwapBuffers(instance);
+		//Poll for window events
+		GLFW.glfwPollEvents();
 		//Check the window size
-		if (Display.wasResized()) {
+		/*if (Display.wasResized()) {
 			//Create the old window size
 			Vector2D oldSize = new Vector2D(Settings.Window.Width, Settings.Window.Height);
 			//Assign the size
@@ -140,7 +216,22 @@ public class Window {
 			Vector2D newSize = new Vector2D(Settings.Window.Width, Settings.Window.Height);
 			//Call a resized event
 			callOnWindowResized(new WindowSizeEvent(oldSize, newSize));
-		}
+		} */
+	}
+	
+	/* The static method used to set the undecorated property */
+	public static void setUndecorated(boolean undecorated) {
+		//Set the value
+		GLFW.glfwWindowHint(GLFW.GLFW_DECORATED, OpenGLUtils.getValue(! undecorated));
+	}
+	
+	/* The static method used to set the vsync property */
+	public static void setVSync(boolean vsync) {
+		//Check the value
+		if (vsync)
+			GLFW.glfwSwapInterval(1);
+		else
+			GLFW.glfwSwapInterval(0);
 	}
 	
 	/* The static method to centre the window */
@@ -170,31 +261,42 @@ public class Window {
 	/* The static method used to set the position of this window */
 	public static void setPosition(float x, float y) {
 		//Set the position of the window
-		Display.setLocation((int) x, (int) y);
+		GLFW.glfwSetWindowPos(instance, (int) x, (int) y);
 	}
 	
 	/* The static method used to set the window as resizable */
 	public static void setResizable(boolean resizable) {
-		Display.setResizable(resizable);
+		//Check to see whether the value has been assigned
+		GLFW.glfwWindowHint(GLFW.GLFW_RESIZABLE, OpenGLUtils.getValue(resizable));
 	}
 	
 	/* The static method used to set the window icon given a list of images */
 	public static void setIcon(Image[] images) {
-		ByteBuffer buffer1 = images[0].texture;
-		ByteBuffer buffer2 = images[1].texture;
-		Display.setIcon(new ByteBuffer[] { buffer1 , buffer2 });
+		//ByteBuffer buffer1 = images[0].texture;
+		//ByteBuffer buffer2 = images[1].texture;
+		//Display.setIcon(new ByteBuffer[] { buffer1 , buffer2 });
+	}
+	
+	/* The static method used to show this window */
+	public static void show() {
+		GLFW.glfwShowWindow(instance);
+	}
+	
+	/* The static method used to hide this window */
+	public static void hide() {
+		GLFW.glfwHideWindow(instance);
 	}
 	
 	/* The static method used to determine whether this window should close */
 	public static boolean shouldClose() {
 		//Return whether close is requested
-		return Display.isCloseRequested();
+		return OpenGLUtils.getBoolean(GLFW.glfwWindowShouldClose(instance));
 	}
 	
 	/* The static method used to close this window */
 	public static void close() {
-		//Destroy the display
-		Display.destroy();
+		//Destroy the window
+		GLFW.glfwDestroyWindow(instance);
 	}
 	
 	/* The static method used to call a window resized event */

@@ -119,12 +119,4 @@ public class Input {
 			listeners.get(a).onButtonReleased(e);
 	}
 	
-	/* The static method used to call a pov change event */
-	public static void callPovChange(ControllerPovEvent e) {
-		//Go through all of the listeners
-		for (int a = 0; a < listeners.size(); a++)
-			//Call the event
-			listeners.get(a).onPovChange(e);
-	}
-	
 }

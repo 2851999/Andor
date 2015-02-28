@@ -43,12 +43,11 @@ import org.andor.core.lighting.Light3D;
 import org.andor.core.model.Model;
 import org.andor.core.model.OBJLoader;
 import org.andor.utils.ClampUtils;
-import org.andor.utils.Console;
 import org.andor.utils.ControlBindingUtils;
-import org.andor.utils.ControllerUtils;
 import org.andor.utils.FontUtils;
 import org.andor.utils.OpenGLUtils;
 import org.andor.utils.ScreenResolution;
+import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 
 public class Cube3DTest extends BaseGame implements ControlInputListener {
@@ -135,8 +134,10 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		//Lock the mouse
 		Mouse.lock();
 		
+		InputManagerController.addController(this.controller = new InputController(GLFW.GLFW_JOYSTICK_1));
+		
 		//Get all of the available controllers
-		InputController[] controllers = ControllerUtils.getAvailableControllers();
+		/*InputController[] controllers = ControllerUtils.getAvailableControllers();
 		//Go through the controllers
 		for (InputController controller : controllers) {
 			//Print out some information
@@ -149,7 +150,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 				this.controller = controller;
 		}
 		if (this.controller != null)
-			InputManagerController.addController(this.controller);
+			InputManagerController.addController(this.controller); */
 		
 		audio = AudioLoader.load("H:/Andor/test2.wav", true);
 		
@@ -306,10 +307,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 			this.cube.renderer.updateColours(Object3DBuilder.createColourArray(24, new Colour(1f, 1f, 1f, 0.1f)));
 		else if (e.getCode() == Keyboard.KEY_9_CODE)
 			this.cube.renderer.updateColours(Object3DBuilder.createColourArray(24, new Colour(1f, 1f, 1f, 0.0f)));
-		else if (e.getCode() == Keyboard.KEY_F11_CODE) {
-			Settings.Window.Fullscreen = ! Settings.Window.Fullscreen;
-			Window.updateDisplaySettings();
-		} else if (e.getCode() == Keyboard.KEY_LBRACKET_CODE) {
+		else if (e.getCode() == Keyboard.KEY_LBRACKET_CODE) {
 			this.light0.type = Light3D.TYPE_VERTEX_SPOT;
 			this.light1.type = Light3D.TYPE_VERTEX_DIRECTIONAL;
 			this.light2.type = Light3D.TYPE_VERTEX_POINT;
@@ -344,7 +342,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 			else
 				OpenGLUtils.disableWireframeMode();
 		} else if (binding.getControlBinding().name.equals("Rumble")) {
-			this.controller.rumble(500, 1f);
+			//this.controller.rumble(500, 1f);
 			//Reset the players position
 			this.camera.position = new Vector3D(0, -2, 0);
 			this.camera.rotation = new Vector3D(0, 0, 0);
@@ -354,9 +352,6 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 	
 	/* The main method */
 	public static void main(String[] args) {
-		String[] s = ScreenResolution.getSupportedResolutions();
-		for (String c : s)
-			System.out.println(c);
 		//Make the game fullscreen
 		Settings.Window.Fullscreen = false;
 		Settings.Window.Undecorated = false;

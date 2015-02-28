@@ -135,4 +135,40 @@ public class OpenGLUtils {
 			return GLES20.glGetString(GLES20.GL_VERSION);
 	}
 	
+	/* The static method used to take a boolean and turn it into an OpenGL value */
+	public static int getValue(boolean value) {
+		//Check the value
+		if (value) {
+			//Check to see whether using Android mode
+			if (! Settings.AndroidMode)
+				return GL11.GL_TRUE;
+			else
+				return GLES20.GL_TRUE;
+		} else {
+			//Check to see whether using Android mode
+			if (! Settings.AndroidMode)
+				return GL11.GL_FALSE;
+			else
+				return GLES20.GL_FALSE;
+		}
+	}
+	
+	/* The static method used to take an OpenGL boolean and turn it into a boolean */
+	public static boolean getBoolean(int value) {
+		//Check to see whether using Android mode
+		if (! Settings.AndroidMode) {
+			//Check the value
+			if (value == GL11.GL_TRUE)
+				return true;
+			else
+				return false;
+		} else {
+			//Check the value
+			if (value == GLES20.GL_TRUE)
+				return true;
+			else
+				return false;
+		}
+	}
+	
 }
