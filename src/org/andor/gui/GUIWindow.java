@@ -11,10 +11,10 @@ package org.andor.gui;
 import org.andor.core.Colour;
 import org.andor.core.Image;
 import org.andor.core.Object2DBuilder;
+import org.andor.core.Settings;
 import org.andor.core.Vector2D;
 import org.andor.core.input.ControllerAxisEvent;
 import org.andor.core.input.ControllerButtonEvent;
-import org.andor.core.input.ControllerPovEvent;
 import org.andor.core.input.Input;
 import org.andor.core.input.InputListenerInterface;
 import org.andor.core.input.KeyboardEvent;
@@ -93,6 +93,12 @@ public class GUIWindow extends GUIComponent implements InputListenerInterface {
 		Input.addListener(this);
 	}
 	
+	/* The method used to centre this window */
+	public void centre() {
+		//Place this window into the centre of the window
+		this.setPosition(new Vector2D((Settings.Window.Width / 2) - (this.width / 2), (Settings.Window.Height / 2) - (this.height / 2)));
+	}
+	
 	/* The method used to assign the colour */
 	public void setColour(Colour colour) { this.renderer.colours = new Colour[] { colour }; }
 	
@@ -121,7 +127,7 @@ public class GUIWindow extends GUIComponent implements InputListenerInterface {
 		if (this.closeButton != null) {
 			this.closeButton.update();
 			if (this.closeButton.clicked)
-				this.visible = false;
+				this.close();
 		}
 	}
 	
@@ -134,6 +140,12 @@ public class GUIWindow extends GUIComponent implements InputListenerInterface {
 		//Render the close button
 		if (this.closeButton != null)
 			this.closeButton.render();
+	}
+	
+	/* The method used to close this window */
+	public void close() {
+		this.visible = false;
+		this.active = false;
 	}
 	
 	/* The method called when a button on the mouse is pressed */
@@ -187,9 +199,6 @@ public class GUIWindow extends GUIComponent implements InputListenerInterface {
 	
 	/* The method called when a button is released */
 	public void onButtonReleased(ControllerButtonEvent e) { }
-	
-	/* The method called when the pov is changed */
-	public void onPovChange(ControllerPovEvent e) { }
 	
 	public void setCloseButton(GUIButton closeButton) {
 		this.closeButton = closeButton;

@@ -8,6 +8,8 @@
 
 package org.andor.core.input;
 
+import org.lwjgl.glfw.GLFW;
+
 public class ControllerAxis {
 	
 	/* The controller this axis is part of */
@@ -15,9 +17,6 @@ public class ControllerAxis {
 	
 	/* The index of the axis */
 	public int index;
-	
-	/* The name of the axis */
-	public String name;
 	
 	/* The current value of this axis (From the last time this axis was checked for input) */
 	public float currentValue;
@@ -30,7 +29,6 @@ public class ControllerAxis {
 		//Assign the variables
 		this.controller = controller;
 		this.index = index;
-		this.name = this.controller.getController().getAxisName(this.index);
 		this.currentValue = 0;
 		this.calledOnce = false;
 	}
@@ -38,7 +36,7 @@ public class ControllerAxis {
 	/* The method used to check this axis for a change */
 	public void checkInput() {
 		//Get the current value of this axis
-		float value = this.controller.getController().getAxisValue(this.index);
+		float value = GLFW.glfwGetJoystickAxes(controller.getIndex()).get(index);
 		//Check the value against the value from the last time it changed
 		if (value != this.currentValue) {
 			//Assign the new value
@@ -55,7 +53,6 @@ public class ControllerAxis {
 	/* The get methods */
 	public InputController getController() { return this.controller; }
 	public int getIndex() { return this.index; }
-	public String getName() { return this.name; }
 	public float getValue() { return this.currentValue; }
 	
 }

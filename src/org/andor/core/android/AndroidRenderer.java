@@ -31,8 +31,8 @@ public class AndroidRenderer extends Renderer {
 		//Setup the Android shader
 		if (defaultAndroidShader == null) {
 			defaultAndroidShader = new AndroidShader();
-			defaultAndroidShader.vertexShader = ShaderUtils.createShader(ArrayUtils.toStringList(ShaderUtils.vertexAndorMain), GLES20.GL_VERTEX_SHADER);
-			defaultAndroidShader.fragmentShader = ShaderUtils.createShader(ArrayUtils.toStringList(ShaderUtils.vertexAndorMain), GLES20.GL_FRAGMENT_SHADER);
+			defaultAndroidShader.vertexShader = ShaderUtils.createRenderShader(ArrayUtils.toStringList(ShaderUtils.vertexAndorMain), Shader.VERTEX_SHADER);
+			defaultAndroidShader.fragmentShader = ShaderUtils.createRenderShader(ArrayUtils.toStringList(ShaderUtils.fragmentAndorMain), Shader.FRAGMENT_SHADER);
 			defaultAndroidShader.create();
 		}
 	}
@@ -134,6 +134,7 @@ public class AndroidRenderer extends Renderer {
 		
 		//Give the shader the matrices
 		shader.setUniformMatrix("andor_modelViewProjectionMatrix", Matrix.modelViewProjectionMatrix);
+		shader.setUniformMatrix("andor_modelMatrix", Matrix.modelMatrix);
 		shader.setUniformMatrix("andor_normalMatrix", Matrix.normalMatrix);
 		//Enable the arrays as needed
 		if (this.vertices != null) {
@@ -152,9 +153,12 @@ public class AndroidRenderer extends Renderer {
 			GLES20.glVertexAttribPointer(colourAttribute, this.colourValuesCount, GLES20.GL_FLOAT, false, 0, 0);
 		}
 		if (this.textureCoords != null) {
-			GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, this.texturesHandle);
 			GLES20.glEnableVertexAttribArray(textureCoordsAttribute);
+			GLES20.glBindBuffer(GLES20.GL_ARRAY_BUFFER, this.texturesHandle);
 			GLES20.glVertexAttribPointer(textureCoordsAttribute, this.textureCoordValuesCount, GLES20.GL_FLOAT, false, 0, 0);
+			shader.setUniformf("andor_hasTexture", 1.0f);
+		} else {
+			shader.setUniformf("andor_hasTexture", 0.0f);
 		}
 		
 		if (this.texture != null) {

@@ -1,4 +1,98 @@
 ------------------------------------------------------
+Release 2 | Beta 2 | Development 3 | Experimental 0
+
+* Added GUITextDisplayArea
+* Added IntObj_TextDisplayArea
+* Added FontUtilsPC
+* Added FontPC
+* Added BitmapFontUtilsPC
+* Added BitmapFontUtilsAndroid
+* Added FontAndroid
+* Added FontUtilsAndroid
+* Added TrueTypeFont
+* Added WindowEventListener
+* Added WindowEventListenerInterface
+* Added WindowSizeEvent
+* Added a resizable setting to the window settings
+* Added new methods in the object classes
+
+* Changed the default value of external to false, in
+  ImageLoader
+  
+* Removed ControllerTest
+* Removed ControllerUtils
+* Removed ControllerRumbler
+* Removed ControllerPov
+* Removed ControllerPovEvent
+
+* Fixed bug: Android didn't render anything
+* Fixed bug: Running the engine on PC with with
+  undecorated set to false, meant that using
+  an orphographic projection had 0, 0 at the top
+  left of the window instead of the viewable area
+  
+* Updated to LWJGL 3
+
+* NOTE: You can now load true type fonts from files
+  and use installed fonts
+
+------------------------------------------------------
+Release 2 | Beta 2 | Development 2 | Experimental 5
+
+* Clean up
+
+------------------------------------------------------
+Release 2 | Beta 2 | Development 2 | Experimental 4
+
+* Removed ControllerTest
+* Removed ControllerUtils
+* Removed ControllerRumbler
+* Removed ControllerPov
+* Removed ControllerPovEvent
+
+* Updated to LWJGL 3
+
+------------------------------------------------------
+Release 2 | Beta 2 | Development 2 | Experimental 3
+
+* Added new methods in the object classes
+
+* Changed the default value of external to false, in
+  ImageLoader
+
+------------------------------------------------------
+Release 2 | Beta 2 | Development 2 | Experimental 2
+
+* Added WindowEventListener
+* Added WindowEventListenerInterface
+* Added WindowSizeEvent
+* Added a resizable setting to the window settings
+
+* Fixed bug: Running the engine on PC with with
+  undecorated set to false, meant that using
+  an orphographic projection had 0, 0 at the top
+  left of the window instead of the viewable area
+* Fixed some issues with the new fonts
+
+------------------------------------------------------
+Release 2 | Beta 2 | Development 2 | Experimental 1
+
+* Added GUITextDisplayArea
+* Added IntObj_TextDisplayArea
+* Added FontUtilsPC
+* Added FontPC
+* Added BitmapFontUtilsPC
+* Added BitmapFontUtilsAndroid
+* Added FontAndroid
+* Added FontUtilsAndroid
+* Added TrueTypeFont
+
+* Fixed bug: Android didn't render anything
+
+* NOTE: You can now load true type fonts from files
+  and use installed fonts
+
+------------------------------------------------------
 Release 2 | Beta 2 | Development 2 | Experimental 0
 
 * Added DeferredScene

@@ -18,11 +18,11 @@ public class Settings {
 	/* The static class containing all of the information about Andor */
 	public static class Information {
 		/* The version of Andor */
-		public static final String VERSION = "V0.0.3.1";
+		public static final String VERSION = "V0.0.3.2";
 		/* The build of Andor */
 		public static final String BUILD = "Development";
 		/* The date this build started development */
-		public static final String DATE = "16/02/2015";
+		public static final String DATE = "01/03/2015";
 	}
 	
 	/* The static class containing all of the settings required for the window */
@@ -34,8 +34,12 @@ public class Settings {
 		public static float Height = 600;
 		/* The boolean that states whether the window is fullscreen */
 		public static boolean Fullscreen = false;
+		/* The boolean that states whether the window is a fullscreen window */
+		public static boolean WindowedFullscreen = false;
 		/* The boolean that states whether the window should be undecorated */
 		public static boolean Undecorated = false;
+		/* The boolean that states whether the window should be resizable */
+		public static boolean Resizable = false;
 	}
 	
 	/* The static class containing all of the video settings */
@@ -80,6 +84,10 @@ public class Settings {
 			public static String DEFERRED_GEOMETRY_PASS = "/resources/andor/shaders/render/deferred/GeometryPass";
 			public static String DEFERRED_DEFAULT_PASS = "/resources/andor/shaders/render/deferred/DefaultPass";
 			public static String DEFERRED_LIGHT_PASS = "/resources/andor/shaders/render/deferred/LightPass";
+		}
+		public static class Icons {
+			public static String ICON_16 = "/resources/andor/Icon16.png";
+			public static String ICON_32 = "/resources/andor/Icon32.png";
 		}
 	}
 	

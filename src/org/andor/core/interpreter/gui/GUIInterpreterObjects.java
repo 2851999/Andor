@@ -26,6 +26,7 @@ import org.andor.core.interpreter.gui.objects.IntObj_GUISlider;
 import org.andor.core.interpreter.gui.objects.IntObj_GUITextBox;
 import org.andor.core.interpreter.gui.objects.IntObj_GUITextBoxCursor;
 import org.andor.core.interpreter.gui.objects.IntObj_GUITextBoxSelection;
+import org.andor.core.interpreter.gui.objects.IntObj_GUITextDisplayArea;
 import org.andor.core.interpreter.gui.objects.IntObj_GUIToolTip;
 import org.andor.core.interpreter.gui.objects.IntObj_GUIWindow;
 import org.andor.core.interpreter.gui.objects.IntObj_Image;
@@ -57,7 +58,8 @@ public class GUIInterpreterObjects {
 		new IntObj_GUITextBox(),
 		new IntObj_GUITextBoxCursor(),
 		new IntObj_GUITextBoxSelection(),
-		new IntObj_GUIWindow()
+		new IntObj_GUIWindow(),
+		new IntObj_GUITextDisplayArea()
 	};
 	
 	/* The static method used to interpret an object and return the component */

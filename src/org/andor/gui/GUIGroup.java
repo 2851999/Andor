@@ -51,6 +51,26 @@ public class GUIGroup extends GUIComponent {
 		this.groupComponents.add(component);
 	}
 	
+	/* The method used to remove a component */
+	public void remove(GUIComponent component) {
+		//Go through each component
+		for (int a = 0; a < this.groupComponents.size(); a++) {
+			//Check the current component
+			if (this.groupComponents.get(a) == component) {
+				//Remove the component
+				this.groupComponents.remove(a);
+				//Exit the loop
+				break;
+			}
+		}
+	}
+	
+	/* The method used to clear this group */
+	public void clear() {
+		//Clear the group
+		this.groupComponents.clear();
+	}
+	
 	/* The set/get methods */
 	public void setGroupComponents(List<GUIComponent> groupComponents) { this.groupComponents = groupComponents; }
 	public List<GUIComponent> getGroupComponents() { return this.groupComponents; }

@@ -11,11 +11,6 @@ package org.andor.core.input;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.andor.core.logger.Log;
-import org.andor.core.logger.Logger;
-import org.lwjgl.LWJGLException;
-import org.lwjgl.input.Controllers;
-
 public class InputManagerController {
 	
 	/* The controllers that are being monitored */
@@ -23,15 +18,7 @@ public class InputManagerController {
 	
 	/* The static method used to create the controllers */
 	public static void create() {
-		//Try and catch any errors
-		try {
-			//Create the controllers
-			Controllers.create();
-		} catch (LWJGLException e) {
-			//Log an error
-			Logger.log("InputManagerController create()" , "An error occurred when creating the Controllers" , Log.ERROR);
-			e.printStackTrace();
-		}
+		
 	}
 	
 	/* The static method used to check the input */
@@ -44,8 +31,7 @@ public class InputManagerController {
 	
 	/* The static method used to destroy the controllers */
 	public static void destroy() {
-		//Destroy the controllers
-		Controllers.destroy();
+		
 	}
 	
 	/* The static method used to add a controller */

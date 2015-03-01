@@ -115,10 +115,16 @@ public class ImageLoaderPC {
 		//Put the buffer back at position 0, to make sure that remaining will be more than 0,
 		//after calling it once already
 		image.texture.position(0);
+		//Write the image
+		write(i, path, format);
+	}
+	
+	/* The static method used to write a buffered image to a file */
+	public static void write(BufferedImage image, String path, String format) {
 		//Try and catch any errors
         try {
         	//Write the file
-			ImageIO.write(i, format, new File(path));
+			ImageIO.write(image, format, new File(path));
 		} catch (IOException e) {
 			//Log an error
 			Logger.log("Andor - ImageLoader write()", "An exception has occurred when writing the file: " + path);

@@ -25,6 +25,7 @@ import org.andor.gui.GUIPanel;
 import org.andor.gui.GUIRadioCheckBox;
 import org.andor.gui.GUISlider;
 import org.andor.gui.GUITextBox;
+import org.andor.gui.GUITextDisplayArea;
 import org.andor.gui.GUIToolTip;
 import org.andor.gui.GUIWindow;
 import org.andor.utils.Console;
@@ -47,6 +48,7 @@ public class GUITest extends BaseGame implements GUIComponentListener {
 	public GUISlider verticalSlider;
 	public GUISlider horizontalSlider;
 	public GUIWindow window;
+	public GUITextDisplayArea displayArea;
 	
 	public GUITest() {
 		
@@ -95,6 +97,7 @@ public class GUITest extends BaseGame implements GUIComponentListener {
 		this.radio.add(this.radio3);
 		
 		this.label = new GUILabel("This is a label");
+		this.label.setFont(FontUtils.createBitmapFont("Arial", Colour.WHITE, 16));
 		this.label.position = new Vector2D(0, 0);
 		
 		this.radio.border = new GUIBorder(this.radio, 1f, new Colour[] { Colour.RED });
@@ -128,6 +131,9 @@ public class GUITest extends BaseGame implements GUIComponentListener {
 		this.window.position = new Vector2D(400, 100);
 		this.window.setCloseButton(closeButton);
 		
+		this.displayArea = new GUITextDisplayArea("Hello how are you today. This will hopefully work but I have no idea.", 200);
+		this.displayArea.position = new Vector2D(400, 400);
+		
 		panel.add(this.button);
 		panel.add(this.checkBox);
 		panel.add(this.menu);
@@ -139,6 +145,7 @@ public class GUITest extends BaseGame implements GUIComponentListener {
 		panel.add(this.verticalSlider);
 		panel.add(this.horizontalSlider);
 		panel.add(this.window);
+		panel.add(this.displayArea);
 	}
 	
 	/* The method called when the game loop is updated */

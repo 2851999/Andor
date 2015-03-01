@@ -13,7 +13,6 @@ import java.util.List;
 
 import org.andor.core.input.ControllerAxisEvent;
 import org.andor.core.input.ControllerButtonEvent;
-import org.andor.core.input.ControllerPovEvent;
 import org.andor.core.input.Input;
 import org.andor.core.input.InputListenerInterface;
 import org.andor.core.input.InputManager;
@@ -46,10 +45,10 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 		if (! Settings.AndroidMode) {
 			//Create the window
 			Window.create();
+			//Set the icons
+			Window.setIcon(new Image[] { ImageLoader.loadImage(Settings.Resources.Icons.ICON_16, false), ImageLoader.loadImage(Settings.Resources.Icons.ICON_32, false) });
 			//Load the default font
 			Settings.Engine.DefaultFont = FontUtils.loadBitmapFont("/resources/andor/defaultfont.png", 12);
-			//Create the input
-			InputManager.create();
 			//Create the audio
 			AudioPC.create();
 		}
@@ -126,12 +125,10 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 		this.releaseAll();
 		//Make sure Andor isn't currently running on Android
 		if (! Settings.AndroidMode) {
-			//Destroy the input
-			InputManager.destroy();
 			//Destroy the audio
 			AudioPC.destroy();
 			//Close the window
-			Window.close();
+			Window.destroy();
 		}
 		//Call the stop method
 		this.stop();
@@ -230,9 +227,6 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 	
 	/* The method called when a button is released */
 	public void onButtonReleased(ControllerButtonEvent e) { }
-	
-	/* The method called when the pov is changed */
-	public void onPovChange(ControllerPovEvent e) { }
 	
 	/* The static method used to add an interface */
 	public static void add(GameLoopInterface i) {

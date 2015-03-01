@@ -15,7 +15,7 @@ import java.io.FileNotFoundException;
 import org.andor.core.logger.Log;
 import org.andor.core.logger.Logger;
 import org.andor.utils.FileUtils;
-import org.lwjgl.util.WaveData;
+import org.newdawn.slick.openal.WaveData;
 
 public class AudioLoaderPC {
 	

@@ -181,4 +181,9 @@ public class RenderableObject2D extends Object2D {
 		this.renderer.setupBuffers();
 	}
 	
+	/* The method used to assign the texture */
+	public void setTexture(Image texture) {
+		this.renderer.setTexture(texture);
+	}
+	
 }

@@ -113,7 +113,7 @@ public class Renderer {
 		this.coloursHandle = -2;
 		this.texturesHandle = -2;
 		//Check to see whether running using deferred rendering
-		if (! Settings.Video.DeferredRendering) {
+		if (! Settings.AndroidMode && ! Settings.Video.DeferredRendering) {
 			//Load and assign the shaders
 			if (forwardRenderShader == null) {
 				forwardRenderShader = new Shader();
@@ -121,7 +121,7 @@ public class Renderer {
 				forwardRenderShader.fragmentShader = ShaderUtils.createRenderShader(ArrayUtils.toStringList(ShaderUtils.fragmentAndorMain), Shader.FRAGMENT_SHADER);
 				forwardRenderShader.create();
 			}
-		} else {
+		} else if (! Settings.AndroidMode) {
 			//Load and assign the shaders
 			if (deferredShaderGeometry == null) {
 				deferredShaderGeometry = new Shader();
@@ -490,6 +490,11 @@ public class Renderer {
 		this.colours = colours;
 		this.textureCoords = textureCoords;
 		this.drawOrder = drawOrder;
+	}
+	
+	/* The method used to assign the texture */
+	public void setTexture(Image texture) {
+		this.texture = texture;
 	}
 	
 	/* The static method used to convert the render mode */

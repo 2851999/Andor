@@ -58,7 +58,4 @@ public class InputListener implements InputListenerInterface {
 	/* The method called when a button is released */
 	public void onButtonReleased(ControllerButtonEvent e) { }
 	
-	/* The method called when the pov is changed */
-	public void onPovChange(ControllerPovEvent e) { }
-	
 }

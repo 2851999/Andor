@@ -214,9 +214,6 @@ public class ControlBindingAxis extends InputListener {
 	/* The method called when a button is released */
 	public void onButtonReleased(ControllerButtonEvent e) { }
 	
-	/* The method called when the pov is changed */
-	public void onPovChange(ControllerPovEvent e) { }
-	
 	/* The method used to get the direction of a value */
 	public int getDirection(float value) {
 		//The direction
