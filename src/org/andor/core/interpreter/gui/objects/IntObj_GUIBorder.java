@@ -17,7 +17,9 @@ import org.andor.core.interpreter.ml.MLInterpretedObject;
 import org.andor.core.interpreter.ml.MLInterpreter;
 import org.andor.core.interpreter.ml.MLInterpreterObject;
 import org.andor.core.parser.ml.MLObject;
+import org.andor.core.parser.ml.MLParameter;
 import org.andor.gui.GUIBorder;
+import org.andor.gui.GUIComponent;
 
 public class IntObj_GUIBorder extends MLInterpreterObject {
 
@@ -52,6 +54,36 @@ public class IntObj_GUIBorder extends MLInterpreterObject {
 			border = new GUIBorder(thickness, image);
 		//Return the object
 		return new MLInterpretedObject(currentObject.getName(), border);
+	}
+	
+	/* The method used to write a component */
+	public void write(MLObject object, GUIComponent component) {
+		
+	}
+	
+	/* The static method used to write a border to an object */
+	public static void write(MLObject object, GUIBorder border) {
+		//Check to see whether there is an overlay image
+		if (border.hasImage()) {
+			MLObject o = new MLObject("Image", object.getName() + "_image");
+			//Write the image
+			IntObj_Image.write(o, border.getImage());
+			//Add the object
+			GUIInterpreter.addAdditionalObject(o);
+			//Add the parameter
+			object.add(new MLParameter("image", GUIInterpreter.OBJECT_REFERENCE + o.getName()));
+		}
+		if (border.hasColour()) {
+			MLObject o = new MLObject("Colour", object.getName() + "_colour");
+			//Write the colour
+			IntObj_Colour.write(o, border.getColour());
+			//Add the object
+			GUIInterpreter.addAdditionalObject(o);
+			//Add the parameter
+			object.add(new MLParameter("colour", GUIInterpreter.OBJECT_REFERENCE + o.getName()));
+		}
+		//Add the parameters
+		object.add(new MLParameter("thickness", "" + border.getThickness()));
 	}
 	
 }

@@ -8,6 +8,7 @@
 
 package org.andor.core.android;
 
+import org.andor.core.Matrix4D;
 import org.andor.core.Shader;
 import org.andor.utils.BufferUtils;
 import org.andor.utils.ShaderUtils;
@@ -107,13 +108,19 @@ public class AndroidShader extends Shader {
 	/* The method used to set a specific value in this shader */
 	public void setUniformi(String variableName, int[] arrayValues) {
 		//Set the value in the shader
-		GLES20.glUniform1iv(this.getUniformLocation(variableName), 0, BufferUtils.createBuffer(arrayValues));
+		GLES20.glUniform1iv(this.getUniformLocation(variableName), 1, BufferUtils.createBuffer(arrayValues));
 	}
 
 	/* The method used to set a specific value in this shader */
 	public void setUniformf(String variableName, float[] arrayValues) {
 		//Set the value in the shader
-		GLES20.glUniform1fv(this.getUniformLocation(variableName), 0, BufferUtils.createBuffer(arrayValues));
+		GLES20.glUniform1fv(this.getUniformLocation(variableName), 1, BufferUtils.createBuffer(arrayValues));
+	}
+	
+	/* The method used to set a specific value in this shader */
+	public void setUniformMatrix(String variableName, Matrix4D matrix) {
+		//Set the value in the shader
+		GLES20.glUniformMatrix4fv(this.getUniformLocation(variableName), 1, false, matrix.getValues(), 0);
 	}
 	
 	/* The method used to get the location of a uniform variable */

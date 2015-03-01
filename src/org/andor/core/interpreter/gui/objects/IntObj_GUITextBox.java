@@ -18,6 +18,8 @@ import org.andor.core.interpreter.ml.MLInterpretedObject;
 import org.andor.core.interpreter.ml.MLInterpreter;
 import org.andor.core.interpreter.ml.MLInterpreterObject;
 import org.andor.core.parser.ml.MLObject;
+import org.andor.core.parser.ml.MLParameter;
+import org.andor.gui.GUIComponent;
 import org.andor.gui.GUITextBox;
 import org.andor.gui.GUITextBoxCursor;
 import org.andor.gui.GUITextBoxSelection;
@@ -71,9 +73,6 @@ public class IntObj_GUITextBox extends MLInterpreterObject {
 			else if (currentObject.getParameter(i).getName().equals("defaultText"))
 				//Assign the variable
 				textBox.defaultText = currentObject.getParameter(i).getValue();
-			else if (currentObject.getParameter(i).getName().equals("defaultText"))
-				//Assign the variable
-				textBox.defaultText = currentObject.getParameter(i).getValue();
 			else if (currentObject.getParameter(i).getName().equals("defaultTextFont"))
 				//Assign the variable
 				textBox.defaultTextFont = ((Font) MLInterpreter.getObject(currentObject.getParameter(i).getValue(), interpretedObjects).getObject());
@@ -91,6 +90,68 @@ public class IntObj_GUITextBox extends MLInterpreterObject {
 		IntObj_GUIComponent.interpret(currentObject, interpretedObjects, textBox);
 		//Return the object
 		return new MLInterpretedObject(currentObject.getName(), textBox);
+	}
+	
+	/* The method used to write a component */
+	public void write(MLObject object, GUIComponent component) {
+		//Check to see whether there is an overlay image
+		if (((GUITextBox) component).hasImage()) {
+			MLObject o = new MLObject("Image", object.getName() + "_image");
+			//Write the object
+			IntObj_Image.write(o, ((GUITextBox) component).getImage());
+			//Add the object
+			GUIInterpreter.addAdditionalObject(o);
+			//Add the parameter
+			object.add(new MLParameter("image", GUIInterpreter.OBJECT_REFERENCE + o.getName()));
+		}
+		if (((GUITextBox) component).hasColour()) {
+			MLObject o = new MLObject("Colour", object.getName() + "_colour");
+			//Write the object
+			IntObj_Colour.write(o, ((GUITextBox) component).getColour());
+			//Add the object
+			GUIInterpreter.addAdditionalObject(o);
+			//Add the parameter
+			object.add(new MLParameter("colour", GUIInterpreter.OBJECT_REFERENCE + o.getName()));
+		}
+		if (((GUITextBox) component).defaultTextFont != null) {
+			//Create the object
+			MLObject o = new MLObject("Font", object.name + "_font");
+			//Write the data to the object
+			IntObj_Font.write(o, component.renderer.font);
+			//Add the object
+			GUIInterpreter.addAdditionalObject(o);
+			//Add the parameter
+			object.add(new MLParameter("font",GUIInterpreter.OBJECT_REFERENCE + o.getName()));
+		}
+		if (((GUITextBox) component).cursor != null) {
+			//Create the object
+			MLObject o = new MLObject("GUITextBoxCursor", object.name + "_cursor");
+			//Write the data to the object
+			IntObj_GUITextBoxCursor.write(o, ((GUITextBox) component).cursor);
+			//Add the object
+			GUIInterpreter.addAdditionalObject(o);
+			//Add the parameter
+			object.add(new MLParameter("cursor",GUIInterpreter.OBJECT_REFERENCE + o.getName()));
+		}
+		if (((GUITextBox) component).selection != null) {
+			//Create the object
+			MLObject o = new MLObject("GUITextBoxSelection", object.name + "_selection");
+			//Write the data to the object
+			IntObj_GUITextBoxSelection.write(o, ((GUITextBox) component).selection);
+			//Add the object
+			GUIInterpreter.addAdditionalObject(o);
+			//Add the parameter
+			object.add(new MLParameter("selection",GUIInterpreter.OBJECT_REFERENCE + o.getName()));
+		}
+		//Add the parameters
+		object.add(new MLParameter("text", ((GUITextBox) component).text));
+		object.add(new MLParameter("selected", "" + ((GUITextBox) component).selected));
+		object.add(new MLParameter("masked", "" + ((GUITextBox) component).masked));
+		object.add(new MLParameter("mask", ((GUITextBox) component).mask));
+		object.add(new MLParameter("defaultText", "" + ((GUITextBox) component).defaultText));
+		
+		//Write the component's variables
+		IntObj_GUIComponent.writeObject(object, component);
 	}
 	
 }

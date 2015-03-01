@@ -153,4 +153,46 @@ public class MLParser {
 		return ArrayUtils.toStringArray(newSplit);
 	}
 	
+	/* The static method used to write an MLTree to a list that can then be saved to a file */
+	public static List<String> write(MLTree tree) {
+		//Create the list
+		List<String> text = new ArrayList<String>();
+		//Write the version declaration
+		text.add(MLSyntax.TAG_START + "MLVersion " + MLSyntax.STRING_DEFINITION +  ML.VERSION + MLSyntax.STRING_DEFINITION + MLSyntax.TAG_END);
+		//Get the objects within the tree
+		List<MLObject> objects = tree.getObjects();
+		//Go through the tree
+		for (int a = 0; a < objects.size(); a++)
+			//Write the current object
+			write(objects.get(a), text);
+		//Return the text
+		return text;
+	}
+	
+	/* The static method used to write a MLObject to a list */
+	public static void write(MLObject object, List<String> text) {
+		//The current line of text
+		String line = MLSyntax.TAG_START + object.getType() + MLSyntax.NAME_ASSIGNMENT + object.getName();
+		//Go through each parameter in the object
+		for (MLParameter parameter : object.getParameters())
+			//Add the current parameter's declaration
+			line += " " + parameter.getName() + MLSyntax.PARAMETER_ASSIGNMENT + MLSyntax.STRING_DEFINITION + parameter.getValue().replace(MLSyntax.STRING_DEFINITION, MLSyntax.STRING_DEFINITION + MLSyntax.STRING_ESCAPE_CHARACTER) + MLSyntax.STRING_DEFINITION;
+		//Close the tag
+		line += MLSyntax.TAG_END;
+		//Add the line to the text
+		text.add(line);
+		//Get the list of objects within the given object
+		List<MLObject> objects = object.getObjects();
+		//Go through all of the other objects within the current one
+		for (int a = 0; a < objects.size(); a++)
+			//Write the current object
+			write(objects.get(a), text);
+		if (text.get(text.size() - 1).endsWith(MLSyntax.TAG_START + MLSyntax.OBJECT_END))
+			//Close this object's declaration
+			text.add(MLSyntax.TAG_START + MLSyntax.OBJECT_END);
+		else
+			//Close this object's declaration
+			text.set(text.size() - 1, text.get(text.size() - 1) + MLSyntax.TAG_START + MLSyntax.OBJECT_END);
+	}
+	
 }

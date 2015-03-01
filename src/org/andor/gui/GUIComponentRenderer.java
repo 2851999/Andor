@@ -43,7 +43,7 @@ public class GUIComponentRenderer {
 	/* The entity this renders */
 	public RenderableObject2D entity;
 	
-	/* The default font */
+	/* The font */
 	public Font font;
 	
 	/* The constructor */
@@ -78,7 +78,7 @@ public class GUIComponentRenderer {
 			this.entity.height = object.height;
 			//Can be optimised ----------------------------------------------------------------------------------------------------
 			//Make sure the component is active
-			if (active || (! this.shouldUseInactiveImage()) || (!this.shouldUseInactiveColour())) {
+			if (active || (! this.shouldUseInactiveImage()) || (! this.shouldUseInactiveColour())) {
 				//Check whether images or colours should be used
 				if (this.shouldUseImages()) {
 					//Setup the textures

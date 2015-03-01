@@ -72,6 +72,11 @@ public class BaseGameTest extends BaseGame {
 		Logger.log("BaseGameTest", "The mouse was moved (" + e.dx + "," + e.dy + ")");
 	}
 	
+	/* The method called when the mouse moves */
+	public void onMouseDragged(MouseMotionEvent e) {
+		Logger.log("BaseGameTest", "The mouse was dragged (" + e.dx + "," + e.dy + ")");
+	}
+	
 	/* The method called when a key on the keyboard is pressed */
 	public void onKeyPressed(KeyboardEvent e) {
 		Logger.log("BaseGameTest", "A key was pressed " + e.keyCharacter);

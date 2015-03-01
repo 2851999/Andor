@@ -8,6 +8,8 @@
 
 package org.andor.core.input;
 
+import org.lwjgl.glfw.GLFW;
+
 public class ControllerButton {
 	
 	/* The controller this axis is part of */
@@ -15,9 +17,6 @@ public class ControllerButton {
 	
 	/* The index of the button */
 	public int index;
-	
-	/* The name of the button */
-	public String name;
 	
 	/* The boolean that states whether this button is pressed */
 	public boolean pressed;
@@ -27,14 +26,13 @@ public class ControllerButton {
 		//Assign the variables
 		this.controller = controller;
 		this.index = index;
-		this.name = this.controller.getController().getButtonName(this.index);
 		this.pressed = false;
 	}
 	
 	/* The method used to check this button for a change */
 	public void checkInput() {
 		//Get the current value of this button
-		boolean p = this.controller.getController().isButtonPressed(this.index);
+		boolean p = GLFW.glfwGetJoystickButtons(controller.getIndex()).get(index) == GLFW.GLFW_PRESS;
 		//Check the value against the value from the last time it changed
 		if (p != this.pressed) {
 			//Assign the new value
@@ -52,7 +50,6 @@ public class ControllerButton {
 	/* The get methods */
 	public InputController getController() { return this.controller; }
 	public int getIndex() { return this.index; }
-	public String getName() { return this.name; }
 	public boolean isPressed() { return this.pressed; }
 	
 }

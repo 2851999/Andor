@@ -116,10 +116,20 @@ public class GUILoadingBar extends GUIComponent {
 		return (float)((float) this.currentLoadingStage / (float) this.loadingStages) * 100;
 	}
 	
-	/* The methods used to set the colour/images for the loading bar */
+	/* The methods used to set/get the colour/images for the loading bar */
 	public void setBackgroundColour(Colour backgroundColour) { this.renderer.colours = new Colour[] { backgroundColour }; }
+	public Colour getBackgroundColour() { return this.renderer.colours[0]; }
 	public void setFillColour(Colour fillColour) { this.barFill.colour = fillColour; }
+	public Colour getFillColour() { return this.barFill.colour; }
 	public void setBackgroundImage(Image backgroundImage) { this.renderer.images = new Image[] { backgroundImage }; }
+	public Image getBackgroundImage() { return this.renderer.images[0]; }
 	public void setFillImage(Image fillImage) { this.barFill.image = fillImage; }
+	public Image getFillImage() { return this.barFill.image; }
+	public int getCurrentStage() { return this.currentLoadingStage; }
+	
+	public boolean hasBackgroundColour() { return this.renderer.colours != null; }
+	public boolean hasBackgroundImage() { return this.renderer.images != null; }
+	public boolean hasFillColour() { return this.barFill.colour != null; }
+	public boolean hasFillImage() { return this.barFill.image != null; }
 	
 }

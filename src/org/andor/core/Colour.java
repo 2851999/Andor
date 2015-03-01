@@ -23,6 +23,11 @@ public class Colour {
 	public static final Colour LIGHT_BLUE = new Colour(0.0f, 1.0f, 1.0f);
 	public static final Colour WHITE = new Colour(1.0f, 1.0f, 1.0f);
 	
+	/* Some predefined arrays of colours */
+	public static final Colour[] ARRAY_RGB = new Colour[] { RED, GREEN, BLUE };
+	public static final Colour[] ARRAY_GREY = new Colour[] { GREY, LIGHT_GREY };
+	public static final Colour[] ARRAY_BLUE = new Colour[] { BLUE, LIGHT_BLUE };
+	public static final Colour[] ARRAY_SUNSET = new Colour[] { RED, ORANGE, YELLOW };
 	
 	/* The colour values */
 	public float r;

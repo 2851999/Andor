@@ -140,11 +140,8 @@ public class BitmapText extends RenderableObject2D {
 	
 	/* The method to get the height of a string */
 	public float getHeight(String text) {
-		//The height of the text
-		float height = 0;
-		//The height is the font size
-		height = this.fontSize;
-		return height;
+		//Return the height of the text
+		return this.fontSize;
 	}
 	
 	/* The get/set methods */

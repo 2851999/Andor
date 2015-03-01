@@ -90,4 +90,9 @@ public class SystemInformation {
 		return System.getProperty("user.name");
 	}
 	
+	/* The static method used to get the users home directory */
+	public static String getUserAppData() {
+		return System.getenv("AppData");
+	}
+	
 }

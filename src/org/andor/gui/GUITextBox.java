@@ -15,7 +15,6 @@ import org.andor.core.Object2DBuilder;
 import org.andor.core.Vector2D;
 import org.andor.core.input.ControllerAxisEvent;
 import org.andor.core.input.ControllerButtonEvent;
-import org.andor.core.input.ControllerPovEvent;
 import org.andor.core.input.Input;
 import org.andor.core.input.InputListenerInterface;
 import org.andor.core.input.Keyboard;
@@ -115,9 +114,13 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface, 
 		this.setup();
 	}
 	
-	/* The methods used to assign the background colour */
+	/* The methods used to set the colour/image and check whether they are set/return them */
 	public void setColour(Colour colour) { this.renderer.colours = new Colour[] { colour }; }
 	public void setImage(Image image) { this.renderer.images = new Image[] { image }; }
+	public Colour getColour() { return this.renderer.colours[0]; }
+	public Image getImage() { return this.renderer.images[0]; }
+	public boolean hasColour() { return this.renderer.colours != null; }
+	public boolean hasImage() { return this.renderer.images != null; }
 	
 	/* The method used to setup all of the variables */
 	public void setup() {
@@ -579,9 +582,6 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface, 
 	/* The method called when a button is released */
 	public void onButtonReleased(ControllerButtonEvent e) { }
 	
-	/* The method called when the pov is changed */
-	public void onPovChange(ControllerPovEvent e) { }
-	
 	/* The method called when a keyboard shortcut has been completed */
 	public void onShortcut(KeyboardShortcut e) {
 		//Check the name of the shortcut
@@ -671,7 +671,10 @@ public class GUITextBox extends GUIComponent implements InputListenerInterface, 
 	}
 	
 	/* The set/get methods */
-	public void setText(String text) { this.text = text; }
+	public void setText(String text) {
+		this.text = text;
+		this.viewIndexEnd = text.length();
+	}
 	public void setRenderText(String renderText) { this.renderText = renderText; }
 	public void setSelected(boolean selected) { this.selected = selected; }
 	public void setMasked(boolean masked) { this.masked = masked; }

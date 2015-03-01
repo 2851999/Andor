@@ -11,10 +11,10 @@ package org.andor.gui;
 import org.andor.core.Colour;
 import org.andor.core.Image;
 import org.andor.core.Object2DBuilder;
+import org.andor.core.Settings;
 import org.andor.core.Vector2D;
 import org.andor.core.input.ControllerAxisEvent;
 import org.andor.core.input.ControllerButtonEvent;
-import org.andor.core.input.ControllerPovEvent;
 import org.andor.core.input.Input;
 import org.andor.core.input.InputListenerInterface;
 import org.andor.core.input.KeyboardEvent;
@@ -31,7 +31,7 @@ public class GUIWindow extends GUIComponent implements InputListenerInterface {
 	public GUIFill topBar;
 	
 	/* The close button */
-	private GUIButton closeButton;
+	public GUIButton closeButton;
 	
 	/* The boolean that states whether the mouse is currently pressed within the top bar */
 	private boolean mousePressed;
@@ -93,11 +93,22 @@ public class GUIWindow extends GUIComponent implements InputListenerInterface {
 		Input.addListener(this);
 	}
 	
+	/* The method used to centre this window */
+	public void centre() {
+		//Place this window into the centre of the window
+		this.setPosition(new Vector2D((Settings.Window.Width / 2) - (this.width / 2), (Settings.Window.Height / 2) - (this.height / 2)));
+	}
+	
 	/* The method used to assign the colour */
 	public void setColour(Colour colour) { this.renderer.colours = new Colour[] { colour }; }
 	
 	/* The method used to assign the image */
 	public void setImage(Image image) { this.renderer.images = new Image[] { image }; }
+	
+	public Colour getColour() { return this.renderer.colours[0]; }
+	public Image getImage() { return this.renderer.images[0]; }
+	public boolean hasColour() { return this.renderer.colours != null; }
+	public boolean hasImage() { return this.renderer.images != null; }
 	
 	/* The method used to assign the top bar colour */
 	public void setTopColour(Colour colour) { this.topBar.colour = colour; }
@@ -105,13 +116,18 @@ public class GUIWindow extends GUIComponent implements InputListenerInterface {
 	/* The method used to assign the image */
 	public void setTopImage(Image image) { this.topBar.image = image; }
 	
+	public Colour getTopColour() { return this.topBar.colour; }
+	public Image getTopImage() { return this.topBar.image; }
+	public boolean hasTopColour() { return this.topBar.colour != null; }
+	public boolean hasTopImage() { return this.topBar.image != null; }
+	
 	/* The method called to update this component */
 	protected void updateComponent() {
 		//Update the close button
 		if (this.closeButton != null) {
 			this.closeButton.update();
 			if (this.closeButton.clicked)
-				this.visible = false;
+				this.close();
 		}
 	}
 	
@@ -124,6 +140,12 @@ public class GUIWindow extends GUIComponent implements InputListenerInterface {
 		//Render the close button
 		if (this.closeButton != null)
 			this.closeButton.render();
+	}
+	
+	/* The method used to close this window */
+	public void close() {
+		this.visible = false;
+		this.active = false;
 	}
 	
 	/* The method called when a button on the mouse is pressed */
@@ -177,9 +199,6 @@ public class GUIWindow extends GUIComponent implements InputListenerInterface {
 	
 	/* The method called when a button is released */
 	public void onButtonReleased(ControllerButtonEvent e) { }
-	
-	/* The method called when the pov is changed */
-	public void onPovChange(ControllerPovEvent e) { }
 	
 	public void setCloseButton(GUIButton closeButton) {
 		this.closeButton = closeButton;

@@ -8,15 +8,16 @@
 
 package org.andor.core;
 
-import org.andor.core.logger.Log;
-import org.andor.core.logger.Logger;
 import org.andor.utils.BufferUtils;
-import org.lwjgl.LWJGLException;
 import org.lwjgl.openal.AL;
 import org.lwjgl.openal.AL10;
-import org.lwjgl.util.WaveData;
+import org.lwjgl.openal.ALContext;
+import org.newdawn.slick.openal.WaveData;
 
 public class AudioPC extends Audio {
+	
+	/* The context */
+	private static ALContext context;
 	
 	/* The default constructor */
 	public AudioPC() {
@@ -97,19 +98,14 @@ public class AudioPC extends Audio {
 	
 	/* The static method used to create the audio context */
 	public static void create() {
-		//Try and catch any errors
-		try {
-			AL.create();
-		} catch (LWJGLException e) {
-			//Log an error
-			Logger.log("Andor - Audio", "An exception has occurred when creating the audio", Log.ERROR);
-			e.printStackTrace();
-		}
+		//Assign the context
+		context = ALContext.create();
+		context.makeCurrent();
 	}
 	
 	/* The static method used to create the audio context */
 	public static void destroy() {
-		AL.destroy();
+		AL.destroy(context);
 	}
 	
 }

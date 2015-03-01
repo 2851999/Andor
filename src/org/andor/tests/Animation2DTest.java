@@ -40,9 +40,9 @@ public class Animation2DTest extends BaseGame {
 	
 	/* The method called when the loop has been created */
 	public void create() {
-		this.font = FontUtils.loadBitmapFont("C:/Andor/test2.png", true, 16, 12);
-		Image grass = ImageLoader.loadImage("C:/Andor/Grass.png", true);
-		Image dirt = ImageLoader.loadImage("C:/Andor/Dirt.png", true);
+		this.font = FontUtils.loadBitmapFont("H:/Andor/test2.png", true, 16, 12);
+		Image grass = ImageLoader.loadImage("H:/Andor/Grass.png", true);
+		Image dirt = ImageLoader.loadImage("H:/Andor/Dirt.png", true);
 		this.animation = new Sprite2D(grass);
 		this.animation.position = new Vector2D(100, 100);
 		this.animation.add(new Animation2D(this.animation, new Image[] { grass, dirt }, 1000), "Animation", 1);

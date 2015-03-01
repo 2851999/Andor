@@ -13,7 +13,6 @@ import java.util.List;
 
 import org.andor.core.input.ControllerAxisEvent;
 import org.andor.core.input.ControllerButtonEvent;
-import org.andor.core.input.ControllerPovEvent;
 import org.andor.core.input.Input;
 import org.andor.core.input.InputListenerInterface;
 import org.andor.core.input.InputManager;
@@ -23,6 +22,7 @@ import org.andor.core.input.MouseMotionEvent;
 import org.andor.core.input.ScrollEvent;
 import org.andor.utils.FPSCalculator;
 import org.andor.utils.FontUtils;
+import org.andor.utils.OpenGLUtils;
 
 public class GameLoop implements GameLoopInterface, InputListenerInterface {
 	
@@ -45,10 +45,10 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 		if (! Settings.AndroidMode) {
 			//Create the window
 			Window.create();
+			//Set the icons
+			Window.setIcon(new Image[] { ImageLoader.loadImage(Settings.Resources.Icons.ICON_16, false), ImageLoader.loadImage(Settings.Resources.Icons.ICON_32, false) });
 			//Load the default font
 			Settings.Engine.DefaultFont = FontUtils.loadBitmapFont("/resources/andor/defaultfont.png", 12);
-			//Create the input
-			InputManager.create();
 			//Create the audio
 			AudioPC.create();
 		}
@@ -93,10 +93,30 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 		//Call the render method
 		this.render();
 		this.interfaceRender();
+		//Check to see whether any information should be shown
+		if (Settings.Debugging.ShowInformation)
+			//Render the information
+			this.renderInformation();
 		//Make sure Andor isn't currently running on Android
 		if (! Settings.AndroidMode)
 			//Update the display
 			Window.updateDisplay();
+	}
+	
+	/* The method used to render some information */
+	public void renderInformation() {
+		//Setup
+		OpenGLUtils.setupRemoveAlpha();
+		OpenGLUtils.enableTexture2D();
+		OpenGLUtils.setupOrtho(-1, 1);
+		//Render the FPS
+		Settings.Engine.DefaultFont.render("DEBUGGING", 10, 10);
+		Settings.Engine.DefaultFont.render("Andor Version: " + Settings.Information.VERSION, 10, 24);
+		Settings.Engine.DefaultFont.render("Andor Build: " + Settings.Information.BUILD, 10, 38);
+		Settings.Engine.DefaultFont.render("Current FPS: " + this.getFPS(), 10, 52);
+		Settings.Engine.DefaultFont.render("Window Size: " + Settings.Window.Width + "x" + Settings.Window.Height, 10, 66);
+		Settings.Engine.DefaultFont.render("VSync: " + Settings.Video.VSync, 10, 80);
+		OpenGLUtils.disableTexture2D();
 	}
 	
 	/* The method used to shutdown the game loop */
@@ -105,12 +125,10 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 		this.releaseAll();
 		//Make sure Andor isn't currently running on Android
 		if (! Settings.AndroidMode) {
-			//Destroy the input
-			InputManager.destroy();
 			//Destroy the audio
 			AudioPC.destroy();
 			//Close the window
-			Window.close();
+			Window.destroy();
 		}
 		//Call the stop method
 		this.stop();
@@ -209,9 +227,6 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 	
 	/* The method called when a button is released */
 	public void onButtonReleased(ControllerButtonEvent e) { }
-	
-	/* The method called when the pov is changed */
-	public void onPovChange(ControllerPovEvent e) { }
 	
 	/* The static method used to add an interface */
 	public static void add(GameLoopInterface i) {

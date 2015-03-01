@@ -21,6 +21,11 @@ public class Shader {
 	public static final int VERTEX_SHADER = 1;
 	public static final int FRAGMENT_SHADER = 2;
 	
+	/* The two types of deferred shaders */
+	public static final int GEOMETRY_SHADER = 3;
+	public static final int LIGHT_SHADER = 4;
+	public static final int DEFAULT_SHADER = 5;
+	
 	/* The shader program this shader uses */
 	public int program;
 	
@@ -127,6 +132,12 @@ public class Shader {
 	public void setUniformf(String variableName, float[] arrayValues) {
 		//Set the value in the shader
 		GL20.glUniform1(this.getUniformLocation(variableName), BufferUtils.createFlippedBuffer(arrayValues));
+	}
+	
+	/* The method used to set a specific value in this shader */
+	public void setUniformMatrix(String variableName, Matrix4D matrix) {
+		//Set the value in the shader
+		GL20.glUniformMatrix4(this.getUniformLocation(variableName), false, BufferUtils.createFlippedBuffer(matrix.getValues()));
 	}
 	
 	/* The method used to get the location of a uniform variable */

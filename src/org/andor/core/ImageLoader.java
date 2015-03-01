@@ -13,9 +13,9 @@ import org.andor.core.android.ImageLoaderAndroid;
 public class ImageLoader {
 	
 	/* The static method used to load an image given the file path (Assumes
-	 * external should be true) */
+	 * external should be false) */
 	public static Image loadImage(String filePath) {
-		return loadImage(filePath, true);
+		return loadImage(filePath, false);
 	}
 	
 	/* The static method used to load an image given the file path, and

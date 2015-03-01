@@ -1,4 +1,272 @@
 ------------------------------------------------------
+Release 2 | Beta 3 | Development 0 | Experimental 0
+
+* Added DeferredScene
+* Added GeometryBuffer
+* Added DeferredTest
+* Added GUITextDisplayArea
+* Added IntObj_TextDisplayArea
+* Added FontUtilsPC
+* Added FontPC
+* Added BitmapFontUtilsPC
+* Added BitmapFontUtilsAndroid
+* Added FontAndroid
+* Added FontUtilsAndroid
+* Added TrueTypeFont
+* Added WindowEventListener
+* Added WindowEventListenerInterface
+* Added WindowSizeEvent
+* Added Settings.Debugging
+* Added the method 'write' in MLParser so it can now
+  save MLTree's to a list that can then be written to
+  a file
+* Added the methods to scale GUIComponents
+* Added a GUI writing system
+* Added the Shaders class within Settings.Resource
+* Added deferred rendering
+* Added some predefined array colours
+* Added a resizable setting to the window settings
+* Added new methods in the object classes
+
+* Created the package org.andor.experimental
+
+* Changed the default value of external to false, in
+  ImageLoader
+  
+* Rewritten the entire rendering system
+  
+* Removed ControllerTest
+* Removed ControllerUtils
+* Removed ControllerRumbler
+* Removed ControllerPov
+* Removed ControllerPovEvent
+
+* Fixed bug: StackOverflowError when calling
+  GUIDropDownMenu.getButtons()
+* Fixed bug: Null Pointer in some cases using the
+  GUI system when interpreting a drop down menu
+* Fixed bug: Window didn't update the undecorated
+  property when updateSettings() was called
+* Fixed bug: Window didn't update the title
+  property when updateSettings() was called
+* Fixed bug: Android didn't render anything
+* Fixed bug: Running the engine on PC with with
+  undecorated set to false, meant that using
+  an orphographic projection had 0, 0 at the top
+  left of the window instead of the viewable area
+  
+* Updated to LWJGL 3
+
+* NOTE: You can now load true type fonts from files
+  and use installed fonts
+
+------------------------------------------------------
+Release 2 | Beta 2 | Development 3 | Experimental 0
+
+* Added GUITextDisplayArea
+* Added IntObj_TextDisplayArea
+* Added FontUtilsPC
+* Added FontPC
+* Added BitmapFontUtilsPC
+* Added BitmapFontUtilsAndroid
+* Added FontAndroid
+* Added FontUtilsAndroid
+* Added TrueTypeFont
+* Added WindowEventListener
+* Added WindowEventListenerInterface
+* Added WindowSizeEvent
+* Added a resizable setting to the window settings
+* Added new methods in the object classes
+
+* Changed the default value of external to false, in
+  ImageLoader
+  
+* Removed ControllerTest
+* Removed ControllerUtils
+* Removed ControllerRumbler
+* Removed ControllerPov
+* Removed ControllerPovEvent
+
+* Fixed bug: Android didn't render anything
+* Fixed bug: Running the engine on PC with with
+  undecorated set to false, meant that using
+  an orphographic projection had 0, 0 at the top
+  left of the window instead of the viewable area
+  
+* Updated to LWJGL 3
+
+* NOTE: You can now load true type fonts from files
+  and use installed fonts
+
+------------------------------------------------------
+Release 2 | Beta 2 | Development 2 | Experimental 5
+
+* Clean up
+
+------------------------------------------------------
+Release 2 | Beta 2 | Development 2 | Experimental 4
+
+* Removed ControllerTest
+* Removed ControllerUtils
+* Removed ControllerRumbler
+* Removed ControllerPov
+* Removed ControllerPovEvent
+
+* Updated to LWJGL 3
+
+------------------------------------------------------
+Release 2 | Beta 2 | Development 2 | Experimental 3
+
+* Added new methods in the object classes
+
+* Changed the default value of external to false, in
+  ImageLoader
+
+------------------------------------------------------
+Release 2 | Beta 2 | Development 2 | Experimental 2
+
+* Added WindowEventListener
+* Added WindowEventListenerInterface
+* Added WindowSizeEvent
+* Added a resizable setting to the window settings
+
+* Fixed bug: Running the engine on PC with with
+  undecorated set to false, meant that using
+  an orphographic projection had 0, 0 at the top
+  left of the window instead of the viewable area
+* Fixed some issues with the new fonts
+
+------------------------------------------------------
+Release 2 | Beta 2 | Development 2 | Experimental 1
+
+* Added GUITextDisplayArea
+* Added IntObj_TextDisplayArea
+* Added FontUtilsPC
+* Added FontPC
+* Added BitmapFontUtilsPC
+* Added BitmapFontUtilsAndroid
+* Added FontAndroid
+* Added FontUtilsAndroid
+* Added TrueTypeFont
+
+* Fixed bug: Android didn't render anything
+
+* NOTE: You can now load true type fonts from files
+  and use installed fonts
+
+------------------------------------------------------
+Release 2 | Beta 2 | Development 2 | Experimental 0
+
+* Added DeferredScene
+* Added GeometryBuffer
+* Added DeferredTest
+* Added the Shaders class within Settings.Resource
+* Added deferred rendering
+* Added some predefined array colours
+
+* Created the package org.andor.experimental
+
+* Rewritten the entire rendering system
+
+* NOTE: Haven't tested rendering on Android yet
+
+------------------------------------------------------
+Release 2 | Beta 2 | Development 1 | Experimental 3
+
+* Cleaned up code
+
+------------------------------------------------------
+Release 2 | Beta 2 | Development 1 | Experimental 2
+
+* Added DeferredScene
+* Added GeometryBuffer
+* Added DeferredTest
+* Added the Shaders class within Settings.Resource
+* Added deferred rendering
+
+* Rewritten the entire rendering system
+
+* NOTE: Haven't tested rendering on Android yet
+* NOTE: Lighting system not working yet
+
+------------------------------------------------------
+Release 2 | Beta 2 | Development 1 | Experimental 1
+
+* Added some predefined array colours
+
+* Created the package org.andor.experimental
+
+------------------------------------------------------
+Release 2 | Beta 2 | Development 1 | Experimental 0
+
+* Added Settings.Debugging
+* Added the method 'write' in MLParser so it can now
+  save MLTree's to a list that can then be written to
+  a file
+* Added the methods to scale GUIComponents
+* Added a GUI writing system
+
+* Fixed bug: StackOverflowError when calling
+  GUIDropDownMenu.getButtons()
+* Fixed bug: Null Pointer in some cases using the
+  GUI system when interpreting a drop down menu
+* Fixed bug: Window didn't update the undecorated
+  property when updateSettings() was called
+* Fixed bug: Window didn't update the title
+  property when updateSettings() was called
+  
+* NOTE: Will not be adding Android support for some
+  new features, to make future updates easier to
+  produce, ready to start experimenting with new
+  rendering methods.
+  
+* NOTE: This game engine has been in development for
+  7 months now. I have managed to achieve the things I
+  set out to do with this engine. It is for this
+  reason, I will now start adding new features, and
+  improve on the current ones. In the hope that I
+  will continue to improve this engine, even if this
+  involve rewriting parts of it. This also includes
+  optimisations that I will start making, when I am
+  ready to, so that the engine will run much faster
+  and be more intuitive to use. I have learn a lot to
+  get this far, and hope I will continue to learn
+  more.
+
+------------------------------------------------------
+Release 2 | Beta 2 | Development 0 | Experimental 3
+
+* Added Settings.Debugging
+
+* Fixed bug: Window didn't update the undecorated
+  property when updateSettings() was called
+* Fixed bug: Window didn't update the title
+  property when updateSettings() was called
+  
+* NOTE: Will not be adding Android support for some
+  new features, to make future updates easier to
+  produce, ready to start experimenting with new
+  rendering methods.
+
+------------------------------------------------------
+Release 2 | Beta 2 | Development 0 | Experimental 2
+
+* Added a GUI writing system
+
+* Fixed bug: StackOverflowError when calling
+  GUIDropDownMenu.getButtons()
+* Fixed bug: Null Pointer in some cases using the
+  GUI system when interpreting a drop down menu
+
+------------------------------------------------------
+Release 2 | Beta 2 | Development 0 | Experimental 1
+
+* Added the method 'write' in MLParser so it can now
+  save MLTree's to a list that can then be written to
+  a file
+* Added the methods to scale GUIComponents
+
+------------------------------------------------------
 Release 2 | Beta 2 | Development 0 | Experimental 0
 
 * Added ControlBindingUtils

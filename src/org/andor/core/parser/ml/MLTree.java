@@ -29,6 +29,9 @@ public class MLTree {
 	/* The method used to add an object */
 	public void add(MLObject object) { this.objects.add(object); }
 	
+	/* The method used to add an object at a specific location */
+	public void add(MLObject object, int n) { this.objects.add(n, object); }
+	
 	/* The method used to get an object given its name */
 	public MLObject get(String name) {
 		//The object

@@ -26,6 +26,7 @@ import org.andor.core.interpreter.gui.objects.IntObj_GUISlider;
 import org.andor.core.interpreter.gui.objects.IntObj_GUITextBox;
 import org.andor.core.interpreter.gui.objects.IntObj_GUITextBoxCursor;
 import org.andor.core.interpreter.gui.objects.IntObj_GUITextBoxSelection;
+import org.andor.core.interpreter.gui.objects.IntObj_GUITextDisplayArea;
 import org.andor.core.interpreter.gui.objects.IntObj_GUIToolTip;
 import org.andor.core.interpreter.gui.objects.IntObj_GUIWindow;
 import org.andor.core.interpreter.gui.objects.IntObj_Image;
@@ -57,7 +58,8 @@ public class GUIInterpreterObjects {
 		new IntObj_GUITextBox(),
 		new IntObj_GUITextBoxCursor(),
 		new IntObj_GUITextBoxSelection(),
-		new IntObj_GUIWindow()
+		new IntObj_GUIWindow(),
+		new IntObj_GUITextDisplayArea()
 	};
 	
 	/* The static method used to interpret an object and return the component */
@@ -78,6 +80,25 @@ public class GUIInterpreterObjects {
 		}
 		//Return the component
 		return component;
+	}
+	
+	/* The static method used to write an object */
+	public static MLObject write(GUIComponent component) {
+		//The MLObject
+		MLObject object = null;
+		//Get the type of component
+		String objectType = component.getClass().getSimpleName();
+		//Get the object the current object represents
+		MLInterpreterObject interpreterObject = getObject(objectType);
+		//Make sure the object was found
+		if (interpreterObject != null) {
+			//Assign the object
+			object = new MLObject(objectType, component.name);
+			//Write the object
+			interpreterObject.write(object, component);
+		}
+		//Return the object
+		return object;
 	}
 	
 	/* The static method used to get an object with a specific name */

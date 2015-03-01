@@ -9,8 +9,8 @@
 package org.andor.utils;
 
 import org.andor.core.Matrix;
+import org.andor.core.Renderer;
 import org.andor.core.Settings;
-import org.andor.core.android.AndroidRenderer;
 import org.lwjgl.opengl.GL11;
 
 import android.opengl.GLES20;
@@ -68,7 +68,7 @@ public class OpenGLUtils {
 		if (! Settings.AndroidMode)
 			GL11.glDisable(GL11.GL_TEXTURE_2D);
 		else {
-			AndroidRenderer.texture = null;
+			Renderer.globalTexture = null;
 			GLES20.glDisable(GLES20.GL_TEXTURE_2D);
 		}
 	}
@@ -133,6 +133,42 @@ public class OpenGLUtils {
 			return GL11.glGetString(GL11.GL_VERSION);
 		else
 			return GLES20.glGetString(GLES20.GL_VERSION);
+	}
+	
+	/* The static method used to take a boolean and turn it into an OpenGL value */
+	public static int getValue(boolean value) {
+		//Check the value
+		if (value) {
+			//Check to see whether using Android mode
+			if (! Settings.AndroidMode)
+				return GL11.GL_TRUE;
+			else
+				return GLES20.GL_TRUE;
+		} else {
+			//Check to see whether using Android mode
+			if (! Settings.AndroidMode)
+				return GL11.GL_FALSE;
+			else
+				return GLES20.GL_FALSE;
+		}
+	}
+	
+	/* The static method used to take an OpenGL boolean and turn it into a boolean */
+	public static boolean getBoolean(int value) {
+		//Check to see whether using Android mode
+		if (! Settings.AndroidMode) {
+			//Check the value
+			if (value == GL11.GL_TRUE)
+				return true;
+			else
+				return false;
+		} else {
+			//Check the value
+			if (value == GLES20.GL_TRUE)
+				return true;
+			else
+				return false;
+		}
 	}
 	
 }

@@ -11,6 +11,7 @@ package org.andor.gui;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.andor.core.Font;
 import org.andor.core.Object2D;
 import org.andor.core.RenderableObject2D;
 import org.andor.core.Settings;
@@ -204,6 +205,11 @@ public class GUIComponent extends Object2D {
 		Vector2D p = this.getPosition();
 		this.renderer.font.render(text, p.x, p.y);
 	}
+	public void renderText(String text, Vector2D offset) {
+		//Get the position
+		Vector2D p = this.getPosition();
+		this.renderer.font.render(text, p.x + offset.x, p.y + offset.y);
+	}
 	public void renderText(String text, float x, float y) { this.renderer.font.render(text, x, y); }
 	public void renderTextAtCentre(String text) { this.renderer.font.renderAtCentre(text, this); }
 	public void renderTextAtCentre(String text, Vector2D offset) { this.renderer.font.renderAtCentre(text, this, offset); }
@@ -334,6 +340,16 @@ public class GUIComponent extends Object2D {
 		return list;
 	}
 	
+	/* The method used to change the scale of this component */
+	public void scale(Vector2D amount) {
+		//Assign the scale of this component
+		this.scale.multiply(amount);
+		//Go through each component within this one
+		for (int a = 0; a < this.components.size(); a++)
+			//Change the scale of the current component
+			this.components.get(a).scale(amount);
+	}
+	
 	/* The methods used to set/toggle/return some values */
 	public void setName(String name) { this.name = name; }
 	public void setVisible(boolean visible) { this.visible = visible; }
@@ -347,6 +363,7 @@ public class GUIComponent extends Object2D {
 	public void toggleVisible() { this.visible = ! this.visible; }
 	public void toggleActive() { this.active = ! this.active; }
 	public void toggleBorder() { this.borderEnabled = ! this.borderEnabled; }
+	public void setFont(Font font) { this.renderer.setFont(font); }
 	public String getName() { return this.name; }
 	public boolean isVisible() { return this.visible; }
 	public boolean isActive() { return this.active; }
@@ -358,5 +375,6 @@ public class GUIComponent extends Object2D {
 	public boolean isBorderEnabled() { return this.borderEnabled; }
 	public List<GUIComponent> getComponents() { return this.components; }
 	public GUIPosition getPositionPreference() { return this.positionPreference; }
+	public boolean isClicked() { return this.clicked; }
 	
 }

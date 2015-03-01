@@ -8,6 +8,8 @@
 
 package org.andor.core.input;
 
+import org.lwjgl.glfw.GLFW;
+
 public class Keyboard {
 	
 	/* The last keyboard event */
@@ -102,7 +104,7 @@ public class Keyboard {
 	public static int KEY_COLON_CODE = 73;
 	public static int KEY_COMMA_CODE = 74;
 	public static int KEY_CONVERT_CODE = 75;
-	public static int KEY_DECIMAL_CODE = 76;
+	public static int KEY_PERIOD_CODE = 76;
 	public static int KEY_DELETE_CODE = 77;
 	public static int KEY_DIVIDE_CODE = 78;
 	public static int KEY_END_CODE = 79;
@@ -127,7 +129,6 @@ public class Keyboard {
 	public static int KEY_PAGE_DOWN_CODE = 98;
 	public static int KEY_NOCONVERT_CODE = 99;
 	public static int KEY_PAUSE_CODE = 100;
-	public static int KEY_PERIOD_CODE = 101;
 	public static int KEY_POWER_CODE = 102;
 	public static int KEY_PAGE_UP_CODE = 103;
 	public static int KEY_RETURN_CODE = 104;
@@ -143,7 +144,7 @@ public class Keyboard {
 	public static int KEY_SYSRQ_CODE = 114;
 	public static int KEY_TAB_CODE = 115;
 	public static int KEY_UNDERSCORE_CODE = 116;
-	public static int KEY_UNLABELED_CODE = 117;
+	public static int KEY_UNKNOWN_CODE = 117;
 	public static int KEY_YEN_CODE = 118;
 	public static int KEY_UP_CODE = 119;
 	public static int KEY_DOWN_CODE = 120;
@@ -232,12 +233,9 @@ public class Keyboard {
 	public static boolean KEY_AX = false;
 	public static boolean KEY_BACKSPACE = false;
 	public static boolean KEY_CAPSLOCK = false;
-	public static boolean KEY_CIRCUMFLEX = false;
 	public static boolean KEY_CLEAR = false;
 	public static boolean KEY_COLON = false;
 	public static boolean KEY_COMMA = false;
-	public static boolean KEY_CONVERT = false;
-	public static boolean KEY_DECIMAL = false;
 	public static boolean KEY_DELETE = false;
 	public static boolean KEY_DIVIDE = false;
 	public static boolean KEY_END = false;
@@ -278,8 +276,7 @@ public class Keyboard {
 	public static boolean KEY_SYSRQ = false;
 	public static boolean KEY_TAB = false;
 	public static boolean KEY_UNDERSCORE = false;
-	public static boolean KEY_UNLABELED = false;
-	public static boolean KEY_YEN = false;
+	public static boolean KEY_UNKNOWN = false;
 	public static boolean KEY_UP = false;
 	public static boolean KEY_DOWN = false;
 	public static boolean KEY_LEFT = false;
@@ -429,18 +426,14 @@ public class Keyboard {
 			return KEY_BACKSPACE;
 		else if (keyCode == KEY_CAPSLOCK_CODE)
 			return KEY_CAPSLOCK;
-		else if (keyCode == KEY_CIRCUMFLEX_CODE)
-			return KEY_CIRCUMFLEX;
 		else if (keyCode == KEY_CLEAR_CODE)
 			return KEY_CLEAR;
 		else if (keyCode == KEY_COLON_CODE)
 			return KEY_COLON;
 		else if (keyCode == KEY_COMMA_CODE)
 			return KEY_COMMA;
-		else if (keyCode == KEY_CONVERT_CODE)
-			return KEY_CONVERT;
-		else if (keyCode == KEY_DECIMAL_CODE)
-			return KEY_DECIMAL;
+		else if (keyCode == KEY_PERIOD_CODE)
+			return KEY_PERIOD;
 		else if (keyCode == KEY_DELETE_CODE)
 			return KEY_DELETE;
 		else if (keyCode == KEY_DIVIDE_CODE)
@@ -521,10 +514,8 @@ public class Keyboard {
 			return KEY_TAB;
 		else if (keyCode == KEY_UNDERSCORE_CODE)
 			return KEY_UNDERSCORE;
-		else if (keyCode == KEY_UNLABELED_CODE)
-			return KEY_UNLABELED;
-		else if (keyCode == KEY_YEN_CODE)
-			return KEY_YEN;
+		else if (keyCode == KEY_UNKNOWN_CODE)
+			return KEY_UNKNOWN;
 		else if (keyCode == KEY_UP_CODE)
 			return KEY_UP;
 		else if (keyCode == KEY_DOWN_CODE)
@@ -545,243 +536,189 @@ public class Keyboard {
 	 * code found here */
 	public static int convertKeyCode(int keyCode) {
 		//Return the correct code
-		if (keyCode == org.lwjgl.input.Keyboard.KEY_0)
+		if (keyCode == GLFW.GLFW_KEY_0)
 			return KEY_0_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_1)
+		else if (keyCode == GLFW.GLFW_KEY_1)
 			return KEY_1_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_2)
+		else if (keyCode == GLFW.GLFW_KEY_2)
 			return KEY_2_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_3)
+		else if (keyCode == GLFW.GLFW_KEY_3)
 			return KEY_3_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_4)
+		else if (keyCode == GLFW.GLFW_KEY_4)
 			return KEY_4_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_5)
+		else if (keyCode == GLFW.GLFW_KEY_5)
 			return KEY_5_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_6)
+		else if (keyCode == GLFW.GLFW_KEY_6)
 			return KEY_6_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_7)
+		else if (keyCode == GLFW.GLFW_KEY_7)
 			return KEY_7_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_8)
+		else if (keyCode == GLFW.GLFW_KEY_8)
 			return KEY_8_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_9)
+		else if (keyCode == GLFW.GLFW_KEY_9)
 			return KEY_9_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_A)
+		else if (keyCode == GLFW.GLFW_KEY_A)
 			return KEY_A_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_B)
+		else if (keyCode == GLFW.GLFW_KEY_B)
 			return KEY_B_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_C)
+		else if (keyCode == GLFW.GLFW_KEY_C)
 			return KEY_C_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_D)
+		else if (keyCode == GLFW.GLFW_KEY_D)
 			return KEY_D_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_E)
+		else if (keyCode == GLFW.GLFW_KEY_E)
 			return KEY_E_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_F)
+		else if (keyCode == GLFW.GLFW_KEY_F)
 			return KEY_F_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_G)
+		else if (keyCode == GLFW.GLFW_KEY_G)
 			return KEY_G_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_H)
+		else if (keyCode == GLFW.GLFW_KEY_H)
 			return KEY_H_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_I)
+		else if (keyCode == GLFW.GLFW_KEY_I)
 			return KEY_I_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_J)
+		else if (keyCode == GLFW.GLFW_KEY_J)
 			return KEY_J_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_K)
+		else if (keyCode == GLFW.GLFW_KEY_K)
 			return KEY_K_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_L)
+		else if (keyCode == GLFW.GLFW_KEY_L)
 			return KEY_L_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_M)
+		else if (keyCode == GLFW.GLFW_KEY_M)
 			return KEY_M_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_N)
+		else if (keyCode == GLFW.GLFW_KEY_N)
 			return KEY_N_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_O)
+		else if (keyCode == GLFW.GLFW_KEY_O)
 			return KEY_O_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_P)
+		else if (keyCode == GLFW.GLFW_KEY_P)
 			return KEY_P_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_Q)
+		else if (keyCode == GLFW.GLFW_KEY_Q)
 			return KEY_Q_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_R)
+		else if (keyCode == GLFW.GLFW_KEY_R)
 			return KEY_R_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_S)
+		else if (keyCode == GLFW.GLFW_KEY_S)
 			return KEY_S_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_T)
+		else if (keyCode == GLFW.GLFW_KEY_T)
 			return KEY_T_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_U)
+		else if (keyCode == GLFW.GLFW_KEY_U)
 			return KEY_U_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_V)
+		else if (keyCode == GLFW.GLFW_KEY_V)
 			return KEY_V_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_W)
+		else if (keyCode == GLFW.GLFW_KEY_W)
 			return KEY_W_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_X)
+		else if (keyCode == GLFW.GLFW_KEY_X)
 			return KEY_X_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_Y)
+		else if (keyCode == GLFW.GLFW_KEY_Y)
 			return KEY_Y_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_Z)
+		else if (keyCode == GLFW.GLFW_KEY_Z)
 			return KEY_Z_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_F1)
+		else if (keyCode == GLFW.GLFW_KEY_F1)
 			return KEY_F1_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_F2)
+		else if (keyCode == GLFW.GLFW_KEY_F2)
 			return KEY_F2_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_F3)
+		else if (keyCode == GLFW.GLFW_KEY_F3)
 			return KEY_F3_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_F4)
+		else if (keyCode == GLFW.GLFW_KEY_F4)
 			return KEY_F4_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_F5)
+		else if (keyCode == GLFW.GLFW_KEY_F5)
 			return KEY_F5_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_F6)
+		else if (keyCode == GLFW.GLFW_KEY_F6)
 			return KEY_F6_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_F7)
+		else if (keyCode == GLFW.GLFW_KEY_F7)
 			return KEY_F7_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_F8)
+		else if (keyCode == GLFW.GLFW_KEY_F8)
 			return KEY_F8_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_F9)
+		else if (keyCode == GLFW.GLFW_KEY_F9)
 			return KEY_F9_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_F10)
+		else if (keyCode == GLFW.GLFW_KEY_F10)
 			return KEY_F10_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_F11)
+		else if (keyCode == GLFW.GLFW_KEY_F11)
 			return KEY_F11_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_F12)
+		else if (keyCode == GLFW.GLFW_KEY_F12)
 			return KEY_F12_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_NUMLOCK)
-			return KEY_NUMLOCK_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_NUMPAD0)
-			return KEY_NUMPAD0_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_NUMPAD1)
-			return KEY_NUMPAD1_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_NUMPAD2)
-			return KEY_NUMPAD2_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_NUMPAD3)
-			return KEY_NUMPAD3_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_NUMPAD4)
-			return KEY_NUMPAD4_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_NUMPAD5)
-			return KEY_NUMPAD5_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_NUMPAD6)
-			return KEY_NUMPAD6_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_NUMPAD7)
-			return KEY_NUMPAD7_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_NUMPAD8)
-			return KEY_NUMPAD8_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_NUMPAD9)
-			return KEY_NUMPAD9_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_ADD)
+		else if (keyCode == GLFW.GLFW_KEY_KP_ADD)
 			return KEY_ADD_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_APOSTROPHE)
+		else if (keyCode == GLFW.GLFW_KEY_APOSTROPHE)
 			return KEY_APOSTROPHE_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_AT)
-			return KEY_AT_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_BACK)
+		else if (keyCode == GLFW.GLFW_KEY_BACKSPACE)
 			return KEY_BACKSPACE_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_BACKSLASH)
+		else if (keyCode == GLFW.GLFW_KEY_BACKSLASH)
 			return KEY_BACKSLASH_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_CAPITAL)
+		else if (keyCode == GLFW.GLFW_KEY_CAPS_LOCK)
 			return KEY_CAPSLOCK_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_CIRCUMFLEX)
-			return KEY_CIRCUMFLEX_CODE;
-		else if (keyCode ==org.lwjgl.input.Keyboard.KEY_CLEAR)
-			return KEY_CLEAR_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_COLON)
-			return KEY_COLON_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_COMMA)
+		else if (keyCode == GLFW.GLFW_KEY_COMMA)
 			return KEY_COMMA_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_CONVERT)
-			return KEY_CONVERT_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_DECIMAL)
-			return KEY_DECIMAL_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_DELETE)
-			return KEY_DELETE_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_DIVIDE)
-			return KEY_DIVIDE_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_END)
-			return KEY_END_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_EQUALS)
-			return KEY_EQUALS_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_ESCAPE)
-			return KEY_ESCAPE_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_FUNCTION)
-			return KEY_FUNCTION_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_GRAVE)
-			return KEY_GRAVE_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_HOME)
-			return KEY_HOME_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_INSERT)
-			return KEY_INSERT_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_KANA)
-			return KEY_KANA_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_KANJI)
-			return KEY_KANJI_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_LBRACKET)
-			return KEY_LBRACKET_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_RBRACKET)
-			return KEY_RBRACKET_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_LCONTROL)
-			return KEY_LCONTROL_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_RCONTROL)
-			return KEY_RCONTROL_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_LMENU)
-			return KEY_LALT_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_RMENU)
-			return KEY_RALT_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_LMETA)
-			return KEY_LMETA_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_RMETA)
-			return KEY_RMETA_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_MINUS)
-			return KEY_MINUS_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_MULTIPLY)
-			return KEY_MULTIPLY_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_NEXT)
-			return KEY_PAGE_DOWN_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_NOCONVERT)
-			return KEY_NOCONVERT_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_PAUSE)
-			return KEY_PAUSE_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_PERIOD)
+		else if (keyCode == GLFW.GLFW_KEY_PERIOD)
 			return KEY_PERIOD_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_POWER)
-			return KEY_POWER_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_PRIOR)
+		else if (keyCode == GLFW.GLFW_KEY_DELETE)
+			return KEY_DELETE_CODE;
+		else if (keyCode == GLFW.GLFW_KEY_KP_DIVIDE)
+			return KEY_DIVIDE_CODE;
+		else if (keyCode == GLFW.GLFW_KEY_END)
+			return KEY_END_CODE;
+		else if (keyCode == GLFW.GLFW_KEY_KP_EQUAL)
+			return KEY_EQUALS_CODE;
+		else if (keyCode == GLFW.GLFW_KEY_ESCAPE)
+			return KEY_ESCAPE_CODE;
+		else if (keyCode == GLFW.GLFW_KEY_GRAVE_ACCENT)
+			return KEY_GRAVE_CODE;
+		else if (keyCode == GLFW.GLFW_KEY_HOME)
+			return KEY_HOME_CODE;
+		else if (keyCode == GLFW.GLFW_KEY_INSERT)
+			return KEY_INSERT_CODE;
+		else if (keyCode == GLFW.GLFW_KEY_LEFT_BRACKET)
+			return KEY_LBRACKET_CODE;
+		else if (keyCode == GLFW.GLFW_KEY_RIGHT_BRACKET)
+			return KEY_RBRACKET_CODE;
+		else if (keyCode == GLFW.GLFW_KEY_LEFT_CONTROL)
+			return KEY_LCONTROL_CODE;
+		else if (keyCode == GLFW.GLFW_KEY_RIGHT_CONTROL)
+			return KEY_RCONTROL_CODE;
+		else if (keyCode == GLFW.GLFW_KEY_LEFT_ALT)
+			return KEY_LALT_CODE;
+		else if (keyCode == GLFW.GLFW_KEY_RIGHT_ALT)
+			return KEY_RALT_CODE;
+		else if (keyCode == GLFW.GLFW_KEY_LEFT_SUPER)
+			return KEY_LMETA_CODE;
+		else if (keyCode == GLFW.GLFW_KEY_RIGHT_SUPER)
+			return KEY_RMETA_CODE;
+		else if (keyCode == GLFW.GLFW_KEY_MINUS)
+			return KEY_MINUS_CODE;
+		else if (keyCode == GLFW.GLFW_KEY_KP_MULTIPLY)
+			return KEY_MULTIPLY_CODE;
+		else if (keyCode == GLFW.GLFW_KEY_PAUSE)
+			return KEY_PAUSE_CODE;
+		else if (keyCode == GLFW.GLFW_KEY_PERIOD)
+			return KEY_PERIOD_CODE;
+		else if (keyCode == GLFW.GLFW_KEY_PAGE_UP)
 			return KEY_PAGE_UP_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_RETURN)
+		else if (keyCode == GLFW.GLFW_KEY_PAGE_DOWN)
+			return KEY_PAGE_DOWN_CODE;
+		else if (keyCode == GLFW.GLFW_KEY_ENTER)
 			return KEY_RETURN_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_SCROLL)
+		else if (keyCode == GLFW.GLFW_KEY_SCROLL_LOCK)
 			return KEY_SCROLLLOCK_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_SECTION)
-			return KEY_SECTION_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_SEMICOLON)
+		else if (keyCode == GLFW.GLFW_KEY_SEMICOLON)
 			return KEY_SEMICOLON_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_SLASH)
+		else if (keyCode == GLFW.GLFW_KEY_SLASH)
 			return KEY_FORWARD_SLASH_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_BACKSLASH)
+		else if (keyCode == GLFW.GLFW_KEY_BACKSLASH)
 			return KEY_BACK_SLASH_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_SLEEP)
-			return KEY_SLEEP_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_SPACE)
+		else if (keyCode == GLFW.GLFW_KEY_SPACE)
 			return KEY_SPACE_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_STOP)
-			return KEY_STOP_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_SUBTRACT)
+		else if (keyCode == GLFW.GLFW_KEY_KP_SUBTRACT)
 			return KEY_SUBTRACT_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_SYSRQ)
-			return KEY_SYSRQ_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_TAB)
+		else if (keyCode == GLFW.GLFW_KEY_TAB)
 			return KEY_TAB_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_UNDERLINE)
-			return KEY_UNDERSCORE_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_UNLABELED)
-			return KEY_UNLABELED_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_YEN)
-			return KEY_YEN_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_UP)
+		else if (keyCode == GLFW.GLFW_KEY_UNKNOWN)
+			return KEY_UNKNOWN_CODE;
+		else if (keyCode == GLFW.GLFW_KEY_UP)
 			return KEY_UP_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_DOWN)
+		else if (keyCode == GLFW.GLFW_KEY_DOWN)
 			return KEY_DOWN_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_LEFT)
+		else if (keyCode == GLFW.GLFW_KEY_LEFT)
 			return KEY_LEFT_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_RIGHT)
+		else if (keyCode == GLFW.GLFW_KEY_RIGHT)
 			return KEY_RIGHT_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_LSHIFT)
+		else if (keyCode == GLFW.GLFW_KEY_LEFT_SHIFT)
 			return KEY_LSHIFT_CODE;
-		else if (keyCode == org.lwjgl.input.Keyboard.KEY_RSHIFT)
+		else if (keyCode == GLFW.GLFW_KEY_RIGHT_SHIFT)
 			return KEY_RSHIFT_CODE;
 		else
 			return 0;
@@ -790,245 +727,195 @@ public class Keyboard {
 	/* The static method to convert a certain key code into a key
 	 * code found in the LWJGL keyboard class here */
 	public static int convertKeyCodeLWJGL(int keyCode) {
-		//return org.lwjgl.input.Keyboard.the correct code
+		//return GLFW.GLFW_the correct code
 		if (keyCode == KEY_0_CODE)
-			return org.lwjgl.input.Keyboard.KEY_0;
+			return GLFW.GLFW_KEY_0;
 		else if (keyCode == KEY_1_CODE)
-			return org.lwjgl.input.Keyboard.KEY_1;
+			return GLFW.GLFW_KEY_1;
 		else if (keyCode == KEY_2_CODE)
-			return org.lwjgl.input.Keyboard.KEY_2;
+			return GLFW.GLFW_KEY_2;
 		else if (keyCode == KEY_3_CODE)
-			return org.lwjgl.input.Keyboard.KEY_3;
+			return GLFW.GLFW_KEY_3;
 		else if (keyCode == KEY_4_CODE)
-			return org.lwjgl.input.Keyboard.KEY_4;
+			return GLFW.GLFW_KEY_4;
 		else if (keyCode == KEY_5_CODE)
-			return org.lwjgl.input.Keyboard.KEY_5;
+			return GLFW.GLFW_KEY_5;
 		else if (keyCode == KEY_6_CODE)
-			return org.lwjgl.input.Keyboard.KEY_6;
+			return GLFW.GLFW_KEY_6;
 		else if (keyCode == KEY_7_CODE)
-			return org.lwjgl.input.Keyboard.KEY_7;
+			return GLFW.GLFW_KEY_7;
 		else if (keyCode == KEY_8_CODE)
-			return org.lwjgl.input.Keyboard.KEY_8;
+			return GLFW.GLFW_KEY_8;
 		else if (keyCode == KEY_9_CODE)
-			return org.lwjgl.input.Keyboard.KEY_9;
+			return GLFW.GLFW_KEY_9;
 		else if (keyCode == KEY_A_CODE)
-			return org.lwjgl.input.Keyboard.KEY_A;
+			return GLFW.GLFW_KEY_A;
 		else if (keyCode == KEY_B_CODE)
-			return org.lwjgl.input.Keyboard.KEY_B;
+			return GLFW.GLFW_KEY_B;
 		else if (keyCode == KEY_C_CODE)
-			return org.lwjgl.input.Keyboard.KEY_C;
+			return GLFW.GLFW_KEY_C;
 		else if (keyCode == KEY_D_CODE)
-			return org.lwjgl.input.Keyboard.KEY_D;
+			return GLFW.GLFW_KEY_D;
 		else if (keyCode == KEY_E_CODE)
-			return org.lwjgl.input.Keyboard.KEY_E;
+			return GLFW.GLFW_KEY_E;
 		else if (keyCode == KEY_F_CODE)
-			return org.lwjgl.input.Keyboard.KEY_F;
+			return GLFW.GLFW_KEY_F;
 		else if (keyCode == KEY_G_CODE)
-			return org.lwjgl.input.Keyboard.KEY_G;
+			return GLFW.GLFW_KEY_G;
 		else if (keyCode == KEY_H_CODE)
-			return org.lwjgl.input.Keyboard.KEY_H;
+			return GLFW.GLFW_KEY_H;
 		else if (keyCode == KEY_I_CODE)
-			return org.lwjgl.input.Keyboard.KEY_I;
+			return GLFW.GLFW_KEY_I;
 		else if (keyCode == KEY_J_CODE)
-			return org.lwjgl.input.Keyboard.KEY_J;
+			return GLFW.GLFW_KEY_J;
 		else if (keyCode == KEY_K_CODE)
-			return org.lwjgl.input.Keyboard.KEY_K;
+			return GLFW.GLFW_KEY_K;
 		else if (keyCode == KEY_L_CODE)
-			return org.lwjgl.input.Keyboard.KEY_L;
+			return GLFW.GLFW_KEY_L;
 		else if (keyCode == KEY_M_CODE)
-			return org.lwjgl.input.Keyboard.KEY_M;
+			return GLFW.GLFW_KEY_M;
 		else if (keyCode == KEY_N_CODE)
-			return org.lwjgl.input.Keyboard.KEY_N;
+			return GLFW.GLFW_KEY_N;
 		else if (keyCode == KEY_O_CODE)
-			return org.lwjgl.input.Keyboard.KEY_O;
+			return GLFW.GLFW_KEY_O;
 		else if (keyCode == KEY_P_CODE)
-			return org.lwjgl.input.Keyboard.KEY_P;
+			return GLFW.GLFW_KEY_P;
 		else if (keyCode == KEY_Q_CODE)
-			return org.lwjgl.input.Keyboard.KEY_Q;
+			return GLFW.GLFW_KEY_Q;
 		else if (keyCode == KEY_R_CODE)
-			return org.lwjgl.input.Keyboard.KEY_R;
+			return GLFW.GLFW_KEY_R;
 		else if (keyCode == KEY_S_CODE)
-			return org.lwjgl.input.Keyboard.KEY_S;
+			return GLFW.GLFW_KEY_S;
 		else if (keyCode == KEY_T_CODE)
-			return org.lwjgl.input.Keyboard.KEY_T;
+			return GLFW.GLFW_KEY_T;
 		else if (keyCode == KEY_U_CODE)
-			return org.lwjgl.input.Keyboard.KEY_U;
+			return GLFW.GLFW_KEY_U;
 		else if (keyCode == KEY_V_CODE)
-			return org.lwjgl.input.Keyboard.KEY_V;
+			return GLFW.GLFW_KEY_V;
 		else if (keyCode == KEY_W_CODE)
-			return org.lwjgl.input.Keyboard.KEY_W;
+			return GLFW.GLFW_KEY_W;
 		else if (keyCode == KEY_X_CODE)
-			return org.lwjgl.input.Keyboard.KEY_X;
+			return GLFW.GLFW_KEY_X;
 		else if (keyCode == KEY_Y_CODE)
-			return org.lwjgl.input.Keyboard.KEY_Y;
+			return GLFW.GLFW_KEY_Y;
 		else if (keyCode == KEY_Z_CODE)
-			return org.lwjgl.input.Keyboard.KEY_Z;
+			return GLFW.GLFW_KEY_Z;
 		else if (keyCode == KEY_F1_CODE)
-			return org.lwjgl.input.Keyboard.KEY_F1;
+			return GLFW.GLFW_KEY_F1;
 		else if (keyCode == KEY_F2_CODE)
-			return org.lwjgl.input.Keyboard.KEY_F2;
+			return GLFW.GLFW_KEY_F2;
 		else if (keyCode == KEY_F3_CODE)
-			return org.lwjgl.input.Keyboard.KEY_F3;
+			return GLFW.GLFW_KEY_F3;
 		else if (keyCode == KEY_F4_CODE)
-			return org.lwjgl.input.Keyboard.KEY_F4;
+			return GLFW.GLFW_KEY_F4;
 		else if (keyCode == KEY_F5_CODE)
-			return org.lwjgl.input.Keyboard.KEY_F5;
+			return GLFW.GLFW_KEY_F5;
 		else if (keyCode == KEY_F6_CODE)
-			return org.lwjgl.input.Keyboard.KEY_F6;
+			return GLFW.GLFW_KEY_F6;
 		else if (keyCode == KEY_F7_CODE)
-			return org.lwjgl.input.Keyboard.KEY_F7;
+			return GLFW.GLFW_KEY_F7;
 		else if (keyCode == KEY_F8_CODE)
-			return org.lwjgl.input.Keyboard.KEY_F8;
+			return GLFW.GLFW_KEY_F8;
 		else if (keyCode == KEY_F9_CODE)
-			return org.lwjgl.input.Keyboard.KEY_F9;
+			return GLFW.GLFW_KEY_F9;
 		else if (keyCode == KEY_F10_CODE)
-			return org.lwjgl.input.Keyboard.KEY_F10;
+			return GLFW.GLFW_KEY_F10;
 		else if (keyCode == KEY_F11_CODE)
-			return org.lwjgl.input.Keyboard.KEY_F11;
+			return GLFW.GLFW_KEY_F11;
 		else if (keyCode == KEY_F12_CODE)
-			return org.lwjgl.input.Keyboard.KEY_F12;
+			return GLFW.GLFW_KEY_F12;
 		else if (keyCode == KEY_NUMLOCK_CODE)
-			return org.lwjgl.input.Keyboard.KEY_NUMLOCK;
-		else if (keyCode == KEY_NUMPAD0_CODE)
-			return org.lwjgl.input.Keyboard.KEY_NUMPAD0;
-		else if (keyCode == KEY_NUMPAD1_CODE)
-			return org.lwjgl.input.Keyboard.KEY_NUMPAD1;
-		else if (keyCode == KEY_NUMPAD2_CODE)
-			return org.lwjgl.input.Keyboard.KEY_NUMPAD2;
-		else if (keyCode == KEY_NUMPAD3_CODE)
-			return org.lwjgl.input.Keyboard.KEY_NUMPAD3;
-		else if (keyCode == KEY_NUMPAD4_CODE)
-			return org.lwjgl.input.Keyboard.KEY_NUMPAD4;
-		else if (keyCode == KEY_NUMPAD5_CODE)
-			return org.lwjgl.input.Keyboard.KEY_NUMPAD5;
-		else if (keyCode == KEY_NUMPAD6_CODE)
-			return org.lwjgl.input.Keyboard.KEY_NUMPAD6;
-		else if (keyCode == KEY_NUMPAD7_CODE)
-			return org.lwjgl.input.Keyboard.KEY_NUMPAD7;
-		else if (keyCode == KEY_NUMPAD8_CODE)
-			return org.lwjgl.input.Keyboard.KEY_NUMPAD8;
-		else if (keyCode == KEY_NUMPAD9_CODE)
-			return org.lwjgl.input.Keyboard.KEY_NUMPAD9;
+			return GLFW.GLFW_KEY_NUM_LOCK;
 		else if (keyCode == KEY_ADD_CODE)
-			return org.lwjgl.input.Keyboard.KEY_ADD;
+			return GLFW.GLFW_KEY_KP_ADD;
 		else if (keyCode == KEY_APOSTROPHE_CODE)
-			return org.lwjgl.input.Keyboard.KEY_APOSTROPHE;
-		else if (keyCode == KEY_AT_CODE)
-			return org.lwjgl.input.Keyboard.KEY_AT;
+			return GLFW.GLFW_KEY_APOSTROPHE;
 		else if (keyCode == KEY_BACKSPACE_CODE)
-			return org.lwjgl.input.Keyboard.KEY_BACK;
+			return GLFW.GLFW_KEY_BACKSPACE;
 		else if (keyCode == KEY_BACKSLASH_CODE)
-			return org.lwjgl.input.Keyboard.KEY_BACKSLASH;
+			return GLFW.GLFW_KEY_BACKSLASH;
 		else if (keyCode == KEY_CAPSLOCK_CODE)
-			return org.lwjgl.input.Keyboard.KEY_CAPITAL;
-		else if (keyCode == KEY_CIRCUMFLEX_CODE)
-			return org.lwjgl.input.Keyboard.KEY_CIRCUMFLEX;
-		else if (keyCode ==KEY_CLEAR_CODE)
-			return org.lwjgl.input.Keyboard.KEY_CLEAR;
-		else if (keyCode == KEY_COLON_CODE)
-			return org.lwjgl.input.Keyboard.KEY_COLON;
+			return GLFW.GLFW_KEY_CAPS_LOCK;
 		else if (keyCode == KEY_COMMA_CODE)
-			return org.lwjgl.input.Keyboard.KEY_COMMA;
-		else if (keyCode == KEY_CONVERT_CODE)
-			return org.lwjgl.input.Keyboard.KEY_CONVERT;
-		else if (keyCode == KEY_DECIMAL_CODE)
-			return org.lwjgl.input.Keyboard.KEY_DECIMAL;
-		else if (keyCode == KEY_DELETE_CODE)
-			return org.lwjgl.input.Keyboard.KEY_DELETE;
-		else if (keyCode == KEY_DIVIDE_CODE)
-			return org.lwjgl.input.Keyboard.KEY_DIVIDE;
-		else if (keyCode == KEY_END_CODE)
-			return org.lwjgl.input.Keyboard.KEY_END;
-		else if (keyCode == KEY_EQUALS_CODE)
-			return org.lwjgl.input.Keyboard.KEY_EQUALS;
-		else if (keyCode == KEY_ESCAPE_CODE)
-			return org.lwjgl.input.Keyboard.KEY_ESCAPE;
-		else if (keyCode == KEY_FUNCTION_CODE)
-			return org.lwjgl.input.Keyboard.KEY_FUNCTION;
-		else if (keyCode == KEY_GRAVE_CODE)
-			return org.lwjgl.input.Keyboard.KEY_GRAVE;
-		else if (keyCode == KEY_HOME_CODE)
-			return org.lwjgl.input.Keyboard.KEY_HOME;
-		else if (keyCode == KEY_INSERT_CODE)
-			return org.lwjgl.input.Keyboard.KEY_INSERT;
-		else if (keyCode == KEY_KANA_CODE)
-			return org.lwjgl.input.Keyboard.KEY_KANA;
-		else if (keyCode == KEY_KANJI_CODE)
-			return org.lwjgl.input.Keyboard.KEY_KANJI;
-		else if (keyCode == KEY_LBRACKET_CODE)
-			return org.lwjgl.input.Keyboard.KEY_LBRACKET;
-		else if (keyCode == KEY_RBRACKET_CODE)
-			return org.lwjgl.input.Keyboard.KEY_RBRACKET;
-		else if (keyCode == KEY_LCONTROL_CODE)
-			return org.lwjgl.input.Keyboard.KEY_LCONTROL;
-		else if (keyCode == KEY_RCONTROL_CODE)
-			return org.lwjgl.input.Keyboard.KEY_RCONTROL;
-		else if (keyCode == KEY_LALT_CODE)
-			return org.lwjgl.input.Keyboard.KEY_LMENU;
-		else if (keyCode == KEY_RALT_CODE)
-			return org.lwjgl.input.Keyboard.KEY_RMENU;
-		else if (keyCode == KEY_LMETA_CODE)
-			return org.lwjgl.input.Keyboard.KEY_LMETA;
-		else if (keyCode == KEY_RMETA_CODE)
-			return org.lwjgl.input.Keyboard.KEY_RMETA;
-		else if (keyCode == KEY_MINUS_CODE)
-			return org.lwjgl.input.Keyboard.KEY_MINUS;
-		else if (keyCode == KEY_MULTIPLY_CODE)
-			return org.lwjgl.input.Keyboard.KEY_MULTIPLY;
-		else if (keyCode == KEY_PAGE_DOWN_CODE)
-			return org.lwjgl.input.Keyboard.KEY_NEXT;
-		else if (keyCode == KEY_NOCONVERT_CODE)
-			return org.lwjgl.input.Keyboard.KEY_NOCONVERT;
-		else if (keyCode == KEY_PAUSE_CODE)
-			return org.lwjgl.input.Keyboard.KEY_PAUSE;
+			return GLFW.GLFW_KEY_COMMA;
 		else if (keyCode == KEY_PERIOD_CODE)
-			return org.lwjgl.input.Keyboard.KEY_PERIOD;
-		else if (keyCode == KEY_POWER_CODE)
-			return org.lwjgl.input.Keyboard.KEY_POWER;
+			return GLFW.GLFW_KEY_PERIOD;
+		else if (keyCode == KEY_DELETE_CODE)
+			return GLFW.GLFW_KEY_DELETE;
+		else if (keyCode == KEY_DIVIDE_CODE)
+			return GLFW.GLFW_KEY_KP_DIVIDE;
+		else if (keyCode == KEY_END_CODE)
+			return GLFW.GLFW_KEY_END;
+		else if (keyCode == KEY_EQUALS_CODE)
+			return GLFW.GLFW_KEY_KP_EQUAL;
+		else if (keyCode == KEY_ESCAPE_CODE)
+			return GLFW.GLFW_KEY_ESCAPE;
+		else if (keyCode == KEY_GRAVE_CODE)
+			return GLFW.GLFW_KEY_GRAVE_ACCENT;
+		else if (keyCode == KEY_HOME_CODE)
+			return GLFW.GLFW_KEY_HOME;
+		else if (keyCode == KEY_INSERT_CODE)
+			return GLFW.GLFW_KEY_INSERT;
+		else if (keyCode == KEY_LBRACKET_CODE)
+			return GLFW.GLFW_KEY_LEFT_BRACKET;
+		else if (keyCode == KEY_RBRACKET_CODE)
+			return GLFW.GLFW_KEY_RIGHT_BRACKET;
+		else if (keyCode == KEY_LCONTROL_CODE)
+			return GLFW.GLFW_KEY_LEFT_CONTROL;
+		else if (keyCode == KEY_RCONTROL_CODE)
+			return GLFW.GLFW_KEY_RIGHT_CONTROL;
+		else if (keyCode == KEY_LALT_CODE)
+			return GLFW.GLFW_KEY_LEFT_ALT;
+		else if (keyCode == KEY_RALT_CODE)
+			return GLFW.GLFW_KEY_RIGHT_ALT;
+		else if (keyCode == KEY_MINUS_CODE)
+			return GLFW.GLFW_KEY_MINUS;
+		else if (keyCode == KEY_MULTIPLY_CODE)
+			return GLFW.GLFW_KEY_KP_MULTIPLY;
+		else if (keyCode == KEY_PAGE_DOWN_CODE)
+			return GLFW.GLFW_KEY_PAGE_DOWN;
+		else if (keyCode == KEY_PAUSE_CODE)
+			return GLFW.GLFW_KEY_PAUSE;
+		else if (keyCode == KEY_PERIOD_CODE)
+			return GLFW.GLFW_KEY_PERIOD;
 		else if (keyCode == KEY_PAGE_UP_CODE)
-			return org.lwjgl.input.Keyboard.KEY_PRIOR;
+			return GLFW.GLFW_KEY_PAGE_UP;
+		else if (keyCode == KEY_PAGE_DOWN_CODE)
+			return GLFW.GLFW_KEY_PAGE_DOWN;
 		else if (keyCode == KEY_RETURN_CODE)
-			return org.lwjgl.input.Keyboard.KEY_RETURN;
+			return GLFW.GLFW_KEY_ENTER;
 		else if (keyCode == KEY_SCROLLLOCK_CODE)
-			return org.lwjgl.input.Keyboard.KEY_SCROLL;
-		else if (keyCode == KEY_SECTION_CODE)
-			return org.lwjgl.input.Keyboard.KEY_SECTION;
+			return GLFW.GLFW_KEY_SCROLL_LOCK;
 		else if (keyCode == KEY_SEMICOLON_CODE)
-			return org.lwjgl.input.Keyboard.KEY_SEMICOLON;
+			return GLFW.GLFW_KEY_SEMICOLON;
 		else if (keyCode == KEY_FORWARD_SLASH_CODE)
-			return org.lwjgl.input.Keyboard.KEY_SLASH;
+			return GLFW.GLFW_KEY_SLASH;
 		else if (keyCode == KEY_BACK_SLASH_CODE)
-			return org.lwjgl.input.Keyboard.KEY_BACKSLASH;
-		else if (keyCode == KEY_SLEEP_CODE)
-			return org.lwjgl.input.Keyboard.KEY_SLEEP;
+			return GLFW.GLFW_KEY_BACKSLASH;
 		else if (keyCode == KEY_SPACE_CODE)
-			return org.lwjgl.input.Keyboard.KEY_SPACE;
-		else if (keyCode == KEY_STOP_CODE)
-			return org.lwjgl.input.Keyboard.KEY_STOP;
+			return GLFW.GLFW_KEY_SPACE;
 		else if (keyCode == KEY_SUBTRACT_CODE)
-			return org.lwjgl.input.Keyboard.KEY_SUBTRACT;
-		else if (keyCode == KEY_SYSRQ_CODE)
-			return org.lwjgl.input.Keyboard.KEY_SYSRQ;
+			return GLFW.GLFW_KEY_KP_SUBTRACT;
+		else if (keyCode == KEY_LMETA_CODE)
+			return GLFW.GLFW_KEY_LEFT_SUPER;
+		else if (keyCode == KEY_RMETA_CODE)
+			return GLFW.GLFW_KEY_RIGHT_SUPER;
 		else if (keyCode == KEY_TAB_CODE)
-			return org.lwjgl.input.Keyboard.KEY_TAB;
-		else if (keyCode == KEY_UNDERSCORE_CODE)
-			return org.lwjgl.input.Keyboard.KEY_UNDERLINE;
-		else if (keyCode == KEY_UNLABELED_CODE)
-			return org.lwjgl.input.Keyboard.KEY_UNLABELED;
-		else if (keyCode == KEY_YEN_CODE)
-			return org.lwjgl.input.Keyboard.KEY_YEN;
+			return GLFW.GLFW_KEY_TAB;
+		else if (keyCode == KEY_UNKNOWN_CODE)
+			return GLFW.GLFW_KEY_UNKNOWN;
 		else if (keyCode == KEY_UP_CODE)
-			return org.lwjgl.input.Keyboard.KEY_UP;
+			return GLFW.GLFW_KEY_UP;
 		else if (keyCode == KEY_DOWN_CODE)
-			return org.lwjgl.input.Keyboard.KEY_DOWN;
+			return GLFW.GLFW_KEY_DOWN;
 		else if (keyCode == KEY_LEFT_CODE)
-			return org.lwjgl.input.Keyboard.KEY_LEFT;
+			return GLFW.GLFW_KEY_LEFT;
 		else if (keyCode == KEY_RIGHT_CODE)
-			return org.lwjgl.input.Keyboard.KEY_RIGHT;
+			return GLFW.GLFW_KEY_RIGHT;
 		else if (keyCode == KEY_LSHIFT_CODE)
-			return org.lwjgl.input.Keyboard.KEY_LSHIFT;
+			return GLFW.GLFW_KEY_LEFT_SHIFT;
 		else if (keyCode == KEY_RSHIFT_CODE)
-			return org.lwjgl.input.Keyboard.KEY_RSHIFT;
+			return GLFW.GLFW_KEY_RIGHT_SHIFT;
 		else
 			return 0;
 	}
@@ -1161,18 +1048,14 @@ public class Keyboard {
 			KEY_BACKSPACE = keyDown;
 		else if (keyCode == KEY_CAPSLOCK_CODE)
 			KEY_CAPSLOCK = keyDown;
-		else if (keyCode == KEY_CIRCUMFLEX_CODE)
-			KEY_CIRCUMFLEX = keyDown;
 		else if (keyCode == KEY_CLEAR_CODE)
 			KEY_CLEAR = keyDown;
 		else if (keyCode == KEY_COLON_CODE)
 			KEY_COLON = keyDown;
 		else if (keyCode == KEY_COMMA_CODE)
 			KEY_COMMA = keyDown;
-		else if (keyCode == KEY_CONVERT_CODE)
-			KEY_CONVERT = keyDown;
-		else if (keyCode == KEY_DECIMAL_CODE)
-			KEY_DECIMAL = keyDown;
+		else if (keyCode == KEY_PERIOD_CODE)
+			KEY_PERIOD = keyDown;
 		else if (keyCode == KEY_DELETE_CODE)
 			KEY_DELETE = keyDown;
 		else if (keyCode == KEY_DIVIDE_CODE)

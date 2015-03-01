@@ -96,14 +96,35 @@ public class ImageLoaderPC {
 		//Create the array
 		byte[] data = new byte[image.texture.remaining()];
 		image.texture.get(data);
+		//Not a great solution, but sometimes, an index out of bounds can be caused when a RGB image is
+		//being saved as a RGBA image, so to fix these issues attempt RGBA, if that doesn't work assume
+		//it should be saved as an RGB image
 		//Setup the image
 		BufferedImage i = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_4BYTE_ABGR);
-		//Put the data into image
-		i.getRaster().setDataElements(0, 0, imageWidth, imageHeight, data);
+		try {
+			//Put the data into image
+			i.getRaster().setDataElements(0, 0, imageWidth, imageHeight, data);
+		} catch (IndexOutOfBoundsException e) {
+			//Setup the image
+			i = new BufferedImage(imageWidth, imageHeight, BufferedImage.TYPE_3BYTE_BGR);
+			//Make sure there is data to be read
+			if (data.length != 0)
+				//Put the data into image
+				i.getRaster().setDataElements(0, 0, imageWidth, imageHeight, data);
+		}
+		//Put the buffer back at position 0, to make sure that remaining will be more than 0,
+		//after calling it once already
+		image.texture.position(0);
+		//Write the image
+		write(i, path, format);
+	}
+	
+	/* The static method used to write a buffered image to a file */
+	public static void write(BufferedImage image, String path, String format) {
 		//Try and catch any errors
         try {
         	//Write the file
-			ImageIO.write(i, format, new File(path));
+			ImageIO.write(image, format, new File(path));
 		} catch (IOException e) {
 			//Log an error
 			Logger.log("Andor - ImageLoader write()", "An exception has occurred when writing the file: " + path);
