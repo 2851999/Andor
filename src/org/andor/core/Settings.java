@@ -18,7 +18,7 @@ public class Settings {
 	/* The static class containing all of the information about Andor */
 	public static class Information {
 		/* The version of Andor */
-		public static final String VERSION = "V0.0.3.2";
+		public static final String VERSION = "V1.0.0";
 		/* The build of Andor */
 		public static final String BUILD = "Development";
 		/* The date this build started development */
