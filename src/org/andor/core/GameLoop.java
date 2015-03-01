@@ -49,8 +49,6 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 			Window.setIcon(new Image[] { ImageLoader.loadImage(Settings.Resources.Icons.ICON_16, false), ImageLoader.loadImage(Settings.Resources.Icons.ICON_32, false) });
 			//Load the default font
 			Settings.Engine.DefaultFont = FontUtils.loadBitmapFont("/resources/andor/defaultfont.png", 12);
-			//Create the input
-			InputManager.create();
 			//Create the audio
 			AudioPC.create();
 		}
@@ -127,12 +125,10 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 		this.releaseAll();
 		//Make sure Andor isn't currently running on Android
 		if (! Settings.AndroidMode) {
-			//Destroy the input
-			InputManager.destroy();
 			//Destroy the audio
 			AudioPC.destroy();
 			//Close the window
-			Window.close();
+			Window.destroy();
 		}
 		//Call the stop method
 		this.stop();

@@ -27,12 +27,12 @@ import org.andor.core.Settings;
 import org.andor.core.SkyBox;
 import org.andor.core.Vector2D;
 import org.andor.core.Vector3D;
-import org.andor.core.Window;
 import org.andor.core.deferredrendering.DeferredScene;
 import org.andor.core.input.ControlBindingAxis;
 import org.andor.core.input.ControlBindingButton;
 import org.andor.core.input.ControlBindings;
 import org.andor.core.input.ControlInputListener;
+import org.andor.core.input.Input;
 import org.andor.core.input.InputController;
 import org.andor.core.input.InputManagerController;
 import org.andor.core.input.Keyboard;
@@ -47,7 +47,6 @@ import org.andor.utils.ControlBindingUtils;
 import org.andor.utils.FontUtils;
 import org.andor.utils.OpenGLUtils;
 import org.andor.utils.ScreenResolution;
-import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 
 public class Cube3DTest extends BaseGame implements ControlInputListener {
@@ -134,23 +133,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		//Lock the mouse
 		Mouse.lock();
 		
-		InputManagerController.addController(this.controller = new InputController(GLFW.GLFW_JOYSTICK_1));
-		
-		//Get all of the available controllers
-		/*InputController[] controllers = ControllerUtils.getAvailableControllers();
-		//Go through the controllers
-		for (InputController controller : controllers) {
-			//Print out some information
-			Console.println("Name: " + controller.name);
-			Console.println("Axis Count: " + controller.axisCount);
-			Console.println("Button Count: " + controller.buttonCount);
-			Console.println("");
-			//Check the controller
-			if (controller.getName().equals("SPEEDLINK Strike 2 Gamepad"))
-				this.controller = controller;
-		}
-		if (this.controller != null)
-			InputManagerController.addController(this.controller); */
+		InputManagerController.addController(this.controller = new InputController(Input.CONTROLLER_1));
 		
 		audio = AudioLoader.load("H:/Andor/test2.wav", true);
 		
@@ -354,13 +337,14 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 	public static void main(String[] args) {
 		//Make the game fullscreen
 		Settings.Window.Fullscreen = false;
+		Settings.Window.WindowedFullscreen = false;
 		Settings.Window.Undecorated = false;
 		//Enable VSync
 		Settings.Video.VSync = true;
 		Settings.Video.MaxFPS = 60;
 		Settings.Window.Width = 1024;
 		Settings.Window.Height = 768;
-		Settings.Video.Resolution = ScreenResolution.RES_4K;
+		Settings.Video.Resolution = ScreenResolution.RES_1080P;
 		Settings.Debugging.ShowDeferredRenderingBuffers = true;
 		Settings.Video.DeferredRendering = true;
 		//Create a new instance of this test

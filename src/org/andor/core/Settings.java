@@ -22,7 +22,7 @@ public class Settings {
 		/* The build of Andor */
 		public static final String BUILD = "Experimental";
 		/* The date this build started development */
-		public static final String DATE = "26/02/2015";
+		public static final String DATE = "28/02/2015";
 	}
 	
 	/* The static class containing all of the settings required for the window */
@@ -34,6 +34,8 @@ public class Settings {
 		public static float Height = 600;
 		/* The boolean that states whether the window is fullscreen */
 		public static boolean Fullscreen = false;
+		/* The boolean that states whether the window is a fullscreen window */
+		public static boolean WindowedFullscreen = false;
 		/* The boolean that states whether the window should be undecorated */
 		public static boolean Undecorated = false;
 		/* The boolean that states whether the window should be resizable */

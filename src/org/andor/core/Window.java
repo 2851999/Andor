@@ -21,11 +21,13 @@ import org.andor.core.input.MouseEvent;
 import org.andor.core.input.MouseMotionEvent;
 import org.andor.core.input.ScrollEvent;
 import org.andor.utils.OpenGLUtils;
+import org.andor.utils.ScreenUtils;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWCursorPosCallback;
 import org.lwjgl.glfw.GLFWKeyCallback;
 import org.lwjgl.glfw.GLFWMouseButtonCallback;
 import org.lwjgl.glfw.GLFWScrollCallback;
+import org.lwjgl.glfw.GLFWWindowSizeCallback;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GLContext;
 
@@ -38,10 +40,11 @@ public class Window {
 	public static List<WindowEventListenerInterface> eventListeners = new ArrayList<WindowEventListenerInterface>();
 	
 	/* Callback references */
-	public static GLFWKeyCallback keyCallback;
-	public static GLFWMouseButtonCallback mouseButtonCallback;
-	public static GLFWCursorPosCallback mousePosCallback;
-	public static GLFWScrollCallback scrollCallback;
+	private static GLFWKeyCallback keyCallback;
+	private static GLFWMouseButtonCallback mouseButtonCallback;
+	private static GLFWCursorPosCallback mousePosCallback;
+	private static GLFWScrollCallback scrollCallback;
+	private static GLFWWindowSizeCallback windowSizeCallback;
 	
 	/* The static method used to create the window */
 	public static void create() {
@@ -49,11 +52,19 @@ public class Window {
 		GLFW.glfwInit();
 		//Assign the values
 		setResizable(Settings.Window.Resizable);
+		setUndecorated(Settings.Window.Undecorated);
+		setVSync(Settings.Video.VSync);
 		//The monitor
 		long monitor = 0;
 		//Check the fullscreen value
-		if (Settings.Window.Fullscreen)
+		if (Settings.Window.Fullscreen || Settings.Window.WindowedFullscreen)
 			monitor = GLFW.glfwGetPrimaryMonitor();
+		//Check whether to use windowed fullscreen
+		if (Settings.Window.WindowedFullscreen) {
+			GLFW.glfwDefaultWindowHints();
+			Settings.Window.Width = ScreenUtils.getScreenWidth();
+			Settings.Window.Height = ScreenUtils.getScreenHeight();
+		}
 		//Set the instance
 		instance = GLFW.glfwCreateWindow((int) Settings.Window.Width, (int) Settings.Window.Height, Settings.Window.Title, monitor, 0L);
 		
@@ -165,6 +176,23 @@ public class Window {
 			}
 		});
 		
+		GLFW.glfwSetWindowSizeCallback(instance, windowSizeCallback = new GLFWWindowSizeCallback() {
+			public void invoke(long instance, int width, int height) {
+				//Create the old window size
+				Vector2D oldSize = new Vector2D(Settings.Window.Width, Settings.Window.Height);
+				//Assign the size
+				Settings.Window.Width = width;
+				Settings.Window.Height = height;
+				//Update OpenGL's resolution
+				GL11.glScissor(0, 0, (int) Settings.Window.Width, (int) Settings.Window.Height);
+				GL11.glViewport(0, 0, (int) Settings.Window.Width, (int) Settings.Window.Height);
+				//Create the new window size
+				Vector2D newSize = new Vector2D(Settings.Window.Width, Settings.Window.Height);
+				//Call a resized event
+				callOnWindowResized(new WindowSizeEvent(oldSize, newSize));
+			}
+		});
+		
 		//Set the correct display mode
 		setDisplayMode();
 		//Make the OpenGL context current
@@ -180,6 +208,16 @@ public class Window {
 	public static void setDisplayMode() {
 		//Set the resizable value
 		setResizable(Settings.Window.Resizable);
+		//Check the fullscreen value
+		if (Settings.Window.Fullscreen) {
+			//Assign the resolution
+			GLFW.glfwSetWindowSize(instance, Settings.Video.Resolution.getWidth(), Settings.Video.Resolution.getHeight());
+			//Assign the settings
+			Settings.Window.Width = Settings.Video.Resolution.getWidth();
+			Settings.Window.Height = Settings.Video.Resolution.getHeight();
+		} else
+			//Assign the resolution
+			GLFW.glfwSetWindowSize(instance, (int) Settings.Window.Width, (int) Settings.Window.Height);
 	}
 	
 	/* The static method used to update the display's settings */
@@ -187,7 +225,6 @@ public class Window {
 		//Set the displays title
 		GLFW.glfwSetWindowTitle(instance, Settings.Window.Title);
 		//Set the undecorated property
-		//System.setProperty("org.lwjgl.opengl.Window.undecorated", "" + Settings.Window.Undecorated);
 		//Reset the display mode
 		setDisplayMode();
 		setVSync(Settings.Video.VSync);
@@ -202,21 +239,6 @@ public class Window {
 		GLFW.glfwSwapBuffers(instance);
 		//Poll for window events
 		GLFW.glfwPollEvents();
-		//Check the window size
-		/*if (Display.wasResized()) {
-			//Create the old window size
-			Vector2D oldSize = new Vector2D(Settings.Window.Width, Settings.Window.Height);
-			//Assign the size
-			Settings.Window.Width = Display.getWidth();
-			Settings.Window.Height = Display.getHeight();
-			//Update OpenGL's resolution
-			GL11.glScissor(0, 0, (int) Settings.Window.Width, (int) Settings.Window.Height);
-			GL11.glViewport(0, 0, (int) Settings.Window.Width, (int) Settings.Window.Height);
-			//Create the new window size
-			Vector2D newSize = new Vector2D(Settings.Window.Width, Settings.Window.Height);
-			//Call a resized event
-			callOnWindowResized(new WindowSizeEvent(oldSize, newSize));
-		} */
 	}
 	
 	/* The static method used to set the undecorated property */
@@ -294,7 +316,13 @@ public class Window {
 	}
 	
 	/* The static method used to close this window */
-	public static void close() {
+	public static void destroy() {
+		//Release the callbacks
+		keyCallback.release();
+		mouseButtonCallback.release();
+		mousePosCallback.release();
+		scrollCallback.release();
+		windowSizeCallback.release();
 		//Destroy the window
 		GLFW.glfwDestroyWindow(instance);
 	}
