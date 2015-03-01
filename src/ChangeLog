@@ -1,0 +1,166 @@
+-------------------------------------------------------------
+Release 1 | Beta 0 | Development 0 | Experimental 0 (V 1.0.0)
+
+* Added ImageLoaderPC
+* Added ImageLoaderAndroid
+* Added FontPC
+* Added ImageSetPC
+* Added ImageSetAndroid
+* Added AndroidInput
+* Added AndroidInputListenerInterface
+* Added InputManagerAndroid
+* Added SystemInformation
+* Added AndroidSensor
+* Added AndroidInputListener
+* Added AndroidSensorListenerInterface
+* Added AndroidSensorListener
+* Added ActivityListener
+* Added AndroidAudio
+* Added AudioPC
+* Added AudioLoaderPC
+* Added AudioLoaderAndroid
+* Added PropertiesFile
+* Added Sprite2D
+* Added Matrix4D
+* Added Matrix
+* Added ControlBindingUtils
+* Added Light3D
+* Added ZipUtils
+* Added ParserUtils
+* Added ML
+* Added MLSyntax
+* Added MLTree
+* Added MLObject
+* Added MLConfig
+* Added MLParser
+* Added MLTest
+* Added GUIInterpreter
+* Added GUIInterpreterObjects
+* Added MLInterpretedObject
+* Added MLInterpreter
+* Added MLInterpreterObject
+* Added ScreenResolution
+* Added IntObj_Colour
+* Added IntObj_GUIButton
+* Added IntObj_GUIComponent
+* Added IntObj_Image
+* Added IntObj_Label
+* Added IntObj_ToolTip
+* Added IntObj_Font
+* Added IntObj_GUIBorder
+* Added IntObj_GUICheckBox
+* Added IntObj_GUIDropDownList
+* Added IntObj_GUIDropDownMenu
+* Added IntObj_GUILoadingBar
+* Added MLInterpreterMethod
+* Added MLInterpreterMethods
+* Added IntMethod_RGB
+* Added IntMethod_RGBA
+* Added IntObj_GUIGroup
+* Added IntObj_GUIRadioCheckBox
+* Added IntObj_GUISlider
+* Added IntObj_GUITextBox
+* Added IntObj_GUITextBoxCursor
+* Added IntObj_GUITextBoxSelection
+* Added IntObj_GUIWindow
+* Added DeferredScene
+* Added GeometryBuffer
+* Added DeferredTest
+* Added GUITextDisplayArea
+* Added IntObj_TextDisplayArea
+* Added FontUtilsPC
+* Added FontPC
+* Added BitmapFontUtilsPC
+* Added BitmapFontUtilsAndroid
+* Added FontAndroid
+* Added FontUtilsAndroid
+* Added TrueTypeFont
+* Added WindowEventListener
+* Added WindowEventListenerInterface
+* Added WindowSizeEvent
+* Added Resources in Settings
+* Added Settings.Debugging
+* Added 'Undecorated' setting in the window settings
+* Added a life time to a particle emitter
+* Added support for multiple buttons on the mouse
+* Added normal matrix to the vertex shader
+* Added the method 'write' in MLParser so it can now
+  save MLTree's to a list that can then be written to
+  a file
+* Added the methods to scale GUIComponents
+* Added a GUI reading and writing system
+* Added the Shaders class within Settings.Resource
+* Added some predefined array colours
+* Added a resizable setting to the window settings
+* Added new methods in the object classes
+* Added deferred rendering
+
+* Changed the default value of external to false, in
+  ImageLoader
+
+* Created the package org.andor.core.lighting
+* Created org.andor.core.parser.ml
+* Created org.andor.core.parser.utils
+* Created the package org.andor.core.interpreter.gui
+* Created the package org.andor.core.interpreter.ml
+* Created the package org.andor.core.interpreter.ml.objects
+* Created the package org.andor.core.interpreter.ml.methods
+
+* Rewritten the entire rendering system
+  
+* Removed ControllerTest
+* Removed ControllerUtils
+* Removed ControllerRumbler
+* Removed ControllerPov
+* Removed ControllerPovEvent
+
+* Updated to LWJGL 3
+
+* Found Bug: Mouse behaves strangely when locked
+  when using DSR (May just be 4K)
+
+* Fixed bug: Android RenderableObject2D didn't rotate
+  around the centre of the object
+* Fixed bug: RenderableObject2D didn't render in the
+  correct place unless the width was equal to the
+  height on Android
+* Fixed bug: Bitmap font's were not rendering in
+  the correct place
+* Fixed some GUI bugs on Android
+* Fixed bug: Android normals were not set in the
+  default shader
+* Fixed bug: On Android updating a Renderer's normals
+  wouldn't have worked properly
+* Fixed bug: Animation2D didn't repeat an animation
+  when 'repeat' was set to true
+* Fixed bug: GUITextBox would move the cursor no
+  matter what mouse button was pressed
+* Fixed bug: Scaling a 3D object resulted in it's
+  position being changed
+* Fixed bug: Controllers didn't work properly with
+  ControlBindings unless the controller was manually
+  set
+* Fixed bug: StackOverflowError when calling
+  GUIDropDownMenu.getButtons()
+* Fixed bug: Window didn't update the title
+  property when updateSettings() was called
+* Fixed bug: Running the engine on PC with with
+  undecorated set to false, meant that using
+  an orphographic projection had 0, 0 at the top
+  left of the window instead of the viewable area
+  
+* NOTE: When using Andor to create shaders using
+  GLSL, don't use the main method, instead use
+  andor_main instead to increase portability to
+  Android
+* NOTE: Can now only use BitmapFonts, a default font
+  will automatically be setup for GUI but on android
+  this should be set manually
+  (Settings.Engine.DefaultFont)
+* NOTE: When using Android, you should put the
+  resources folder into the assets folder
+* NOTE: Linker errors are now also detected in
+  shader programs
+* NOTE: You can now load true type fonts from files
+  and use installed fonts
+* NOTE: Support for DSR (Dynamic Super Resolution)
