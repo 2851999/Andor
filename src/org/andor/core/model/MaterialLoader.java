@@ -8,7 +8,6 @@
 
 package org.andor.core.model;
 
-import java.io.File;
 import java.util.List;
 
 import org.andor.core.Colour;
@@ -20,7 +19,7 @@ import org.andor.utils.FileUtils;
 public class MaterialLoader {
 	
 	/* The static method used to load a material  and return it */
-	public static List<Material> loadMaterialFile(String filePath, boolean external, List<Material> materials) {
+	public static List<Material> loadMaterialFile(String filePath, String directory, boolean external, List<Material> materials) {
 		//The file text
 		List<String> fileText = FileUtils.read(filePath, external);
 		//The current material
@@ -33,12 +32,10 @@ public class MaterialLoader {
 			if (line.startsWith("newmtl ")) {
 				//Split up the line using a space
 				String[] split = line.split(" ");
-				//Check to see whether the current material has been set
-				if (currentMaterial != null)
-					//Add the current material to the list of materials
-					materials.add(currentMaterial);
 				//Create the new material
 				currentMaterial = new Material(split[1]);
+				//Add the material
+				materials.add(currentMaterial);
 			} else if (line.startsWith("Ka ")) {
 				//Get the vector values
 				Vector3D values = ModelParserUtils.getVectorValue(line);
@@ -58,27 +55,52 @@ public class MaterialLoader {
 				//Split up the current line
 				String[] split = line.split(" ");
 				//Get the shininess value
-				double shininess = Double.parseDouble(split[1]);
+				float shininess = Float.parseFloat(split[1]);
 				//Set the shininess colour in the current material
 				currentMaterial.shininess = shininess;
 			} else if (line.startsWith("d ") || line.startsWith("Tr ")) {
 				//Split up the current line using a space
 				String[] split = line.split(" ");
 				//Get the alpha colour value
-				double alphaColourValue = ModelParserUtils.getValue(split[1]);
+				float alphaColourValue = ModelParserUtils.getValue(split[1]);
 				//Set the alpha colour value in the current material
 				currentMaterial.alphaColourValue = alphaColourValue;
 			} else if (line.startsWith("map_d")) {
 				//Split up the current line using a space
 				String[] split = line.split(" ");
-				//Get the this material's file name
-				String fileName = new File(FileUtils.getPath(filePath)).getName();
 				//Get the file path of the material file
-				String textureFilePath = filePath.replace(fileName, split[1]);
-				//Load the alpha texture map
-				Image alphaTextureMap = ImageLoader.loadImage(textureFilePath, external);
-				//Set the alpha texture map in the current material
+				String textureFilePath = directory + split[1];
+				//Load the texture map
+				Image alphaTextureMap = ImageLoader.loadImage(textureFilePath.replace("\\", "/"), external);
+				//Set the texture map in the current material
 				currentMaterial.alphaTextureMap = alphaTextureMap;
+			} else if (line.startsWith("map_Ka")) {
+				//Split up the current line using a space
+				String[] split = line.split(" ");
+				//Get the file path of the material file
+				String textureFilePath = directory + split[1];
+				//Load the texture map
+				Image ambientTextureMap = ImageLoader.loadImage(textureFilePath.replace("\\", "/"), external);
+				//Set the texture map in the current material
+				currentMaterial.ambientTextureMap = ambientTextureMap;
+			} else if (line.startsWith("map_Kd")) {
+				//Split up the current line using a space
+				String[] split = line.split(" ");
+				//Get the file path of the material file
+				String textureFilePath = directory + split[1];
+				//Load the texture map
+				Image diffuseTextureMap = ImageLoader.loadImage(textureFilePath.replace("\\", "/"), external);
+				//Set the texture map in the current material
+				currentMaterial.diffuseTextureMap = diffuseTextureMap;
+			} else if (line.startsWith("map_Ks")) {
+				//Split up the current line using a space
+				String[] split = line.split(" ");
+				//Get the file path of the material file
+				String textureFilePath = directory + split[1];
+				//Load the texture map
+				Image specularTextureMap = ImageLoader.loadImage(textureFilePath.replace("\\", "/"), external);
+				//Set the texture map in the current material
+				currentMaterial.specularTextureMap = specularTextureMap;
 			}
 		}
 		//Return the materials

@@ -122,11 +122,10 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		}, 1, 1, 1, Colour.WHITE);
 		bigCube = Object3DBuilder.createCube(10, 10, 10, new Colour(130f / 255f, 176f / 255f, 255f / 255f, 0.8f));
 		//Load the model
-		this.model = OBJLoader.loadModel(path + "dragon.obj", true);
+		this.model = OBJLoader.loadModel(path + "ship.obj", path, true);
 		this.model.prepare();
-		this.model.renderer.updateColours(Object3DBuilder.createColourArray(this.model.renderer.vertices.length, Colour.WHITE));
-		this.model.position.z = -10;
-		this.model.scale.multiply(4f);
+		this.model.position.z = -20;
+		this.model.scale.multiply(0.03f);
 		
 		//Set wireframe to false
 		wireframe = false;
@@ -201,7 +200,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 	public void render() {
 		OpenGLUtils.clearColourBuffer();
 		OpenGLUtils.clearDepthBuffer();
-		scene.startRendering();
+		//scene.startRendering();
 		GL11.glPointSize(4);
 		//Setup OpenGL
 		OpenGLUtils.clearColourBuffer();
@@ -250,10 +249,10 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		
 		//Render the FPS
 		this.font.render("Current FPS: " + this.getFPS(), 10, 10);
-		this.font.render("Object Face Count: " + this.model.faces.size(), 10, 26);
+		this.font.render("Object Face Count: " + this.model.getNumberOfFaces(), 10, 26);
 		this.font.render("Particle Count: " + this.particleEmitter.particles.size(), 10, 42);
-		scene.stopRendering();
-		scene.renderToScreen();
+		//scene.stopRendering();
+		//scene.renderToScreen();
 	}
 	
 	/* The method called when the game loop is stopped */
@@ -345,8 +344,8 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		Settings.Window.Width = 1024;
 		Settings.Window.Height = 768;
 		Settings.Video.Resolution = ScreenResolution.RES_1080P;
-		Settings.Debugging.ShowDeferredRenderingBuffers = true;
-		Settings.Video.DeferredRendering = true;
+		//Settings.Debugging.ShowDeferredRenderingBuffers = true;
+		//Settings.Video.DeferredRendering = true;
 		//Create a new instance of this test
 		new Cube3DTest();
 	}

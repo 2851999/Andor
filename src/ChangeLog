@@ -1,4 +1,11 @@
 -------------------------------------------------------------
+Release 1 | Beta 0 | Development 0 | Experimental 1
+
+* Added ModelMaterial
+
+* NOTE: Materials are not applied to models
+
+-------------------------------------------------------------
 Release 1 | Beta 0 | Development 0 | Experimental 0 (V 1.0.0)
 
 * Added ImageLoaderPC

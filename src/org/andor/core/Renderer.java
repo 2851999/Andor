@@ -17,6 +17,7 @@ import org.andor.core.android.AndroidRenderer;
 import org.andor.core.deferredrendering.GeometryBuffer;
 import org.andor.core.logger.Log;
 import org.andor.core.logger.Logger;
+import org.andor.core.model.Material;
 import org.andor.utils.ArrayUtils;
 import org.andor.utils.BufferUtils;
 import org.andor.utils.ShaderUtils;
@@ -99,6 +100,9 @@ public class Renderer {
 	/* The current texture (If any) */
 	public Image texture;
 	
+	/* The current material (If any) */
+	public Material material;
+	
 	/* The constructor */
 	public Renderer(int renderMode, int vertexValuesCount) {
 		//Assign the values
@@ -144,6 +148,8 @@ public class Renderer {
 			//Setup the geometry buffer if it has not already been setup
 			if (geometryBuffer == null) geometryBuffer = new GeometryBuffer();
 		}
+		//Assign the default material
+		this.material = new Material("Default");
 		//Add this renderer to the list
 		allRenderers.add(this);
 	}
@@ -282,6 +288,55 @@ public class Renderer {
 			shader.setUniformi("andor_diffuseTexture", 1);
 			shader.setUniformi("andor_normalTexture", 2);
 			shader.setUniformi("andor_depthTexture", 3);
+		}
+		
+		//Check for a material
+		if (this.material != null) {
+			if (this.material.ambientColour != null)
+				shader.setUniformf("andor_material.ambientColour", new Colour(this.material.ambientColour, (float) this.material.alphaColourValue));
+			else
+				shader.setUniformf("andor_material.ambientColour", new Colour(0, 0, 0, 0));
+			if (this.material.diffuseColour != null)
+				shader.setUniformf("andor_material.diffuseColour", new Colour(this.material.diffuseColour, (float) this.material.alphaColourValue));
+			else
+				shader.setUniformf("andor_material.diffuseColour", new Colour(0, 0, 0, 0));
+			if (this.material.specularColour != null)
+				shader.setUniformf("andor_material.specularColour", new Colour(this.material.specularColour, (float) this.material.alphaColourValue));
+			else
+				shader.setUniformf("andor_material.specularColour", new Colour(0, 0, 0, 0));
+			if (this.material.ambientTextureMap != null) {
+				GL13.glActiveTexture(GL13.GL_TEXTURE4);
+				this.material.ambientTextureMap.bind();
+				shader.setUniformi("andor_material.ambientTexture", 4);
+				shader.setUniformf("andor_material.hasAmbientTexture", 1.0f);
+			} else {
+				shader.setUniformf("andor_material.hasAmbientTexture", 0.0f);
+			}
+			if (this.material.diffuseTextureMap != null) {
+				GL13.glActiveTexture(GL13.GL_TEXTURE5);
+				this.material.diffuseTextureMap.bind();
+				shader.setUniformi("andor_material.diffuseTexture", 5);
+				shader.setUniformf("andor_material.hasDiffuseTexture", 1.0f);
+			} else {
+				shader.setUniformf("andor_material.hasDiffuseTexture", 0.0f);
+			}
+			if (this.material.specularTextureMap != null) {
+				GL13.glActiveTexture(GL13.GL_TEXTURE6);
+				this.material.specularTextureMap.bind();
+				shader.setUniformi("andor_material.specularTexture", 6);
+				shader.setUniformf("andor_material.hasSpecularTexture", 1.0f);
+			} else {
+				shader.setUniformf("andor_material.hasSpeulcarTexture", 0.0f);
+			}
+			
+			GL13.glActiveTexture(GL13.GL_TEXTURE0);
+		} else {
+			shader.setUniformf("andor_material.hasAmbientTexture", 0.0f);
+			shader.setUniformf("andor_material.hasDiffuseTexture", 0.0f);
+			shader.setUniformf("andor_material.hasSpecularTexture", 0.0f);
+			shader.setUniformf("andor_material.ambientColour", new Colour(0, 0, 0, 0));
+			shader.setUniformf("andor_material.diffuseColour", new Colour(0, 0, 0, 0));
+			shader.setUniformf("andor_material.specularColour", new Colour(0, 0, 0, 0));
 		}
 		
 		if (this.drawOrder != null) {
@@ -495,6 +550,11 @@ public class Renderer {
 	/* The method used to assign the texture */
 	public void setTexture(Image texture) {
 		this.texture = texture;
+	}
+	
+	/* The method used to assign the material */
+	public void setMaterial(Material material) {
+		this.material = material;
 	}
 	
 	/* The static method used to convert the render mode */

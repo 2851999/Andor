@@ -26,16 +26,11 @@ public class Model extends RenderableObject3D {
 	/* The texture coordinates */
 	public List<Vector3D> textures;
 
-	/* The faces in the model */
-	public List<Face> faces;
+	/* The pars in the model */
+	public List<ModelPart> parts;
 
 	/* The materials in the model */
 	public List<Material> materials;
-	
-	/* The current values */
-	private int currentVertex;
-	private int currentNormal;
-	private int currentTexture;
 	
 	/* The default constructor */
 	public Model() {
@@ -43,26 +38,22 @@ public class Model extends RenderableObject3D {
 		this.vertices = new ArrayList<Vector3D>();
 		this.normals = new ArrayList<Vector3D>();
 		this.textures = new ArrayList<Vector3D>();
-		this.faces = new ArrayList<Face>();
+		this.parts = new ArrayList<ModelPart>();
 		this.materials = new ArrayList<Material>();
 	}
 
 	/* The constructor with the vertices, normals, texture coordinate and faces given */
-	public Model(List<Vector3D> vertices, List<Vector3D> normals, List<Vector3D> textures, List<Face> faces, List<Material> materials) {
+	public Model(List<Vector3D> vertices, List<Vector3D> normals, List<Vector3D> textures, List<ModelPart> parts, List<Material> materials) {
 		//Assign the variables
 		this.vertices = vertices;
 		this.normals = normals;
 		this.textures = textures;
-		this.faces = faces;
+		this.parts = parts;
 		this.materials = materials;
 	}
 	
 	/* The method used to prepare this model */
 	public void prepare() {
-		//Set the current values
-		this.currentVertex = 0;
-		this.currentNormal = 0;
-		this.currentTexture = 0;
 		//Create the renderer
 		this.renderer = Renderer.create(Renderer.TRIANGLES, Renderer.VERTEX_VALUES_COUNT_3D);
 		//Prepare the values
@@ -73,64 +64,34 @@ public class Model extends RenderableObject3D {
 		//Check to see whether the textures have been set
 		if (this.textures.size() > 0)
 			this.renderer.textureCoords = new float[this.calculateNumberOfVertices() * 2];
-		//Go through the faces
-		for (int a = 0; a < this.faces.size(); a++)
-			//Prepare the current face
-			this.prepareFace(this.faces.get(a), a);
+		//Go through the parts
+		for (int a = 0; a < this.parts.size(); a++)
+			//Prepare the current part
+			this.parts.get(a).prepare();
 		//Setup the buffers
 		this.renderer.setupBuffers();
 	}
 	
-	/* The method used to prepare a face */
-	public void prepareFace(Face face, int current) {
-		//Go through the vertices in this face
-		for (int a = 0; a < face.vertices.size(); a++) {
-			//Prepare the current vertex
-			prepareFaceVertex(face, a);
-			//Add on to the current values
-			this.currentVertex += Renderer.VERTEX_VALUES_COUNT_3D;
-			this.currentNormal += Renderer.VERTEX_VALUES_COUNT_3D;
-			this.currentTexture += 2;
-		}
-	}
-	
-	/* The method used to prepare a face's vertex */
-	public void prepareFaceVertex(Face face, int a) {
-		//Check to see whether the normals for this face exists
-		if (face.normals != null) {
-			//Get the normal
-			Vector3D n = this.normals.get(face.normals.get(a).intValue() - 1);
-			//Set the normal values
-			this.renderer.normals[this.currentNormal] = n.x;
-			this.renderer.normals[this.currentNormal + 1] = n.y;
-			this.renderer.normals[this.currentNormal + 2] = n.z;
-		}
-		
-		//Check to see whether the textures for this face exists
-		if (face.textures != null) {
-			//Get the texture
-			Vector3D t = this.textures.get(face.textures.get(a).intValue() - 1);
-			//Set the texture values
-			this.renderer.textureCoords[this.currentTexture] = t.x;
-			this.renderer.textureCoords[this.currentTexture + 1] = t.y;
-		}
-		
-		//Get the vertex
-		Vector3D v = this.vertices.get(face.vertices.get(a).intValue() - 1);
-		//Set the vertex values
-		this.renderer.vertices[this.currentVertex] = v.x;
-		this.renderer.vertices[this.currentVertex + 1] = v.y;
-		this.renderer.vertices[this.currentVertex + 2] = v.z;
+	/* The method used to render this object */
+	public void render() {
+		//Update the view matrix
+		this.updateViewMatrix();
+		//Go through each part
+		for (int a = 0; a < this.parts.size(); a++)
+			//Render the current part
+			this.parts.get(a).render();
+		//Restore the view matrix
+		this.restoreViewMatrix();
 	}
 	
 	/* The method used to find out the total amount of vertices that are needed */
 	public int calculateNumberOfVertices() {
 		//The current total
 		int total = 0;
-		//Go though each face
-		for (int a = 0; a < this.faces.size(); a++)
+		//Go though each part
+		for (int a = 0; a < this.parts.size(); a++)
 			//Add onto the total
-			total += this.faces.get(a).getVertices().size();
+			total += this.parts.get(a).calculateNumberOfVertices();
 		//Return the total
 		return total;
 	}
@@ -139,10 +100,10 @@ public class Model extends RenderableObject3D {
 	public int calculateNumberOfNormals() {
 		//The current total
 		int total = 0;
-		//Go though each face
-		for (int a = 0; a < this.faces.size(); a++)
+		//Go though each part
+		for (int a = 0; a < this.parts.size(); a++)
 			//Add onto the total
-			total += this.faces.get(a).getNormals().size();
+			total += this.parts.get(a).calculateNumberOfNormals();
 		//Return the total
 		return total;
 	}
@@ -151,10 +112,10 @@ public class Model extends RenderableObject3D {
 	public int calculateNumberOfTextures() {
 		//The current total
 		int total = 0;
-		//Go though each face
-		for (int a = 0; a < this.faces.size(); a++)
+		//Go though each part
+		for (int a = 0; a < this.parts.size(); a++)
 			//Add onto the total
-			total += this.faces.get(a).getTextures().size();
+			total += this.parts.get(a).calculateNumberOfTextures();
 		//Return the total
 		return total;
 	}
@@ -181,20 +142,26 @@ public class Model extends RenderableObject3D {
 	public void addVertex(Vector3D vertex) { this.vertices.add(vertex); }
 	public void addNormal(Vector3D normal) { this.normals.add(normal); }
 	public void addTexture(Vector3D texture) { this.textures.add(texture); }
-	public void addFace(Face face) { this.faces.add(face); }
+	public void addPart(ModelPart part) { this.parts.add(part); }
 	public void addMaterial(Material material) { this.materials.add(material); }
 
 	/* The 'setter' and 'getter' methods */
 	public void setVertices(List<Vector3D> vertices) { this.vertices = vertices; }
 	public void setNormals(List<Vector3D> normals) { this.normals = normals; }
 	public void setTextures(List<Vector3D> textures) { this.textures = textures; }
-	public void setFaces(List<Face> faces) { this.faces = faces; }
+	public void setParts(List<ModelPart> parts) { this.parts = parts; }
 	public void setMaterials(List<Material> materials) { this.materials = materials; }
 	public List<Vector3D> getVertices() { return this.vertices; }
 	public List<Vector3D> getNormals() { return this.normals; }
 	public List<Vector3D> getTextures() { return this.textures; }
-	public List<Face> getFaces() { return this.faces; }
+	public List<ModelPart> getParts() { return this.parts; }
 	public List<Material> getMaterials() { return this.materials; }
+	public int getNumberOfFaces() {
+		int total = 0;
+		for (int a = 0; a < this.parts.size(); a++)
+			total += this.parts.get(a).faces.size();
+		return total;
+	}
 
 	
 }

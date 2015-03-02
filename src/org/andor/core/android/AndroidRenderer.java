@@ -8,6 +8,7 @@
 
 package org.andor.core.android;
 
+import org.andor.core.Colour;
 import org.andor.core.Matrix;
 import org.andor.core.Renderer;
 import org.andor.core.Shader;
@@ -167,6 +168,55 @@ public class AndroidRenderer extends Renderer {
 		} else if (globalTexture  != null) {
 			globalTexture.bind();
 			shader.setUniformi("andor_texture", 0);
+		}
+		
+		//Check for a material
+		if (this.material != null) {
+			if (this.material.ambientColour != null)
+				shader.setUniformf("andor_material.ambientColour", new Colour(this.material.ambientColour, (float) this.material.alphaColourValue));
+			else
+				shader.setUniformf("andor_material.ambientColour", new Colour(0, 0, 0, 0));
+			if (this.material.diffuseColour != null)
+				shader.setUniformf("andor_material.diffuseColour", new Colour(this.material.diffuseColour, (float) this.material.alphaColourValue));
+			else
+				shader.setUniformf("andor_material.diffuseColour", new Colour(0, 0, 0, 0));
+			if (this.material.specularColour != null)
+				shader.setUniformf("andor_material.specularColour", new Colour(this.material.specularColour, (float) this.material.alphaColourValue));
+			else
+				shader.setUniformf("andor_material.specularColour", new Colour(0, 0, 0, 0));
+			if (this.material.ambientTextureMap != null) {
+				GLES20.glActiveTexture(GLES20.GL_TEXTURE1);
+				this.material.ambientTextureMap.bind();
+				shader.setUniformi("andor_material.ambientTexture", 1);
+				shader.setUniformf("andor_material.hasAmbientTexture", 1.0f);
+			} else {
+				shader.setUniformf("andor_material.hasAmbientTexture", 0.0f);
+			}
+			if (this.material.diffuseTextureMap != null) {
+				GLES20.glActiveTexture(GLES20.GL_TEXTURE2);
+				this.material.diffuseTextureMap.bind();
+				shader.setUniformi("andor_material.diffuseTexture", 2);
+				shader.setUniformf("andor_material.hasDiffuseTexture", 1.0f);
+			} else {
+				shader.setUniformf("andor_material.hasDiffuseTexture", 0.0f);
+			}
+			if (this.material.specularTextureMap != null) {
+				GLES20.glActiveTexture(GLES20.GL_TEXTURE3);
+				this.material.specularTextureMap.bind();
+				shader.setUniformi("andor_material.specularTexture", 3);
+				shader.setUniformf("andor_material.hasSpecularTexture", 1.0f);
+			} else {
+				shader.setUniformf("andor_material.hasSpeulcarTexture", 0.0f);
+			}
+			
+			GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
+		} else {
+			shader.setUniformf("andor_material.hasAmbientTexture", 0.0f);
+			shader.setUniformf("andor_material.hasDiffuseTexture", 0.0f);
+			shader.setUniformf("andor_material.hasSpecularTexture", 0.0f);
+			shader.setUniformf("andor_material.ambientColour", new Colour(0, 0, 0, 0));
+			shader.setUniformf("andor_material.diffuseColour", new Colour(0, 0, 0, 0));
+			shader.setUniformf("andor_material.specularColour", new Colour(0, 0, 0, 0));
 		}
 		
 		if (this.drawOrder != null) {

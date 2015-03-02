@@ -86,6 +86,12 @@ public class AndroidShader extends Shader {
 		//Set the value in the shader
 		GLES20.glUniform3f(this.getUniformLocation(variableName), v1, v2, v3);
 	}
+	
+	/* The method used to set a specific value in this shader */
+	public void setUniformf(String variableName, float v1, float v2, float v3, float v4) {
+		//Set the value in the shader
+		GLES20.glUniform4f(this.getUniformLocation(variableName), v1, v2, v3, v4);
+	}
 
 	/* The method used to set a specific value in this shader */
 	public void setUniformi(String variableName, int v1) {

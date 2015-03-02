@@ -44,7 +44,7 @@ public class DeferredTest extends BaseGame {
 		camera.position.z = -3.2f;
 		
 		//Load the model
-		this.model = OBJLoader.loadModel("H:/Andor/dragon.obj", true);
+		this.model = OBJLoader.loadModel("H:/Andor/dragon.obj", "H:/Andor/", true);
 		this.model.prepare();
 		this.model.position.z = -1;
 		this.model.scale.multiply(4f);

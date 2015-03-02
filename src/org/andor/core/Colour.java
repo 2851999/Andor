@@ -11,6 +11,7 @@ package org.andor.core;
 public class Colour {
 	
 	/* The predefined colours */
+	public static final Colour NONE = new Colour(0.0f, 0.0f, 0.0f, 0.0f);
 	public static final Colour BLACK = new Colour(0.0f, 0.0f, 0.0f);
 	public static final Colour GREY = new Colour(0.2f, 0.2f, 0.2f);
 	public static final Colour LIGHT_GREY = new Colour(0.45f, 0.45f, 0.45f);
