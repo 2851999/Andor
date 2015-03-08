@@ -11,6 +11,7 @@ package org.andor.core;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.andor.core.render.Renderer;
 import org.andor.utils.ArrayUtils;
 
 public class BitmapText extends RenderableObject2D {
@@ -51,7 +52,7 @@ public class BitmapText extends RenderableObject2D {
 		//Set the size
 		this.fontSize = fontSize;
 		//Create the renderer
-		this.renderer = Renderer.create(Renderer.TRIANGLES, Renderer.VERTEX_VALUES_COUNT_2D);
+		this.renderer = new Renderer(Renderer.TRIANGLES, Renderer.VERTEX_VALUES_COUNT_2D);
 		this.renderer.setValues(Object2DBuilder.createQuadV(1, 1), Object2DBuilder.createColourArray(4, Colour.WHITE), Object2DBuilder.createQuadT(image), Object2DBuilder.createQuadDO());
 		this.renderer.setupBuffers();
 	}

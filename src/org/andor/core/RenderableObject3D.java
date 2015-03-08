@@ -10,6 +10,8 @@ package org.andor.core;
 
 import java.util.Arrays;
 
+import org.andor.core.render.Renderer;
+
 public class RenderableObject3D extends Object3D {
 	
 	/* The renderer used to render this object */
@@ -119,7 +121,7 @@ public class RenderableObject3D extends Object3D {
 	 * and the vertices data */
 	public void setup(int renderMode, float[] verticesData) {
 		//Create the renderer
-		this.renderer = Renderer.create(renderMode, Renderer.VERTEX_VALUES_COUNT_3D);
+		this.renderer = new Renderer(renderMode, Renderer.VERTEX_VALUES_COUNT_3D);
 		//Set the correct values
 		this.renderer.setValues(verticesData);
 		//Setup the buffers
@@ -130,7 +132,7 @@ public class RenderableObject3D extends Object3D {
 	 * the vertices data and the colour data */
 	public void setup(int renderMode, float[] verticesData, float[] colourData) {
 		//Create the renderer
-		this.renderer = Renderer.create(renderMode, Renderer.VERTEX_VALUES_COUNT_3D);
+		this.renderer = new Renderer(renderMode, Renderer.VERTEX_VALUES_COUNT_3D);
 		//Set the correct values
 		this.renderer.setValues(verticesData, colourData);
 		//Setup the buffers
@@ -141,7 +143,7 @@ public class RenderableObject3D extends Object3D {
 	 * the vertices data, the colour data and the texture data */
 	public void setup(int renderMode, float[] verticesData, float[] colourData, float[] textureData) {
 		//Create the renderer
-		this.renderer = Renderer.create(renderMode, Renderer.VERTEX_VALUES_COUNT_3D);
+		this.renderer = new Renderer(renderMode, Renderer.VERTEX_VALUES_COUNT_3D);
 		//Set the correct values
 		this.renderer.setValues(verticesData, colourData, textureData);
 		//Setup the buffers
@@ -152,7 +154,7 @@ public class RenderableObject3D extends Object3D {
 	 * and the vertices data */
 	public void setup(int renderMode, float[] verticesData, short[] drawOrder) {
 		//Create the renderer
-		this.renderer = Renderer.create(renderMode, Renderer.VERTEX_VALUES_COUNT_3D);
+		this.renderer = new Renderer(renderMode, Renderer.VERTEX_VALUES_COUNT_3D);
 		//Set the correct values
 		this.renderer.setValues(verticesData, drawOrder);
 		//Setup the buffers
@@ -163,7 +165,7 @@ public class RenderableObject3D extends Object3D {
 	 * the vertices data and the colour data */
 	public void setup(int renderMode, float[] verticesData, float[] colourData, short[] drawOrder) {
 		//Create the renderer
-		this.renderer = Renderer.create(renderMode, Renderer.VERTEX_VALUES_COUNT_3D);
+		this.renderer = new Renderer(renderMode, Renderer.VERTEX_VALUES_COUNT_3D);
 		//Set the correct values
 		this.renderer.setValues(verticesData, colourData, drawOrder);
 		//Setup the buffers
@@ -174,7 +176,7 @@ public class RenderableObject3D extends Object3D {
 	 * the vertices data, the colour data and the texture data */
 	public void setup(int renderMode, float[] verticesData, float[] colourData, float[] textureData, short[] drawOrder) {
 		//Create the renderer
-		this.renderer = Renderer.create(renderMode, Renderer.VERTEX_VALUES_COUNT_3D);
+		this.renderer = new Renderer(renderMode, Renderer.VERTEX_VALUES_COUNT_3D);
 		//Set the correct values
 		this.renderer.setValues(verticesData, colourData, textureData, drawOrder);
 		//Setup the buffers

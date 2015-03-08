@@ -1,9 +1,35 @@
 -------------------------------------------------------------
+Release 1 | Beta 0 | Development 0 | Experimental 2
+
+* Added FinalPass
+* Added ForwardPass
+* Added GeometryPass
+* Added RenderPass
+* Added RenderPasses
+* Added GLUtils
+* Added RenderUtils
+* Added ShaderCode
+
+* Removed AndroidShader
+* Removed AndroidRenderer
+
+* Created the package org.andor.render
+
+* Deleted the package org.andor.deferredrendering
+
+* Moved Renderer to org.andor.render
+* Moved DeferredScene to org.andor.render
+* Moved GeometryBuffer to org.andor.render
+
+* Fixed bug: Materials didn't work when using deferred
+  rendering
+
+-------------------------------------------------------------
 Release 1 | Beta 0 | Development 0 | Experimental 1
 
 * Added ModelMaterial
 
-* NOTE: Materials are not applied to models
+* NOTE: Materials are now applied to models
 
 -------------------------------------------------------------
 Release 1 | Beta 0 | Development 0 | Experimental 0 (V 1.0.0)

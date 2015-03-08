@@ -1,4 +1,4 @@
-package org.andor.core.deferredrendering;
+package org.andor.core.render;
 
 import org.andor.core.Settings;
 import org.andor.core.logger.Log;

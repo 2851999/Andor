@@ -20,6 +20,8 @@ import org.andor.core.input.KeyboardEvent;
 import org.andor.core.input.MouseEvent;
 import org.andor.core.input.MouseMotionEvent;
 import org.andor.core.input.ScrollEvent;
+import org.andor.core.render.RenderPasses;
+import org.andor.core.render.Renderer;
 import org.andor.utils.FPSCalculator;
 import org.andor.utils.FontUtils;
 import org.andor.utils.OpenGLUtils;
@@ -52,6 +54,8 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 			//Create the audio
 			AudioPC.create();
 		}
+		//Setup the render passes
+		RenderPasses.setupPasses();
 		//Add this input listener
 		Input.addListener(this);
 		//Set close requested to false

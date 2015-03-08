@@ -38,7 +38,7 @@ void main() {
 		gl_FragData[1] *= andor_material.diffuseColour;
 	if (andor_material.hasDiffuseTexture > 0.5)
 		gl_FragData[1] *= texture2D(andor_material.diffuseTexture, andor_ftextureCoord);
-	if (andor_hasTexture > 0.5)
+	else if (andor_hasTexture > 0.5)
 		gl_FragData[1] *= texture2D(andor_texture, andor_ftextureCoord);
 	gl_FragData[2] = vec4(andor_fnormal, 1.0);
 	andor_main();

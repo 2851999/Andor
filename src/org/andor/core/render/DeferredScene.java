@@ -6,7 +6,7 @@
  * COPYRIGHT @ 2014-2015
  **********************************************/
 
-package org.andor.core.deferredrendering;
+package org.andor.core.render;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,6 @@ import org.andor.core.Image;
 import org.andor.core.Object2DBuilder;
 import org.andor.core.RenderableObject2D;
 import org.andor.core.RenderableObject3D;
-import org.andor.core.Renderer;
 import org.andor.core.Settings;
 import org.andor.core.Vector2D;
 
@@ -133,9 +132,9 @@ public class DeferredScene {
 		Renderer.deferredRender = true;
 		//Make sure the quad has been defined
 		if (this.screenQuad != null) {
+			Renderer.deferredNormalRender = true;
 			//Render the screen quad
 			this.screenQuad.render();
-			Renderer.deferredNormalRender = true;
 			//Check to see whether the other quads should be rendered
 			if (Settings.Debugging.ShowDeferredRenderingBuffers) {
 				this.positionQuad.render();

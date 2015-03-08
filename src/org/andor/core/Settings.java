@@ -22,7 +22,7 @@ public class Settings {
 		/* The build of Andor */
 		public static final String BUILD = "Experimental";
 		/* The date this build started development */
-		public static final String DATE = "01/03/2015";
+		public static final String DATE = "02/03/2015";
 	}
 	
 	/* The static class containing all of the settings required for the window */
@@ -83,7 +83,7 @@ public class Settings {
 			public static String FORWARD_LIGHT = "/resources/andor/shaders/render/forward/lighting/lightfrag";
 			public static String DEFERRED_GEOMETRY_PASS = "/resources/andor/shaders/render/deferred/GeometryPass";
 			public static String DEFERRED_DEFAULT_PASS = "/resources/andor/shaders/render/deferred/DefaultPass";
-			public static String DEFERRED_LIGHT_PASS = "/resources/andor/shaders/render/deferred/LightPass";
+			public static String DEFERRED_FINAL_PASS = "/resources/andor/shaders/render/deferred/FinalPass";
 		}
 		public static class Icons {
 			public static String ICON_16 = "/resources/andor/Icon16.png";

@@ -15,11 +15,11 @@ import org.andor.core.Object2DBuilder;
 import org.andor.core.Object3DBuilder;
 import org.andor.core.RenderableObject2D;
 import org.andor.core.RenderableObject3D;
-import org.andor.core.Renderer;
 import org.andor.core.Settings;
-import org.andor.core.deferredrendering.DeferredScene;
 import org.andor.core.model.Model;
 import org.andor.core.model.OBJLoader;
+import org.andor.core.render.DeferredScene;
+import org.andor.core.render.Renderer;
 import org.andor.utils.OpenGLUtils;
 
 public class DeferredTest extends BaseGame {

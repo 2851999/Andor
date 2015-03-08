@@ -27,7 +27,6 @@ import org.andor.core.Settings;
 import org.andor.core.SkyBox;
 import org.andor.core.Vector2D;
 import org.andor.core.Vector3D;
-import org.andor.core.deferredrendering.DeferredScene;
 import org.andor.core.input.ControlBindingAxis;
 import org.andor.core.input.ControlBindingButton;
 import org.andor.core.input.ControlBindings;
@@ -42,6 +41,7 @@ import org.andor.core.input.MouseMotionEvent;
 import org.andor.core.lighting.Light3D;
 import org.andor.core.model.Model;
 import org.andor.core.model.OBJLoader;
+import org.andor.core.render.DeferredScene;
 import org.andor.utils.ClampUtils;
 import org.andor.utils.ControlBindingUtils;
 import org.andor.utils.FontUtils;
@@ -200,7 +200,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 	public void render() {
 		OpenGLUtils.clearColourBuffer();
 		OpenGLUtils.clearDepthBuffer();
-		//scene.startRendering();
+		scene.startRendering();
 		GL11.glPointSize(4);
 		//Setup OpenGL
 		OpenGLUtils.clearColourBuffer();
@@ -251,8 +251,8 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		this.font.render("Current FPS: " + this.getFPS(), 10, 10);
 		this.font.render("Object Face Count: " + this.model.getNumberOfFaces(), 10, 26);
 		this.font.render("Particle Count: " + this.particleEmitter.particles.size(), 10, 42);
-		//scene.stopRendering();
-		//scene.renderToScreen();
+		scene.stopRendering();
+		scene.renderToScreen();
 	}
 	
 	/* The method called when the game loop is stopped */
@@ -344,8 +344,8 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		Settings.Window.Width = 1024;
 		Settings.Window.Height = 768;
 		Settings.Video.Resolution = ScreenResolution.RES_1080P;
-		//Settings.Debugging.ShowDeferredRenderingBuffers = true;
-		//Settings.Video.DeferredRendering = true;
+		Settings.Debugging.ShowDeferredRenderingBuffers = true;
+		Settings.Video.DeferredRendering = true;
 		//Create a new instance of this test
 		new Cube3DTest();
 	}

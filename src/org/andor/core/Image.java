@@ -190,6 +190,7 @@ public class Image {
 	public ByteBuffer getTexture() { return texture; }
 	public int getWidth() { return this.width; }
 	public int getHeight() { return this.height; }
+	public int getPointer() { return this.pointer; }
 	
 	public float[] getTextureCoordinates() {
 		return new float[] { this.top, this.bottom, this.left, this.right };

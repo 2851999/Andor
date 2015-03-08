@@ -12,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.andor.core.RenderableObject3D;
-import org.andor.core.Renderer;
 import org.andor.core.Vector3D;
+import org.andor.core.render.Renderer;
 
 public class Model extends RenderableObject3D {
 	
@@ -55,7 +55,7 @@ public class Model extends RenderableObject3D {
 	/* The method used to prepare this model */
 	public void prepare() {
 		//Create the renderer
-		this.renderer = Renderer.create(Renderer.TRIANGLES, Renderer.VERTEX_VALUES_COUNT_3D);
+		this.renderer = new Renderer(Renderer.TRIANGLES, Renderer.VERTEX_VALUES_COUNT_3D);
 		//Prepare the values
 		this.renderer.vertices = new float[this.calculateNumberOfVertices() * Renderer.VERTEX_VALUES_COUNT_3D];
 		//Check to see whether the normals have been set
