@@ -1,4 +1,18 @@
 -------------------------------------------------------------
+Release 1 | Beta 0 | Development 0 | Experimental 3
+
+* Added SetupExample
+* Added ObjectsExample
+* Added UpdateExample
+* Added RenderSetupExample
+* Added TextureExample
+* Added CubeExample
+* Added TexturedCubeExample
+* Added InputExample
+
+* Created the package org.andor.examples
+
+-------------------------------------------------------------
 Release 1 | Beta 0 | Development 0 | Experimental 2
 
 * Added FinalPass

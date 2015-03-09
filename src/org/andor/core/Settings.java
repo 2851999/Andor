@@ -22,7 +22,7 @@ public class Settings {
 		/* The build of Andor */
 		public static final String BUILD = "Experimental";
 		/* The date this build started development */
-		public static final String DATE = "02/03/2015";
+		public static final String DATE = "08/03/2015";
 	}
 	
 	/* The static class containing all of the settings required for the window */
@@ -77,7 +77,7 @@ public class Settings {
 	
 	/* The static class containing all of the places and names of all of the resources needed by Andor */
 	public static class Resources {
-		public static String FONT_DEFAULT = "/resources/andor/defaultfont.png";
+		public static String FONT_DEFAULT = "/resources/andor/SEGOEUI.TTF";
 		public static class Shaders {
 			public static String FORWARD_DEFAULT = "/resources/andor/shaders/render/forward/andorshader";
 			public static String FORWARD_LIGHT = "/resources/andor/shaders/render/forward/lighting/lightfrag";

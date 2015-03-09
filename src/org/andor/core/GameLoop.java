@@ -50,7 +50,7 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 			//Set the icons
 			Window.setIcon(new Image[] { ImageLoader.loadImage(Settings.Resources.Icons.ICON_16, false), ImageLoader.loadImage(Settings.Resources.Icons.ICON_32, false) });
 			//Load the default font
-			Settings.Engine.DefaultFont = FontUtils.loadBitmapFont("/resources/andor/defaultfont.png", 12);
+			Settings.Engine.DefaultFont = FontUtils.createBitmapFont(Settings.Resources.FONT_DEFAULT, false, Colour.WHITE, 16);
 			//Create the audio
 			AudioPC.create();
 		}
@@ -114,12 +114,12 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 		OpenGLUtils.enableTexture2D();
 		OpenGLUtils.setupOrtho(-1, 1);
 		//Render the FPS
-		Settings.Engine.DefaultFont.render("DEBUGGING", 10, 10);
-		Settings.Engine.DefaultFont.render("Andor Version: " + Settings.Information.VERSION, 10, 24);
-		Settings.Engine.DefaultFont.render("Andor Build: " + Settings.Information.BUILD, 10, 38);
-		Settings.Engine.DefaultFont.render("Current FPS: " + this.getFPS(), 10, 52);
-		Settings.Engine.DefaultFont.render("Window Size: " + Settings.Window.Width + "x" + Settings.Window.Height, 10, 66);
-		Settings.Engine.DefaultFont.render("VSync: " + Settings.Video.VSync, 10, 80);
+		Settings.Engine.DefaultFont.render("DEBUGGING", 0, 0);
+		Settings.Engine.DefaultFont.render("Andor Version: " + Settings.Information.VERSION, 0, 24);
+		Settings.Engine.DefaultFont.render("Andor Build: " + Settings.Information.BUILD, 0, 38);
+		Settings.Engine.DefaultFont.render("Current FPS: " + this.getFPS(), 0, 52);
+		Settings.Engine.DefaultFont.render("Window Size: " + Settings.Window.Width + "x" + Settings.Window.Height, 0, 66);
+		Settings.Engine.DefaultFont.render("VSync: " + Settings.Video.VSync, 0, 80);
 		OpenGLUtils.disableTexture2D();
 	}
 	

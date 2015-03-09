@@ -123,6 +123,27 @@ public class OpenGLUtils {
 		Matrix.projectionMatrix = Matrix.perspective(fov, aspect, zNear, zFar);
 	}
 	
+	/* The static method used to setup a simple 2D view (For calling every frame) */
+	public static void setupSimpleView2D() {
+		//Clear the screen
+		clearColourBuffer();
+		//Setup the perspective
+		setupOrtho(Settings.Window.Width, Settings.Window.Height, -1, 1);
+		//Allow alpha blending
+		setupRemoveAlpha();
+	}
+	
+	/* The static method used to setup a simple 3D view (For calling every frame) */
+	public static void setupSimpleView3D() {
+		//Clear the screen
+		clearColourBuffer();
+		clearDepthBuffer();
+		//Setup the perspective
+		setupPerspective(70, 1f, 100f);
+		//Allow alpha blending
+		setupRemoveAlpha();
+	}
+	
 	/* The static method to get the OpenGL version */
 	public static String getVersion() {
 		//Check to see whether using Android mode
