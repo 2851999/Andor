@@ -10,11 +10,11 @@ package org.andor.core.lighting;
 
 import org.andor.core.Colour;
 import org.andor.core.Object3D;
-import org.andor.core.Renderer;
 import org.andor.core.Settings;
 import org.andor.core.Shader;
 import org.andor.core.Vector3D;
-import org.andor.utils.ShaderUtils;
+import org.andor.core.render.ForwardPass;
+import org.andor.core.render.RenderPasses;
 
 public class Light3D extends Object3D {
 	
@@ -124,7 +124,7 @@ public class Light3D extends Object3D {
 	public void loadShader() {
 		//Load the shader
 		if (shader == null)
-			shader = ShaderUtils.createRenderShader(Settings.Resources.Shaders.FORWARD_LIGHT, false);
+			shader = RenderPasses.getPass(ForwardPass.PASS_NAME).shaderCode.createShader(Settings.Resources.Shaders.FORWARD_LIGHT, false);
 	}
 	
 	/* The method used to start using this light */
@@ -134,40 +134,39 @@ public class Light3D extends Object3D {
 		//Get the position
 		Vector3D p = this.getPosition();
 		//Assign the shader
-		Renderer.customShader = shader;
+		RenderPasses.getPass(ForwardPass.PASS_NAME).customShader = shader;
 		//Use the current shader
-		Renderer.customShader.use();
+		shader.use();
 		//Assign the variables
-		Renderer.customShader.setUniformi("andor_lights[" + this.number + "].active", 1);
-		Renderer.customShader.setUniformf("andor_lights[" + this.number + "].position", p.x, p.y, p.z);
-		Renderer.customShader.setUniformf("andor_lights[" + this.number + "].ambient", this.ambient.r, this.ambient.g, this.ambient.b);
-		Renderer.customShader.setUniformf("andor_lights[" + this.number + "].diffuse", this.diffuse.r, this.diffuse.g, this.diffuse.b);
-		Renderer.customShader.setUniformf("andor_lights[" + this.number + "].specular", this.specular.r, this.specular.g, this.specular.b);
-		Renderer.customShader.setUniformf("andor_lights[" + this.number + "].constantAttenuation", this.constantAttenuation);
-		Renderer.customShader.setUniformf("andor_lights[" + this.number + "].linearAttenuation", this.linearAttenuation);
-		Renderer.customShader.setUniformf("andor_lights[" + this.number + "].quadraticAttenuation", this.quadraticAttenuation);
-		Renderer.customShader.setUniformf("andor_lights[" + this.number + "].spotDirection", this.spotDirection.x, this.spotDirection.y, this.spotDirection.z);
-		Renderer.customShader.setUniformf("andor_lights[" + this.number + "].spotCutOff", this.spotCutOff);
-		Renderer.customShader.setUniformf("andor_lights[" + this.number + "].spotExponent", this.spotExponent);
-		Renderer.customShader.setUniformi("andor_lights[" + this.number + "].type", this.type);
+		shader.setUniformi("andor_lights[" + this.number + "].active", 1);
+		shader.setUniformf("andor_lights[" + this.number + "].position", p.x, p.y, p.z);
+		shader.setUniformf("andor_lights[" + this.number + "].ambient", this.ambient.r, this.ambient.g, this.ambient.b);
+		shader.setUniformf("andor_lights[" + this.number + "].diffuse", this.diffuse.r, this.diffuse.g, this.diffuse.b);
+		shader.setUniformf("andor_lights[" + this.number + "].specular", this.specular.r, this.specular.g, this.specular.b);
+		shader.setUniformf("andor_lights[" + this.number + "].constantAttenuation", this.constantAttenuation);
+		shader.setUniformf("andor_lights[" + this.number + "].linearAttenuation", this.linearAttenuation);
+		shader.setUniformf("andor_lights[" + this.number + "].quadraticAttenuation", this.quadraticAttenuation);
+		shader.setUniformf("andor_lights[" + this.number + "].spotDirection", this.spotDirection.x, this.spotDirection.y, this.spotDirection.z);
+		shader.setUniformf("andor_lights[" + this.number + "].spotCutOff", this.spotCutOff);
+		shader.setUniformf("andor_lights[" + this.number + "].spotExponent", this.spotExponent);
+		shader.setUniformi("andor_lights[" + this.number + "].type", this.type);
 		//Stop using the current shader
-		Renderer.customShader.stopUsing();
+		shader.stopUsing();
 	}
 	
 	/* The method used to stop using this light */
 	public void stopUsing() {
 		//Assign the active variable
 		this.active = false;
-		//Assign the shader
-		Renderer.customShader = shader;
 		//Use the current shader
-		Renderer.customShader.use();
+		shader.use();
 		//Assign the variables
-		Renderer.customShader.setUniformi("andor_light" + this.number + ".active", 0);
+		shader.setUniformi("andor_light" + this.number + ".active", 0);
 		//Stop using the current shader
-		Renderer.customShader.stopUsing();
+		shader.stopUsing();
 		//Reset the shader
-		Renderer.customShader = null;
+		//Assign the shader
+		RenderPasses.getPass(ForwardPass.PASS_NAME).customShader = null;
 	}
 	
 	/* The 'set' and 'get' methods */

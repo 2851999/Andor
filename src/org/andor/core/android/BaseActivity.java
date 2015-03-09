@@ -89,8 +89,6 @@ public abstract class BaseActivity extends Activity implements ActivityListenerI
 		layout.removeView(this.display);
 		//Pause the OpenGL ES display
 		this.display.onPause();
-		//Reset the default shader to stop it becoming invalid
-		AndroidRenderer.defaultAndroidShader = null;
 		//Call the method in the interfaces
 		this.callOnActivityPaused();
 	}

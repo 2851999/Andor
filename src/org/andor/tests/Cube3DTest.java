@@ -27,7 +27,6 @@ import org.andor.core.Settings;
 import org.andor.core.SkyBox;
 import org.andor.core.Vector2D;
 import org.andor.core.Vector3D;
-import org.andor.core.deferredrendering.DeferredScene;
 import org.andor.core.input.ControlBindingAxis;
 import org.andor.core.input.ControlBindingButton;
 import org.andor.core.input.ControlBindings;
@@ -42,6 +41,7 @@ import org.andor.core.input.MouseMotionEvent;
 import org.andor.core.lighting.Light3D;
 import org.andor.core.model.Model;
 import org.andor.core.model.OBJLoader;
+import org.andor.core.render.DeferredScene;
 import org.andor.utils.ClampUtils;
 import org.andor.utils.ControlBindingUtils;
 import org.andor.utils.FontUtils;
@@ -122,11 +122,10 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		}, 1, 1, 1, Colour.WHITE);
 		bigCube = Object3DBuilder.createCube(10, 10, 10, new Colour(130f / 255f, 176f / 255f, 255f / 255f, 0.8f));
 		//Load the model
-		this.model = OBJLoader.loadModel(path + "dragon.obj", true);
+		this.model = OBJLoader.loadModel(path + "ship.obj", path, true);
 		this.model.prepare();
-		this.model.renderer.updateColours(Object3DBuilder.createColourArray(this.model.renderer.vertices.length, Colour.WHITE));
-		this.model.position.z = -10;
-		this.model.scale.multiply(4f);
+		this.model.position.z = -20;
+		this.model.scale.multiply(0.03f);
 		
 		//Set wireframe to false
 		wireframe = false;
@@ -250,7 +249,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		
 		//Render the FPS
 		this.font.render("Current FPS: " + this.getFPS(), 10, 10);
-		this.font.render("Object Face Count: " + this.model.faces.size(), 10, 26);
+		this.font.render("Object Face Count: " + this.model.getNumberOfFaces(), 10, 26);
 		this.font.render("Particle Count: " + this.particleEmitter.particles.size(), 10, 42);
 		scene.stopRendering();
 		scene.renderToScreen();

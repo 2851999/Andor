@@ -9,7 +9,6 @@
 package org.andor.utils;
 
 import org.andor.core.Matrix;
-import org.andor.core.Renderer;
 import org.andor.core.Settings;
 import org.lwjgl.opengl.GL11;
 
@@ -67,10 +66,8 @@ public class OpenGLUtils {
 		//Check to see whether using Android mode
 		if (! Settings.AndroidMode)
 			GL11.glDisable(GL11.GL_TEXTURE_2D);
-		else {
-			Renderer.globalTexture = null;
+		else
 			GLES20.glDisable(GLES20.GL_TEXTURE_2D);
-		}
 	}
 
 	/* The static method used to enable wireframe mode */
@@ -124,6 +121,27 @@ public class OpenGLUtils {
 		Matrix.loadIdentity(Matrix.modelMatrix);
 		Matrix.loadIdentity(Matrix.viewMatrix);
 		Matrix.projectionMatrix = Matrix.perspective(fov, aspect, zNear, zFar);
+	}
+	
+	/* The static method used to setup a simple 2D view (For calling every frame) */
+	public static void setupSimpleView2D() {
+		//Clear the screen
+		clearColourBuffer();
+		//Setup the perspective
+		setupOrtho(Settings.Window.Width, Settings.Window.Height, -1, 1);
+		//Allow alpha blending
+		setupRemoveAlpha();
+	}
+	
+	/* The static method used to setup a simple 3D view (For calling every frame) */
+	public static void setupSimpleView3D() {
+		//Clear the screen
+		clearColourBuffer();
+		clearDepthBuffer();
+		//Setup the perspective
+		setupPerspective(70, 1f, 100f);
+		//Allow alpha blending
+		setupRemoveAlpha();
 	}
 	
 	/* The static method to get the OpenGL version */

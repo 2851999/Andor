@@ -22,9 +22,6 @@ public class Face {
 	/* The texture coordinates in this face */
 	public List<Float> textures;
 	
-	/* The material of this face */
-	public Material material;
-	
 	/* The default constructor */
 	public Face() {
 		//Assign the variables
@@ -37,10 +34,8 @@ public class Face {
 	public void setVertices(List<Float> vertices) { this.vertices = vertices; }
 	public void setNormals(List<Float> normals) { this.normals = normals; }
 	public void setTextures(List<Float> textures) { this.textures = textures; }
-	public void setMaterial(Material material) { this.material = material; }
 	public List<Float> getVertices() { return this.vertices; }
 	public List<Float> getNormals() { return this.normals; }
 	public List<Float> getTextures() { return this.textures; }
-	public Material getMaterial() { return this.material; }
 	
 }

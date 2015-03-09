@@ -26,7 +26,7 @@ import org.andor.utils.FileUtils;
 public class OBJLoader {
 
 	/* The static method used to load and return an obj file */
-	public static Model loadModel(String filePath, boolean external) {
+	public static Model loadModel(String filePath, String directory, boolean external) {
 		//The model
 		Model model = new Model();
 		//Try
@@ -50,8 +50,8 @@ public class OBJLoader {
 
 			//The current line
 			String line = "";
-			//The current material
-			Material currentMaterial = null;
+			//The current part
+			ModelPart currentPart = new ModelPart(model);
 			//Go through the file text
 			while ((line = bufferedReader.readLine()) != null) {
 				//Check the start of the current line
@@ -66,7 +66,7 @@ public class OBJLoader {
 					model.addTexture(ModelParserUtils.getVectorValue(line));
 				else if (line.startsWith("f "))
 					//Add a face to the model
-					model.addFace(getFace(line, currentMaterial));
+					currentPart.addFace(getFace(line));
 				else if (line.startsWith("mtllib ")) {
 					//Split up the line
 					String[] split = line.split(" ");
@@ -75,14 +75,19 @@ public class OBJLoader {
 					//Get the file path of the material file
 					String materialFilePath = filePath.replace(fileName, split[1]);
 					//Load the material
-					model.materials = MaterialLoader.loadMaterialFile(materialFilePath, external, model.materials);
+					model.materials = MaterialLoader.loadMaterialFile(materialFilePath, directory, external, model.materials);
 				} else if (line.startsWith("usemtl ")) {
 					//Split up the line
 					String[] split = line.split(" ");
-					//Set the current material
-					currentMaterial = model.getMaterial(split[1]);
+					//Add the current part and start a new one
+					model.addPart(currentPart);
+					currentPart = new ModelPart(model);
+					currentPart.setMaterial(model.getMaterial(split[1]));
 				}
 			}
+			
+			//Add the current part
+			model.addPart(currentPart);
 
 			//Close the buffer
 			bufferedReader.close();
@@ -102,7 +107,7 @@ public class OBJLoader {
 	}
 
 	/* The static method used to get a face from a line */
-	public static Face getFace(String line, Material currentMaterial) {
+	public static Face getFace(String line) {
 		//Split up the line using a space 1//2 1//2 1//2
 		String[] split = line.split(" ");
 
@@ -150,7 +155,6 @@ public class OBJLoader {
 		face.vertices = verticesList;
 		face.normals = normalsList;
 		face.textures = texturesList;
-		face.material = currentMaterial;
 		//Return the face
 		return face;
 	}

@@ -8,6 +8,7 @@
 
 package org.andor.core;
 
+import org.andor.core.render.Renderer;
 import org.andor.utils.ObjectBuilderUtils;
 
 public class Object2DBuilder {
