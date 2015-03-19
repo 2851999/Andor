@@ -105,6 +105,40 @@ public class Vector3D {
 		this.z /= amount;
 	}
 	
+	/* The methods used to perform calculations given other vectors when returning the result */
+	public Vector3D addNew(Vector3D vector) {
+		return new Vector3D(this.x + vector.x, this.y + vector.y, this.z + vector.z);
+	}
+	
+	public Vector3D subtractNew(Vector3D vector) {
+		return new Vector3D(this.x - vector.x, this.y - vector.y, this.z - vector.z);
+	}
+	
+	public Vector3D multiplyNew(Vector3D vector) {
+		return new Vector3D(this.x * vector.x, this.y * vector.y, this.z * vector.z);
+	}
+	
+	public Vector3D divideNew(Vector3D vector) {
+		return new Vector3D(this.x / vector.x, this.y / vector.y, this.z / vector.z);
+	}
+	
+	/* The methods used to perform calculations given a single value when returning the result */
+	public Vector3D addNew(float amount) {
+		return new Vector3D(this.x + amount, this.y + amount, this.z + amount);
+	}
+	
+	public Vector3D subtractNew(float amount) {
+		return new Vector3D(this.x - amount, this.y - amount, this.z - amount);
+	}
+	
+	public Vector3D multiplyNew(float amount) {
+		return new Vector3D(this.x * amount, this.y * amount, this.z * amount);
+	}
+	
+	public Vector3D divideNew(float amount) {
+		return new Vector3D(this.x / amount, this.y / amount, this.z / amount);
+	}
+	
 	/* The method used to get the length of this vector */
 	public float getLength() {
 		//Return the length

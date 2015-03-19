@@ -77,6 +77,40 @@ public class Vector2D {
 		this.y /= amount;
 	}
 	
+	/* The methods used to perform calculations given other vectors when returning the result */
+	public Vector2D addNew(Vector2D vector) {
+		return new Vector2D(this.x + vector.x, this.y + vector.y);
+	}
+	
+	public Vector2D subtractNew(Vector2D vector) {
+		return new Vector2D(this.x - vector.x, this.y - vector.y);
+	}
+	
+	public Vector2D multiplyNew(Vector2D vector) {
+		return new Vector2D(this.x * vector.x, this.y * vector.y);
+	}
+	
+	public Vector2D divideNew(Vector2D vector) {
+		return new Vector2D(this.x / vector.x, this.y / vector.y);
+	}
+	
+	/* The methods used to perform calculations given a single value when returning the result */
+	public Vector2D addNew(float amount) {
+		return new Vector2D(this.x + amount, this.y + amount);
+	}
+	
+	public Vector2D subtractNew(float amount) {
+		return new Vector2D(this.x - amount, this.y - amount);
+	}
+	
+	public Vector2D multiplyNew(float amount) {
+		return new Vector2D(this.x * amount, this.y * amount);
+	}
+	
+	public Vector2D divideNew(float amount) {
+		return new Vector2D(this.x / amount, this.y / amount);
+	}
+	
 	/* The method used to get the length of this vector */
 	public float getLength() {
 		//Return the length

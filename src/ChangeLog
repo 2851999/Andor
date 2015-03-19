@@ -1,4 +1,59 @@
 -------------------------------------------------------------
+Release 1 | Beta 0 | Development 1 | Experimental 1
+
+* Added GravitySource2D
+* Added Physics
+* Added PhysicsObject2D
+* Added PhysicsTest
+
+* Fixed bug: Rectangle.intersects() didn't return true
+  when the other other rectangle is the same size and
+  matches the coordinates on an axis
+  
+* NOTE: Wouldn't recommend using the physics engine stuff
+  at the moment, it doesn't work very well and this is just
+  a long term project of mine that will continue in the
+  background
+
+-------------------------------------------------------------
+Release 1 | Beta 0 | Development 1 | Experimental 0
+
+* Added ModelMaterial
+* Added FinalPass
+* Added ForwardPass
+* Added GeometryPass
+* Added RenderPass
+* Added RenderPasses
+* Added GLUtils
+* Added RenderUtils
+* Added ShaderCode
+* Added SetupExample
+* Added ObjectsExample
+* Added UpdateExample
+* Added RenderSetupExample
+* Added TextureExample
+* Added CubeExample
+* Added TexturedCubeExample
+* Added InputExample
+
+* Removed AndroidShader
+* Removed AndroidRenderer
+
+* Created the package org.andor.render
+* Created the package org.andor.examples
+
+* Deleted the package org.andor.deferredrendering
+
+* Moved Renderer to org.andor.render
+* Moved DeferredScene to org.andor.render
+* Moved GeometryBuffer to org.andor.render
+
+* Fixed bug: Materials didn't work when using deferred
+  rendering
+
+* NOTE: Materials are now applied to models
+
+-------------------------------------------------------------
 Release 1 | Beta 0 | Development 0 | Experimental 3
 
 * Added SetupExample
