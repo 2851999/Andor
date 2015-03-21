@@ -28,7 +28,7 @@ public class GravitySource2D extends PhysicsObject2D {
 		//Calculate the distance between the two masses
 		float r = (float) Math.sqrt((dx * dx) + (dy * dy)) / pixelsInMeter;
 		//Calculate the force of gravity
-		float f = (float) (Physics.Constants.GRAVITATIONAL_CONSTANT * ((this.mass * object.mass) / (r * r)));
+		float f = (float) (Physics.Constants.GRAVITATIONAL_CONSTANT * (float) ((long) (this.mass * object.mass) / (float) (r * r)));
 		
 		//Calculate the acceleration
 		float a = f / object.mass;

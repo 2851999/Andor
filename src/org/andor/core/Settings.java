@@ -22,7 +22,7 @@ public class Settings {
 		/* The build of Andor */
 		public static final String BUILD = "Experimental";
 		/* The date this build started development */
-		public static final String DATE = "09/03/2015";
+		public static final String DATE = "19/03/2015";
 	}
 	
 	/* The static class containing all of the settings required for the window */

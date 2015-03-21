@@ -10,27 +10,24 @@ package org.andor.tests;
 
 import org.andor.core.BaseGame;
 import org.andor.core.Colour;
+import org.andor.core.Effect;
+import org.andor.core.EffectColourChange;
 import org.andor.core.Font;
 import org.andor.core.Image;
 import org.andor.core.ImageLoader;
-import org.andor.core.Object2DBuilder;
-import org.andor.core.RenderableObject2D;
 import org.andor.core.Settings;
+import org.andor.core.Sprite2D;
 import org.andor.core.Vector2D;
 import org.andor.core.Window;
 import org.andor.core.input.Keyboard;
 import org.andor.core.input.KeyboardEvent;
 import org.andor.core.input.MouseMotionEvent;
-import org.andor.core.render.Renderer;
 import org.andor.utils.FontUtils;
 import org.andor.utils.OpenGLUtils;
-import org.lwjgl.opengl.GL11;
 
-public class Quad2DTest extends BaseGame {
+public class EffectTest extends BaseGame {
 	
-	/* The 2D Object */
-	public RenderableObject2D quad;
-	public Renderer circle;
+	public Sprite2D sprite;
 	
 	/* The font */
 	public Font font;
@@ -38,23 +35,21 @@ public class Quad2DTest extends BaseGame {
 	/* The boolean that determine whether wireframe is on or off */
 	public boolean wireframe;
 	
-	public Image image;
+	public Effect colour;
 	
 	/* The constructor */
-	public Quad2DTest() {
+	public EffectTest() {
 		
 	}
 	
 	/* The method called when the loop has been created */
 	public void create() {
-		image = ImageLoader.loadImage("H:/Andor/Grass_Side.png", true);
-		this.quad = Object2DBuilder.createQuad(image, 100, 100, new Colour[] { Colour.LIGHT_BLUE, Colour.LIGHT_GREY, Colour.ORANGE, Colour.WHITE });
-		this.quad.position = new Vector2D(100, 100);
 		this.font = FontUtils.loadBitmapFont("H:/Andor/test2.png", true, 16, 12);
+		Image grass = ImageLoader.loadImage("H:/Andor/Grass.png", true);
+		this.sprite = new Sprite2D(grass);
+		this.sprite.position = new Vector2D(100, 100);
 		
-		this.circle = new Renderer(GL11.GL_TRIANGLE_FAN, 2);
-		this.circle.setValues(Object2DBuilder.createCircleV(new Vector2D(100, 100), 60, 30));
-		this.circle.setupBuffers();
+		this.colour = new EffectColourChange(Colour.WHITE, Colour.BLACK, 500, this.sprite.object.renderer);
 	}
 	
 	/* The method called when the game loop has started */
@@ -64,7 +59,8 @@ public class Quad2DTest extends BaseGame {
 	
 	/* The method called when the game loop is updated */
 	public void update() {
-		this.quad.rotation += 0.1f * getDelta();
+		this.colour.update(getDelta());
+		this.sprite.update();
 	}
 	
 	/* The method called when the game loop is rendered */
@@ -72,13 +68,13 @@ public class Quad2DTest extends BaseGame {
 		//Setup OpenGL
 		OpenGLUtils.clearColourBuffer();
 		OpenGLUtils.setupRemoveAlpha();
-		OpenGLUtils.disableTexture2D();
-		this.circle.render();
-		OpenGLUtils.setupOrtho(-1, 1);
-		OpenGLUtils.enableTexture2D();
 		
-		image.bind();
-		this.quad.render();
+		OpenGLUtils.setupOrtho(-1, 1);
+		OpenGLUtils.disableTexture2D();
+		
+		this.sprite.render();
+		
+		OpenGLUtils.enableTexture2D();
 		
 		//Render the FPS
 		this.font.render("Current FPS: " + this.getFPS(), 10, 10);
@@ -123,7 +119,7 @@ public class Quad2DTest extends BaseGame {
 		Settings.Video.VSync = true;
 		Settings.Video.MaxFPS = 60;
 		//Create a new instance of this test
-		new Quad2DTest();
+		new EffectTest();
 	}
 	
 }

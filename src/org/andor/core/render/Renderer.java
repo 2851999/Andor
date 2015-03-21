@@ -13,12 +13,14 @@ import java.nio.ShortBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.andor.core.Colour;
 import org.andor.core.Image;
 import org.andor.core.Settings;
 import org.andor.core.Shader;
 import org.andor.core.model.Material;
 import org.andor.utils.BufferUtils;
 import org.andor.utils.GLUtils;
+import org.andor.utils.ObjectBuilderUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
 
@@ -28,6 +30,7 @@ public class Renderer {
 	public static final int QUADS = 1;
 	public static final int TRIANGLES = 2;
 	public static final int POINTS = 3;
+	public static final int TRIANGLE_FAN = 4;
 	
 	/* The number of vertex values for both 2D and 3D */
 	public static final int VERTEX_VALUES_COUNT_2D = 2;
@@ -338,17 +341,30 @@ public class Renderer {
 		this.material = material;
 	}
 	
+	/* The method used to update the colour */
+	public void updateColour(Colour colour) {
+		this.updateColours(ObjectBuilderUtils.createColourArray(this.vertices.length, colour));
+	}
+	
+	/* The method used to update the colour */
+	public void updateColour(Colour[] colours) {
+		this.updateColours(ObjectBuilderUtils.createColourArray(this.vertices.length, colours));
+	}
+	
 	/* The static method used to convert the render mode */
 	private static int convert(int renderMode) {
-		//Check the render mode
-		if (renderMode == QUADS)
-			return GL11.GL_QUADS;
-		else if (renderMode == TRIANGLES)
-			return GL11.GL_TRIANGLES;
-		else if (renderMode == POINTS)
-			return GL11.GL_POINTS;
-		else
-			return renderMode;
+		//The mode
+		int mode = renderMode;
+		//Check the mode
+		if (renderMode == QUADS) mode = GL11.GL_QUADS;
+		else if (renderMode == TRIANGLES) mode = GL11.GL_TRIANGLES;
+		else if (renderMode == POINTS) mode = GL11.GL_POINTS;
+		else if (renderMode == TRIANGLE_FAN) mode = GL11.GL_TRIANGLE_FAN;
+		//Special case - On Android use triangle fan instead of quads
+		if (Settings.AndroidMode && renderMode == QUADS)
+			mode = GL11.GL_TRIANGLE_FAN;
+		//Return the mode
+		return mode;
 	}
 	
 	/* The static method used to release all of the renderer's that have been created */
