@@ -11,6 +11,7 @@ package org.andor.core;
 import java.util.Arrays;
 
 import org.andor.core.render.Renderer;
+import org.andor.utils.ObjectBuilderUtils;
 
 public class RenderableObject3D extends Object3D {
 	
@@ -186,6 +187,18 @@ public class RenderableObject3D extends Object3D {
 	/* The method used to assign the texture */
 	public void setTexture(Image texture) {
 		this.renderer.setTexture(texture);
+	}
+	
+	/* The method used to set the colour of this object */
+	public void setColour(Colour colour) {
+		//Update the colours
+		this.renderer.updateColours(ObjectBuilderUtils.createColourArray(this.renderer.vertices.length, colour));
+	}
+	
+	/* The method used to set the colour of this object */
+	public void setColour(Colour[] colours) {
+		//Update the colours
+		this.renderer.updateColours(ObjectBuilderUtils.createColourArray(this.renderer.vertices.length, colours));
 	}
 	
 }

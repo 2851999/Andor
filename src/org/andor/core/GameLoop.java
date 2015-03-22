@@ -53,9 +53,9 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 			Settings.Engine.DefaultFont = FontUtils.createBitmapFont(Settings.Resources.FONT_DEFAULT, false, Colour.WHITE, 16);
 			//Create the audio
 			AudioPC.create();
+			//Setup the render passes
+			RenderPasses.setupPasses();
 		}
-		//Setup the render passes
-		RenderPasses.setupPasses();
 		//Add this input listener
 		Input.addListener(this);
 		//Set close requested to false

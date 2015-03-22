@@ -24,8 +24,8 @@ public class Sprite2D extends ImageEntity2D {
 	/* The id's of the animations */
 	public List<Integer> animationIds;
 	
-	/* The current animation */
-	public Animation2D currentAnimation;
+	/* The running animations */
+	public List<Animation2D> currentAnimations;
 	
 	/* The constructor */
 	public Sprite2D(Image image) {
@@ -35,68 +35,31 @@ public class Sprite2D extends ImageEntity2D {
 		this.animations = new ArrayList<Animation2D>();
 		this.animationNames = new ArrayList<String>();
 		this.animationIds = new ArrayList<Integer>();
-	}
-	
-	/* The constructor */
-	public Sprite2D(Image image, RenderableObject2D object) {
-		//Call the super constructor
-		super(image, object);
-		//Assign the variables
-		this.animations = new ArrayList<Animation2D>();
-		this.animationNames = new ArrayList<String>();
-		this.animationIds = new ArrayList<Integer>();
+		this.currentAnimations = new ArrayList<Animation2D>();
 	}
 	
 	/* The method used to update this sprite */
 	public void update() {
-		//Check the current animation
-		if (this.currentAnimation != null)
-			//Update the animation
-			this.currentAnimation.update();
+		//Go through each animation
+		for (int a = 0; a < this.currentAnimations.size(); a++)
+			//Update the current animation
+			this.currentAnimations.get(a).update();
 	}
 	
 	/* The method used to start an animation given the name */
 	public void start(String name) {
-		//Assign the animation
-		this.currentAnimation = this.getByName(name);
+		//Add the animation
+		this.currentAnimations.add(this.getByName(name));
 		//Start the animation
-		this.currentAnimation.start();
+		this.currentAnimations.get(this.currentAnimations.size() - 1).start();;
 	}
 	
 	/* The method used to start an animation given the id */
 	public void start(int id) {
-		//Assign the animation
-		this.currentAnimation = this.getById(id);
+		//Add the animation
+		this.currentAnimations.add(this.getById(id));
 		//Start the animation
-		this.currentAnimation.start();
-	}
-	
-	/* The method used to pause the current animation */
-	public void pause() {
-		//Make sure the current animation is not null
-		if (this.currentAnimation != null)
-			this.currentAnimation.pause();
-	}
-	
-	/* The method used to resume the current animation */
-	public void resume() {
-		//Make sure the current animation is not null
-		if (this.currentAnimation != null)
-			this.currentAnimation.resume();
-	}
-	
-	/* The method used to restart the current animation */
-	public void restart() {
-		//Make sure the current animation is not null
-		if (this.currentAnimation != null)
-			this.currentAnimation.restart();
-	}
-	
-	/* The method used to start the current animation */
-	public void stop() {
-		//Make sure the current animation is not null
-		if (this.currentAnimation != null)
-			this.currentAnimation.stop();
+		this.currentAnimations.get(this.currentAnimations.size() - 1).start();;
 	}
 	
 	/* The method used to add an animation */

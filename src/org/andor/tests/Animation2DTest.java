@@ -8,10 +8,12 @@
 
 package org.andor.tests;
 
-import org.andor.core.Animation2D;
 import org.andor.core.BaseGame;
+import org.andor.core.Colour;
+import org.andor.core.ColourAnimation2D;
 import org.andor.core.Font;
 import org.andor.core.Image;
+import org.andor.core.ImageAnimation2D;
 import org.andor.core.ImageLoader;
 import org.andor.core.Settings;
 import org.andor.core.Sprite2D;
@@ -45,8 +47,10 @@ public class Animation2DTest extends BaseGame {
 		Image dirt = ImageLoader.loadImage("H:/Andor/Dirt.png", true);
 		this.animation = new Sprite2D(grass);
 		this.animation.position = new Vector2D(100, 100);
-		this.animation.add(new Animation2D(this.animation, new Image[] { grass, dirt }, 1000), "Animation", 1);
+		this.animation.add(new ImageAnimation2D(this.animation.object, new Image[] { grass, dirt }, 1000), "ImageAnimation", 1);
+		this.animation.add(new ColourAnimation2D(this.animation.object, Colour.ARRAY_BLUE, 500, true), "ColourAnimation", 2);
 		this.animation.start(1);
+		this.animation.start(2);
 	}
 	
 	/* The method called when the game loop has started */

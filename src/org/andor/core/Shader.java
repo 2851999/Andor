@@ -113,6 +113,18 @@ public class Shader {
 		GLUtils.uniform4f(this.getUniformLocation(variableName), v1, v2, v3, v4);
 	}
 	
+	/* The method used to set a specific value in this shader */
+	public void setUniformf(String variableName, Vector2D v) {
+		//Set the value in the shader
+		GLUtils.uniform2f(this.getUniformLocation(variableName), v.x, v.y);
+	}
+	
+	/* The method used to set a specific value in this shader */
+	public void setUniformf(String variableName, Vector3D v) {
+		//Set the value in the shader
+		GLUtils.uniform3f(this.getUniformLocation(variableName), v.x, v.y, v.z);
+	}
+	
 	
 	/* The method used to set a specific value in this shader */
 	public void setUniformf(String variableName, Colour colour) {

@@ -10,13 +10,10 @@ package org.andor.core;
 
 import org.andor.utils.Timer;
 
-public class Animation2D {
+public abstract class Animation2D {
 	
-	/* The 2D image entity */
-	public ImageEntity2D entity;
-	
-	/* The images */
-	public Image[] images;
+	/* The entity */
+	public RenderableObject2D entity;
 	
 	/* The time between each frame of the animation */
 	public long timeBetweenFrame;
@@ -34,27 +31,21 @@ public class Animation2D {
 	public boolean repeat;
 	
 	/* The constructor */
-	public Animation2D(ImageEntity2D entity, Image[] images, long timeBetweenFrame) {
+	public Animation2D(RenderableObject2D entity, long timeBetweenFrame) {
 		//Assign the variables
 		this.entity = entity;
-		this.images = images;
 		this.timeBetweenFrame = timeBetweenFrame;
 		this.repeat = false;
 		this.timer = new Timer();
-		//Reset the animation
-		this.reset();
 	}
 	
 	/* The constructor */
-	public Animation2D(ImageEntity2D entity, Image[] images, long timeBetweenFrame, boolean repeat) {
+	public Animation2D(RenderableObject2D entity, long timeBetweenFrame, boolean repeat) {
 		//Assign the variables
 		this.entity = entity;
-		this.images = images;
 		this.timeBetweenFrame = timeBetweenFrame;
 		this.repeat = repeat;
 		this.timer = new Timer();
-		//Reset the animation
-		this.reset();
 	}
 	
 	/* The method used to update this animation */
@@ -66,7 +57,7 @@ public class Animation2D {
 				//Increment the current frame
 				this.currentFrame++;
 				//Check the current frame
-				if (this.currentFrame == this.images.length) {
+				if (this.hasFinished()) {
 					//Check to see whether this animation should repeat
 					if (this.repeat) {
 						//Reset this animation
@@ -78,8 +69,8 @@ public class Animation2D {
 						this.stop();
 					}
 				} else {
-					//Set the image
-					this.entity.setImage(this.images[this.currentFrame]);
+					//UPDATE THE ANIMATION HERE
+					this.updateAnimation();
 					//Restart the timer
 					this.timer.restart();
 				}
@@ -87,12 +78,22 @@ public class Animation2D {
 		}
 	}
 	
+	/* The method called during the course of an animation */
+	public void startAnimation() {}
+	public void updateAnimation() {}
+	public void stopAnimation() {}
+	public void resetAnimation() {}
+	
+	/* The method used to determine whether the animation has finished */
+	public abstract boolean hasFinished();
+	
 	/* The method used to start this animation */
 	public void start() {
 		//Set running to true
 		this.running = true;
 		//Start the timer
 		this.timer.start();
+		this.startAnimation();
 	}
 	
 	/* The method used to reset this animation */
@@ -101,7 +102,7 @@ public class Animation2D {
 		this.running = false;
 		this.currentFrame = 0;
 		this.timer.reset();
-		this.entity.setImage(images[this.currentFrame]);
+		this.resetAnimation();
 	}
 	
 	/* The method used to pause this animation */
@@ -129,12 +130,11 @@ public class Animation2D {
 		this.running = false;
 		//Stop the timer
 		this.timer.stop();
+		this.stopAnimation();
 	}
 	
 	/* The set/get methods */
-	public void setImages(Image[] images) { this.images = images; }
 	public void setTimeBetweenFrame(long timeBetweenFrame) { this.timeBetweenFrame = timeBetweenFrame; }
-	public Image[] getImages() { return this.images; }
 	public long getTimeBetweenFrame() { return this.timeBetweenFrame; }
 	
 }

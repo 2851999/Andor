@@ -44,6 +44,7 @@ import org.andor.core.model.OBJLoader;
 import org.andor.core.render.DeferredScene;
 import org.andor.utils.ClampUtils;
 import org.andor.utils.ControlBindingUtils;
+import org.andor.utils.ControllerUtils;
 import org.andor.utils.FontUtils;
 import org.andor.utils.OpenGLUtils;
 import org.andor.utils.ScreenResolution;
@@ -132,7 +133,8 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		//Lock the mouse
 		Mouse.lock();
 		
-		InputManagerController.addController(this.controller = new InputController(Input.CONTROLLER_1));
+		if (ControllerUtils.isPresent(Input.CONTROLLER_1))
+			InputManagerController.addController(this.controller = new InputController(Input.CONTROLLER_1));
 		
 		audio = AudioLoader.load("H:/Andor/test2.wav", true);
 		
@@ -158,6 +160,10 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		//this.light1 = Light3D.createVertexDirectional(1, new Vector3D(1, 0, 1), new Colour(0.1f, 0.1f, 0.1f), new Colour(0, 1, 0), new Colour(1, 1, 1));
 		//this.light2 = Light3D.createVertexPoint(2, new Vector3D(0, 3, -7), new Colour(0.1f, 0.1f, 0.1f), new Colour(0, 0, 1), new Colour(1, 1, 1));
 		scene = new DeferredScene();
+		
+		InputController[] controllers = ControllerUtils.getAvailableControllers();
+		for (int a = 0; a < controllers.length; a++)
+			System.out.println(controllers[a].getName());
 	}
 	
 	/* The method called when the game loop has started */
@@ -210,6 +216,11 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		OpenGLUtils.setupPerspective(70f, 1f, 1000f);
 		OpenGLUtils.enableDepthTest();
 		
+		if (wireframe)
+			OpenGLUtils.enableWireframeMode();
+		else
+			OpenGLUtils.disableWireframeMode();
+		
 		//Use the camera's view on the world
 		this.camera.useView();
 		
@@ -252,6 +263,10 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		this.font.render("Object Face Count: " + this.model.getNumberOfFaces(), 10, 26);
 		this.font.render("Particle Count: " + this.particleEmitter.particles.size(), 10, 42);
 		scene.stopRendering();
+		
+		if (wireframe)
+			OpenGLUtils.disableWireframeMode();
+		
 		scene.renderToScreen();
 	}
 	
@@ -319,10 +334,6 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 	public void onButtonReleased(ControlBindingButton binding) {
 		if (binding.getControlBinding().name.equals("Wireframe")) {
 			wireframe = !wireframe;
-			if (wireframe)
-				OpenGLUtils.enableWireframeMode();
-			else
-				OpenGLUtils.disableWireframeMode();
 		} else if (binding.getControlBinding().name.equals("Rumble")) {
 			//this.controller.rumble(500, 1f);
 			//Reset the players position

@@ -1,4 +1,68 @@
 -------------------------------------------------------------
+Release 1 | Beta 0 | Development 2 | Experimental 0
+
+* Added GravitySource2D
+* Added Physics
+* Added PhysicsObject2D
+* Added PhysicsTest
+* Added ColourAnimation2D
+* Added ImageAnimation2D
+* Added ControllerUtils
+* Added Effect
+* Added EffectColourChange
+* Added EffectTest
+* Added OnScreenJoystickAxis
+* Added PhongPass
+* Added LightingTest
+
+* Fixed bug: Nothing rendered on Android
+
+* Fixed bug: Rectangle.intersects() didn't return true
+  when the other other rectangle is the same size and
+  matches the coordinates on an axis
+  
+* NOTE: Wouldn't recommend using the physics engine stuff
+  at the moment, it doesn't work very well and this is just
+  a long term project of mine that will continue in the
+  background
+
+-------------------------------------------------------------
+Release 1 | Beta 0 | Development 1 | Experimental 3
+
+* Added OnScreenJoystickAxis
+* Added PhongPass
+* Added LightingTest
+
+* Fixed bug: Nothing rendered on Android
+
+-------------------------------------------------------------
+Release 1 | Beta 0 | Development 1 | Experimental 2
+
+* Added ColourAnimation2D
+* Added ImageAnimation2D
+* Added ControllerUtils
+* Added Effect
+* Added EffectColourChange
+* Added EffectTest
+
+-------------------------------------------------------------
+Release 1 | Beta 0 | Development 1 | Experimental 1
+
+* Added GravitySource2D
+* Added Physics
+* Added PhysicsObject2D
+* Added PhysicsTest
+
+* Fixed bug: Rectangle.intersects() didn't return true
+  when the other other rectangle is the same size and
+  matches the coordinates on an axis
+  
+* NOTE: Wouldn't recommend using the physics engine stuff
+  at the moment, it doesn't work very well and this is just
+  a long term project of mine that will continue in the
+  background
+
+-------------------------------------------------------------
 Release 1 | Beta 0 | Development 1 | Experimental 0
 
 * Added ModelMaterial

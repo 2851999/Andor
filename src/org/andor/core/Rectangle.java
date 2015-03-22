@@ -45,14 +45,20 @@ public class Rectangle {
 		//Return whether the coordinates are contained within this rectangle
 		return (x > this.x && y > this.y && x < this.x + this.width && y < this.y + this.height);
 	}
+	
+	/* The method to check whether a point is intersects the rectangle */
+	public boolean intersects(float x , float y) {
+		//Return whether the coordinates are intersect this rectangle
+		return (x >= this.x && y >= this.y && x <= this.x + this.width && y <= this.y + this.height);
+	}
 
 	/* The method to check whether another rectangle intersects this rectangle */
 	public boolean intersects(Rectangle other) {
 		//Check if the rectangle's points are contained in this rectangle
-		if (this.contains(other.x , other.y)
-				|| this.contains(other.x + other.width , other.y)
-				|| this.contains(other.x + other.width , other.y + other.height)
-				|| this.contains(other.x , other.y + other.height)) {
+		if (this.intersects(other.x , other.y)
+				|| this.intersects(other.x + other.width , other.y)
+				|| this.intersects(other.x + other.width , other.y + other.height)
+				|| this.intersects(other.x , other.y + other.height)) {
 			return true;
 		} else
 			return false;

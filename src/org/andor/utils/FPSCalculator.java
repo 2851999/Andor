@@ -33,18 +33,33 @@ public class FPSCalculator {
 	/* The current FPS's count */
 	public int fpsCount;
 	
+	/* The value that represents whether this has started recording the frame times */
+	public boolean started;
+	
 	/* The constructor */
 	public FPSCalculator() {
+		this(MODE_FPS_PER_SECOND);
+	}
+	
+	/* The constructor with the mode given */
+	public FPSCalculator(int mode) {
 		//Assign the variables
-		this.mode = MODE_FPS_PER_SECOND;
-		this.lastFrameTime = Time.getMiliseconds();
-		this.lastDeltaFrameTime = Time.getMiliseconds();
+		this.mode = mode;
 		this.currentDeltaTime = 0;
 		this.currentFPS = 0;
+		this.started = false;
 	}
 	
 	/* The method called to update this, should be called every frame */
 	public void update() {
+		//Check to see whether this has started
+		if (! this.started) {
+			//Assign the times
+			this.lastFrameTime = Time.getMiliseconds();
+			this.lastDeltaFrameTime = Time.getMiliseconds();
+			//Set started to true
+			this.started = true;
+		}
 		//Make sure the FPS calculation is turned on
 		if (this.mode != MODE_FPS_OFF) {
 			//Check the mode

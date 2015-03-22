@@ -44,10 +44,13 @@ public class FontUtilsAndroid {
 		if (external)
 			//Create the typeface
 			typeface = Typeface.createFromFile(path);
-		else
+		else {
+			if (path.startsWith("/"))
+				path = path.substring(1);
 			//Make sure the font file is in at least the assets folder assets/fonts/NAME.TTF
 			//Create the typeface
 			typeface = Typeface.createFromAsset(BaseActivity.instance.getAssets(), path);
+		}
 		
 		//Return the font
 		return typeface;

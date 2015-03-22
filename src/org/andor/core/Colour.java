@@ -96,6 +96,36 @@ public class Colour {
 		this.a = a;
 	}
 	
+	/* The method used to add another colour to this one and return the result */
+	public Colour addRGB(Colour other) {
+		return new Colour(this.r + other.r, this.g + other.g, this.b + other.b);
+	}
+	
+	/* The method used to add another colour to this one and return the result */
+	public Colour addRGBA(Colour other) {
+		return new Colour(this.r + other.r, this.g + other.g, this.b + other.b, this.a + other.a);
+	}
+	
+	/* The method used to subtract another colour from this one and return the result */
+	public Colour subtractRGB(Colour other) {
+		return new Colour(this.r - other.r, this.g - other.g, this.b - other.b);
+	}
+	
+	/* The method used to subtract another colour from this one and return the result */
+	public Colour subtractRGBA(Colour other) {
+		return new Colour(this.r - other.r, this.g - other.g, this.b - other.b, this.a - other.a);
+	}
+	
+	/* The method used to multiply this colour by another one and return the result */
+	public Colour multiplyRGB(float value) {
+		return new Colour(this.r * value, this.g * value, this.b * value);
+	}
+	
+	/* The method used to multiply this colour by another one and return the result */
+	public Colour multiplyRGBA(float value) {
+		return new Colour(this.r * value, this.g * value, this.b * value, this.a * value);
+	}
+	
 	/* The method used to return a float array containing the rgb values */
 	public float[] getValuesRGB() { return new float[] { this.r, this.g, this.b }; }
 	/* The method used to return a float array containing the rgba values */

@@ -43,6 +43,29 @@ public class Object2DBuilder {
 		return new RenderableObject2D(Renderer.TRIANGLES, createQuadV(width, height), createQuadDO(), width, height);
 	}
 	
+	/* The static method used to create a circle renderable object given the
+	 * radius and number of segments */
+	public static RenderableObject2D createCircle(float radius, int segments) {
+		float size = radius * 2;
+		return new RenderableObject2D(Renderer.TRIANGLE_FAN, createCircleV(radius, segments), size, size);
+	}
+	
+	/* The static method used to create a circle renderable object given the
+	 * radius, number of segments and colour */
+	public static RenderableObject2D createCircle(float radius, int segments, Colour colour) {
+		float size = radius * 2;
+		float[] v = createCircleV(radius, segments);
+		return new RenderableObject2D(Renderer.TRIANGLE_FAN, v, createColourArray(v.length, colour), size, size);
+	}
+	
+	/* The static method used to create a circle renderable object given the
+	 * radius, number of segments and colours */
+	public static RenderableObject2D createCircle(float radius, int segments, Colour[] colours) {
+		float size = radius * 2;
+		float[] v = createCircleV(radius, segments);
+		return new RenderableObject2D(Renderer.TRIANGLE_FAN, v, createColourArray(v.length, colours), size, size);
+	}
+	
 	/* The static method used to create a quad's vertices array given the width and height */
 	public static float[] createQuadV(float width, float height) {
 		return createQuadV(
@@ -81,6 +104,38 @@ public class Object2DBuilder {
 			//Top-Right triangle
 			2, 3, 0
 		};
+	}
+	
+	/* The static method used to create a circle's vertices */
+	public static float[] createCircleV(float radius, int segments) {
+		return createCircleV(new Vector2D(0, 0), radius, segments);
+	}
+	
+	/* The static method used to create a circle's vertices */
+	public static float[] createCircleV(Vector2D center, float radius, int segments) {
+		//Create the list
+		float[] vertices = new float[segments * 2];
+		//Calculate the angle at the radius of each segment
+		float theta = (float) (2 * Math.PI / segments);
+		//Calculate the sine and cosine values
+		float sine = (float) Math.sin(theta);
+		float cos = (float) Math.cos(theta);
+		//Define the other values needed
+		float t;
+		float x = radius;
+		float y = 0;
+		//Go through the vertices array
+		for (int a = 0; a < vertices.length; a+= 2) {
+			//Output the vertices
+			vertices[a] = x + center.x;
+			vertices[a + 1] = y + center.y;
+			
+			t = x;
+			x = cos * x - sine * y;
+			y = sine * t + cos * y;
+		}
+		//Return the vertices
+		return vertices;
 	}
 	
 	/* The static method used to create the colour array for each vertices given one colour,

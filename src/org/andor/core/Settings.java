@@ -18,11 +18,11 @@ public class Settings {
 	/* The static class containing all of the information about Andor */
 	public static class Information {
 		/* The version of Andor */
-		public static final String VERSION = "V1.0.1";
+		public static final String VERSION = "V1.0.2";
 		/* The build of Andor */
 		public static final String BUILD = "Development";
 		/* The date this build started development */
-		public static final String DATE = "09/03/2015";
+		public static final String DATE = "22/03/2015";
 	}
 	
 	/* The static class containing all of the settings required for the window */
@@ -54,6 +54,12 @@ public class Settings {
 		public static ScreenResolution Resolution = ScreenResolution.RES_NATIVE;
 		/* Whether any renderers should setup for deferred rendering */
 		public static boolean DeferredRendering = false;
+	}
+	
+	/* The static class containing all of the physics settings */
+	public static class Physics {
+		/* The target number of times to update the physics per second */
+		public static int TargetUpdate = 60;
 	}
 	
 	/* The static class containing all of the Android settings */
