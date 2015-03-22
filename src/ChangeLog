@@ -1,4 +1,13 @@
 -------------------------------------------------------------
+Release 1 | Beta 0 | Development 1 | Experimental 3
+
+* Added OnScreenJoystickAxis
+* Added PhongPass
+* Added LightingTest
+
+* Fixed bug: Nothing rendered on Android
+
+-------------------------------------------------------------
 Release 1 | Beta 0 | Development 1 | Experimental 2
 
 * Added ColourAnimation2D

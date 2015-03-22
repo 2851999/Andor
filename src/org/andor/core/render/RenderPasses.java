@@ -11,6 +11,8 @@ package org.andor.core.render;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.andor.core.Settings;
+
 public class RenderPasses {
 	
 	/* The list of render passes */
@@ -22,8 +24,10 @@ public class RenderPasses {
 		renderPasses = new ArrayList<RenderPass>();
 		//Add the render passes
 		renderPasses.add(new ForwardPass());
-		renderPasses.add(new GeometryPass());
-		renderPasses.add(new FinalPass());
+		if (! Settings.AndroidMode) {
+			renderPasses.add(new GeometryPass());
+			renderPasses.add(new FinalPass());
+		}
 	}
 	
 	/* The static method used to 'set' a specific pass given its name */
