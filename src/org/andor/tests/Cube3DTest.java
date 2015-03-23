@@ -38,7 +38,6 @@ import org.andor.core.input.Keyboard;
 import org.andor.core.input.KeyboardEvent;
 import org.andor.core.input.Mouse;
 import org.andor.core.input.MouseMotionEvent;
-import org.andor.core.lighting.Light3D;
 import org.andor.core.model.Model;
 import org.andor.core.model.OBJLoader;
 import org.andor.core.render.DeferredScene;
@@ -79,10 +78,6 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 	public ParticleEmitter particleEmitter;
 	
 	public BitmapText bitmapText;
-	
-	public Light3D light0;
-	public Light3D light1;
-	public Light3D light2;
 	
 	public DeferredScene scene;
 	
@@ -304,15 +299,6 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 			this.cube.renderer.updateColours(Object3DBuilder.createColourArray(24, new Colour(1f, 1f, 1f, 0.1f)));
 		else if (e.getCode() == Keyboard.KEY_9_CODE)
 			this.cube.renderer.updateColours(Object3DBuilder.createColourArray(24, new Colour(1f, 1f, 1f, 0.0f)));
-		else if (e.getCode() == Keyboard.KEY_LBRACKET_CODE) {
-			this.light0.type = Light3D.TYPE_VERTEX_SPOT;
-			this.light1.type = Light3D.TYPE_VERTEX_DIRECTIONAL;
-			this.light2.type = Light3D.TYPE_VERTEX_POINT;
-		} else if (e.getCode() == Keyboard.KEY_RBRACKET_CODE) {
-			this.light0.type = Light3D.TYPE_FRAGMENT_SPOT;
-			this.light1.type = Light3D.TYPE_FRAGMENT_DIRECTIONAL;
-			this.light2.type = Light3D.TYPE_FRAGMENT_POINT;
-		}
 	}
 	
 	/* The method called when the mouse moves */

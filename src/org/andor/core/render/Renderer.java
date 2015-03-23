@@ -13,10 +13,12 @@ import java.nio.ShortBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.andor.core.Camera3D;
 import org.andor.core.Colour;
 import org.andor.core.Image;
 import org.andor.core.Settings;
 import org.andor.core.Shader;
+import org.andor.core.lighting.BaseLight;
 import org.andor.core.model.Material;
 import org.andor.utils.BufferUtils;
 import org.andor.utils.GLUtils;
@@ -87,6 +89,14 @@ public class Renderer {
 	/* The boolean that turns deferred rendering mode on or off */
 	public static boolean deferredRender = false;
 	public static boolean deferredNormalRender = false;
+	
+	/* The lighting information */
+	public static Camera3D camera;
+	public static BaseLight light;
+	public static boolean useAmbient = false;
+	public static Colour ambientLight = new Colour(0.1f, 0.1f, 0.1f);
+	public static float specularIntensity = 2;
+	public static float specularExponent = 32;
 	
 	/* The current texture (If any) */
 	public Image texture;

@@ -10,7 +10,6 @@ package org.andor.experimental;
 
 import org.andor.core.Colour;
 import org.andor.core.Matrix;
-import org.andor.core.Vector3D;
 import org.andor.core.render.RenderPass;
 import org.andor.core.render.Renderer;
 import org.andor.tests.LightingTest;
@@ -39,9 +38,28 @@ public class PhongPass extends RenderPass {
 		this.useShader();
 		
 		currentShader.setUniformf("ambientLight", new Colour(0.1f, 0.1f, 0.1f));
-		currentShader.setUniformf("directionalLight.base.colour", Colour.WHITE.getR(), Colour.WHITE.getG(), Colour.WHITE.getB());
-		currentShader.setUniformf("directionalLight.base.intensity", 0.8f);
-		currentShader.setUniformf("directionalLight.direction", new Vector3D(0, 0, 1));
+		//currentShader.setUniformf("directionalLight.base.colour", Colour.WHITE.getR(), Colour.WHITE.getG(), Colour.WHITE.getB());
+		//currentShader.setUniformf("directionalLight.base.intensity", 0.8f);
+		//currentShader.setUniformf("directionalLight.direction", new Vector3D(0, 0, 1));
+		
+//		currentShader.setUniformf("pointLight.base.colour", Colour.WHITE.getR(), 0, 0);
+//		currentShader.setUniformf("pointLight.base.intensity", 0.8f);
+//		currentShader.setUniformf("pointLight.attenuation.constant", 0f);
+//		currentShader.setUniformf("pointLight.attenuation.linear", 0f);
+//		currentShader.setUniformf("pointLight.attenuation.exponent", 1f);
+//		currentShader.setUniformf("pointLight.position", new Vector3D(0, 0, 2));
+//		currentShader.setUniformf("pointLight.range", 20);
+		
+//		currentShader.setUniformf("spotLight.pointLight.base.colour", Colour.WHITE.getR(), 0, 0);
+//		currentShader.setUniformf("spotLight.pointLight.base.intensity", 0.8f);
+//		currentShader.setUniformf("spotLight.pointLight.attenuation.constant", 0f);
+//		currentShader.setUniformf("spotLight.pointLight.attenuation.linear", 0f);
+//		currentShader.setUniformf("spotLight.pointLight.attenuation.exponent", 0.4f);
+//		currentShader.setUniformf("spotLight.pointLight.position", new Vector3D(0, 0, 2));
+//		currentShader.setUniformf("spotLight.pointLight.range", 30f);
+//		currentShader.setUniformf("spotLight.direction", new Vector3D(0, 0, 1));
+//		currentShader.setUniformf("spotLight.cutoff", 0.9f);
+		
 		currentShader.setUniformf("specularIntensity", 2f);
 		currentShader.setUniformf("specularPower", 32f);
 		currentShader.setUniformf("eyePos", LightingTest.camera.getPosition());
@@ -56,7 +74,6 @@ public class PhongPass extends RenderPass {
 		currentShader.setUniformMatrix(RenderUtils.UNIFORM_MODEL_VIEW_PROJECTION_MATRIX, Matrix.modelViewProjectionMatrix);
 		currentShader.setUniformMatrix(RenderUtils.UNIFORM_NORMAL_MATRIX, Matrix.normalMatrix);
 		currentShader.setUniformMatrix(RenderUtils.UNIFORM_MODEL_MATRIX, Matrix.modelMatrix);
-		currentShader.setUniformMatrix("andor_viewMatrix", Matrix.viewMatrix);
 		
 		if (renderer.vertices != null)
 			prepareVertexArray(vertexAttribute, renderer.verticesHandle, renderer.vertexValuesCount);

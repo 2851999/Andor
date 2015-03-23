@@ -34,6 +34,30 @@ public class ForwardPass extends RenderPass {
 		//Use the shader
 		this.useShader();
 		
+		//Check to see whether lighting should be applied
+		if (Renderer.light != null) {
+			//Assign the lighting values
+			currentShader.setUniformf("lighting", 1.0f);
+			currentShader.setUniformf("ambientLight", Renderer.ambientLight);
+			currentShader.setUniformf("specularIntensity", Renderer.specularIntensity);
+			currentShader.setUniformf("specularPower", Renderer.specularExponent);
+			//if (Renderer.camera != null)
+				currentShader.setUniformf("eyePos", Renderer.camera.getPosition());
+			//Apply the light
+			Renderer.light.applyUniforms(currentShader);
+		} else if (Renderer.useAmbient) {
+			currentShader.setUniformf("lighting", 1.0f);
+			currentShader.setUniformf("directionalLight.base.intensity", 0);
+			currentShader.setUniformf("pointLight.base.intensity", 0);
+			currentShader.setUniformf("spotLight.pointLight.base.intensity", 0);
+		} else {
+			//Prevent lighting
+			currentShader.setUniformf("lighting", 0.0f);
+			currentShader.setUniformf("directionalLight.base.intensity", 0);
+			currentShader.setUniformf("pointLight.base.intensity", 0);
+			currentShader.setUniformf("spotLight.pointLight.base.intensity", 0);
+		}
+		
 		//The attributes within the shader
 		int vertexAttribute = currentShader.getAttributeLocation(RenderUtils.ATTRIBUTE_VERTEX);
 		int colourAttribute = currentShader.getAttributeLocation(RenderUtils.ATTRIBUTE_COLOUR);

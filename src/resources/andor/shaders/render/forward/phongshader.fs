@@ -36,13 +36,37 @@ struct DirectionalLight {
 	vec3 direction;
 };
 
+struct Attenuation {
+	//Physically accurate = 0, 0, 1
+	float constant;
+	float linear;
+	float exponent;
+};
+
+struct PointLight {
+	BaseLight base;
+	Attenuation attenuation;
+	vec3 position;
+	float range; //Maximum distance (Stop it effecting whole scene)
+};
+
+struct SpotLight {
+	PointLight pointLight;
+	vec3 direction;
+	float cutoff;
+};
+
 uniform DirectionalLight directionalLight;
+uniform PointLight pointLight;
+uniform SpotLight spotLight;
 
 //Spec intensity = 2
 //Spec exponent = 32
 uniform float specularIntensity;
 uniform float specularPower;
 uniform vec3 eyePos;
+
+uniform float lighting;
 
 vec4 calculateLight(BaseLight base, vec3 direction, vec3 normal) {
 	//Attenuation
@@ -60,7 +84,7 @@ vec4 calculateLight(BaseLight base, vec3 direction, vec3 normal) {
 		float specularFactor = dot(directionToEye, reflectDirection); //1 if same, less if they diverge (cosine)
 		specularFactor = pow(specularFactor, specularPower);
 		
-		if (specularFactor > 0) {
+		if (specularFactor > 0.0) {
 			specularColour = vec4(base.colour, 1.0) * specularIntensity * specularFactor;
 		}
 	}
@@ -69,6 +93,41 @@ vec4 calculateLight(BaseLight base, vec3 direction, vec3 normal) {
 
 vec4 calculateDirectionalLight(DirectionalLight directionalLight, vec3 normal) {
 	return calculateLight(directionalLight.base, -directionalLight.direction, normal);
+}
+
+vec4 calculatePointLight(PointLight pointLight, vec3 normal) {
+	//May need to flip this around
+	vec3 lightDirection = worldPosition - pointLight.position;
+	float distanceToLight = length(lightDirection);
+	
+	if (distanceToLight > pointLight.range)
+		return vec4(0.0, 0.0, 0.0, 0.0);
+	
+	lightDirection = normalize(lightDirection);
+	
+	vec4 colour = calculateLight(pointLight.base, lightDirection, normal);
+	
+	//Gets bigger as the distance gets larger so divide the final colour
+	float attenuation = pointLight.attenuation.constant +
+						pointLight.attenuation.linear * distanceToLight +
+						pointLight.attenuation.exponent * distanceToLight * distanceToLight + 0.00001;
+						//Make sure /0 never occurs, as glsl sometimes will execute both code paths of an if statement at the same time
+						
+	return colour / attenuation;
+}
+
+vec4 calculateSpotLight(SpotLight spotLight, vec3 normal) {
+	vec3 lightDirection = normalize(spotLight.pointLight.position - worldPosition);
+	float spotFactor = dot(lightDirection, spotLight.direction);
+	
+	vec4 colour = vec4(0.0, 0.0, 0.0, 0.0);
+	
+	if (spotFactor > spotLight.cutoff) {
+		colour = calculatePointLight(spotLight.pointLight, normal) *
+				(1.0 - (1.0 - spotFactor) / (1.0 - spotLight.cutoff)); //Give it a softer edge
+	}
+	
+	return colour;
 }
 
 void andor_main();
@@ -80,10 +139,19 @@ void main() {
 	
 	if (textureColour != vec4(0.0, 0.0, 0.0, 1.0))
 		colour *= textureColour;
+	if (andor_material.diffuseColour.a > 0.0)
+		colour *= andor_material.diffuseColour;
 	
 	vec3 normal = normalize(andor_fnormal);
-	totalLight += calculateDirectionalLight(directionalLight, normal);
+	if (directionalLight.base.intensity > 0.0)
+		totalLight += calculateDirectionalLight(directionalLight, normal);
+	if (pointLight.base.intensity > 0.0)
+		totalLight += calculatePointLight(pointLight, normal);
+	if (spotLight.pointLight.base.intensity > 0.0)
+		totalLight += calculateSpotLight(spotLight, normal);
 	
-	gl_FragColor = vec4(vec3(colour * totalLight), 1.0);
+	gl_FragColor = colour;
+	if (lighting > 0.5)
+		gl_FragColor *= vec4(vec3(totalLight), 1.0);
 	andor_main();
 }
