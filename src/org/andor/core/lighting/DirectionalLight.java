@@ -27,10 +27,10 @@ public class DirectionalLight extends BaseLight {
 	/* The method used to start using this light */
 	public void applyUniforms(Shader shader) {
 		//Assign the base lights variables
-		this.assignUniforms(shader, "directionalLight");
+		this.assignUniforms(shader, "andor_directionalLight");
 		
 		//Assign the light uniforms
-		shader.setUniformf("directionalLight.direction", direction);
+		shader.setUniformf("andor_directionalLight.direction", direction);
 	}
 	
 }

@@ -48,7 +48,7 @@ public class EffectColourChange extends Effect {
 		//Assign the current colour
 		current = current.addRGBA(difference);
 		//Update the colour
-		renderer.updateColour(current);
+		this.getRenderer().updateColour(current);
 	}
 	
 }

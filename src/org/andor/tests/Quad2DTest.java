@@ -38,8 +38,6 @@ public class Quad2DTest extends BaseGame {
 	/* The boolean that determine whether wireframe is on or off */
 	public boolean wireframe;
 	
-	public Image image;
-	
 	/* The constructor */
 	public Quad2DTest() {
 		
@@ -47,9 +45,10 @@ public class Quad2DTest extends BaseGame {
 	
 	/* The method called when the loop has been created */
 	public void create() {
-		image = ImageLoader.loadImage("H:/Andor/Grass_Side.png", true);
-		this.quad = Object2DBuilder.createQuad(image, 100, 100, new Colour[] { Colour.LIGHT_BLUE, Colour.LIGHT_GREY, Colour.ORANGE, Colour.WHITE });
+		Image image = ImageLoader.loadImage("H:/Andor/Grass_Side.png", true);
+		this.quad = Object2DBuilder.createQuad(image, 100, 100, Colour.ARRAY_RGB);
 		this.quad.position = new Vector2D(100, 100);
+		this.quad.setTexture(image);
 		this.font = FontUtils.loadBitmapFont("H:/Andor/test2.png", true, 16, 12);
 		
 		this.circle = new Renderer(GL11.GL_TRIANGLE_FAN, 2);
@@ -77,7 +76,6 @@ public class Quad2DTest extends BaseGame {
 		OpenGLUtils.setupOrtho(-1, 1);
 		OpenGLUtils.enableTexture2D();
 		
-		image.bind();
 		this.quad.render();
 		
 		//Render the FPS

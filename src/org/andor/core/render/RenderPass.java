@@ -14,7 +14,7 @@ import java.util.List;
 import org.andor.core.Shader;
 import org.andor.utils.GLUtils;
 import org.andor.utils.RenderUtils;
-import org.andor.utils.ShaderCode;
+import org.andor.utils.shader.ShaderCode;
 
 public abstract class RenderPass {
 	

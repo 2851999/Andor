@@ -25,6 +25,7 @@ import org.andor.core.render.Renderer;
 import org.andor.utils.FPSCalculator;
 import org.andor.utils.FontUtils;
 import org.andor.utils.OpenGLUtils;
+import org.andor.utils.Timer;
 
 public class GameLoop implements GameLoopInterface, InputListenerInterface {
 	
@@ -36,6 +37,8 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 	
 	/* The other game loop interfaces */
 	public static List<GameLoopInterface> interfaces;
+	
+	public static Timer timer = new Timer();
 	
 	/* The default constructor */
 	public GameLoop() {
@@ -85,26 +88,37 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 	
 	/* The method called to run a 'tick' of this game loop */
 	public void tick() {
+		timer.start();
 		//Update the FPS calculator
 		this.fpsCalculator.update();
 		//Make sure Andor isn't currently running on Android
 		if (! Settings.AndroidMode)
 			//Check the input
 			InputManager.checkInput();
+		System.out.println("Input: " + timer.getTime() + " ms");
+		timer.restart();
 		//Call the update method
 		this.update();
+		System.out.println("Update: " + timer.getTime() + " ms");
+		timer.restart();
 		this.interfaceUpdate();
 		//Call the render method
 		this.render();
 		this.interfaceRender();
+		System.out.println("Render: " + timer.getTime() + " ms");
+		timer.restart();
 		//Check to see whether any information should be shown
 		if (Settings.Debugging.ShowInformation)
 			//Render the information
 			this.renderInformation();
+		System.out.println("Render Information: " + timer.getTime() + " ms");
+		timer.restart();
 		//Make sure Andor isn't currently running on Android
 		if (! Settings.AndroidMode)
 			//Update the display
 			Window.updateDisplay();
+		System.out.println("Update Display: " + timer.getTime() + " ms");
+		timer.stop();
 	}
 	
 	/* The method used to render some information */

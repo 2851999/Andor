@@ -12,7 +12,7 @@ import org.andor.core.Matrix;
 import org.andor.core.Settings;
 import org.andor.utils.GLUtils;
 import org.andor.utils.RenderUtils;
-import org.andor.utils.ShaderCode;
+import org.andor.utils.shader.ShaderCode;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
 
@@ -37,25 +37,25 @@ public class ForwardPass extends RenderPass {
 		//Check to see whether lighting should be applied
 		if (Renderer.light != null) {
 			//Assign the lighting values
-			currentShader.setUniformf("lighting", 1.0f);
-			currentShader.setUniformf("ambientLight", Renderer.ambientLight);
-			currentShader.setUniformf("specularIntensity", Renderer.specularIntensity);
-			currentShader.setUniformf("specularPower", Renderer.specularExponent);
+			currentShader.setUniformf("andor_lighting", 1.0f);
+			currentShader.setUniformf("andor_ambientLight", Renderer.ambientLight);
+			currentShader.setUniformf("andor_specularIntensity", Renderer.specularIntensity);
+			currentShader.setUniformf("andor_specularPower", Renderer.specularExponent);
 			//if (Renderer.camera != null)
-				currentShader.setUniformf("eyePos", Renderer.camera.getPosition());
+				currentShader.setUniformf("andor_eyePosition", Renderer.camera.getPosition());
 			//Apply the light
 			Renderer.light.applyUniforms(currentShader);
 		} else if (Renderer.useAmbient) {
-			currentShader.setUniformf("lighting", 1.0f);
-			currentShader.setUniformf("directionalLight.base.intensity", 0);
-			currentShader.setUniformf("pointLight.base.intensity", 0);
-			currentShader.setUniformf("spotLight.pointLight.base.intensity", 0);
+			currentShader.setUniformf("andor_lighting", 1.0f);
+			currentShader.setUniformf("andor_directionalLight.base.intensity", 0);
+			currentShader.setUniformf("andor_pointLight.base.intensity", 0);
+			currentShader.setUniformf("andor_spotLight.pointLight.base.intensity", 0);
 		} else {
 			//Prevent lighting
-			currentShader.setUniformf("lighting", 0.0f);
-			currentShader.setUniformf("directionalLight.base.intensity", 0);
-			currentShader.setUniformf("pointLight.base.intensity", 0);
-			currentShader.setUniformf("spotLight.pointLight.base.intensity", 0);
+			currentShader.setUniformf("andor_lighting", 0.0f);
+			currentShader.setUniformf("andor_directionalLight.base.intensity", 0);
+			currentShader.setUniformf("andor_pointLight.base.intensity", 0);
+			currentShader.setUniformf("andor_spotLight.pointLight.base.intensity", 0);
 		}
 		
 		//The attributes within the shader
@@ -67,7 +67,6 @@ public class ForwardPass extends RenderPass {
 		//Give the shader the matrices
 		currentShader.setUniformMatrix(RenderUtils.UNIFORM_MODEL_VIEW_PROJECTION_MATRIX, Matrix.modelViewProjectionMatrix);
 		currentShader.setUniformMatrix(RenderUtils.UNIFORM_NORMAL_MATRIX, Matrix.normalMatrix);
-		currentShader.setUniformMatrix(RenderUtils.UNIFORM_MODEL_MATRIX, Matrix.modelMatrix);
 		
 		if (renderer.vertices != null)
 			prepareVertexArray(vertexAttribute, renderer.verticesHandle, renderer.vertexValuesCount);
@@ -78,13 +77,9 @@ public class ForwardPass extends RenderPass {
 		if (renderer.textureCoords != null) {
 			prepareVertexArray(textureCoordsAttribute, renderer.texturesHandle, renderer.textureCoordValuesCount);
 			currentShader.setUniformf(RenderUtils.UNIFORM_HAS_TEXTURE, 1.0f);
-		} else
+		} else {
 			currentShader.setUniformf(RenderUtils.UNIFORM_HAS_TEXTURE, 0.0f);
-		
-		//Check the image
-		if (renderer.texture != null)
-			//Bind the texture
-			currentShader.setUniformi(RenderUtils.UNIFORM_TEXTURE, this.bindTexture(renderer.texture.getPointer()));
+		}
 		
 		//Check whether the material exists
 		if (renderer.material != null)

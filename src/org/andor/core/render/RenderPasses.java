@@ -11,6 +11,7 @@ package org.andor.core.render;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.andor.core.ImageLoader;
 import org.andor.core.Settings;
 
 public class RenderPasses {
@@ -28,6 +29,8 @@ public class RenderPasses {
 			renderPasses.add(new GeometryPass());
 			renderPasses.add(new FinalPass());
 		}
+		//Load and assign the default texture
+		Settings.Resources.DEFAULT_TEXTURE = ImageLoader.loadImage("/resources/andor/blank.png");
 	}
 	
 	/* The static method used to 'set' a specific pass given its name */

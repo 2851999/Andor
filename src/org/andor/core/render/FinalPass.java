@@ -12,7 +12,7 @@ import org.andor.core.Matrix;
 import org.andor.core.Settings;
 import org.andor.utils.GLUtils;
 import org.andor.utils.RenderUtils;
-import org.andor.utils.ShaderCode;
+import org.andor.utils.shader.ShaderCode;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
 

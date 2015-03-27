@@ -95,16 +95,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		this.font = FontUtils.loadBitmapFont("H:/Andor/test2.png", true, 16, 12);
 		//Load the texture and bind it
 		String path = "H:/Andor/";
-		//Create a skybox
-		SkyBox skybox = new SkyBox(path, new String[] {
-				"front.png",
-				"back.png",
-				"left.png",
-				"right.png",
-				"top.png",
-				"bottom.png"
-		}, true, 500);
-		this.camera.setSkyBox(skybox);
+		this.camera.setSkyBox(new SkyBox(ImageLoader.loadImage(path + "skybox1.png", true), 100));
 		//Create the images
 		ImageSet images = new ImageSet();
 		Image grassSide = images.loadImage(path + "Grass_Side.png", true);
@@ -250,7 +241,6 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		
 		OpenGLUtils.setupOrtho(-1, 1);
 		
-		this.bitmapText.image.bind();
 		this.bitmapText.render();
 		
 		//Render the FPS

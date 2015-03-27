@@ -11,7 +11,7 @@ package org.andor.core;
 public class ColourAnimation2D extends Animation2D {
 	
 	/* The colours */
-	public Colour[] colours;
+	private Colour[] colours;
 	
 	/* The constructor */
 	public ColourAnimation2D(RenderableObject2D entity, Colour[] colours, long timeBetweenFrame) {
@@ -30,17 +30,17 @@ public class ColourAnimation2D extends Animation2D {
 	/* The method used to update this animation */
 	public void updateAnimation() {
 		//Set the image
-		this.entity.setColour(this.colours[this.currentFrame]);
+		this.getEntity().setColour(this.colours[this.getCurrentFrame()]);
 	}
 	
 	/* The method used to reset this animation */
 	public void resetAnimation() {
-		this.entity.setColour(this.colours[this.currentFrame]);
+		this.getEntity().setColour(this.colours[this.getCurrentFrame()]);
 	}
 	
 	/* The method used to determine whether the animation has finished */
 	public boolean hasFinished() {
-		return this.currentFrame == this.colours.length;
+		return this.getCurrentFrame() == this.colours.length;
 	}
 	
 	/* The set/get methods */

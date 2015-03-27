@@ -13,22 +13,22 @@ import org.andor.utils.Timer;
 public abstract class Animation2D {
 	
 	/* The entity */
-	public RenderableObject2D entity;
+	private RenderableObject2D entity;
 	
 	/* The time between each frame of the animation */
-	public long timeBetweenFrame;
+	private long timeBetweenFrame;
 	
 	/* The timer */
-	public Timer timer;
+	private Timer timer;
 	
 	/* The current frame */
-	public int currentFrame;
+	private int currentFrame;
 	
 	/* Is the animation running */
-	public boolean running;
+	private boolean running;
 	
 	/* The boolean that states whether this animation should repeat */
-	public boolean repeat;
+	private boolean repeat;
 	
 	/* The constructor */
 	public Animation2D(RenderableObject2D entity, long timeBetweenFrame) {
@@ -134,7 +134,13 @@ public abstract class Animation2D {
 	}
 	
 	/* The set/get methods */
+	public void setEntity(RenderableObject2D entity) { this.entity = entity; }
 	public void setTimeBetweenFrame(long timeBetweenFrame) { this.timeBetweenFrame = timeBetweenFrame; }
+	public void setRepeat(boolean repeat) { this.repeat = repeat; }
+	public RenderableObject2D getEntity() { return this.entity; }
 	public long getTimeBetweenFrame() { return this.timeBetweenFrame; }
+	public int getCurrentFrame() { return this.currentFrame; }
+	public boolean isRunning() { return this.running; }
+	public boolean getRepeat() { return this.repeat; }
 	
 }

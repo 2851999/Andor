@@ -11,7 +11,7 @@ package org.andor.core;
 public class ImageAnimation2D extends Animation2D {
 	
 	/* The images */
-	public Image[] images;
+	private Image[] images;
 	
 	/* The constructor */
 	public ImageAnimation2D(RenderableObject2D entity, Image[] images, long timeBetweenFrame) {
@@ -30,17 +30,17 @@ public class ImageAnimation2D extends Animation2D {
 	/* The method used to update this animation */
 	public void updateAnimation() {
 		//Set the image
-		this.entity.setTexture(this.images[this.currentFrame]);
+		this.getEntity().setTexture(this.images[this.getCurrentFrame()]);
 	}
 	
 	/* The method used to reset this animation */
 	public void resetAnimation() {
-		this.entity.setTexture(this.images[this.currentFrame]);
+		this.getEntity().setTexture(this.images[this.getCurrentFrame()]);
 	}
 	
 	/* The method used to determine whether the animation has finished */
 	public boolean hasFinished() {
-		return this.currentFrame == this.images.length;
+		return this.getCurrentFrame() == this.images.length;
 	}
 	
 	/* The set/get methods */

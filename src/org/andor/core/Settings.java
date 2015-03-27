@@ -22,7 +22,7 @@ public class Settings {
 		/* The build of Andor */
 		public static final String BUILD = "Experimental";
 		/* The date this build started development */
-		public static final String DATE = "22/03/2015";
+		public static final String DATE = "23/03/2015";
 	}
 	
 	/* The static class containing all of the settings required for the window */
@@ -85,7 +85,7 @@ public class Settings {
 	public static class Resources {
 		public static String FONT_DEFAULT = "/resources/andor/SEGOEUI.TTF";
 		public static class Shaders {
-			public static String FORWARD_DEFAULT = "/resources/andor/shaders/render/forward/phongshader";
+			public static String FORWARD_DEFAULT = "/resources/andor/shaders/render/forward/StandardShader";
 			public static String DEFERRED_GEOMETRY_PASS = "/resources/andor/shaders/render/deferred/GeometryPass";
 			public static String DEFERRED_DEFAULT_PASS = "/resources/andor/shaders/render/deferred/DefaultPass";
 			public static String DEFERRED_FINAL_PASS = "/resources/andor/shaders/render/deferred/FinalPass";
@@ -94,6 +94,7 @@ public class Settings {
 			public static String ICON_16 = "/resources/andor/Icon16.png";
 			public static String ICON_32 = "/resources/andor/Icon32.png";
 		}
+		public static Image DEFAULT_TEXTURE; //Assigned with render passes
 	}
 	
 	/* The static class containing all of the debugging settings */

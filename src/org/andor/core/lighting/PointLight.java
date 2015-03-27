@@ -39,7 +39,7 @@ public class PointLight extends BaseLight {
 	
 	/* The method used to start using this light */
 	public void applyUniforms(Shader shader) {
-		this.applyPointUniforms(shader, "");
+		this.applyPointUniforms(shader, "andor_");
 	}
 	
 }

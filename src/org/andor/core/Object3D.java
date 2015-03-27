@@ -93,6 +93,7 @@ public class Object3D {
 	public void setPosition(Vector3D position) { this.position = position; }
 	public void setPosition(float x, float y, float z) { this.position = new Vector3D(x, y, z); }
 	public void setRotation(Vector3D rotation) { this.rotation = rotation; }
+	public void setRotation(float x, float y, float z) { this.rotation = new Vector3D(x, y, z); }
 	public void setScale(Vector3D scale) { this.scale = scale; }
 	public void setScale(float scale) { this.setScale(new Vector3D(scale, scale, scale)); }
 	public void setScale(float x, float y, float z) { this.scale = new Vector3D(x, y, z); }

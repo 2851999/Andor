@@ -154,7 +154,7 @@ public class IntObj_GUIComponent extends MLInterpreterObject {
 		object.add(new MLParameter("repeatClickedEvents", "" + component.repeatClickedEvents));
 		object.add(new MLParameter("borderEnabled", "" + component.borderEnabled));
 		//Write additional objects that are needed
-		if (component.renderer.font != null && component.renderer.font.bitmapFont.image != Settings.Engine.DefaultFont.bitmapFont.image) {
+		if (component.renderer.font != null && component.renderer.font.bitmapFont.renderer.material.diffuseTextureMap != Settings.Engine.DefaultFont.bitmapFont.renderer.material.diffuseTextureMap) {
 			//Create the object
 			MLObject o = new MLObject("Font", object.name + "_font");
 			//Write the data to the object

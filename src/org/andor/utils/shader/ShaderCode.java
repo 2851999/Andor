@@ -6,11 +6,13 @@
  * COPYRIGHT @ 2014-2015
  **********************************************/
 
-package org.andor.utils;
+package org.andor.utils.shader;
 
 import java.util.List;
 
 import org.andor.core.Shader;
+import org.andor.utils.ArrayUtils;
+import org.andor.utils.FileUtils;
 
 public class ShaderCode {
 	
@@ -70,6 +72,9 @@ public class ShaderCode {
 		//Assign the shader code
 		this.vertexCode = FileUtils.read(this.path + this.vertexExtension, this.external);
 		this.fragmentCode = FileUtils.read(this.path + this.fragmentExtension, this.external);
+		//Apply any custom preprocessor directives
+		ShaderPreprocessor.execute(this.vertexCode, path + this.vertexExtension, this.external);
+		ShaderPreprocessor.execute(this.fragmentCode, path + this.fragmentExtension, this.external);
 	}
 	
 	/* The method used to load a shader given the path */
@@ -77,6 +82,9 @@ public class ShaderCode {
 		//Assign the shader code
 		this.vertexCode = FileUtils.read(path + this.vertexExtension, this.external);
 		this.fragmentCode = FileUtils.read(path + this.fragmentExtension, this.external);
+		//Apply any custom preprocessor directives
+		ShaderPreprocessor.execute(this.vertexCode, path + this.vertexExtension, this.external);
+		ShaderPreprocessor.execute(this.fragmentCode, path + this.fragmentExtension, this.external);
 	}
 	
 	/* The method used to load a shader given the path and external values */
@@ -84,6 +92,9 @@ public class ShaderCode {
 		//Assign the shader code
 		this.vertexCode = FileUtils.read(path + this.vertexExtension, external);
 		this.fragmentCode = FileUtils.read(path + this.fragmentExtension, external);
+		//Apply any custom preprocessor directives
+		ShaderPreprocessor.execute(this.vertexCode, path + this.vertexExtension, external);
+		ShaderPreprocessor.execute(this.fragmentCode, path + this.fragmentExtension, external);
 	}
 	
 	/* The method used to create a default shader (No external code - use the default) */

@@ -28,9 +28,9 @@ public class SpotLight extends PointLight {
 	
 	/* The method used to start using this light */
 	public void applyUniforms(Shader shader) {
-		this.applyPointUniforms(shader, "spotLight.");
-		shader.setUniformf("spotLight.direction", this.direction);
-		shader.setUniformf("spotLight.cutoff", this.cutoff);
+		this.applyPointUniforms(shader, "andor_spotLight.");
+		shader.setUniformf("andor_spotLight.direction", this.direction);
+		shader.setUniformf("andor_spotLight.cutoff", this.cutoff);
 	}
 	
 }

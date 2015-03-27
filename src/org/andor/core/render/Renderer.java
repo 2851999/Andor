@@ -98,9 +98,6 @@ public class Renderer {
 	public static float specularIntensity = 2;
 	public static float specularExponent = 32;
 	
-	/* The current texture (If any) */
-	public Image texture;
-	
 	/* The current material (If any) */
 	public Material material;
 	
@@ -343,7 +340,7 @@ public class Renderer {
 	
 	/* The method used to assign the texture */
 	public void setTexture(Image texture) {
-		this.texture = texture;
+		this.material.diffuseTextureMap = texture;
 	}
 	
 	/* The method used to assign the material */

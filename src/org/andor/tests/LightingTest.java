@@ -31,6 +31,7 @@ import org.andor.utils.OpenGLUtils;
 public class LightingTest extends BaseGame implements LitSceneInterface {
 	
 	public Model model;
+	public Model model2;
 	public static Camera3D camera;
 	public BaseLight light;
 	public LitScene scene;
@@ -39,6 +40,10 @@ public class LightingTest extends BaseGame implements LitSceneInterface {
 		this.model = OBJLoader.loadModel("H:/Andor/monkey2.obj", "H:/Andor/", true);
 		this.model.prepare();
 		this.model.scale.multiply(1f);
+		this.model2 = OBJLoader.loadModel("H:/Andor/plane.obj", "H:/Andor/", true);
+		this.model2.prepare();
+		this.model2.scale.multiply(1f);
+		this.model2.position.x += 3;
 		camera = new Camera3D();
 		camera.position.setZ(-2f);
 		camera.flying = true;
@@ -48,7 +53,7 @@ public class LightingTest extends BaseGame implements LitSceneInterface {
 		scene.lights.add(new DirectionalLight(Colour.RED, 0.8f, new Vector3D(0, 1, 1)));
 		//light = new PointLight(Colour.ORANGE, 0.8f, new Vector3D(0, 0, 1));
 		//light.position = new Vector3D(0, 0, 1);
-		light = new SpotLight(Colour.YELLOW, 0.9f, new Vector3D(0, 0, 0.4f), new Vector3D(0, 0, 1), 0.9f);
+		light = new SpotLight(Colour.YELLOW, 0.9f, new Vector3D(0, 0, 0.4f), new Vector3D(0, 0, -1), 0.9f);
 		light.position = new Vector3D(0, 0, 2);
 		scene.lights.add(light);
 		Renderer.camera = camera;
@@ -68,6 +73,7 @@ public class LightingTest extends BaseGame implements LitSceneInterface {
 			this.requestClose();
 		
 		this.model.rotation.y += 0.08f * this.getDelta();
+		this.model2.rotation.y -= 0.08f * this.getDelta();
 	}
 	
 	public void render() {
@@ -79,6 +85,7 @@ public class LightingTest extends BaseGame implements LitSceneInterface {
 		
 		camera.useView();
 		this.scene.render();
+		this.model2.render();
 	}
 	
 	public void renderObjects() {

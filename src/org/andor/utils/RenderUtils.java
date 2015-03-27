@@ -9,6 +9,7 @@
 package org.andor.utils;
 
 import org.andor.core.Colour;
+import org.andor.core.Settings;
 import org.andor.core.model.Material;
 import org.andor.core.render.RenderPass;
 import org.lwjgl.opengl.GL11;
@@ -82,6 +83,9 @@ public class RenderUtils {
 			pass.currentShader.setUniformf(UniformMaterial.DIFFUSE_TEXTURE, pass.bindTexture(material.diffuseTextureMap.getPointer()));
 			//Assign the 'has' value
 			hasDiffuseTexture = 1;
+		} else {
+			//Bind the default texture
+			pass.currentShader.setUniformi(RenderUtils.UNIFORM_TEXTURE, pass.bindTexture(Settings.Resources.DEFAULT_TEXTURE.getPointer()));
 		}
 		if (material.specularTextureMap != null) {
 			//Assign the texture

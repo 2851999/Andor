@@ -21,8 +21,6 @@ public class Font {
 	
 	/* The method used to render some text */
 	public void render(String text, float x, float y) {
-		//Bind the image
-		this.bitmapFont.image.bind();
 		//Set the position
 		this.bitmapFont.position = new Vector2D(x, y);
 		//Check the text
