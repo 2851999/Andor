@@ -16,7 +16,7 @@ public abstract class Effect {
 	public String name;
 	
 	/* The renderer instance used to apply the effect to */
-	public Renderer renderer;
+	private Renderer renderer;
 	
 	/* The constructor */
 	public Effect(String name, Renderer renderer) {
@@ -27,5 +27,10 @@ public abstract class Effect {
 	
 	/* The method used to apply this effect given the current delta */
 	public abstract void update(long delta);
+	
+	/* The getter and setters */
+	public void setRenderer(Renderer renderer) { this.renderer = renderer; }
+	public String getName() { return this.name; }
+	public Renderer getRenderer() { return this.renderer; }
 	
 }

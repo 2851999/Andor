@@ -13,10 +13,12 @@ import java.nio.ShortBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.andor.core.Camera3D;
 import org.andor.core.Colour;
 import org.andor.core.Image;
 import org.andor.core.Settings;
 import org.andor.core.Shader;
+import org.andor.core.lighting.BaseLight;
 import org.andor.core.model.Material;
 import org.andor.utils.BufferUtils;
 import org.andor.utils.GLUtils;
@@ -88,8 +90,13 @@ public class Renderer {
 	public static boolean deferredRender = false;
 	public static boolean deferredNormalRender = false;
 	
-	/* The current texture (If any) */
-	public Image texture;
+	/* The lighting information */
+	public static Camera3D camera;
+	public static BaseLight light;
+	public static boolean useAmbient = false;
+	public static Colour ambientLight = new Colour(0.1f, 0.1f, 0.1f);
+	public static float specularIntensity = 2;
+	public static float specularExponent = 32;
 	
 	/* The current material (If any) */
 	public Material material;
@@ -163,39 +170,27 @@ public class Renderer {
 	
 	/* The method used to render the geometry to the geometry buffer */
 	public void render() {
+		getPass().render(this);
+	}
+	
+	/* The static method used to determine what pass to use and return it */
+	public static RenderPass getPass() {
 		//Check to see whether deferred rendering is on
-		if (deferredRender && ! Settings.AndroidMode && Settings.Video.DeferredRendering)
-			//Deferred render
-			this.deferredRender();
-		else
-			//Forward render
-			this.forwardRender();
-	}
-	
-	/* The method used to forward render */
-	public void forwardRender() {
-		if (Settings.Video.DeferredRendering && ! deferredNormalRender)
-			//Find the forward pass and use it
-			RenderPasses.getPass(GeometryPass.PASS_NAME).render(this);
-		else
-			RenderPasses.getPass(ForwardPass.PASS_NAME).render(this);
-	}
-	
-	/* The method used to apply deferred rendering */
-	public void deferredRender() {
-		//Make sure deferred rendering is enabled
-		if (! Settings.AndroidMode && Settings.Video.DeferredRendering) {
-			if (deferredNormalRender)
-				this.deferredNormalRender();
+		if (deferredRender && ! Settings.AndroidMode && Settings.Video.DeferredRendering) {
+			//Make sure deferred rendering is enabled
+			if (! Settings.AndroidMode && Settings.Video.DeferredRendering) {
+				if (deferredNormalRender)
+					return RenderPasses.getPass(ForwardPass.PASS_NAME);
+				else
+					return RenderPasses.getPass(FinalPass.PASS_NAME);
+			} else
+				return null;
+		} else {
+			if (Settings.Video.DeferredRendering && ! deferredNormalRender)
+				return RenderPasses.getPass(GeometryPass.PASS_NAME);
 			else
-				//Find the geometry pass and use it
-				RenderPasses.getPass(FinalPass.PASS_NAME).render(this);
+				return RenderPasses.getPass(ForwardPass.PASS_NAME);
 		}
-	}
-	
-	/* The method used to render a normal image while deferred rendering */
-	public void deferredNormalRender() {
-		this.forwardRender();
 	}
 	
 	/* The method used to update the vertices */
@@ -333,7 +328,7 @@ public class Renderer {
 	
 	/* The method used to assign the texture */
 	public void setTexture(Image texture) {
-		this.texture = texture;
+		this.material.diffuseTextureMap = texture;
 	}
 	
 	/* The method used to assign the material */

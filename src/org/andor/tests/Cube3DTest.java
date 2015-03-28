@@ -38,7 +38,6 @@ import org.andor.core.input.Keyboard;
 import org.andor.core.input.KeyboardEvent;
 import org.andor.core.input.Mouse;
 import org.andor.core.input.MouseMotionEvent;
-import org.andor.core.lighting.Light3D;
 import org.andor.core.model.Model;
 import org.andor.core.model.OBJLoader;
 import org.andor.core.render.DeferredScene;
@@ -80,10 +79,6 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 	
 	public BitmapText bitmapText;
 	
-	public Light3D light0;
-	public Light3D light1;
-	public Light3D light2;
-	
 	public DeferredScene scene;
 	
 	/* The constructor */
@@ -100,16 +95,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		this.font = FontUtils.loadBitmapFont("H:/Andor/test2.png", true, 16, 12);
 		//Load the texture and bind it
 		String path = "H:/Andor/";
-		//Create a skybox
-		SkyBox skybox = new SkyBox(path, new String[] {
-				"front.png",
-				"back.png",
-				"left.png",
-				"right.png",
-				"top.png",
-				"bottom.png"
-		}, true, 500);
-		this.camera.setSkyBox(skybox);
+		this.camera.setSkyBox(new SkyBox(ImageLoader.loadImage(path + "skybox1.png", true), 100));
 		//Create the images
 		ImageSet images = new ImageSet();
 		Image grassSide = images.loadImage(path + "Grass_Side.png", true);
@@ -121,6 +107,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 				grassSide, grassSide, grassSide, grassSide,
 				grass, dirt
 		}, 1, 1, 1, Colour.WHITE);
+		cube.setTexture(this.texture);
 		bigCube = Object3DBuilder.createCube(10, 10, 10, new Colour(130f / 255f, 176f / 255f, 255f / 255f, 0.8f));
 		//Load the model
 		this.model = OBJLoader.loadModel(path + "ship.obj", path, true);
@@ -190,7 +177,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		                                                                                                                                   
 		this.audio.listenerPosition = this.camera.position.clone();
 		this.audio.listenerPosition.multiply(new Vector3D(-1, 1, 1));
-		this.audio.listenerRotation = this.camera.rotation;
+		//this.audio.listenerRotation = this.camera.rotation;
 		this.audio.sourcePosition = this.model.position.clone();
 		this.audio.sourcePosition.multiply(new Vector3D(1, 1, -1));
 		this.audio.update();
@@ -199,7 +186,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		
 		Vector3D change = new Vector3D(0, 0.06f, 0);
 		change.multiply(getDelta());
-		//this.model.rotation.add(change);
+		this.model.rotation.add(change);
 	}
 	
 	/* The method called when the game loop is rendered */
@@ -237,13 +224,8 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		
 		OpenGLUtils.enableTexture2D();
 		
-		//Bind the texture
-		this.texture.bind();
-		
 		//Render the cube
 		this.cube.render();
-		
-		this.texture.unbind();
 		
 		OpenGLUtils.disableTexture2D();
 		
@@ -255,7 +237,6 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		
 		OpenGLUtils.setupOrtho(-1, 1);
 		
-		this.bitmapText.image.bind();
 		this.bitmapText.render();
 		
 		//Render the FPS
@@ -304,15 +285,6 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 			this.cube.renderer.updateColours(Object3DBuilder.createColourArray(24, new Colour(1f, 1f, 1f, 0.1f)));
 		else if (e.getCode() == Keyboard.KEY_9_CODE)
 			this.cube.renderer.updateColours(Object3DBuilder.createColourArray(24, new Colour(1f, 1f, 1f, 0.0f)));
-		else if (e.getCode() == Keyboard.KEY_LBRACKET_CODE) {
-			this.light0.type = Light3D.TYPE_VERTEX_SPOT;
-			this.light1.type = Light3D.TYPE_VERTEX_DIRECTIONAL;
-			this.light2.type = Light3D.TYPE_VERTEX_POINT;
-		} else if (e.getCode() == Keyboard.KEY_RBRACKET_CODE) {
-			this.light0.type = Light3D.TYPE_FRAGMENT_SPOT;
-			this.light1.type = Light3D.TYPE_FRAGMENT_DIRECTIONAL;
-			this.light2.type = Light3D.TYPE_FRAGMENT_POINT;
-		}
 	}
 	
 	/* The method called when the mouse moves */

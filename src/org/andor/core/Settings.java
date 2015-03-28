@@ -18,11 +18,11 @@ public class Settings {
 	/* The static class containing all of the information about Andor */
 	public static class Information {
 		/* The version of Andor */
-		public static final String VERSION = "V1.0.2";
+		public static final String VERSION = "V1.0.3";
 		/* The build of Andor */
 		public static final String BUILD = "Development";
 		/* The date this build started development */
-		public static final String DATE = "22/03/2015";
+		public static final String DATE = "28/03/2015";
 	}
 	
 	/* The static class containing all of the settings required for the window */
@@ -85,16 +85,19 @@ public class Settings {
 	public static class Resources {
 		public static String FONT_DEFAULT = "/resources/andor/SEGOEUI.TTF";
 		public static class Shaders {
-			public static String FORWARD_DEFAULT = "/resources/andor/shaders/render/forward/andorshader";
-			public static String FORWARD_LIGHT = "/resources/andor/shaders/render/forward/lighting/lightfrag";
-			public static String DEFERRED_GEOMETRY_PASS = "/resources/andor/shaders/render/deferred/GeometryPass";
-			public static String DEFERRED_DEFAULT_PASS = "/resources/andor/shaders/render/deferred/DefaultPass";
-			public static String DEFERRED_FINAL_PASS = "/resources/andor/shaders/render/deferred/FinalPass";
+			public static String FORWARD_DEFAULT = "/resources/andor/shaders/StandardForwardShader";
+			public static String FORWARD_AMBIENT_LIGHT = "/resources/andor/shaders/ForwardAmbientLight";
+			public static String FORWARD_DIRECTIONAL_LIGHT = "/resources/andor/shaders/ForwardDirectionalLight";
+			public static String FORWARD_POINT_LIGHT = "/resources/andor/shaders/ForwardPointLight";
+			public static String FORWARD_SPOT_LIGHT = "/resources/andor/shaders/ForwardSpotLight";
+			public static String DEFERRED_GEOMETRY_PASS = "/resources/andor/shaders/StandardDeferredGeometryShader";
+			public static String DEFERRED_FINAL_PASS = "/resources/andor/shaders/StandardDeferredFinalShader";
 		}
 		public static class Icons {
 			public static String ICON_16 = "/resources/andor/Icon16.png";
 			public static String ICON_32 = "/resources/andor/Icon32.png";
 		}
+		public static Image DEFAULT_TEXTURE; //Assigned with render passes
 	}
 	
 	/* The static class containing all of the debugging settings */

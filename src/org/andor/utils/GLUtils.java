@@ -8,6 +8,7 @@
 
 package org.andor.utils;
 
+import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
 
@@ -22,13 +23,6 @@ import android.opengl.GLES20;
 public class GLUtils {
 	
 	/* ------------------------------- METHODS FOR CROSS PLATFORM SUPPORT (OPENGL AND OPENGLES) -------------------------------*/
-	
-	public static void bindTexture(int texture) {
-		if (onPC())
-			GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture);
-		else
-			GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texture);
-	}
 	
 	public static void activeTexture(int texture) {
 		if (onPC())
@@ -292,6 +286,70 @@ public class GLUtils {
 			GL11.glDisable(target);
 		else
 			GLES20.glDisable(target);
+	}
+	
+	public static void blendFunc(int sfactor, int dfactor) {
+		if (onPC())
+			GL11.glBlendFunc(sfactor, dfactor);
+		else
+			GLES20.glBlendFunc(sfactor, dfactor);
+	}
+	
+	public static void depthMask(boolean flag) {
+		if (onPC())
+			GL11.glDepthMask(flag);
+		else
+			GLES20.glDepthMask(flag);
+	}
+	
+	public static void depthFunc(int func) {
+		if (onPC())
+			GL11.glDepthFunc(func);
+		else
+			GLES20.glDepthFunc(func);
+	}
+	
+	public static void bindTexture(int target, int texture) {
+		if (onPC())
+			GL11.glBindTexture(target, texture);
+		else
+			GLES20.glBindTexture(target, texture);
+	}
+	
+	public static void texImage2D(int target, int level, int internalformat, int width, int height, int border, int format, int type, ByteBuffer pixels) {
+		if (onPC())
+			GL11.glTexImage2D(target, level, internalformat, width, height, border, format, type, pixels);
+		else
+			GLES20.glTexImage2D(target, level, internalformat, width, height, border, format, type, pixels);
+	}
+	
+	public static void texParameteri(int target, int pname, int param) {
+		if (onPC())
+			GL11.glTexParameteri(target, pname, param);
+		else
+			GLES20.glTexParameteri(target, pname, param);
+	}
+	
+	public static void texEnvi(int target, int pname, int param) {
+		if (onPC())
+			GL11.glTexEnvi(target, pname, param);
+	}
+	
+	public static int genTextures() {
+		if (onPC())
+			return GL11.glGenTextures();
+		else {
+			int[] h = new int[1];
+			GLES20.glGenTextures(1, h, 0);
+			return h[0];
+		}
+	}
+	
+	public static void deleteTextures(int texture) {
+		if (onPC())
+			GL11.glDeleteTextures(texture);
+		else
+			GLES20.glDeleteTextures(1, new int[] { texture }, 0);
 	}
 	
 	/* The static method used to return whether android is enabled */

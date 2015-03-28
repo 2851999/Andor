@@ -53,7 +53,6 @@ public class Window {
 		//Assign the values
 		setResizable(Settings.Window.Resizable);
 		setUndecorated(Settings.Window.Undecorated);
-		setVSync(Settings.Video.VSync);
 		//The monitor
 		long monitor = 0;
 		//Check the fullscreen value
@@ -65,9 +64,9 @@ public class Window {
 			Settings.Window.Width = ScreenUtils.getScreenWidth();
 			Settings.Window.Height = ScreenUtils.getScreenHeight();
 		}
+		GLFW.glfwWindowHint(GLFW.GLFW_REFRESH_RATE, 0);
 		//Set the instance
 		instance = GLFW.glfwCreateWindow((int) Settings.Window.Width, (int) Settings.Window.Height, Settings.Window.Title, monitor, 0L);
-		
 		//Move to centre
 		centre();
 		
@@ -199,6 +198,8 @@ public class Window {
 		GLFW.glfwMakeContextCurrent(instance);
 		//Create the OpenGL context
 		GLContext.createFromCurrent();
+		//Enable VSync if necessary
+		setVSync(Settings.Video.VSync);
 		//Update OpenGL's resolution
 		GL11.glScissor(0, 0, (int) Settings.Window.Width, (int) Settings.Window.Height);
 		GL11.glViewport(0, 0, (int) Settings.Window.Width, (int) Settings.Window.Height);

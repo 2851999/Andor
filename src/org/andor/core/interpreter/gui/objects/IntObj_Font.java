@@ -66,7 +66,7 @@ public class IntObj_Font extends MLInterpreterObject {
 		//Create the object
 		MLObject o = new MLObject("Image", object.name + "_image");
 		//Write the data to the object
-		IntObj_Image.write(o, font.bitmapFont.image);
+		IntObj_Image.write(o, font.bitmapFont.renderer.material.diffuseTextureMap);
 		//Add the object
 		GUIInterpreter.addAdditionalObject(o);
 		//Add the parameters

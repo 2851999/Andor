@@ -11,7 +11,7 @@ package org.andor.core;
 import org.andor.core.logger.Log;
 import org.andor.core.logger.Logger;
 import org.andor.utils.GLUtils;
-import org.andor.utils.ShaderUtils;
+import org.andor.utils.shader.ShaderUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 

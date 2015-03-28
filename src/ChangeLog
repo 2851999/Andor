@@ -1,4 +1,58 @@
 -------------------------------------------------------------
+Release 1 | Beta 0 | Development 3 | Experimental 0
+
+* Added BaseLight
+* Added DirectionalLight
+* Added PointLight
+* Added SpotLight
+* Added LitScene
+* Added LitSceneInterface
+* Added RenderTest
+* Added ShaderPreprocessor
+* Added ShaderPreprocessorDirective
+* Added IncludeDirective
+* Added Lights
+
+* Created the package org.andor.utils.shader
+
+* Removed PhongPass
+* Removed 'texture' in Renderer, the textures for objects
+  are now stored in the diffuseMap in their material instance
+
+-------------------------------------------------------------
+Release 1 | Beta 0 | Development 2 | Experimental 3
+
+* Added Lights
+
+* Updated lighting system
+
+* Fixed deferred rendering
+
+-------------------------------------------------------------
+Release 1 | Beta 0 | Development 2 | Experimental 2
+
+* Added RenderTest
+* Added ShaderPreprocessor
+* Added ShaderPreprocessorDirective
+* Added IncludeDirective
+
+* Created the package org.andor.utils.shader
+
+* Removed PhongPass
+* Removed 'texture' in Renderer, the textures for objects
+  are now stored in the diffuseMap in their material instance
+
+-------------------------------------------------------------
+Release 1 | Beta 0 | Development 2 | Experimental 1
+
+* Added BaseLight
+* Added DirectionalLight
+* Added PointLight
+* Added SpotLight
+* Added LitScene
+* Added LitSceneInterface
+
+-------------------------------------------------------------
 Release 1 | Beta 0 | Development 2 | Experimental 0
 
 * Added GravitySource2D

@@ -10,6 +10,45 @@ package org.andor.core;
 
 public class SkyBox {
 	
+	/* The texture coordinates */
+	public static final float[] TEXTURE_COORDINATES = {
+		//BACK
+		1f / 4f, 1f / 3f,
+		0f, 1f / 3f,
+		0f, 2f / 3f,
+		1f / 4f, 2f / 3f,
+		
+		//LEFT
+		1f / 4f, 2f / 3f,
+		2f / 4f, 2f / 3f,
+		2f / 4f, 1f / 3f,
+		1f / 4f, 1f / 3f,
+		
+		//FORWARD
+		2f / 4f, 1f / 3f,
+		3f / 4f, 1f / 3f,
+		3f / 4f, 2f / 3f,
+		2f / 4f, 2f / 3f,
+		
+		//BOTTOM
+		2f / 4f, 1f,
+		1f / 4f, 1f,
+		1f / 4f, 2f / 3f,
+		2f / 4f, 2f / 3f,
+		
+		//RIGHT
+		3f / 4f, 2f / 3f,
+		1, 2f / 3f,
+		1, 1f / 3f,
+		3f / 4f, 1f / 3f,
+		
+		//TOP
+		2f / 4f, 1f / 3f,
+		1f / 4f, 1f / 3f,
+		1f / 4f, 0f,
+		2f / 4f, 0f,
+	};
+	
 	/* The image set used for this skybox */
 	public ImageSet imageSet;
 	
@@ -36,15 +75,26 @@ public class SkyBox {
 		this.texture = this.imageSet.joinImages();
 		//Setup the cube
 		this.box = Object3DBuilder.createCube(images, size, size, size, Colour.WHITE);
+		//Assign the texture
+		this.box.setTexture(this.texture);
+	}
+	
+	/* The constructor */
+	public SkyBox(Image image, float size) {
+		//Setup the cube
+		this.box = Object3DBuilder.createCube(image, size, size, size, Colour.WHITE);
+		this.texture = image;
+		//Assign the texture coordinates
+		this.box.renderer.updateTextures(TEXTURE_COORDINATES);
+		//Assign the texture
+		this.box.setTexture(this.texture);
 	}
 	
 	/* The method used to render this skybox */
 	public void renderSkybox() {
-		//Bind the texture
 		this.texture.bind();
 		//Render this
 		this.box.render();
-		//Unbind the texture
 		this.texture.unbind();
 	}
 	

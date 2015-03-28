@@ -12,7 +12,7 @@ import org.andor.core.Matrix;
 import org.andor.core.Settings;
 import org.andor.utils.GLUtils;
 import org.andor.utils.RenderUtils;
-import org.andor.utils.ShaderCode;
+import org.andor.utils.shader.ShaderCode;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
 
@@ -34,6 +34,20 @@ public class ForwardPass extends RenderPass {
 		//Use the shader
 		this.useShader();
 		
+		//Check to see whether lighting should be applied
+		if (Renderer.light != null) {
+			//Assign the lighting values
+			currentShader.setUniformf("andor_ambientLight", Renderer.ambientLight);
+			currentShader.setUniformf("andor_specularIntensity", Renderer.specularIntensity);
+			currentShader.setUniformf("andor_specularPower", Renderer.specularExponent);
+			if (Renderer.camera != null)
+				currentShader.setUniformf("andor_eyePosition", Renderer.camera.getPosition());
+			//Apply the light
+			Renderer.light.applyUniforms(currentShader);
+		} else if (Renderer.useAmbient) {
+			currentShader.setUniformf("andor_ambientLight", Renderer.ambientLight);
+		}
+		
 		//The attributes within the shader
 		int vertexAttribute = currentShader.getAttributeLocation(RenderUtils.ATTRIBUTE_VERTEX);
 		int colourAttribute = currentShader.getAttributeLocation(RenderUtils.ATTRIBUTE_COLOUR);
@@ -43,7 +57,6 @@ public class ForwardPass extends RenderPass {
 		//Give the shader the matrices
 		currentShader.setUniformMatrix(RenderUtils.UNIFORM_MODEL_VIEW_PROJECTION_MATRIX, Matrix.modelViewProjectionMatrix);
 		currentShader.setUniformMatrix(RenderUtils.UNIFORM_NORMAL_MATRIX, Matrix.normalMatrix);
-		currentShader.setUniformMatrix(RenderUtils.UNIFORM_MODEL_MATRIX, Matrix.modelMatrix);
 		
 		if (renderer.vertices != null)
 			prepareVertexArray(vertexAttribute, renderer.verticesHandle, renderer.vertexValuesCount);
@@ -54,13 +67,9 @@ public class ForwardPass extends RenderPass {
 		if (renderer.textureCoords != null) {
 			prepareVertexArray(textureCoordsAttribute, renderer.texturesHandle, renderer.textureCoordValuesCount);
 			currentShader.setUniformf(RenderUtils.UNIFORM_HAS_TEXTURE, 1.0f);
-		} else
+		} else {
 			currentShader.setUniformf(RenderUtils.UNIFORM_HAS_TEXTURE, 0.0f);
-		
-		//Check the image
-		if (renderer.texture != null)
-			//Bind the texture
-			currentShader.setUniformi(RenderUtils.UNIFORM_TEXTURE, this.bindTexture(renderer.texture.getPointer()));
+		}
 		
 		//Check whether the material exists
 		if (renderer.material != null)

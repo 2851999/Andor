@@ -16,9 +16,6 @@ import org.andor.utils.ArrayUtils;
 
 public class BitmapText extends RenderableObject2D {
 	
-	/* The image */
-	public Image image;
-	
 	/* The font size */
 	public float fontSize;
 	
@@ -42,8 +39,6 @@ public class BitmapText extends RenderableObject2D {
 	
 	/* The constructor of the font */
 	public BitmapText(Image image, int gridSize, float fontSize, Colour[] colour) {
-		//Load the font image
-		this.image = image;
 		//Set the colour
 		this.colour = colour;
 		//Set the grid size
@@ -55,6 +50,8 @@ public class BitmapText extends RenderableObject2D {
 		this.renderer = new Renderer(Renderer.TRIANGLES, Renderer.VERTEX_VALUES_COUNT_2D);
 		this.renderer.setValues(Object2DBuilder.createQuadV(1, 1), Object2DBuilder.createColourArray(4, Colour.WHITE), Object2DBuilder.createQuadT(image), Object2DBuilder.createQuadDO());
 		this.renderer.setupBuffers();
+		//Load the font image
+		this.setTexture(image);
 	}
 	
 	/* The constructor of the font */
@@ -80,8 +77,8 @@ public class BitmapText extends RenderableObject2D {
 			//Get the ASCII code of the character
 			int asciiCode = (int) text.charAt(a);
 			//Calculate the cell's size and set it
-			this.cellWidth = this.image.getWidth() / this.gridWidth;
-			this.cellHeight = this.image.getHeight() / this.gridHeight;
+			this.cellWidth = this.renderer.material.diffuseTextureMap.getWidth() / this.gridWidth;
+			this.cellHeight = this.renderer.material.diffuseTextureMap.getHeight() / this.gridHeight;
 			
 			//Calculate the cell's x position
 			float cellX = ((int) asciiCode % this.gridWidth) * this.cellWidth;
@@ -99,14 +96,14 @@ public class BitmapText extends RenderableObject2D {
 			vertices.add(this.fontSize);
 			
 			//Add the textures
-			textures.add(cellX / this.image.getWidth());
-			textures.add(cellY / this.image.getHeight());
-			textures.add((cellX + cellWidth) / this.image.getWidth());
-			textures.add(cellY / this.image.getHeight());
-			textures.add((cellX + cellWidth) / this.image.getWidth());
-			textures.add((cellY + cellHeight) / this.image.getHeight());
-			textures.add(cellX / this.image.getWidth());
-			textures.add((cellY + cellHeight) / this.image.getHeight());
+			textures.add(cellX / this.renderer.material.diffuseTextureMap.getWidth());
+			textures.add(cellY / this.renderer.material.diffuseTextureMap.getHeight());
+			textures.add((cellX + cellWidth) / this.renderer.material.diffuseTextureMap.getWidth());
+			textures.add(cellY / this.renderer.material.diffuseTextureMap.getHeight());
+			textures.add((cellX + cellWidth) / this.renderer.material.diffuseTextureMap.getWidth());
+			textures.add((cellY + cellHeight) / this.renderer.material.diffuseTextureMap.getHeight());
+			textures.add(cellX / this.renderer.material.diffuseTextureMap.getWidth());
+			textures.add((cellY + cellHeight) / this.renderer.material.diffuseTextureMap.getHeight());
 			
 			//Get the draw order
 			short[] cdrawOrder = Object2DBuilder.createQuadDO();
@@ -132,8 +129,8 @@ public class BitmapText extends RenderableObject2D {
 		//The width of the text
 		float width = 0;
 		//Calculate the cell's size and set it
-		this.cellWidth = this.image.getWidth() / this.gridWidth;
-		this.cellHeight = this.image.getHeight() / this.gridHeight;
+		this.cellWidth = this.renderer.material.diffuseTextureMap.getWidth() / this.gridWidth;
+		this.cellHeight = this.renderer.material.diffuseTextureMap.getHeight() / this.gridHeight;
 		//Set the width to the cellSize times the number of letters
 		width = (text.length() *  (((this.cellWidth / this.cellHeight) * this.fontSize) / 1.5f));
 		return width;

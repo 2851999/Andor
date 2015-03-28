@@ -25,6 +25,7 @@ import org.andor.core.render.Renderer;
 import org.andor.utils.FPSCalculator;
 import org.andor.utils.FontUtils;
 import org.andor.utils.OpenGLUtils;
+import org.andor.utils.SystemInformation;
 
 public class GameLoop implements GameLoopInterface, InputListenerInterface {
 	
@@ -118,8 +119,10 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 		Settings.Engine.DefaultFont.render("Andor Version: " + Settings.Information.VERSION, 0, 24);
 		Settings.Engine.DefaultFont.render("Andor Build: " + Settings.Information.BUILD, 0, 38);
 		Settings.Engine.DefaultFont.render("Current FPS: " + this.getFPS(), 0, 52);
-		Settings.Engine.DefaultFont.render("Window Size: " + Settings.Window.Width + "x" + Settings.Window.Height, 0, 66);
-		Settings.Engine.DefaultFont.render("VSync: " + Settings.Video.VSync, 0, 80);
+		Settings.Engine.DefaultFont.render("Current Delta: " + this.getDelta(), 0, 66);
+		Settings.Engine.DefaultFont.render("Memory Usage: " + (((SystemInformation.getTotalMemory() - SystemInformation.getFreeMemory()) / 1024) / 1024) + "/" + ((SystemInformation.getMaxMemory() / 1024) / 1024), 0, 80);
+		Settings.Engine.DefaultFont.render("Window Size: " + Settings.Window.Width + "x" + Settings.Window.Height, 0, 94);
+		Settings.Engine.DefaultFont.render("VSync: " + Settings.Video.VSync, 0, 108);
 		OpenGLUtils.disableTexture2D();
 	}
 	

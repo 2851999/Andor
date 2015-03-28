@@ -10,7 +10,7 @@ package org.andor.core.render;
 
 import org.andor.core.Settings;
 import org.andor.core.Shader;
-import org.andor.utils.ShaderCode;
+import org.andor.utils.shader.ShaderCode;
 
 public class GeometryPass extends RenderPass {
 	

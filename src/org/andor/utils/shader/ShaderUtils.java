@@ -6,7 +6,7 @@
  * COPYRIGHT @ 2014-2015
  **********************************************/
 
-package org.andor.utils;
+package org.andor.utils.shader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +15,8 @@ import org.andor.core.Settings;
 import org.andor.core.Shader;
 import org.andor.core.logger.Log;
 import org.andor.core.logger.Logger;
+import org.andor.utils.FileUtils;
+import org.andor.utils.GLUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 
@@ -40,8 +42,14 @@ public class ShaderUtils {
 	
 	/* The static method to create a shader from a file */
 	public static int createShader(String path, boolean external, int shaderType) {
+		//Get the shader code
+		List<String> shaderCode = FileUtils.read(path, external);
+		
+		//Apply any custom preprocessor directives
+		ShaderPreprocessor.execute(shaderCode, path, external);
+		
 		//Return the shader
-		return createShader(FileUtils.read(path, external), shaderType);
+		return createShader(shaderCode, shaderType);
 	}
 	
 	/* The static method used to create a shader, when joining together two different pieces of shader code */
