@@ -18,10 +18,9 @@ import org.andor.core.input.KeyboardEvent;
 import org.andor.core.input.Mouse;
 import org.andor.core.input.MouseMotionEvent;
 import org.andor.core.lighting.BaseLight;
-import org.andor.core.lighting.DirectionalLight;
 import org.andor.core.lighting.LitScene;
 import org.andor.core.lighting.LitSceneInterface;
-import org.andor.core.lighting.SpotLight;
+import org.andor.core.lighting.PointLight;
 import org.andor.core.model.Model;
 import org.andor.core.model.OBJLoader;
 import org.andor.core.render.Renderer;
@@ -40,7 +39,7 @@ public class LightingTest extends BaseGame implements LitSceneInterface {
 		this.model = OBJLoader.loadModel("H:/Andor/monkey2.obj", "H:/Andor/", true);
 		this.model.prepare();
 		this.model.scale.multiply(1f);
-		this.model2 = OBJLoader.loadModel("H:/Andor/plane.obj", "H:/Andor/", true);
+		this.model2 = OBJLoader.loadModel("H:/Andor/monkey2.obj", "H:/Andor/", true);
 		this.model2.prepare();
 		this.model2.scale.multiply(1f);
 		this.model2.position.x += 3;
@@ -50,11 +49,11 @@ public class LightingTest extends BaseGame implements LitSceneInterface {
 		scene = new LitScene(this);
 		//this.model.rotation.y = 90;
 		//RenderPasses.setPass(ForwardPass.PASS_NAME, new PhongPass());
-		scene.lights.add(new DirectionalLight(Colour.RED, 0.8f, new Vector3D(0, 1, 1)));
-		//light = new PointLight(Colour.ORANGE, 0.8f, new Vector3D(0, 0, 1));
-		//light.position = new Vector3D(0, 0, 1);
-		light = new SpotLight(Colour.YELLOW, 0.9f, new Vector3D(0, 0, 0.4f), new Vector3D(0, 0, -1), 0.9f);
-		light.position = new Vector3D(0, 0, 2);
+		//scene.lights.add(new DirectionalLight(Colour.RED, 0.8f, new Vector3D(0, 1, 1)));
+		light = new PointLight(Colour.BLUE, 0.8f, new Vector3D(0, 0, 1));
+		light.position = new Vector3D(0, 0, 1);
+		//light = new SpotLight(Colour.YELLOW, 0.9f, new Vector3D(0, 0, 0.4f), new Vector3D(0, 0, -1), 0.9f);
+		//light.position = new Vector3D(0, 0, 2);
 		scene.lights.add(light);
 		Renderer.camera = camera;
 		Mouse.lock();
@@ -85,11 +84,11 @@ public class LightingTest extends BaseGame implements LitSceneInterface {
 		
 		camera.useView();
 		this.scene.render();
-		this.model2.render();
 	}
 	
 	public void renderObjects() {
 		this.model.render();
+		this.model2.render();
 	}
 	
 	public void onMouseMoved(MouseMotionEvent e) {

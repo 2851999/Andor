@@ -1,41 +1,9 @@
-/* *********************************************
- * ANDOR
- * 
- * USE - EDUCATIONAL PURPOSES ONLY
- *
- * COPYRIGHT @ 2014-2015
- ********************************************* */
+/* DEFINE ALL OF THE DATA THAT IS NEEDED IN THE FORWARD LIGHTING FRAGMENT SHADERS HERE */
 
-/* Define all of the matrices needed in this shader */
-uniform mat4 andor_modelViewProjectionMatrix;
-uniform mat4 andor_normalMatrix;
+#include "GlobalEngineData.fs"
 
-/* The data that is supposed to go to the fragment shader */
-varying vec4 frag_andor_colour;
-varying vec3 frag_andor_normal;
-varying vec2 frag_andor_textureCoord;
-varying vec3 frag_andor_worldPosition;
+/*---------------------- STRUCTURES ----------------------*/
 
-/* The material structure */
-struct Andor_Material {
-	/* The various colours */
-	vec4 ambientColour;
-	vec4 diffuseColour;
-	vec4 specularColour;
-
-	/* The various textures */
-	sampler2D ambientTexture;
-	sampler2D diffuseTexture;
-	sampler2D specularTexture;
-	
-	/* The shininess of this material */
-	float shininess;
-};
-
-/* The current material */
-uniform Andor_Material andor_material;
-
-/************************* LIGHTING STRUCTURES *************************/
 struct Andor_BaseLight {
 	vec3 colour;
 	float intensity;
@@ -65,15 +33,15 @@ struct Andor_SpotLight {
 	float cutoff;
 };
 
-/************************* LIGHTING VALUES *************************/
+/*---------------------- UNIFORMS ----------------------*/
+
 uniform vec4 andor_ambientLight;
 uniform float andor_specularIntensity;
 uniform float andor_specularPower;
 uniform vec3 andor_eyePosition;
-uniform Andor_DirectionalLight andor_directionalLight;
-uniform Andor_PointLight andor_pointLight;
-uniform Andor_SpotLight andor_spotLight;
 uniform float andor_lighting;
+
+/*---------------------- METHODS ----------------------*/
 
 /* The method used to calculate the effect of a base light */
 vec4 andor_calculateLight(Andor_BaseLight base, vec3 direction, vec3 normal) {
@@ -149,30 +117,4 @@ vec4 andor_calculateSpotLight(Andor_SpotLight spotLight, vec3 normal) {
 	}
 	//Return the colour
 	return colour;
-}
-
-/* The andor main method */
-void andor_main();
-
-/* The main method */
-void main() {
-	vec3 totalLight = andor_ambientLight;
-	vec4 colour = frag_andor_colour;
-	
-	colour *= texture2D(andor_material.diffuseTexture, frag_andor_textureCoord);
-	if (andor_material.diffuseColour.a > 0.0)
-		colour *= andor_material.diffuseColour;
-	
-	vec3 normal = normalize(frag_andor_normal);
-	if (andor_directionalLight.base.intensity > 0.0)
-		totalLight += andor_calculateDirectionalLight(andor_directionalLight, normal);
-	if (andor_pointLight.base.intensity > 0.0)
-		totalLight += andor_calculatePointLight(andor_pointLight, normal);
-	if (andor_spotLight.pointLight.base.intensity > 0.0)
-		totalLight += andor_calculateSpotLight(andor_spotLight, normal);
-	
-	gl_FragColor = colour;
-	if (andor_lighting > 0.5)
-		gl_FragColor *= vec4(totalLight, 1.0);
-	andor_main();
 }

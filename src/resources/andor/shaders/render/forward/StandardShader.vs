@@ -5,18 +5,10 @@
  *
  * COPYRIGHT @ 2014-2015
  ********************************************* */
- 
-/* NOTES TO SELF
- * - andor_modelMatrix removed
- * - Changed eyePos to eyePosition
- */
 
 /* Define all of the matrices needed in this shader */
 uniform mat4 andor_modelViewProjectionMatrix;
 uniform mat4 andor_normalMatrix;
-
-/* The current texture */
-uniform sampler2D andor_texture;
 
 /* The values from the renderer */
 attribute vec3 andor_vertex;

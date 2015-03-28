@@ -1,4 +1,13 @@
 -------------------------------------------------------------
+Release 1 | Beta 0 | Development 2 | Experimental 3
+
+* Added Lights
+
+* Updated lighting system
+
+* Fixed deferred rendering
+
+-------------------------------------------------------------
 Release 1 | Beta 0 | Development 2 | Experimental 2
 
 * Added RenderTest

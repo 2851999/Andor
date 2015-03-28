@@ -107,6 +107,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 				grassSide, grassSide, grassSide, grassSide,
 				grass, dirt
 		}, 1, 1, 1, Colour.WHITE);
+		cube.setTexture(this.texture);
 		bigCube = Object3DBuilder.createCube(10, 10, 10, new Colour(130f / 255f, 176f / 255f, 255f / 255f, 0.8f));
 		//Load the model
 		this.model = OBJLoader.loadModel(path + "ship.obj", path, true);
@@ -176,7 +177,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		                                                                                                                                   
 		this.audio.listenerPosition = this.camera.position.clone();
 		this.audio.listenerPosition.multiply(new Vector3D(-1, 1, 1));
-		this.audio.listenerRotation = this.camera.rotation;
+		//this.audio.listenerRotation = this.camera.rotation;
 		this.audio.sourcePosition = this.model.position.clone();
 		this.audio.sourcePosition.multiply(new Vector3D(1, 1, -1));
 		this.audio.update();
@@ -185,7 +186,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		
 		Vector3D change = new Vector3D(0, 0.06f, 0);
 		change.multiply(getDelta());
-		//this.model.rotation.add(change);
+		this.model.rotation.add(change);
 	}
 	
 	/* The method called when the game loop is rendered */
@@ -223,13 +224,8 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		
 		OpenGLUtils.enableTexture2D();
 		
-		//Bind the texture
-		this.texture.bind();
-		
 		//Render the cube
 		this.cube.render();
-		
-		this.texture.unbind();
 		
 		OpenGLUtils.disableTexture2D();
 		

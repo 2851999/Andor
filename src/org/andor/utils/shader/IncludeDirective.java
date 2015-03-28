@@ -35,6 +35,8 @@ public class IncludeDirective extends ShaderPreprocessorDirective {
 			String filePath = ParserUtils.getString(arguments[0]);
 			//Get the code from the other file
 			List<String> code2 = FileUtils.read(path + "/" + filePath, external);
+			//Do the same to the new code
+			ShaderPreprocessor.execute(code2, path, external);
 			//Remove the include directive
 			shaderCode.remove(line);
 			//Join the code together

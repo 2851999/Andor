@@ -37,25 +37,15 @@ public class ForwardPass extends RenderPass {
 		//Check to see whether lighting should be applied
 		if (Renderer.light != null) {
 			//Assign the lighting values
-			currentShader.setUniformf("andor_lighting", 1.0f);
 			currentShader.setUniformf("andor_ambientLight", Renderer.ambientLight);
 			currentShader.setUniformf("andor_specularIntensity", Renderer.specularIntensity);
 			currentShader.setUniformf("andor_specularPower", Renderer.specularExponent);
-			//if (Renderer.camera != null)
+			if (Renderer.camera != null)
 				currentShader.setUniformf("andor_eyePosition", Renderer.camera.getPosition());
 			//Apply the light
 			Renderer.light.applyUniforms(currentShader);
 		} else if (Renderer.useAmbient) {
-			currentShader.setUniformf("andor_lighting", 1.0f);
-			currentShader.setUniformf("andor_directionalLight.base.intensity", 0);
-			currentShader.setUniformf("andor_pointLight.base.intensity", 0);
-			currentShader.setUniformf("andor_spotLight.pointLight.base.intensity", 0);
-		} else {
-			//Prevent lighting
-			currentShader.setUniformf("andor_lighting", 0.0f);
-			currentShader.setUniformf("andor_directionalLight.base.intensity", 0);
-			currentShader.setUniformf("andor_pointLight.base.intensity", 0);
-			currentShader.setUniformf("andor_spotLight.pointLight.base.intensity", 0);
+			currentShader.setUniformf("andor_ambientLight", Renderer.ambientLight);
 		}
 		
 		//The attributes within the shader

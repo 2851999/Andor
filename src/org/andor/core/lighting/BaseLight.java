@@ -21,11 +21,15 @@ public abstract class BaseLight extends Object3D {
 	/* The intensity of this light */
 	public float intensity;
 	
+	/* The shader for this type of light */
+	public Shader shader;
+	
 	/* The constructor */
-	public BaseLight(Colour colour, float intensity) {
+	public BaseLight(Colour colour, float intensity, Shader shader) {
 		//Assign the variables
 		this.colour = colour;
 		this.intensity = intensity;
+		this.shader = shader;
 	}
 	
 	/* The method used to assign the uniforms for this in a shader */
@@ -42,12 +46,16 @@ public abstract class BaseLight extends Object3D {
 	public void use() {
 		//Assign the current light to this one
 		Renderer.light = this;
+		//Replace the shader in the render pass
+		Renderer.getPass().customShader = this.shader;
 	}
 	
 	/* The method used to stop using all lights */
 	public void stopUsing() {
 		//Assign the current light to this one
 		Renderer.light = null;
+		//Reset the custom shader
+		Renderer.getPass().customShader = null;
 	}
 	
 }

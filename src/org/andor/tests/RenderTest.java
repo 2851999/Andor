@@ -40,6 +40,8 @@ public class RenderTest extends BaseGame implements LitSceneInterface {
 	
 	public PointLight light1;
 	
+	public boolean wireframe;
+	
 	public void create() {
 		this.camera = new Camera3D();
 		this.camera.setRotation(20f, 0, 0);
@@ -47,9 +49,9 @@ public class RenderTest extends BaseGame implements LitSceneInterface {
 		this.camera.setSkyBox(new SkyBox(ImageLoader.loadImage(PATH + "skybox4.png", true), 100));
 		this.floor = OBJLoader.loadModel(PATH + "plane.obj", PATH, true);
 		this.floor.prepare();
-		this.cube = OBJLoader.loadModel(PATH + "cube.obj", PATH, true);
+		this.cube = OBJLoader.loadModel(PATH + "monkey2.obj", PATH, true);
 		this.cube.prepare();
-		this.cube.setScale(0.5f);
+		this.cube.setScale(1f);
 		this.cube.setPosition(0, 0.5f, -1);
 		this.scene = new LitScene(this);
 		this.scene.lights.add(new DirectionalLight(Colour.WHITE, 0.8f, new Vector3D(0, 1, 1)));
@@ -57,6 +59,7 @@ public class RenderTest extends BaseGame implements LitSceneInterface {
 		this.light1.setPosition(0, 0.5f, 0);
 		this.scene.lights.add(this.light1);
 		
+		this.wireframe = false;
 		Renderer.camera = camera;
 		Mouse.lock();
 	}
@@ -97,6 +100,24 @@ public class RenderTest extends BaseGame implements LitSceneInterface {
 	public void onKeyTyped(KeyboardEvent e) {
 		if (e.getCode() == Keyboard.KEY_F3_CODE)
 			Mouse.setLocked(! Mouse.isLocked());
+		else if (e.getCode() == Keyboard.KEY_M_CODE) {
+			this.wireframe = ! this.wireframe;
+			if (this.wireframe)
+				OpenGLUtils.enableWireframeMode();
+			else
+				OpenGLUtils.disableWireframeMode();
+		} else if (e.getCode() == Keyboard.KEY_1_CODE)
+			this.camera.setSkyBox(new SkyBox(ImageLoader.loadImage(PATH + "skybox1.png", true), 100));
+		else if (e.getCode() == Keyboard.KEY_2_CODE)
+			this.camera.setSkyBox(new SkyBox(ImageLoader.loadImage(PATH + "skybox2.png", true), 100));
+		else if (e.getCode() == Keyboard.KEY_3_CODE)
+			this.camera.setSkyBox(new SkyBox(ImageLoader.loadImage(PATH + "skybox3.png", true), 100));
+		else if (e.getCode() == Keyboard.KEY_4_CODE)
+			this.camera.setSkyBox(new SkyBox(ImageLoader.loadImage(PATH + "skybox4.png", true), 100));
+		else if (e.getCode() == Keyboard.KEY_5_CODE)
+			this.camera.setSkyBox(new SkyBox(ImageLoader.loadImage(PATH + "skybox5.png", true), 100));
+		else if (e.getCode() == Keyboard.KEY_6_CODE)
+			this.camera.setSkyBox(new SkyBox(ImageLoader.loadImage(PATH + "skybox6.jpg", true), 100));
 	}
 	
 	public void onMouseMoved(MouseMotionEvent e) {

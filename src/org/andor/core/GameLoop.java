@@ -25,7 +25,7 @@ import org.andor.core.render.Renderer;
 import org.andor.utils.FPSCalculator;
 import org.andor.utils.FontUtils;
 import org.andor.utils.OpenGLUtils;
-import org.andor.utils.Timer;
+import org.andor.utils.SystemInformation;
 
 public class GameLoop implements GameLoopInterface, InputListenerInterface {
 	
@@ -37,8 +37,6 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 	
 	/* The other game loop interfaces */
 	public static List<GameLoopInterface> interfaces;
-	
-	public static Timer timer = new Timer();
 	
 	/* The default constructor */
 	public GameLoop() {
@@ -88,37 +86,26 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 	
 	/* The method called to run a 'tick' of this game loop */
 	public void tick() {
-		timer.start();
 		//Update the FPS calculator
 		this.fpsCalculator.update();
 		//Make sure Andor isn't currently running on Android
 		if (! Settings.AndroidMode)
 			//Check the input
 			InputManager.checkInput();
-		System.out.println("Input: " + timer.getTime() + " ms");
-		timer.restart();
 		//Call the update method
 		this.update();
-		System.out.println("Update: " + timer.getTime() + " ms");
-		timer.restart();
 		this.interfaceUpdate();
 		//Call the render method
 		this.render();
 		this.interfaceRender();
-		System.out.println("Render: " + timer.getTime() + " ms");
-		timer.restart();
 		//Check to see whether any information should be shown
 		if (Settings.Debugging.ShowInformation)
 			//Render the information
 			this.renderInformation();
-		System.out.println("Render Information: " + timer.getTime() + " ms");
-		timer.restart();
 		//Make sure Andor isn't currently running on Android
 		if (! Settings.AndroidMode)
 			//Update the display
 			Window.updateDisplay();
-		System.out.println("Update Display: " + timer.getTime() + " ms");
-		timer.stop();
 	}
 	
 	/* The method used to render some information */
@@ -132,8 +119,10 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 		Settings.Engine.DefaultFont.render("Andor Version: " + Settings.Information.VERSION, 0, 24);
 		Settings.Engine.DefaultFont.render("Andor Build: " + Settings.Information.BUILD, 0, 38);
 		Settings.Engine.DefaultFont.render("Current FPS: " + this.getFPS(), 0, 52);
-		Settings.Engine.DefaultFont.render("Window Size: " + Settings.Window.Width + "x" + Settings.Window.Height, 0, 66);
-		Settings.Engine.DefaultFont.render("VSync: " + Settings.Video.VSync, 0, 80);
+		Settings.Engine.DefaultFont.render("Current Delta: " + this.getDelta(), 0, 66);
+		Settings.Engine.DefaultFont.render("Memory Usage: " + (((SystemInformation.getTotalMemory() - SystemInformation.getFreeMemory()) / 1024) / 1024) + "/" + ((SystemInformation.getMaxMemory() / 1024) / 1024), 0, 80);
+		Settings.Engine.DefaultFont.render("Window Size: " + Settings.Window.Width + "x" + Settings.Window.Height, 0, 94);
+		Settings.Engine.DefaultFont.render("VSync: " + Settings.Video.VSync, 0, 108);
 		OpenGLUtils.disableTexture2D();
 	}
 	

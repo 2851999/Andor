@@ -15,6 +15,7 @@ import org.andor.core.Shader;
 import org.andor.utils.GLUtils;
 import org.andor.utils.RenderUtils;
 import org.andor.utils.shader.ShaderCode;
+import org.lwjgl.opengl.GL11;
 
 public abstract class RenderPass {
 	
@@ -69,7 +70,7 @@ public abstract class RenderPass {
 		//Set the active texture
 		GLUtils.activeTexture(currentTexture);
 		//Bind the texture
-		GLUtils.bindTexture(texture);
+		GLUtils.bindTexture(GL11.GL_TEXTURE_2D, texture);
 		//Increment the current texture
 		this.currentTexture++;
 		//Return the current texture
@@ -83,7 +84,7 @@ public abstract class RenderPass {
 			//Assign the active texture
 			GLUtils.activeTexture(this.currentTexture);
 			//Unbind the image
-			GLUtils.bindTexture(0);
+			GLUtils.bindTexture(GL11.GL_TEXTURE_2D, 0);
 			//Decrement the current texture
 			this.currentTexture--;
 		}

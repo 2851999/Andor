@@ -13,6 +13,7 @@ import java.util.List;
 
 import org.andor.core.ImageLoader;
 import org.andor.core.Settings;
+import org.andor.core.lighting.Lights;
 
 public class RenderPasses {
 	
@@ -31,6 +32,8 @@ public class RenderPasses {
 		}
 		//Load and assign the default texture
 		Settings.Resources.DEFAULT_TEXTURE = ImageLoader.loadImage("/resources/andor/blank.png");
+		//Load the lighting shaders
+		Lights.setupShaders();
 	}
 	
 	/* The static method used to 'set' a specific pass given its name */

@@ -13,40 +13,40 @@ public class SkyBox {
 	/* The texture coordinates */
 	public static final float[] TEXTURE_COORDINATES = {
 		//BACK
-		3f / 4f, 1f / 3f,
-		1, 1f / 3f,
-		1, 2f / 3f,
-		3f / 4f, 2f / 3f,
+		1f / 4f, 1f / 3f,
+		0f, 1f / 3f,
+		0f, 2f / 3f,
+		1f / 4f, 2f / 3f,
 		
 		//LEFT
-		3f / 4f, 2f / 3f,
+		1f / 4f, 2f / 3f,
 		2f / 4f, 2f / 3f,
 		2f / 4f, 1f / 3f,
-		3f / 4f, 1f / 3f,
+		1f / 4f, 1f / 3f,
 		
 		//FORWARD
 		2f / 4f, 1f / 3f,
-		1f / 4f, 1f / 3f,
-		1f / 4f, 2f / 3f,
+		3f / 4f, 1f / 3f,
+		3f / 4f, 2f / 3f,
 		2f / 4f, 2f / 3f,
 		
 		//BOTTOM
-		2f / 4f, 1,
-		2f / 4f, 2f / 3f,
+		2f / 4f, 1f,
+		1f / 4f, 1f,
 		1f / 4f, 2f / 3f,
-		1f / 4f, 1,
+		2f / 4f, 2f / 3f,
 		
 		//RIGHT
-		1f / 4f, 2f / 3f,
-		0f, 2f / 3f,
-		0f, 1f / 3f,
-		1f / 4f, 1f / 3f,
+		3f / 4f, 2f / 3f,
+		1, 2f / 3f,
+		1, 1f / 3f,
+		3f / 4f, 1f / 3f,
 		
 		//TOP
 		2f / 4f, 1f / 3f,
-		2f / 4f, 0,
-		1f / 4f, 0,
 		1f / 4f, 1f / 3f,
+		1f / 4f, 0f,
+		2f / 4f, 0f,
 	};
 	
 	/* The image set used for this skybox */

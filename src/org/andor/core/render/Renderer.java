@@ -170,39 +170,27 @@ public class Renderer {
 	
 	/* The method used to render the geometry to the geometry buffer */
 	public void render() {
+		getPass().render(this);
+	}
+	
+	/* The static method used to determine what pass to use and return it */
+	public static RenderPass getPass() {
 		//Check to see whether deferred rendering is on
-		if (deferredRender && ! Settings.AndroidMode && Settings.Video.DeferredRendering)
-			//Deferred render
-			this.deferredRender();
-		else
-			//Forward render
-			this.forwardRender();
-	}
-	
-	/* The method used to forward render */
-	public void forwardRender() {
-		if (Settings.Video.DeferredRendering && ! deferredNormalRender)
-			//Find the forward pass and use it
-			RenderPasses.getPass(GeometryPass.PASS_NAME).render(this);
-		else
-			RenderPasses.getPass(ForwardPass.PASS_NAME).render(this);
-	}
-	
-	/* The method used to apply deferred rendering */
-	public void deferredRender() {
-		//Make sure deferred rendering is enabled
-		if (! Settings.AndroidMode && Settings.Video.DeferredRendering) {
-			if (deferredNormalRender)
-				this.deferredNormalRender();
+		if (deferredRender && ! Settings.AndroidMode && Settings.Video.DeferredRendering) {
+			//Make sure deferred rendering is enabled
+			if (! Settings.AndroidMode && Settings.Video.DeferredRendering) {
+				if (deferredNormalRender)
+					return RenderPasses.getPass(ForwardPass.PASS_NAME);
+				else
+					return RenderPasses.getPass(FinalPass.PASS_NAME);
+			} else
+				return null;
+		} else {
+			if (Settings.Video.DeferredRendering && ! deferredNormalRender)
+				return RenderPasses.getPass(GeometryPass.PASS_NAME);
 			else
-				//Find the geometry pass and use it
-				RenderPasses.getPass(FinalPass.PASS_NAME).render(this);
+				return RenderPasses.getPass(ForwardPass.PASS_NAME);
 		}
-	}
-	
-	/* The method used to render a normal image while deferred rendering */
-	public void deferredNormalRender() {
-		this.forwardRender();
 	}
 	
 	/* The method used to update the vertices */

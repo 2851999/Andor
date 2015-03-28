@@ -83,10 +83,9 @@ public class RenderUtils {
 			pass.currentShader.setUniformf(UniformMaterial.DIFFUSE_TEXTURE, pass.bindTexture(material.diffuseTextureMap.getPointer()));
 			//Assign the 'has' value
 			hasDiffuseTexture = 1;
-		} else {
+		} else
 			//Bind the default texture
-			pass.currentShader.setUniformi(RenderUtils.UNIFORM_TEXTURE, pass.bindTexture(Settings.Resources.DEFAULT_TEXTURE.getPointer()));
-		}
+			pass.currentShader.setUniformi(UniformMaterial.DIFFUSE_TEXTURE, pass.bindTexture(Settings.Resources.DEFAULT_TEXTURE.getPointer()));
 		if (material.specularTextureMap != null) {
 			//Assign the texture
 			pass.currentShader.setUniformf(UniformMaterial.SPECULAR_TEXTURE, pass.bindTexture(material.specularTextureMap.getPointer()));
@@ -100,6 +99,7 @@ public class RenderUtils {
 		pass.currentShader.setUniformf(UniformMaterial.HAS_AMBIENT_TEXTURE, hasAmbientTexture);
 		pass.currentShader.setUniformf(UniformMaterial.HAS_DIFFUSE_TEXTURE, hasDiffuseTexture);
 		pass.currentShader.setUniformf(UniformMaterial.HAS_SPECULAR_TEXTURE, hasSpecularTexture);
+		pass.currentShader.setUniformf(UniformMaterial.SHININESS, material.shininess);
 	}
 
 }

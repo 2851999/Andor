@@ -132,7 +132,7 @@ public class DeferredScene {
 		Renderer.deferredRender = true;
 		//Make sure the quad has been defined
 		if (this.screenQuad != null) {
-			Renderer.deferredNormalRender = true;
+			Renderer.deferredNormalRender = false;
 			//Render the screen quad
 			this.screenQuad.render();
 			//Check to see whether the other quads should be rendered

@@ -22,7 +22,7 @@ public class Settings {
 		/* The build of Andor */
 		public static final String BUILD = "Experimental";
 		/* The date this build started development */
-		public static final String DATE = "23/03/2015";
+		public static final String DATE = "27/03/2015";
 	}
 	
 	/* The static class containing all of the settings required for the window */
@@ -85,10 +85,13 @@ public class Settings {
 	public static class Resources {
 		public static String FONT_DEFAULT = "/resources/andor/SEGOEUI.TTF";
 		public static class Shaders {
-			public static String FORWARD_DEFAULT = "/resources/andor/shaders/render/forward/StandardShader";
-			public static String DEFERRED_GEOMETRY_PASS = "/resources/andor/shaders/render/deferred/GeometryPass";
-			public static String DEFERRED_DEFAULT_PASS = "/resources/andor/shaders/render/deferred/DefaultPass";
-			public static String DEFERRED_FINAL_PASS = "/resources/andor/shaders/render/deferred/FinalPass";
+			public static String FORWARD_DEFAULT = "/resources/andor/shaders/StandardForwardShader";
+			public static String FORWARD_AMBIENT_LIGHT = "/resources/andor/shaders/ForwardAmbientLight";
+			public static String FORWARD_DIRECTIONAL_LIGHT = "/resources/andor/shaders/ForwardDirectionalLight";
+			public static String FORWARD_POINT_LIGHT = "/resources/andor/shaders/ForwardPointLight";
+			public static String FORWARD_SPOT_LIGHT = "/resources/andor/shaders/ForwardSpotLight";
+			public static String DEFERRED_GEOMETRY_PASS = "/resources/andor/shaders/StandardDeferredGeometryShader";
+			public static String DEFERRED_FINAL_PASS = "/resources/andor/shaders/StandardDeferredFinalShader";
 		}
 		public static class Icons {
 			public static String ICON_16 = "/resources/andor/Icon16.png";
