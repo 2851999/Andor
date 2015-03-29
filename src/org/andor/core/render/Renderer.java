@@ -52,6 +52,8 @@ public class Renderer {
 	public float[] textureCoords;
 	public short[] drawOrder;
 	
+	public float[] tangents;
+	
 	/* The data handles */
 	public int verticesHandle;
 	public int coloursHandle;

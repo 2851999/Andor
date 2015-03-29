@@ -117,8 +117,20 @@ public class Vector2D {
 		return (float) Math.sqrt((this.x * this.x) + (this.y * this.y));
 	}
 	
+	/* The method used to get the dot product */
+	public float dot(Vector2D vector) {
+		//Return the value
+		return x * vector.x + y * vector.y ;
+	}
+	
+	/* The method used to get the crossed vector product */
+	public float cross(Vector2D vector) {
+		//Return the value
+		return x * vector.y - y * vector.x;
+	}
+	
 	/* The method used to get the normalised vector */
-	public Vector2D normalise() {
+	public Vector2D normalised() {
 		//Get the length
 		float length = this.getLength();
 		//Return the new vector

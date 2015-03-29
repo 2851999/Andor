@@ -22,6 +22,7 @@ struct Andor_Material {
 
 /* The needed matrices */
 uniform mat4 andor_modelViewProjectionMatrix;
+uniform mat4 andor_modelMatrix;
 uniform mat4 andor_normalMatrix;
 
 /* The current material */

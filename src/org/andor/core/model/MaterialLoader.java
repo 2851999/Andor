@@ -38,17 +38,17 @@ public class MaterialLoader {
 				materials.add(currentMaterial);
 			} else if (line.startsWith("Ka ")) {
 				//Get the vector values
-				Vector3D values = ModelParserUtils.getVectorValue(line);
+				Vector3D values = ModelParserUtils.getVectorValue3D(line);
 				//Set the ambient colour in the current material
 				currentMaterial.ambientColour = new Colour(values.x, values.y, values.z);
 			} else if (line.startsWith("Kd ")) {
 				//Get the vector values
-				Vector3D values = ModelParserUtils.getVectorValue(line);
+				Vector3D values = ModelParserUtils.getVectorValue3D(line);
 				//Set the diffuse colour in the current material
 				currentMaterial.diffuseColour = new Colour(values.x, values.y, values.z);
 			} else if (line.startsWith("Ks ")) {
 				//Get the vector values
-				Vector3D values = ModelParserUtils.getVectorValue(line);
+				Vector3D values = ModelParserUtils.getVectorValue3D(line);
 				//Set the specular colour in the current material
 				currentMaterial.specularColour = new Colour(values.x, values.y, values.z);
 			} else if (line.startsWith("Ns ")) {

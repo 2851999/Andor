@@ -49,14 +49,15 @@ public class RenderTest extends BaseGame implements LitSceneInterface {
 		this.camera.setSkyBox(new SkyBox(ImageLoader.loadImage(PATH + "skybox4.png", true), 100));
 		this.floor = OBJLoader.loadModel(PATH + "plane.obj", PATH, true);
 		this.floor.prepare();
+		this.floor.scale.add(1f);
 		this.cube = OBJLoader.loadModel(PATH + "monkey2.obj", PATH, true);
 		this.cube.prepare();
-		this.cube.setScale(1f);
+		this.cube.setScale(0.5f);
 		this.cube.setPosition(0, 0.5f, -1);
 		this.scene = new LitScene(this);
-		this.scene.lights.add(new DirectionalLight(Colour.WHITE, 0.8f, new Vector3D(0, 1, 1)));
-		this.light1 = new PointLight(Colour.ORANGE, 0.8f, new Vector3D(0f, 0f, 0.2f));
-		this.light1.setPosition(0, 0.5f, 0);
+		this.scene.lights.add(new DirectionalLight(Colour.WHITE, 0.8f, new Vector3D(0, 1f, 1)));
+		this.light1 = new PointLight(Colour.LIGHT_BLUE, 0.8f, new Vector3D(0f, 0.4f, 0.2f));
+		this.light1.setPosition(0, 1f, 0);
 		this.scene.lights.add(this.light1);
 		
 		this.wireframe = false;

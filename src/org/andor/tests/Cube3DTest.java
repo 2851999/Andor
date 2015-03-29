@@ -186,7 +186,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		
 		Vector3D change = new Vector3D(0, 0.06f, 0);
 		change.multiply(getDelta());
-		this.model.rotation.add(change);
+		//this.model.rotation.add(change);
 	}
 	
 	/* The method called when the game loop is rendered */
@@ -241,7 +241,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		
 		//Render the FPS
 		this.font.render("Current FPS: " + this.getFPS(), 10, 10);
-		this.font.render("Object Face Count: " + this.model.getNumberOfFaces(), 10, 26);
+		//this.font.render("Object Face Count: " + this.model.getNumberOfFaces(), 10, 26);
 		this.font.render("Particle Count: " + this.particleEmitter.particles.size(), 10, 42);
 		scene.stopRendering();
 		

@@ -55,10 +55,12 @@ vec4 andor_calculateLight(Andor_BaseLight base, vec3 direction, vec3 normal) {
 		diffuseColour = vec4(base.colour, 1.0) * base.intensity * diffuseFactor;
 		//Calculate the direction from the current pixel to the eye, and then find the direction
 		//the light should reflect
-		vec3 directionToEye = normalize(frag_andor_worldPosition - andor_eyePosition);
-		vec3 reflectDirection = normalize(reflect(direction, normal));
+		vec3 directionToEye = normalize(andor_eyePosition - frag_andor_worldPosition);
+		//vec3 reflectDirection = normalize(reflect(direction, normal));
+		vec3 halfDirection = normalize(directionToEye - direction);
 		//Calculate the specular factor
-		float specularFactor = dot(directionToEye, reflectDirection);
+		float specularFactor = dot(halfDirection, normal);
+		//float specularFactor = dot(directionToEye, reflectDirection);
 		specularFactor = pow(specularFactor, andor_specularPower);
 		//Check to see whether the specular colour takes any effect
 		if (specularFactor > 0.0) {
