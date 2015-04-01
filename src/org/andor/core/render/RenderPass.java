@@ -69,6 +69,7 @@ public abstract class RenderPass {
 	public int bindTexture(int texture) {
 		//Set the active texture
 		GLUtils.activeTexture(currentTexture);
+		//GLUtils.enable(GL11.GL_TEXTURE_2D);
 		//Bind the texture
 		GLUtils.bindTexture(GL11.GL_TEXTURE_2D, texture);
 		//Increment the current texture
@@ -83,6 +84,7 @@ public abstract class RenderPass {
 		while (this.currentTexture >= 0) {
 			//Assign the active texture
 			GLUtils.activeTexture(this.currentTexture);
+			//GLUtils.disable(GL11.GL_TEXTURE_2D);
 			//Unbind the image
 			GLUtils.bindTexture(GL11.GL_TEXTURE_2D, 0);
 			//Decrement the current texture

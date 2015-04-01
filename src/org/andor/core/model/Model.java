@@ -32,10 +32,15 @@ public class Model extends RenderableObject3D {
 	
 	/* The method used to setup this model for rendering */
 	public void prepare() {
+		this.prepare(false);
+	}
+	
+	/* The method used to setup this model for rendering */
+	public void prepare(boolean calculateTangents) {
 		//Go through the model parts
 		for (int a = 0; a < this.parts.size(); a++)
 			//Render the current part
-			this.parts.get(a).prepare();
+			this.parts.get(a).prepare(calculateTangents);
 	}
 	
 	/* The method used to render this model */

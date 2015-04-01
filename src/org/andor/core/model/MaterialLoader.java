@@ -101,6 +101,24 @@ public class MaterialLoader {
 				Image specularTextureMap = ImageLoader.loadImage(textureFilePath.replace("\\", "/"), external);
 				//Set the texture map in the current material
 				currentMaterial.specularTextureMap = specularTextureMap;
+			} else if (line.startsWith("map_bump") || line.startsWith("bump")) {
+				//Split up the current line using a space
+				String[] split = line.split(" ");
+				//Get the file path of the material file
+				String textureFilePath = directory + split[1];
+				//Load the texture map
+				Image normalTextureMap = ImageLoader.loadImage(textureFilePath.replace("\\", "/"), external);
+				//Set the texture map in the current material
+				currentMaterial.normalTextureMap = normalTextureMap;
+			} else if (line.startsWith("disp")) {
+				//Split up the current line using a space
+				String[] split = line.split(" ");
+				//Get the file path of the material file
+				String textureFilePath = directory + split[1];
+				//Load the texture map
+				Image displacementTextureMap = ImageLoader.loadImage(textureFilePath.replace("\\", "/"), external);
+				//Set the texture map in the current material
+				currentMaterial.displacementTextureMap = displacementTextureMap;
 			}
 		}
 		//Return the materials

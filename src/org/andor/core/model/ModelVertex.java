@@ -17,6 +17,7 @@ public class ModelVertex {
 	public Vector3D vertex;
 	public Vector3D normal;
 	public Vector2D textureCoordinate;
+	public Vector3D tangent;
 	
 	/* The constructor */
 	public ModelVertex() {
@@ -41,5 +42,6 @@ public class ModelVertex {
 	public Vector3D getVertex() { return this.vertex; }
 	public Vector3D getNormal() { return this.normal; }
 	public Vector2D getTextureCoordinate() { return this.textureCoordinate; }
+	public Vector3D getTangent() { return this.tangent; }
 	
 }

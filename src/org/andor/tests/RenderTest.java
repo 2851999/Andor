@@ -14,6 +14,7 @@ import org.andor.core.Colour;
 import org.andor.core.ImageLoader;
 import org.andor.core.Settings;
 import org.andor.core.SkyBox;
+import org.andor.core.TextureParameters;
 import org.andor.core.Vector3D;
 import org.andor.core.input.Keyboard;
 import org.andor.core.input.KeyboardEvent;
@@ -28,6 +29,7 @@ import org.andor.core.model.OBJLoader;
 import org.andor.core.render.Renderer;
 import org.andor.utils.ClampUtils;
 import org.andor.utils.OpenGLUtils;
+import org.lwjgl.opengl.GL11;
 
 public class RenderTest extends BaseGame implements LitSceneInterface {
 	
@@ -46,16 +48,19 @@ public class RenderTest extends BaseGame implements LitSceneInterface {
 		this.camera = new Camera3D();
 		this.camera.setRotation(20f, 0, 0);
 		this.camera.setPosition(0, -1, -3);
-		this.camera.setSkyBox(new SkyBox(ImageLoader.loadImage(PATH + "skybox4.png", true), 100));
+		this.camera.setSkyBox(new SkyBox(ImageLoader.loadImage(PATH + "skybox4.png", true, new TextureParameters().setFilter(GL11.GL_NEAREST)), 200));
+		this.camera.flying = true;
 		this.floor = OBJLoader.loadModel(PATH + "plane.obj", PATH, true);
-		this.floor.prepare();
-		this.floor.scale.add(1f);
-		this.cube = OBJLoader.loadModel(PATH + "monkey2.obj", PATH, true);
+		this.floor.prepare(true);
+		//for (int a = 0; a < this.floor.parts.size(); a++)
+			//this.floor.getPart(a).material.normalTextureMap = ImageLoader.loadImage(PATH + "bricks_normal.jpg", true);
+		this.floor.scale.add(2f);
+		this.cube = OBJLoader.loadModel(PATH + "cube.obj", PATH, true);
 		this.cube.prepare();
 		this.cube.setScale(0.5f);
 		this.cube.setPosition(0, 0.5f, -1);
 		this.scene = new LitScene(this);
-		this.scene.lights.add(new DirectionalLight(Colour.WHITE, 0.8f, new Vector3D(0, 1f, 1)));
+		this.scene.lights.add(new DirectionalLight(Colour.WHITE, 0.8f, new Vector3D(0, 1f, 0.5f)));
 		this.light1 = new PointLight(Colour.LIGHT_BLUE, 0.8f, new Vector3D(0f, 0.4f, 0.2f));
 		this.light1.setPosition(0, 1f, 0);
 		this.scene.lights.add(this.light1);
@@ -108,17 +113,17 @@ public class RenderTest extends BaseGame implements LitSceneInterface {
 			else
 				OpenGLUtils.disableWireframeMode();
 		} else if (e.getCode() == Keyboard.KEY_1_CODE)
-			this.camera.setSkyBox(new SkyBox(ImageLoader.loadImage(PATH + "skybox1.png", true), 100));
+			this.camera.setSkyBox(new SkyBox(ImageLoader.loadImage(PATH + "skybox1.png", true, new TextureParameters().setFilter(GL11.GL_NEAREST)), 100));
 		else if (e.getCode() == Keyboard.KEY_2_CODE)
-			this.camera.setSkyBox(new SkyBox(ImageLoader.loadImage(PATH + "skybox2.png", true), 100));
+			this.camera.setSkyBox(new SkyBox(ImageLoader.loadImage(PATH + "skybox2.png", true, new TextureParameters().setFilter(GL11.GL_NEAREST)), 100));
 		else if (e.getCode() == Keyboard.KEY_3_CODE)
-			this.camera.setSkyBox(new SkyBox(ImageLoader.loadImage(PATH + "skybox3.png", true), 100));
+			this.camera.setSkyBox(new SkyBox(ImageLoader.loadImage(PATH + "skybox3.png", true, new TextureParameters().setFilter(GL11.GL_NEAREST)), 100));
 		else if (e.getCode() == Keyboard.KEY_4_CODE)
-			this.camera.setSkyBox(new SkyBox(ImageLoader.loadImage(PATH + "skybox4.png", true), 100));
+			this.camera.setSkyBox(new SkyBox(ImageLoader.loadImage(PATH + "skybox4.png", true, new TextureParameters().setFilter(GL11.GL_NEAREST)), 100));
 		else if (e.getCode() == Keyboard.KEY_5_CODE)
-			this.camera.setSkyBox(new SkyBox(ImageLoader.loadImage(PATH + "skybox5.png", true), 100));
+			this.camera.setSkyBox(new SkyBox(ImageLoader.loadImage(PATH + "skybox5.png", true, new TextureParameters().setFilter(GL11.GL_NEAREST)), 100));
 		else if (e.getCode() == Keyboard.KEY_6_CODE)
-			this.camera.setSkyBox(new SkyBox(ImageLoader.loadImage(PATH + "skybox6.jpg", true), 100));
+			this.camera.setSkyBox(new SkyBox(ImageLoader.loadImage(PATH + "skybox6.jpg", true, new TextureParameters().setFilter(GL11.GL_NEAREST)), 100));
 	}
 	
 	public void onMouseMoved(MouseMotionEvent e) {
@@ -132,6 +137,7 @@ public class RenderTest extends BaseGame implements LitSceneInterface {
 		Settings.Window.Height = 720;
 		Settings.Video.VSync = true;
 		Settings.Debugging.ShowInformation = true;
+		TextureParameters.DEFAULT_FILTER = GL11.GL_LINEAR_MIPMAP_LINEAR;
 		new RenderTest();
 	}
 	

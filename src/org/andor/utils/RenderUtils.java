@@ -30,6 +30,7 @@ public class RenderUtils {
 	public static final String ATTRIBUTE_NORMAL = "andor_normal";
 	public static final String ATTRIBUTE_COLOUR = "andor_colour";
 	public static final String ATTRIBUTE_TEXTURE_COORD = "andor_textureCoord";
+	public static final String ATTRIBUTE_TANGENT = "andor_tangent";
 	
 	/* The names of the variables for materials */
 	public class UniformMaterial {
@@ -37,11 +38,12 @@ public class RenderUtils {
 		public static final String DIFFUSE_COLOUR = UNIFORM_MATERIAL + ".diffuseColour";
 		public static final String SPECULAR_COLOUR = UNIFORM_MATERIAL + ".specularColour";
 		public static final String AMBIENT_TEXTURE = UNIFORM_MATERIAL + ".ambientTexture";
-		public static final String HAS_AMBIENT_TEXTURE = UNIFORM_MATERIAL + ".hasAmbientTexture";
 		public static final String DIFFUSE_TEXTURE = UNIFORM_MATERIAL + ".diffuseTexture";
-		public static final String HAS_DIFFUSE_TEXTURE = UNIFORM_MATERIAL + ".hasDiffuseTexture";
 		public static final String SPECULAR_TEXTURE = UNIFORM_MATERIAL + ".specularTexture";
-		public static final String HAS_SPECULAR_TEXTURE = UNIFORM_MATERIAL + ".hasSpecularTexture";
+		public static final String NORMAL_MAP = UNIFORM_MATERIAL + ".normalMap";
+		public static final String DISPLACEMENT_MAP = UNIFORM_MATERIAL + ".displacementMap";
+		public static final String DISPLACEMENT_MAP_SCALE = UNIFORM_MATERIAL + ".displacementMapScale";
+		public static final String DISPLACEMENT_MAP_BIAS = UNIFORM_MATERIAL + ".displacementMapBias";
 		public static final String SHININESS = UNIFORM_MATERIAL + ".shininess";
 	}
 	
@@ -61,9 +63,6 @@ public class RenderUtils {
 		Colour ambientColour = Colour.NONE;
 		Colour diffuseColour = Colour.NONE;
 		Colour specularColour = Colour.NONE;
-		float hasAmbientTexture = 0;
-		float hasDiffuseTexture = 0;
-		float hasSpecularTexture = 0;
 		//Check the colours and assign them if necessary
 		if (material.ambientColour != null)
 			ambientColour = new Colour(material.ambientColour, material.alphaColourValue);
@@ -72,33 +71,31 @@ public class RenderUtils {
 		if (material.specularColour != null)
 			specularColour = new Colour(material.specularColour, material.alphaColourValue);
 		//Check the textures and assign them if necessary
-		if (material.ambientTextureMap != null) {
+		if (material.ambientTextureMap != null)
 			//Assign the texture
-			pass.currentShader.setUniformf(UniformMaterial.AMBIENT_TEXTURE, pass.bindTexture(material.ambientTextureMap.getPointer()));
-			//Assign the 'has' value
-			hasAmbientTexture = 1;
-		}
-		if (material.diffuseTextureMap != null) {
+			pass.currentShader.setUniformi(UniformMaterial.AMBIENT_TEXTURE, pass.bindTexture(material.ambientTextureMap.getPointer()));
+		if (material.diffuseTextureMap != null)
 			//Assign the texture
-			pass.currentShader.setUniformf(UniformMaterial.DIFFUSE_TEXTURE, pass.bindTexture(material.diffuseTextureMap.getPointer()));
-			//Assign the 'has' value
-			hasDiffuseTexture = 1;
-		} else
+			pass.currentShader.setUniformi(UniformMaterial.DIFFUSE_TEXTURE, pass.bindTexture(material.diffuseTextureMap.getPointer()));
+		else
 			//Bind the default texture
 			pass.currentShader.setUniformi(UniformMaterial.DIFFUSE_TEXTURE, pass.bindTexture(Settings.Resources.DEFAULT_TEXTURE.getPointer()));
-		if (material.specularTextureMap != null) {
+		if (material.specularTextureMap != null)
 			//Assign the texture
-			pass.currentShader.setUniformf(UniformMaterial.SPECULAR_TEXTURE, pass.bindTexture(material.specularTextureMap.getPointer()));
-			//Assign the 'has' value
-			hasSpecularTexture = 1;
+			pass.currentShader.setUniformi(UniformMaterial.SPECULAR_TEXTURE, pass.bindTexture(material.specularTextureMap.getPointer()));
+		if (material.normalTextureMap != null)
+			//Assign the texture
+			pass.currentShader.setUniformi(UniformMaterial.NORMAL_MAP, pass.bindTexture(material.normalTextureMap.getPointer()));
+		if (material.displacementTextureMap != null) {
+			//Assign the texture
+			pass.currentShader.setUniformi(UniformMaterial.DISPLACEMENT_MAP, pass.bindTexture(material.displacementTextureMap.getPointer()));
+			pass.currentShader.setUniformf(UniformMaterial.DISPLACEMENT_MAP_SCALE, material.displacementMapScale);
+			pass.currentShader.setUniformf(UniformMaterial.DISPLACEMENT_MAP_BIAS, material.displacementMapBias);
 		}
 		//Assign the uniforms
 		pass.currentShader.setUniformf(UniformMaterial.AMBIENT_COLOUR, ambientColour);
 		pass.currentShader.setUniformf(UniformMaterial.DIFFUSE_COLOUR, diffuseColour);
 		pass.currentShader.setUniformf(UniformMaterial.SPECULAR_COLOUR, specularColour);
-		pass.currentShader.setUniformf(UniformMaterial.HAS_AMBIENT_TEXTURE, hasAmbientTexture);
-		pass.currentShader.setUniformf(UniformMaterial.HAS_DIFFUSE_TEXTURE, hasDiffuseTexture);
-		pass.currentShader.setUniformf(UniformMaterial.HAS_SPECULAR_TEXTURE, hasSpecularTexture);
 		pass.currentShader.setUniformf(UniformMaterial.SHININESS, material.shininess);
 	}
 

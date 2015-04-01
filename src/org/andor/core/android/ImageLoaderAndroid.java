@@ -11,6 +11,7 @@ package org.andor.core.android;
 import java.io.IOException;
 
 import org.andor.core.Image;
+import org.andor.core.TextureParameters;
 import org.andor.core.logger.Logger;
 
 import android.graphics.Bitmap;
@@ -23,6 +24,13 @@ public class ImageLoaderAndroid {
 	public static Image loadImage(String filePath, boolean external) {
 		//Return the image
 		return new Image(loadBitmap(filePath, external));
+	}
+	
+	/* The static method used to load an image given the file path, and
+	 * the external variables */
+	public static Image loadImage(String filePath, boolean external, TextureParameters parameters) {
+		//Return the image
+		return new Image(loadBitmap(filePath, external), parameters);
 	}
 	
 	/* The static method used to load a bitmap given the file path, and

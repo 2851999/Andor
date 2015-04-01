@@ -32,6 +32,7 @@ public class RenderPasses {
 		}
 		//Load and assign the default texture
 		Settings.Resources.DEFAULT_TEXTURE = ImageLoader.loadImage("/resources/andor/blank.png");
+		Settings.Resources.DEFAULT_NORMAL_MAP = ImageLoader.loadImage("/resources/andor/blanknormal.png");
 		//Load the lighting shaders
 		Lights.setupShaders();
 	}

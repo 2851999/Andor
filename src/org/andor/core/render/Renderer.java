@@ -60,6 +60,7 @@ public class Renderer {
 	public int normalsHandle;
 	public int texturesHandle;
 	public int drawOrderHandle;
+	public int tangentsHandle;
 	
 	/* The data buffers */
 	public FloatBuffer verticesBuffer;
@@ -67,6 +68,7 @@ public class Renderer {
 	public FloatBuffer normalsBuffer;
 	public FloatBuffer textureCoordsBuffer;
 	public ShortBuffer drawOrderBuffer;
+	public FloatBuffer tangentsBuffer;
 	
 	/* The usage of the VBO */
 	public int usage;
@@ -116,6 +118,7 @@ public class Renderer {
 		this.normalsHandle = -2;
 		this.coloursHandle = -2;
 		this.texturesHandle = -2;
+		this.tangentsHandle = -2;
 		//Check to see whether running using deferred rendering
 		if (! Settings.AndroidMode && Settings.Video.DeferredRendering) {
 			//Setup the geometry buffer if it has not already been setup
@@ -165,6 +168,13 @@ public class Renderer {
 			
 			GLUtils.bindBuffer(GL15.GL_ARRAY_BUFFER, this.drawOrderHandle);
 			GLUtils.bufferData(GL15.GL_ARRAY_BUFFER, this.drawOrderBuffer, this.usage);
+		}
+		if (tangents != null) {
+			this.tangentsBuffer = BufferUtils.createFlippedBuffer(this.tangents);
+			this.tangentsHandle = GLUtils.genBuffers();
+			
+			GLUtils.bindBuffer(GL15.GL_ARRAY_BUFFER, this.tangentsHandle);
+			GLUtils.bufferData(GL15.GL_ARRAY_BUFFER, this.tangentsBuffer, this.usage);
 		}
 		//Unbind any bound buffers
 		GLUtils.bindBuffer(GL15.GL_ARRAY_BUFFER, 0);
@@ -275,6 +285,22 @@ public class Renderer {
 		GLUtils.bindBuffer(GL15.GL_ARRAY_BUFFER, 0);
 	}
 	
+	/* The method used to update the tangents */
+	public void updateTangents(float[] tangents) {
+		//Set the vertices data
+		this.tangents = tangents;
+		//Create the vertices buffer
+		this.tangentsBuffer = BufferUtils.createFlippedBuffer(this.tangents);
+		//Check to see whether the handle has been setup
+		if (this.tangentsHandle == -2)
+			//Setup the handle
+			this.tangentsHandle = GLUtils.genBuffers();
+		//Bind the vertices buffer and give OpenGL the data
+		GLUtils.bindBuffer(GL15.GL_ARRAY_BUFFER, this.tangentsHandle);
+		GLUtils.bufferData(GL15.GL_ARRAY_BUFFER, this.tangentsBuffer, this.usage);
+		GLUtils.bindBuffer(GL15.GL_ARRAY_BUFFER, 0);
+	}
+	
 	/* The method used to release this renderer */
 	public void release() {
 		if (this.vertices != null)
@@ -287,6 +313,8 @@ public class Renderer {
 			GLUtils.deleteBuffers(this.texturesHandle);
 		if (this.drawOrder != null)
 			GLUtils.deleteBuffers(this.drawOrderHandle);
+		if (this.tangents != null)
+			GLUtils.deleteBuffers(this.tangentsHandle);
 	}
 	
 	/* The method used to set the vertices */

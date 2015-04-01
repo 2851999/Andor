@@ -25,6 +25,7 @@ import org.andor.core.ParticleEmitter;
 import org.andor.core.RenderableObject3D;
 import org.andor.core.Settings;
 import org.andor.core.SkyBox;
+import org.andor.core.TextureParameters;
 import org.andor.core.Vector2D;
 import org.andor.core.Vector3D;
 import org.andor.core.input.ControlBindingAxis;
@@ -95,7 +96,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		this.font = FontUtils.loadBitmapFont("H:/Andor/test2.png", true, 16, 12);
 		//Load the texture and bind it
 		String path = "H:/Andor/";
-		this.camera.setSkyBox(new SkyBox(ImageLoader.loadImage(path + "skybox1.png", true), 100));
+		this.camera.setSkyBox(new SkyBox(ImageLoader.loadImage(path + "skybox1.png", true, new TextureParameters().setFilter(GL11.GL_NEAREST)), 100));
 		//Create the images
 		ImageSet images = new ImageSet();
 		Image grassSide = images.loadImage(path + "Grass_Side.png", true);

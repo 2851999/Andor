@@ -17,6 +17,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
+import org.lwjgl.opengl.GL30;
 
 import android.opengl.GLES20;
 
@@ -330,6 +331,13 @@ public class GLUtils {
 			GLES20.glTexParameteri(target, pname, param);
 	}
 	
+	public static void texParameterf(int target, int pname, float param) {
+		if (onPC())
+			GL11.glTexParameterf(target, pname, param);
+		else
+			GLES20.glTexParameterf(target, pname, param);
+	}
+	
 	public static void texEnvi(int target, int pname, int param) {
 		if (onPC())
 			GL11.glTexEnvi(target, pname, param);
@@ -350,6 +358,11 @@ public class GLUtils {
 			GL11.glDeleteTextures(texture);
 		else
 			GLES20.glDeleteTextures(1, new int[] { texture }, 0);
+	}
+	
+	public static void generateMipmap(int target) {
+		if (onPC())
+			GL30.glGenerateMipmap(target);
 	}
 	
 	/* The static method used to return whether android is enabled */

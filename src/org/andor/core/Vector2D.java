@@ -143,6 +143,11 @@ public class Vector2D {
 		return new Vector2D(this);
 	}
 	
+	/* The method used to return a string representation of this object */
+	public String toString() {
+		return "(" + this.x + ", " + this.y + ")";
+	}
+	
 	/* The method used to set and get the different values */
 	public void setX(float x) { this.x = x; }
 	public void setY(float y) { this.y = y; }

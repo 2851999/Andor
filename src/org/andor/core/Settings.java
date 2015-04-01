@@ -22,7 +22,7 @@ public class Settings {
 		/* The build of Andor */
 		public static final String BUILD = "Experimental";
 		/* The date this build started development */
-		public static final String DATE = "28/03/2015";
+		public static final String DATE = "29/03/2015";
 	}
 	
 	/* The static class containing all of the settings required for the window */
@@ -54,6 +54,8 @@ public class Settings {
 		public static ScreenResolution Resolution = ScreenResolution.RES_NATIVE;
 		/* Whether any renderers should setup for deferred rendering */
 		public static boolean DeferredRendering = false;
+		/* The maximum number of samples to do using anisotropic filtering */
+		public static int MaxAnisotropicSamples = 16;
 	}
 	
 	/* The static class containing all of the physics settings */
@@ -98,6 +100,7 @@ public class Settings {
 			public static String ICON_32 = "/resources/andor/Icon32.png";
 		}
 		public static Image DEFAULT_TEXTURE; //Assigned with render passes
+		public static Image DEFAULT_NORMAL_MAP; //Assigned with render passes
 	}
 	
 	/* The static class containing all of the debugging settings */

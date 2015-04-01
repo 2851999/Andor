@@ -86,9 +86,11 @@ public class ShaderUtils {
 		//The shader source
 		StringBuilder shaderSource = new StringBuilder();
 		//Look at all of the shader file text
-		for (int a = 0; a < shaderCode.size(); a++)
+		for (int a = 0; a < shaderCode.size(); a++) {
 			//Add onto the shader source
 			shaderSource.append(shaderCode.get(a)).append('\n');
+			System.out.println("" + a + "    :" + shaderCode.get(a));
+		}
 		//Load the shader file
 		GLUtils.shaderSource(shader, shaderSource.toString());
 		//Compile the shader

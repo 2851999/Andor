@@ -53,11 +53,13 @@ public class ForwardPass extends RenderPass {
 		int colourAttribute = currentShader.getAttributeLocation(RenderUtils.ATTRIBUTE_COLOUR);
 		int normalAttribute = currentShader.getAttributeLocation(RenderUtils.ATTRIBUTE_NORMAL);
 		int textureCoordsAttribute = currentShader.getAttributeLocation(RenderUtils.ATTRIBUTE_TEXTURE_COORD);
+		int tangentAttribute = currentShader.getAttributeLocation(RenderUtils.ATTRIBUTE_TANGENT);
 		
 		//Give the shader the matrices
 		currentShader.setUniformMatrix(RenderUtils.UNIFORM_MODEL_VIEW_PROJECTION_MATRIX, Matrix.modelViewProjectionMatrix);
 		currentShader.setUniformMatrix(RenderUtils.UNIFORM_MODEL_MATRIX, Matrix.modelMatrix);
 		currentShader.setUniformMatrix(RenderUtils.UNIFORM_NORMAL_MATRIX, Matrix.normalMatrix);
+		currentShader.setUniformMatrix("andor_viewMatrix", Matrix.viewMatrix);
 		
 		if (renderer.vertices != null)
 			prepareVertexArray(vertexAttribute, renderer.verticesHandle, renderer.vertexValuesCount);
@@ -65,12 +67,20 @@ public class ForwardPass extends RenderPass {
 			prepareVertexArray(colourAttribute, renderer.coloursHandle, renderer.colourValuesCount);
 		if (renderer.normals != null)
 			prepareVertexArray(normalAttribute, renderer.normalsHandle, renderer.vertexValuesCount);
-		if (renderer.textureCoords != null) {
+		if (renderer.tangents != null)
+			prepareVertexArray(tangentAttribute, renderer.tangentsHandle, renderer.vertexValuesCount);
+		if (renderer.textureCoords != null)
 			prepareVertexArray(textureCoordsAttribute, renderer.texturesHandle, renderer.textureCoordValuesCount);
-			currentShader.setUniformf(RenderUtils.UNIFORM_HAS_TEXTURE, 1.0f);
-		} else {
-			currentShader.setUniformf(RenderUtils.UNIFORM_HAS_TEXTURE, 0.0f);
-		}
+		
+		if (renderer.material.normalTextureMap != null)
+			currentShader.setUniformf("andor_useNormalMap", 1.0f);
+		else
+			currentShader.setUniformf("andor_useNormalMap", 0.0f);
+		
+		if (renderer.material.displacementTextureMap != null)
+			currentShader.setUniformf("andor_useDisplacementMap", 1.0f);
+		else
+			currentShader.setUniformf("andor_useDisplacementMap", 0.0f);
 		
 		//Check whether the material exists
 		if (renderer.material != null)
