@@ -42,6 +42,14 @@ public class Material {
 	
 	/* The diffuse texture map */
 	public Image specularTextureMap;
+	
+	/* The normal texture map */
+	public Image normalTextureMap;
+	
+	/* The displace texture map */
+	public Image displacementTextureMap;
+	public float displacementMapScale;
+	public float displacementMapBias;
 
 	/* The constructor */
 	public Material(String name) {
@@ -52,6 +60,33 @@ public class Material {
 		this.specularColour = null;
 		this.shininess = 0;
 		this.alphaColourValue = 0;
+		this.displacementMapScale = 0.02f;
+		this.displacementMapBias = 0f;
 	}
+	
+	/* The getter and setters */
+	public void setAmbientColour(Colour ambientColour) { this.ambientColour = ambientColour; }
+	public void setDiffuseColour(Colour diffuseColour) { this.diffuseColour = diffuseColour; }
+	public void setSpecularColour(Colour specularColour) { this.specularColour = specularColour; }
+	public void setShininess(float shininess) { this.shininess = shininess; }
+	public void setAlphaColourValue(float alphaColourValue) { this.alphaColourValue = alphaColourValue; }
+	public void setAlphaTextureMap(Image alphaTextureMap) { this.alphaTextureMap = alphaTextureMap; }
+	public void setAmbientTextureMap(Image ambientTextureMap) { this.ambientTextureMap = ambientTextureMap; }
+	public void setDiffuseTextureMap(Image diffuseTextureMap) { this.diffuseTextureMap = diffuseTextureMap; }
+	public void setSpecularTextureMap(Image specularTextureMap) { this.specularTextureMap = specularTextureMap; }
+	public void setNormalTextureMap(Image normalTextureMap) { this.normalTextureMap = normalTextureMap; }
+	public void setDisplacementTextureMap(Image displacementTextureMap) { this.displacementTextureMap = displacementTextureMap; }
+	public String getName() { return this.name; }
+	public Colour getAmbientColour() { return this.ambientColour; }
+	public Colour getDiffuseColour() { return this.diffuseColour; }
+	public Colour getSpecularColour() { return this.specularColour; }
+	public float getShininess() { return this.shininess; }
+	public float getAlphaColourValue() { return this.alphaColourValue; }
+	public Image getAlphaTextureMap() { return this.alphaTextureMap; }
+	public Image getAmbientTextureMap() { return this.ambientTextureMap; }
+	public Image getDiffuseTextureMap() { return this.diffuseTextureMap; }
+	public Image getSpecularTextureMap() { return this.specularTextureMap; }
+	public Image getNormalTextureMap() { return this.normalTextureMap; }
+	public Image getDisplacementTextureMap() { return this.displacementTextureMap; }
 	
 }

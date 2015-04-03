@@ -48,7 +48,7 @@ public class DeferredScene {
 				1, 0,
 				0, 0
 			});
-			this.screenQuad.renderer.setTexture(new Image(Renderer.geometryBuffer.textures[GeometryBuffer.TYPE_DIFFUSE]));
+			this.screenQuad.renderer.setTexture(new Image(Renderer.geometryBuffer.getTexture(GeometryBuffer.TYPE_DIFFUSE).getPointer()));
 			//Check to see whether the other quads should be set up
 			if (Settings.Debugging.ShowDeferredRenderingBuffers) {
 				//Setup the quads
@@ -59,7 +59,7 @@ public class DeferredScene {
 					1, 0,
 					0, 0
 				});
-				this.positionQuad.renderer.setTexture(new Image(Renderer.geometryBuffer.textures[GeometryBuffer.TYPE_POSITION]));
+				this.positionQuad.renderer.setTexture(new Image(Renderer.geometryBuffer.getTexture(GeometryBuffer.TYPE_POSITION).getPointer()));
 				this.positionQuad.position = new Vector2D(Settings.Window.Width - (Settings.Window.Width / 4), 0);
 				
 				this.diffuseQuad = Object2DBuilder.createQuad(Settings.Window.Width / 4, Settings.Window.Height / 4, Colour.WHITE);
@@ -69,7 +69,7 @@ public class DeferredScene {
 					1, 0,
 					0, 0
 				});
-				this.diffuseQuad.renderer.setTexture(new Image(Renderer.geometryBuffer.textures[GeometryBuffer.TYPE_DIFFUSE]));
+				this.diffuseQuad.renderer.setTexture(new Image(Renderer.geometryBuffer.getTexture(GeometryBuffer.TYPE_DIFFUSE).getPointer()));
 				this.diffuseQuad.position = new Vector2D(Settings.Window.Width - (Settings.Window.Width / 4), Settings.Window.Height / 4);
 				
 				this.normalQuad = Object2DBuilder.createQuad(Settings.Window.Width / 4, Settings.Window.Height / 4, Colour.WHITE);
@@ -79,7 +79,7 @@ public class DeferredScene {
 					1, 0,
 					0, 0
 				});
-				this.normalQuad.renderer.setTexture(new Image(Renderer.geometryBuffer.textures[GeometryBuffer.TYPE_NORMAL]));
+				this.normalQuad.renderer.setTexture(new Image(Renderer.geometryBuffer.getTexture(GeometryBuffer.TYPE_NORMAL).getPointer()));
 				this.normalQuad.position = new Vector2D(Settings.Window.Width - (Settings.Window.Width / 4), 2 * (Settings.Window.Height / 4));
 				
 				this.depthQuad = Object2DBuilder.createQuad(Settings.Window.Width / 4, Settings.Window.Height / 4, Colour.WHITE);
@@ -89,7 +89,7 @@ public class DeferredScene {
 					1, 0,
 					0, 0
 				});
-				this.depthQuad.renderer.setTexture(new Image(Renderer.geometryBuffer.depthTexture));
+				this.depthQuad.renderer.setTexture(new Image(Renderer.geometryBuffer.getTexture(GeometryBuffer.TYPE_DEPTH).getPointer()));
 				this.depthQuad.position = new Vector2D(Settings.Window.Width - (Settings.Window.Width / 4), 3 * (Settings.Window.Height / 4));
 			}
 		}

@@ -146,17 +146,38 @@ public class Vector3D {
 	}
 	
 	/* The method used to get the normalised vector */
-	public Vector3D normalise() {
+	public Vector3D normalised() {
 		//Get the length
 		float length = this.getLength();
 		//Return the new vector
 		return new Vector3D(this.x / length, this.y / length, this.z / length);
 	}
 	
+	/* The method used to get the dot product */
+	public float dot(Vector3D vector) {
+		//Return the value
+		return x * vector.x + y * vector.y + z * vector.z;
+	}
+	
+	/* The method used to get the crossed vector product */
+	public Vector3D cross(Vector3D vector) {
+		//Return the vector
+		return new Vector3D(
+			y * vector.z - z * vector.y,
+			z * vector.x - x * vector.z,
+			x * vector.y - y * vector.x
+		);
+	}
+	
 	/* The method used to create a new vector with the same values as
 	 * this one and then return it (Clones this vector) */
 	public Vector3D clone() {
 		return new Vector3D(this);
+	}
+	
+	/* The method used to return a string representation of this object */
+	public String toString() {
+		return "(" + this.x + ", " + this.y + ", " + this.z + ")";
 	}
 	
 	/* The method used to set and get the different values */

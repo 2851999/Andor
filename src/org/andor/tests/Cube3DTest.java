@@ -25,6 +25,7 @@ import org.andor.core.ParticleEmitter;
 import org.andor.core.RenderableObject3D;
 import org.andor.core.Settings;
 import org.andor.core.SkyBox;
+import org.andor.core.TextureParameters;
 import org.andor.core.Vector2D;
 import org.andor.core.Vector3D;
 import org.andor.core.input.ControlBindingAxis;
@@ -95,7 +96,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		this.font = FontUtils.loadBitmapFont("H:/Andor/test2.png", true, 16, 12);
 		//Load the texture and bind it
 		String path = "H:/Andor/";
-		this.camera.setSkyBox(new SkyBox(ImageLoader.loadImage(path + "skybox1.png", true), 100));
+		this.camera.setSkyBox(new SkyBox(ImageLoader.loadImage(path + "skybox1.png", true, new TextureParameters().setFilter(GL11.GL_NEAREST)), 100));
 		//Create the images
 		ImageSet images = new ImageSet();
 		Image grassSide = images.loadImage(path + "Grass_Side.png", true);
@@ -110,7 +111,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		cube.setTexture(this.texture);
 		bigCube = Object3DBuilder.createCube(10, 10, 10, new Colour(130f / 255f, 176f / 255f, 255f / 255f, 0.8f));
 		//Load the model
-		this.model = OBJLoader.loadModel(path + "ship.obj", path, true);
+		this.model = OBJLoader.loadModel(path + "Tests/Render/crytek-sponza/sponza.obj", path + "Tests/Render/crytek-sponza/", true);
 		this.model.prepare();
 		this.model.position.z = -20;
 		this.model.scale.multiply(0.03f);
@@ -186,7 +187,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		
 		Vector3D change = new Vector3D(0, 0.06f, 0);
 		change.multiply(getDelta());
-		this.model.rotation.add(change);
+		//this.model.rotation.add(change);
 	}
 	
 	/* The method called when the game loop is rendered */
@@ -217,7 +218,12 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		//this.light0.use();
 		//this.light1.use();
 		//this.light2.use();
-		model.render();
+		GL11.glEnable(GL11.GL_CULL_FACE);
+		GL11.glCullFace(GL11.GL_CW);
+		
+		this.model.render();
+		
+		GL11.glDisable(GL11.GL_CULL_FACE);
 		//this.light2.stopUsing();
 		//this.light1.stopUsing();
 		//this.light0.stopUsing();
@@ -241,7 +247,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		
 		//Render the FPS
 		this.font.render("Current FPS: " + this.getFPS(), 10, 10);
-		this.font.render("Object Face Count: " + this.model.getNumberOfFaces(), 10, 26);
+		//this.font.render("Object Face Count: " + this.model.getNumberOfFaces(), 10, 26);
 		this.font.render("Particle Count: " + this.particleEmitter.particles.size(), 10, 42);
 		scene.stopRendering();
 		
@@ -322,7 +328,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		Settings.Window.WindowedFullscreen = false;
 		Settings.Window.Undecorated = false;
 		//Enable VSync
-		Settings.Video.VSync = true;
+		Settings.Video.VSync = false;
 		Settings.Video.MaxFPS = 60;
 		Settings.Window.Width = 1024;
 		Settings.Window.Height = 768;

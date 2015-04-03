@@ -150,7 +150,7 @@ public class GameLoop implements GameLoopInterface, InputListenerInterface {
 		//Release all of the renderer's
 		Renderer.releaseAll();
 		//Release all of the images's
-		Image.releaseAll();
+		Textures.releaseAll();
 		//Make sure Andor isn't currently running on Android
 		if (! Settings.AndroidMode)
 			//Release all of the audio

@@ -10,6 +10,7 @@
 package org.andor.core.android;
 
 import org.andor.core.Image;
+import org.andor.core.TextureParameters;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -51,7 +52,7 @@ public class BitmapFontUtilsAndroid {
 			canvas.drawText("" + (char) a, posX + x, posY + y + paint.getFontMetrics().descent, paint);
 		}
 		//Return the image
-		return new Image(bitmap);
+		return new Image(bitmap, TextureParameters.DEFAULT_NEAREST);
 	}
 	
 }

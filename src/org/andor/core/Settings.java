@@ -18,11 +18,11 @@ public class Settings {
 	/* The static class containing all of the information about Andor */
 	public static class Information {
 		/* The version of Andor */
-		public static final String VERSION = "V1.0.3";
+		public static final String VERSION = "V1.0.4";
 		/* The build of Andor */
 		public static final String BUILD = "Development";
 		/* The date this build started development */
-		public static final String DATE = "28/03/2015";
+		public static final String DATE = "03/04/2015";
 	}
 	
 	/* The static class containing all of the settings required for the window */
@@ -40,6 +40,24 @@ public class Settings {
 		public static boolean Undecorated = false;
 		/* The boolean that states whether the window should be resizable */
 		public static boolean Resizable = false;
+		
+		/* The static method used to set the window size */
+		public static void setSize(ScreenResolution resolution) {
+			Width = resolution.getWidth();
+			Height = resolution.getHeight();
+		}
+		
+		/* The static method used to set the window size */
+		public static void setSize(Vector2D size) {
+			Width = size.getX();
+			Height = size.getY();
+		}
+		
+		/* The static method used to set the window size */
+		public static void setSize(float width, float height) {
+			Width = width;
+			Height = height;
+		}
 	}
 	
 	/* The static class containing all of the video settings */
@@ -54,6 +72,8 @@ public class Settings {
 		public static ScreenResolution Resolution = ScreenResolution.RES_NATIVE;
 		/* Whether any renderers should setup for deferred rendering */
 		public static boolean DeferredRendering = false;
+		/* The maximum number of samples to do using anisotropic filtering */
+		public static int MaxAnisotropicSamples = 16;
 	}
 	
 	/* The static class containing all of the physics settings */
@@ -98,6 +118,7 @@ public class Settings {
 			public static String ICON_32 = "/resources/andor/Icon32.png";
 		}
 		public static Image DEFAULT_TEXTURE; //Assigned with render passes
+		public static Image DEFAULT_NORMAL_MAP; //Assigned with render passes
 	}
 	
 	/* The static class containing all of the debugging settings */

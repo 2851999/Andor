@@ -14,13 +14,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.List;
 
 import org.andor.core.Settings;
+import org.andor.core.Vector2D;
 import org.andor.core.android.BaseActivity;
 import org.andor.core.logger.Log;
 import org.andor.core.logger.Logger;
-import org.andor.utils.ArrayUtils;
+import org.andor.core.render.Renderer;
 import org.andor.utils.FileUtils;
 
 public class OBJLoader {
@@ -29,6 +29,7 @@ public class OBJLoader {
 	public static Model loadModel(String filePath, String directory, boolean external) {
 		//The model
 		Model model = new Model();
+		IndexedModel indexedModel = new IndexedModel();
 		//Try
 		try {
 			//The buffered reader
@@ -51,22 +52,22 @@ public class OBJLoader {
 			//The current line
 			String line = "";
 			//The current part
-			ModelPart currentPart = new ModelPart(model);
+			ModelPart currentPart = new ModelPart(Renderer.TRIANGLES);
 			//Go through the file text
 			while ((line = bufferedReader.readLine()) != null) {
 				//Check the start of the current line
 				if (line.startsWith("v "))
 					//Add a vertex to the model
-					model.addVertex(ModelParserUtils.getVectorValue(line));
+					indexedModel.addVertex(ModelParserUtils.getVectorValue3D(line));
 				else if (line.startsWith("vn "))
 					//Add a normal to the model
-					model.addNormal(ModelParserUtils.getVectorValue(line));
+					indexedModel.addNormal(ModelParserUtils.getVectorValue3D(line));
 				else if (line.startsWith("vt "))
 					//Add a texture to the model
-					model.addTexture(ModelParserUtils.getVectorValue(line));
+					indexedModel.addTextureCoordinate(ModelParserUtils.getVectorValue2D(line));
 				else if (line.startsWith("f "))
 					//Add a face to the model
-					currentPart.addFace(getFace(line));
+					currentPart.addFace(getFace(line, indexedModel));
 				else if (line.startsWith("mtllib ")) {
 					//Split up the line
 					String[] split = line.split(" ");
@@ -75,14 +76,15 @@ public class OBJLoader {
 					//Get the file path of the material file
 					String materialFilePath = filePath.replace(fileName, split[1]);
 					//Load the material
-					model.materials = MaterialLoader.loadMaterialFile(materialFilePath, directory, external, model.materials);
+					indexedModel.materials = MaterialLoader.loadMaterialFile(materialFilePath, directory, external, indexedModel.materials);
 				} else if (line.startsWith("usemtl ")) {
 					//Split up the line
 					String[] split = line.split(" ");
 					//Add the current part and start a new one
-					model.addPart(currentPart);
-					currentPart = new ModelPart(model);
-					currentPart.setMaterial(model.getMaterial(split[1]));
+					if (currentPart.getFaces().size() > 0)
+						model.addPart(currentPart);
+					currentPart = new ModelPart(Renderer.TRIANGLES);
+					currentPart.setMaterial(indexedModel.getMaterial(split[1]));
 				}
 			}
 			
@@ -107,54 +109,30 @@ public class OBJLoader {
 	}
 
 	/* The static method used to get a face from a line */
-	public static Face getFace(String line) {
+	public static ModelFace getFace(String line, IndexedModel indexedModel) {
 		//Split up the line using a space 1//2 1//2 1//2
 		String[] split = line.split(" ");
 
-		//The vertices, normals and textures
-		float[] vertices = new float[split.length - 1];
-		float[] normals = new float[split.length - 1];
-		float[] textures = new float[split.length - 1];
-		
-		boolean vSet = false;
-		boolean nSet = false;
-		boolean tSet = false;
+		//Create the face
+		ModelFace face = new ModelFace();
 		
 		//Go through the array
 		for (int a = 1; a < split.length; a++) {
 			//Get the current values
 			float[] current = calculateFaceValues(split[a]);
+			//Create the face vertex
+			ModelVertex faceVertex = new ModelVertex();
 			//Assign the values
-			vertices[a - 1] = current[0];
-			normals[a - 1] = current[1];
-			textures[a - 1] = current[2];
-			
-			vSet = (vertices[a - 1] != 0) || vSet;
-			nSet = (normals[a - 1] != 0) || nSet;
-			tSet = (textures[a - 1] != 0) || tSet;
+			faceVertex.setVertex(indexedModel.getVertex((int) current[0] - 1));
+			if (current[1] != 0)
+				faceVertex.setNormal(indexedModel.getNormal((int) current[1] - 1));
+			if (current[2] != 0) {
+				Vector2D coord = indexedModel.getTextureCoordinate((int) current[2] - 1);
+				faceVertex.setTextureCoordinate(new Vector2D(coord.x, 1f - coord.y));
+			}
+			//Add the face vertex to the face
+			face.addVertex(faceVertex);
 		}
-		
-		//The lists
-		List<Float> verticesList = null;
-		List<Float> normalsList = null;
-		List<Float> texturesList = null;
-
-		//Check to see whether there are any vertex, normal or texture values
-		if (vSet)
-			//Set the vertices
-			verticesList = ArrayUtils.toFloatList(vertices);
-		if (nSet)
-			//Set the normals
-			normalsList = ArrayUtils.toFloatList(normals);
-		if (tSet)
-			//Set the textures
-			texturesList = ArrayUtils.toFloatList(textures);
-		
-		//Create the face
-		Face face = new Face();
-		face.vertices = verticesList;
-		face.normals = normalsList;
-		face.textures = texturesList;
 		//Return the face
 		return face;
 	}

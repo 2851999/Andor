@@ -9,17 +9,22 @@ vec4 andor_calculatePosition() {
 	return vec4(vec3(frag_andor_vertex), 1.0);
 }
 
-vec4 andor_calculateColour() {
+vec4 andor_calculateColour(vec2 textureCoord) {
 	//Assign the colour
 	vec4 colour = frag_andor_colour;
 	//Apply the diffuse texture
-	colour *= texture2D(andor_material.diffuseTexture, frag_andor_textureCoord);
+	colour *= texture2D(andor_material.diffuseTexture, textureCoord);
 	//Check the diffuse colour
 	if (andor_material.diffuseColour.a > 0.0)
 		//Apply the diffuse colour
 		colour *= andor_material.diffuseColour;
 	//Return the colour
 	return colour;
+}
+
+vec4 andor_calculateColour() {
+	//Return the colour
+	return andor_calculateColour(frag_andor_textureCoord);
 }
 
 vec4 andor_calculateNormal() {

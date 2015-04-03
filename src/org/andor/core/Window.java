@@ -63,10 +63,13 @@ public class Window {
 			GLFW.glfwDefaultWindowHints();
 			Settings.Window.Width = ScreenUtils.getScreenWidth();
 			Settings.Window.Height = ScreenUtils.getScreenHeight();
+		} else if (Settings.Window.Fullscreen) {
+			Settings.Window.setSize(Settings.Video.Resolution);
 		}
-		GLFW.glfwWindowHint(GLFW.GLFW_REFRESH_RATE, 0);
+		GLFW.glfwWindowHint(GLFW.GLFW_REFRESH_RATE, 60);
 		//Set the instance
 		instance = GLFW.glfwCreateWindow((int) Settings.Window.Width, (int) Settings.Window.Height, Settings.Window.Title, monitor, 0L);
+		System.out.println();
 		//Move to centre
 		centre();
 		
@@ -283,8 +286,9 @@ public class Window {
 	
 	/* The static method used to set the position of this window */
 	public static void setPosition(float x, float y) {
-		//Set the position of the window
-		GLFW.glfwSetWindowPos(instance, (int) x, (int) y);
+		if (! Settings.Window.Fullscreen)
+			//Set the position of the window
+			GLFW.glfwSetWindowPos(instance, (int) x, (int) y);
 	}
 	
 	/* The static method used to set the window as resizable */

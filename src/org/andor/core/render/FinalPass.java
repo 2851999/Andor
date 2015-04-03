@@ -42,8 +42,8 @@ public class FinalPass extends RenderPass {
 		
 		//Give the shader the matrices
 		currentShader.setUniformMatrix(RenderUtils.UNIFORM_MODEL_VIEW_PROJECTION_MATRIX, Matrix.modelViewProjectionMatrix);
-		currentShader.setUniformMatrix(RenderUtils.UNIFORM_NORMAL_MATRIX, Matrix.normalMatrix);
 		currentShader.setUniformMatrix(RenderUtils.UNIFORM_MODEL_MATRIX, Matrix.modelMatrix);
+		currentShader.setUniformMatrix(RenderUtils.UNIFORM_NORMAL_MATRIX, Matrix.normalMatrix);
 		
 		if (renderer.vertices != null)
 			prepareVertexArray(vertexAttribute, renderer.verticesHandle, renderer.vertexValuesCount);
@@ -62,10 +62,10 @@ public class FinalPass extends RenderPass {
 			//Assign the material values
 			RenderUtils.assignMaterial(this, renderer.material);
 		
-		currentShader.setUniformf("andor_positionTexture", this.bindTexture(Renderer.geometryBuffer.textures[GeometryBuffer.TYPE_POSITION]));
-		currentShader.setUniformf("andor_diffuseTexture", this.bindTexture(Renderer.geometryBuffer.textures[GeometryBuffer.TYPE_DIFFUSE]));
-		currentShader.setUniformf("andor_normalTexture", this.bindTexture(Renderer.geometryBuffer.textures[GeometryBuffer.TYPE_NORMAL]));
-		currentShader.setUniformf("andor_depthTexture", this.bindTexture(Renderer.geometryBuffer.depthTexture));
+		currentShader.setUniformf("andor_positionTexture", this.bindTexture(Renderer.geometryBuffer.getTexture(GeometryBuffer.TYPE_POSITION).getPointer()));
+		currentShader.setUniformf("andor_diffuseTexture", this.bindTexture(Renderer.geometryBuffer.getTexture(GeometryBuffer.TYPE_DIFFUSE).getPointer()));
+		currentShader.setUniformf("andor_normalTexture", this.bindTexture(Renderer.geometryBuffer.getTexture(GeometryBuffer.TYPE_NORMAL).getPointer()));
+		currentShader.setUniformf("andor_depthTexture", this.bindTexture(Renderer.geometryBuffer.getTexture(GeometryBuffer.TYPE_DEPTH).getPointer()));
 		
 		//Check to see whether the draw order has been assigned
 		if (renderer.drawOrder != null) {

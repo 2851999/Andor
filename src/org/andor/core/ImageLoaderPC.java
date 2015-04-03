@@ -30,6 +30,12 @@ public class ImageLoaderPC {
 		return loadImage(loadBufferedImage(filePath, external));
 	}
 	
+	/* The static method used to load an image given the file path, and
+	 * the external variables */
+	public static Image loadImage(String filePath, boolean external, TextureParameters parameters) {
+		return loadImage(loadBufferedImage(filePath, external), parameters);
+	}
+	
 	/* The static method used to load a buffered image given the file path,
 	 * and the external variables */
 	public static BufferedImage loadBufferedImage(String filePath, boolean external) {
@@ -63,6 +69,16 @@ public class ImageLoaderPC {
 		int numberOfColourComponents = image.getColorModel().getNumComponents();
 		//Create the image
 		Image outImage = new Image(loadByteBuffer(image, numberOfColourComponents), image.getWidth(), image.getHeight(), numberOfColourComponents);
+		//Return the image
+		return outImage;
+	}
+	
+	/* The static method used to create an image from a buffered image */
+	public static Image loadImage(BufferedImage image, TextureParameters parameters) {
+		//Get the number of colour components
+		int numberOfColourComponents = image.getColorModel().getNumComponents();
+		//Create the image
+		Image outImage = new Image(loadByteBuffer(image, numberOfColourComponents), image.getWidth(), image.getHeight(), numberOfColourComponents, parameters);
 		//Return the image
 		return outImage;
 	}

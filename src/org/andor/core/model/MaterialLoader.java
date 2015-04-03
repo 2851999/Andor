@@ -28,6 +28,7 @@ public class MaterialLoader {
 		for (int a = 0; a < fileText.size(); a++) {
 			//Get the current line
 			String line = fileText.get(a);
+			if (! line.endsWith(".tga")) {
 			//Check the beginning of the line
 			if (line.startsWith("newmtl ")) {
 				//Split up the line using a space
@@ -38,17 +39,17 @@ public class MaterialLoader {
 				materials.add(currentMaterial);
 			} else if (line.startsWith("Ka ")) {
 				//Get the vector values
-				Vector3D values = ModelParserUtils.getVectorValue(line);
+				Vector3D values = ModelParserUtils.getVectorValue3D(line);
 				//Set the ambient colour in the current material
 				currentMaterial.ambientColour = new Colour(values.x, values.y, values.z);
 			} else if (line.startsWith("Kd ")) {
 				//Get the vector values
-				Vector3D values = ModelParserUtils.getVectorValue(line);
+				Vector3D values = ModelParserUtils.getVectorValue3D(line);
 				//Set the diffuse colour in the current material
 				currentMaterial.diffuseColour = new Colour(values.x, values.y, values.z);
 			} else if (line.startsWith("Ks ")) {
 				//Get the vector values
-				Vector3D values = ModelParserUtils.getVectorValue(line);
+				Vector3D values = ModelParserUtils.getVectorValue3D(line);
 				//Set the specular colour in the current material
 				currentMaterial.specularColour = new Colour(values.x, values.y, values.z);
 			} else if (line.startsWith("Ns ")) {
@@ -101,7 +102,25 @@ public class MaterialLoader {
 				Image specularTextureMap = ImageLoader.loadImage(textureFilePath.replace("\\", "/"), external);
 				//Set the texture map in the current material
 				currentMaterial.specularTextureMap = specularTextureMap;
-			}
+			} else if (line.startsWith("map_bump") || line.startsWith("bump") || line.startsWith("map_Bump")) {
+				//Split up the current line using a space
+				String[] split = line.split(" ");
+				//Get the file path of the material file
+				String textureFilePath = directory + split[1];
+				//Load the texture map
+				Image normalTextureMap = ImageLoader.loadImage(textureFilePath.replace("\\", "/"), external);
+				//Set the texture map in the current material
+				currentMaterial.normalTextureMap = normalTextureMap;
+			} else if (line.startsWith("disp")) {
+				//Split up the current line using a space
+				String[] split = line.split(" ");
+				//Get the file path of the material file
+				String textureFilePath = directory + split[1];
+				//Load the texture map
+				Image displacementTextureMap = ImageLoader.loadImage(textureFilePath.replace("\\", "/"), external);
+				//Set the texture map in the current material
+				currentMaterial.displacementTextureMap = displacementTextureMap;
+			} }
 		}
 		//Return the materials
 		return materials;

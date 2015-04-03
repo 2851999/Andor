@@ -1,4 +1,42 @@
 -------------------------------------------------------------
+Release 1 | Beta 0 | Development 4 | Experimental 0
+
+* Added IndexedModel
+* Added ModelFace
+* Added ModelVertex
+* Added Texture
+* Added Textures
+* Added TextureParameters
+* Added FBO
+* Added RenderTexture
+
+* Removed Face
+
+-------------------------------------------------------------
+Release 1 | Beta 0 | Development 3 | Experimental 3
+
+* Added FBO
+* Added RenderTexture
+
+* Fixed bug: Last commit broke lighting positions
+
+-------------------------------------------------------------
+Release 1 | Beta 0 | Development 3 | Experimental 2
+
+* Added Texture
+* Added Textures
+* Added TextureParameters
+
+-------------------------------------------------------------
+Release 1 | Beta 0 | Development 3 | Experimental 1
+
+* Added IndexedModel
+* Added ModelFace
+* Added ModelVertex
+
+* Removed Face
+
+-------------------------------------------------------------
 Release 1 | Beta 0 | Development 3 | Experimental 0
 
 * Added BaseLight

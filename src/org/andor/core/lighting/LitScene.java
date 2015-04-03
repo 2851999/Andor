@@ -39,6 +39,9 @@ public class LitScene {
 		this.lights = new ArrayList<BaseLight>();
 	}
 	
+	/* The method used to add a light */
+	public void add(BaseLight light) { this.lights.add(light); }
+	
 	/* The method used to render this scene */
 	public void render() {
 		//Render the ambient

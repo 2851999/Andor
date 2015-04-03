@@ -18,6 +18,7 @@ import org.andor.core.input.KeyboardEvent;
 import org.andor.core.input.Mouse;
 import org.andor.core.input.MouseMotionEvent;
 import org.andor.core.lighting.BaseLight;
+import org.andor.core.lighting.DirectionalLight;
 import org.andor.core.lighting.LitScene;
 import org.andor.core.lighting.LitSceneInterface;
 import org.andor.core.lighting.PointLight;
@@ -49,7 +50,7 @@ public class LightingTest extends BaseGame implements LitSceneInterface {
 		scene = new LitScene(this);
 		//this.model.rotation.y = 90;
 		//RenderPasses.setPass(ForwardPass.PASS_NAME, new PhongPass());
-		//scene.lights.add(new DirectionalLight(Colour.RED, 0.8f, new Vector3D(0, 1, 1)));
+		scene.lights.add(new DirectionalLight(Colour.RED, 0.8f, new Vector3D(0, 1, 1)));
 		light = new PointLight(Colour.BLUE, 0.8f, new Vector3D(0, 0, 1));
 		light.position = new Vector3D(0, 0, 1);
 		//light = new SpotLight(Colour.YELLOW, 0.9f, new Vector3D(0, 0, 0.4f), new Vector3D(0, 0, -1), 0.9f);
@@ -72,7 +73,7 @@ public class LightingTest extends BaseGame implements LitSceneInterface {
 			this.requestClose();
 		
 		this.model.rotation.y += 0.08f * this.getDelta();
-		this.model2.rotation.y -= 0.08f * this.getDelta();
+		//this.model2.rotation.y -= 0.08f * this.getDelta();
 	}
 	
 	public void render() {

@@ -10,6 +10,7 @@ package org.andor.utils;
 
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 import java.nio.ShortBuffer;
 
 import org.andor.core.Settings;
@@ -17,6 +18,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
+import org.lwjgl.opengl.GL30;
 
 import android.opengl.GLES20;
 
@@ -184,14 +186,14 @@ public class GLUtils {
 		if (onPC())
 			GL15.glBufferData(target, data, usage);
 		else
-			GLES20.glBufferData(target, Float.BYTES * data.remaining(), data, usage);
+			GLES20.glBufferData(target, Float.SIZE * data.remaining(), data, usage);
 	}
 	
 	public static void bufferData(int target, ShortBuffer data, int usage) {
 		if (onPC())
 			GL15.glBufferData(target, data, usage);
 		else
-			GLES20.glBufferData(target, Short.BYTES * data.remaining(), data, usage);
+			GLES20.glBufferData(target, Short.SIZE * data.remaining(), data, usage);
 	}
 	
 	public static void enableVertexAttribArray(int index) {
@@ -330,6 +332,13 @@ public class GLUtils {
 			GLES20.glTexParameteri(target, pname, param);
 	}
 	
+	public static void texParameterf(int target, int pname, float param) {
+		if (onPC())
+			GL11.glTexParameterf(target, pname, param);
+		else
+			GLES20.glTexParameterf(target, pname, param);
+	}
+	
 	public static void texEnvi(int target, int pname, int param) {
 		if (onPC())
 			GL11.glTexEnvi(target, pname, param);
@@ -350,6 +359,40 @@ public class GLUtils {
 			GL11.glDeleteTextures(texture);
 		else
 			GLES20.glDeleteTextures(1, new int[] { texture }, 0);
+	}
+	
+	public static void generateMipmap(int target) {
+		if (onPC())
+			GL30.glGenerateMipmap(target);
+	}
+	
+	public static int genFramebuffers() {
+		if (onPC())
+			return GL30.glGenFramebuffers();
+		else
+			return -1;
+	}
+	
+	public static void bindFramebuffer(int target, int framebuffer) {
+		if (onPC())
+			GL30.glBindFramebuffer(target, framebuffer);
+	}
+	
+	public static void framebufferTexture2D(int target, int attachment, int textarget, int texture, int level) {
+		if (onPC())
+			GL30.glFramebufferTexture2D(target, attachment, textarget, texture, level);
+	}
+	
+	public static void drawBuffers(IntBuffer buffs) {
+		if (onPC())
+			GL20.glDrawBuffers(buffs);
+	}
+	
+	public static int checkFramebufferStatus(int target) {
+		if (onPC())
+			return GL30.glCheckFramebufferStatus(target);
+		else
+			return -1;
 	}
 	
 	/* The static method used to return whether android is enabled */

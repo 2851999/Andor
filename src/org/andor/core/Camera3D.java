@@ -132,7 +132,8 @@ public class Camera3D extends Object3D {
 		this.position.z -= amount * (float) Math.cos(Math.toRadians(this.getRotation().y - 90));
 	}
 	
-	/* The method used to set this camera's skybox */
+	/* The getters and setters */
+	public void setFlying(boolean flying) { this.flying = flying; }
 	public void setSkyBox(SkyBox skyBox) {
 		//Assign the skybox
 		this.skyBox = skyBox;

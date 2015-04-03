@@ -14,6 +14,7 @@ import java.awt.image.BufferedImage;
 
 import org.andor.core.Image;
 import org.andor.core.ImageLoaderPC;
+import org.andor.core.TextureParameters;
 
 public class BitmapFontUtilsPC {
 	
@@ -46,7 +47,7 @@ public class BitmapFontUtilsPC {
 			g2d.drawString("" + (char) a, posX + x, posY + y + g2d.getFontMetrics(font.font.deriveFont(font.fontSize)).getAscent());
 		}
 		//Return the image
-		return ImageLoaderPC.loadImage(image);
+		return ImageLoaderPC.loadImage(image, TextureParameters.DEFAULT_NEAREST);
 	}
 	
 }
