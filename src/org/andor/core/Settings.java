@@ -22,7 +22,7 @@ public class Settings {
 		/* The build of Andor */
 		public static final String BUILD = "Experimental";
 		/* The date this build started development */
-		public static final String DATE = "29/03/2015";
+		public static final String DATE = "02/04/2015";
 	}
 	
 	/* The static class containing all of the settings required for the window */
@@ -40,6 +40,24 @@ public class Settings {
 		public static boolean Undecorated = false;
 		/* The boolean that states whether the window should be resizable */
 		public static boolean Resizable = false;
+		
+		/* The static method used to set the window size */
+		public static void setSize(ScreenResolution resolution) {
+			Width = resolution.getWidth();
+			Height = resolution.getHeight();
+		}
+		
+		/* The static method used to set the window size */
+		public static void setSize(Vector2D size) {
+			Width = size.getX();
+			Height = size.getY();
+		}
+		
+		/* The static method used to set the window size */
+		public static void setSize(float width, float height) {
+			Width = width;
+			Height = height;
+		}
 	}
 	
 	/* The static class containing all of the video settings */

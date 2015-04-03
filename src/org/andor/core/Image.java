@@ -13,6 +13,7 @@ import java.nio.ByteBuffer;
 import org.andor.core.logger.Logger;
 import org.andor.utils.GLUtils;
 import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL30;
 
 import android.graphics.Bitmap;
 import android.opengl.GLES20;
@@ -153,6 +154,8 @@ public class Image extends Texture {
 		else if (this.numberOfColourComponents == 4)
 			//Set the correct mode
 			colourMode = GL11.GL_RGBA;
+		else if (this.numberOfColourComponents == 2)
+			colourMode = GL30.GL_RG;
 		else if (this.numberOfColourComponents == 1)
 			colourMode = GL11.GL_RED;
 		else {
@@ -190,7 +193,6 @@ public class Image extends Texture {
 	public Bitmap getBitmap() { return this.bitmap; }
 	public int getWidth() { return this.width; }
 	public int getHeight() { return this.height; }
-	public int getPointer() { return this.pointer; }
 	
 	public float[] getTextureCoordinates() {
 		return new float[] { this.top, this.bottom, this.left, this.right };

@@ -76,4 +76,8 @@ public class Texture {
 		GLUtils.deleteTextures(this.pointer);
 	}
 	
+	/* The getter and setters */
+	public int getPointer() { return this.pointer; }
+	public TextureParameters getParameters() { return this.parameters; }
+	
 }

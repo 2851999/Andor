@@ -156,45 +156,6 @@ public class ModelPart extends Renderer {
 			}
 		}
 	}
-	/* public void calculateTangents() {
-		//The array of tangents
-		float[] tangents = new float[this.faces.size() * 3];
-		int current = 0;
-		//Go through the faces
-		for (int a = 0; a < this.faces.size(); a++) {
-			//Get the 3 vertices for the current face
-			ModelVertex vertex0 = this.faces.get(a).getVertex(0);
-			ModelVertex vertex1 = this.faces.get(a).getVertex(1);
-			ModelVertex vertex2 = this.faces.get(a).getVertex(2);
-			//Get the values
-			Vector3D v0 = vertex0.getVertex();
-			Vector3D v1 = vertex1.getVertex();
-			Vector3D v2 = vertex2.getVertex();
-			
-			Vector2D uv0 = vertex0.getTextureCoordinate();
-			Vector2D uv1 = vertex1.getTextureCoordinate();
-			Vector2D uv2 = vertex2.getTextureCoordinate();
-			
-			Vector3D n0 = vertex0.getNormal();
-			Vector3D n1 = vertex1.getNormal();
-			Vector3D n2 = vertex2.getNormal();
-			
-			Vector3D deltaPos1 = v1.subtractNew(v0);
-			Vector3D deltaPos2 = v2.subtractNew(v0);
-			
-			Vector2D deltaUV1 = uv1.subtractNew(uv0);
-			Vector2D deltaUV2 = uv2.subtractNew(uv0);
-			
-			float r = 1.0f / (deltaUV1.x * deltaUV2.y - deltaUV1.y * deltaUV2.x);
-			Vector3D tangent = ((deltaPos1.multiplyNew(deltaUV2.y)).subtractNew((deltaPos2.multiplyNew(deltaUV1.y)))).multiplyNew(r);
-			
-			//Assign the tangent values
-			tangents[current] = tangent.x;
-			tangents[current + 1] = tangent.y;
-			tangents[current + 2] = tangent.z;
-			current += 3;
-		}
-	} */
 	
 	/* The setter and getters */
 	public void addFace(ModelFace face) { this.faces.add(face); }

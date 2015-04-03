@@ -20,7 +20,7 @@ import org.andor.core.input.Keyboard;
 import org.andor.core.input.KeyboardEvent;
 import org.andor.core.input.Mouse;
 import org.andor.core.input.MouseMotionEvent;
-import org.andor.core.lighting.DirectionalLight;
+import org.andor.core.lighting.BaseLight;
 import org.andor.core.lighting.LitScene;
 import org.andor.core.lighting.LitSceneInterface;
 import org.andor.core.lighting.PointLight;
@@ -29,6 +29,7 @@ import org.andor.core.model.OBJLoader;
 import org.andor.core.render.Renderer;
 import org.andor.utils.ClampUtils;
 import org.andor.utils.OpenGLUtils;
+import org.andor.utils.ScreenResolution;
 import org.lwjgl.opengl.GL11;
 
 public class RenderTest extends BaseGame implements LitSceneInterface {
@@ -36,12 +37,12 @@ public class RenderTest extends BaseGame implements LitSceneInterface {
 	public static final String PATH = "H:/Andor/Tests/Render/";
 	
 	public Camera3D camera;
-	public Model floor;
-	public Model cube;
+	public Model model;
+	public Model plane;
 	public LitScene scene;
 	
 	public PointLight light1;
-	
+	public float speed;
 	public boolean wireframe;
 	
 	public void create() {
@@ -50,40 +51,62 @@ public class RenderTest extends BaseGame implements LitSceneInterface {
 		this.camera.setPosition(0, -1, -3);
 		this.camera.setSkyBox(new SkyBox(ImageLoader.loadImage(PATH + "skybox4.png", true, new TextureParameters().setFilter(GL11.GL_NEAREST)), 200));
 		this.camera.flying = true;
-		this.floor = OBJLoader.loadModel(PATH + "plane.obj", PATH, true);
-		this.floor.prepare(true);
-		//for (int a = 0; a < this.floor.parts.size(); a++)
-			//this.floor.getPart(a).material.normalTextureMap = ImageLoader.loadImage(PATH + "bricks_normal.jpg", true);
-		this.floor.scale.add(2f);
-		this.cube = OBJLoader.loadModel(PATH + "cube.obj", PATH, true);
-		this.cube.prepare();
-		this.cube.setScale(0.5f);
-		this.cube.setPosition(0, 0.5f, -1);
+		
+		this.model = OBJLoader.loadModel(PATH + "crytek-sponza/sponza.obj", PATH + "crytek-sponza/", true);
+		this.model.prepare(true);
+		this.model.setScale(0.1f);
+		this.model.setPosition(0, 1, -1f);
+		
+		this.plane = OBJLoader.loadModel(PATH + "plane2.obj", PATH, true);
+		this.plane.prepare(true);
+		this.plane.setScale(0.5f);
+		this.plane.setPosition(-2, 1, 0);
+		this.plane.setRotation(0, 0, -30);
+		
 		this.scene = new LitScene(this);
-		this.scene.lights.add(new DirectionalLight(Colour.WHITE, 0.8f, new Vector3D(0, 1f, 0.5f)));
-		this.light1 = new PointLight(Colour.LIGHT_BLUE, 0.8f, new Vector3D(0f, 0.4f, 0.2f));
+		
+		//this.scene.lights.add(new DirectionalLight(Colour.WHITE, 1f, new Vector3D(-1f, 0f, 0f)));
+		//this.scene.lights.add(new DirectionalLight(Colour.WHITE, 1f, new Vector3D(0f, 1f, 0f)));
+		//this.scene.lights.add(new DirectionalLight(Colour.WHITE, 0.8f, new Vector3D(-1f, 0f, 0f)));
+		this.light1 = new PointLight(Colour.LIGHT_BLUE, 1f, new Vector3D(0f, 0.4f, 0.2f));
 		this.light1.setPosition(0, 1f, 0);
 		this.scene.lights.add(this.light1);
 		
+		BaseLight light2 = new PointLight(Colour.ORANGE, 1f, new Vector3D(0f, 0.4f, 0.2f));
+		light2.setPosition(0, 1f, 0);
+		this.scene.lights.add(light2);
+		
 		this.wireframe = false;
 		Renderer.camera = camera;
+		Renderer.ambientLight = new Colour(0.2f, 0.2f, 0.2f);
 		Mouse.lock();
 	}
 	
 	public void update() {
+		if (Keyboard.KEY_LSHIFT)
+			speed = 0.02f;
+		else
+			speed = 0.005f;
 		if (Keyboard.KEY_W)
-			camera.moveForward(0.005f * this.getDelta());
+			camera.moveForward(speed * this.getDelta());
 		if (Keyboard.KEY_S)
-			camera.moveBackward(0.005f * this.getDelta());
+			camera.moveBackward(speed * this.getDelta());
 		if (Keyboard.KEY_A)
-			camera.moveLeft(0.005f * this.getDelta());
+			camera.moveLeft(speed * this.getDelta());
 		if (Keyboard.KEY_D)
-			camera.moveRight(0.005f * this.getDelta());
+			camera.moveRight(speed * this.getDelta());
 		if (Keyboard.KEY_ESCAPE)
 			requestClose();
 		this.camera.rotation.x = ClampUtils.clamp(this.camera.rotation.x, -80, 80);
 		
-		this.cube.rotation.add(0.05f * getDelta());
+		if (Keyboard.KEY_UP)
+			this.light1.position.x -= 0.005f * getDelta();
+		if (Keyboard.KEY_DOWN)
+			this.light1.position.x += 0.005f * getDelta();
+		if (Keyboard.KEY_LEFT)
+			this.light1.position.z += 0.005f * getDelta();
+		if (Keyboard.KEY_RIGHT)
+			this.light1.position.z -= 0.005f * getDelta();
 	}
 	
 	public void render() {
@@ -95,12 +118,18 @@ public class RenderTest extends BaseGame implements LitSceneInterface {
 		OpenGLUtils.enableTexture2D();
 		
 		this.camera.useView();
+		
+		GL11.glEnable(GL11.GL_CULL_FACE);
+		GL11.glCullFace(GL11.GL_CW);
+		
 		this.scene.render();
+		
+		GL11.glDisable(GL11.GL_CULL_FACE);
 	}
 	
 	public void renderObjects() {
-		this.floor.render();
-		this.cube.render();
+		this.model.render();
+		//this.plane.render();
 	}
 	
 	public void onKeyTyped(KeyboardEvent e) {
@@ -133,10 +162,13 @@ public class RenderTest extends BaseGame implements LitSceneInterface {
 	
 	public static void main(String[] args) {
 		Settings.Window.Title = "Render Test";
-		Settings.Window.Width = 1280;
-		Settings.Window.Height = 720;
+		//Settings.Window.Width = 1280;
+		//Settings.Window.Height = 720;
+		//Settings.Window.setSize(ScreenResolution.RES_1080P);
 		Settings.Video.VSync = true;
 		Settings.Debugging.ShowInformation = true;
+		Settings.Video.Resolution = ScreenResolution.RES_1080P;
+		Settings.Window.Fullscreen = true;
 		TextureParameters.DEFAULT_FILTER = GL11.GL_LINEAR_MIPMAP_LINEAR;
 		new RenderTest();
 	}

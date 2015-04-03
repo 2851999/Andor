@@ -111,7 +111,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		cube.setTexture(this.texture);
 		bigCube = Object3DBuilder.createCube(10, 10, 10, new Colour(130f / 255f, 176f / 255f, 255f / 255f, 0.8f));
 		//Load the model
-		this.model = OBJLoader.loadModel(path + "ship.obj", path, true);
+		this.model = OBJLoader.loadModel(path + "Tests/Render/crytek-sponza/sponza.obj", path + "Tests/Render/crytek-sponza/", true);
 		this.model.prepare();
 		this.model.position.z = -20;
 		this.model.scale.multiply(0.03f);
@@ -218,7 +218,12 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		//this.light0.use();
 		//this.light1.use();
 		//this.light2.use();
-		model.render();
+		GL11.glEnable(GL11.GL_CULL_FACE);
+		GL11.glCullFace(GL11.GL_CW);
+		
+		this.model.render();
+		
+		GL11.glDisable(GL11.GL_CULL_FACE);
 		//this.light2.stopUsing();
 		//this.light1.stopUsing();
 		//this.light0.stopUsing();
@@ -323,7 +328,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		Settings.Window.WindowedFullscreen = false;
 		Settings.Window.Undecorated = false;
 		//Enable VSync
-		Settings.Video.VSync = true;
+		Settings.Video.VSync = false;
 		Settings.Video.MaxFPS = 60;
 		Settings.Window.Width = 1024;
 		Settings.Window.Height = 768;

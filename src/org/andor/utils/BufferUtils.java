@@ -30,7 +30,7 @@ public class BufferUtils {
 	/* The static method used to create a short buffer given the data */
 	public static ShortBuffer createBuffer(short[] data) {
 		//Create the buffer
-		ShortBuffer buffer = ByteBuffer.allocateDirect(data.length * Integer.BYTES).order(ByteOrder.nativeOrder()).asShortBuffer();
+		ShortBuffer buffer = ByteBuffer.allocateDirect(data.length * Integer.SIZE).order(ByteOrder.nativeOrder()).asShortBuffer();
 		//Give the data to the buffer
 		buffer.put(data);
 		//Return the buffer
@@ -40,7 +40,7 @@ public class BufferUtils {
 	/* The static method used to create an integer buffer given the data */
 	public static IntBuffer createBuffer(int[] data) {
 		//Create the buffer
-		IntBuffer buffer = ByteBuffer.allocateDirect(data.length * Integer.BYTES).order(ByteOrder.nativeOrder()).asIntBuffer();
+		IntBuffer buffer = ByteBuffer.allocateDirect(data.length * Integer.SIZE).order(ByteOrder.nativeOrder()).asIntBuffer();
 		//Give the data to the buffer
 		buffer.put(data);
 		//Return the buffer
@@ -50,7 +50,7 @@ public class BufferUtils {
 	/* The static method used to create a float buffer given the data */
 	public static FloatBuffer createBuffer(float[] data) {
 		//Create the buffer
-		FloatBuffer buffer = ByteBuffer.allocateDirect(data.length * Float.BYTES).order(ByteOrder.nativeOrder()).asFloatBuffer();
+		FloatBuffer buffer = ByteBuffer.allocateDirect(data.length * Float.SIZE).order(ByteOrder.nativeOrder()).asFloatBuffer();
 		//Give the data to the buffer
 		buffer.put(data);
 		//Return the buffer
@@ -60,7 +60,7 @@ public class BufferUtils {
 	/* The static method used to create a double buffer given the data */
 	public static DoubleBuffer createBuffer(double[] data) {
 		//Create the buffer
-		DoubleBuffer buffer = ByteBuffer.allocateDirect(data.length * Double.BYTES).order(ByteOrder.nativeOrder()).asDoubleBuffer();
+		DoubleBuffer buffer = ByteBuffer.allocateDirect(data.length * Double.SIZE).order(ByteOrder.nativeOrder()).asDoubleBuffer();
 		//Give the data to the buffer
 		buffer.put(data);
 		//Return the buffer

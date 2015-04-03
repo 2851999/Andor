@@ -89,7 +89,7 @@ public class ShaderUtils {
 		for (int a = 0; a < shaderCode.size(); a++) {
 			//Add onto the shader source
 			shaderSource.append(shaderCode.get(a)).append('\n');
-			System.out.println("" + a + "    :" + shaderCode.get(a));
+			//System.out.println("" + a + "     : " + shaderCode.get(a));
 		}
 		//Load the shader file
 		GLUtils.shaderSource(shader, shaderSource.toString());

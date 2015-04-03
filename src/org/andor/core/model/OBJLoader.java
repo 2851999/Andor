@@ -16,10 +16,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import org.andor.core.Settings;
+import org.andor.core.Vector2D;
 import org.andor.core.android.BaseActivity;
 import org.andor.core.logger.Log;
 import org.andor.core.logger.Logger;
-import org.andor.core.model.MaterialLoader;
 import org.andor.core.render.Renderer;
 import org.andor.utils.FileUtils;
 
@@ -126,8 +126,10 @@ public class OBJLoader {
 			faceVertex.setVertex(indexedModel.getVertex((int) current[0] - 1));
 			if (current[1] != 0)
 				faceVertex.setNormal(indexedModel.getNormal((int) current[1] - 1));
-			if (current[2] != 0)
-				faceVertex.setTextureCoordinate(indexedModel.getTextureCoordinate((int) current[2] - 1));
+			if (current[2] != 0) {
+				Vector2D coord = indexedModel.getTextureCoordinate((int) current[2] - 1);
+				faceVertex.setTextureCoordinate(new Vector2D(coord.x, 1f - coord.y));
+			}
 			//Add the face vertex to the face
 			face.addVertex(faceVertex);
 		}

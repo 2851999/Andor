@@ -60,4 +60,15 @@ public class Model extends RenderableObject3D {
 	public List<ModelPart> getParts() { return this.parts; }
 	public ModelPart getPart(int index) { return this.parts.get(index); }
 	
+	public int getNumberOfPolygons() {
+		//The count
+		int count = 0;
+		//Go through each part
+		for (int a = 0; a < this.parts.size(); a++)
+			//Add the number of polygons in the current face to the counter
+			count += this.parts.get(a).getFaces().size();
+		//Return the counter
+		return count;
+	}
+	
 }

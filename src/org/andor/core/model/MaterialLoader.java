@@ -28,6 +28,7 @@ public class MaterialLoader {
 		for (int a = 0; a < fileText.size(); a++) {
 			//Get the current line
 			String line = fileText.get(a);
+			if (! line.endsWith(".tga")) {
 			//Check the beginning of the line
 			if (line.startsWith("newmtl ")) {
 				//Split up the line using a space
@@ -101,7 +102,7 @@ public class MaterialLoader {
 				Image specularTextureMap = ImageLoader.loadImage(textureFilePath.replace("\\", "/"), external);
 				//Set the texture map in the current material
 				currentMaterial.specularTextureMap = specularTextureMap;
-			} else if (line.startsWith("map_bump") || line.startsWith("bump")) {
+			} else if (line.startsWith("map_bump") || line.startsWith("bump") || line.startsWith("map_Bump")) {
 				//Split up the current line using a space
 				String[] split = line.split(" ");
 				//Get the file path of the material file
@@ -119,7 +120,7 @@ public class MaterialLoader {
 				Image displacementTextureMap = ImageLoader.loadImage(textureFilePath.replace("\\", "/"), external);
 				//Set the texture map in the current material
 				currentMaterial.displacementTextureMap = displacementTextureMap;
-			}
+			} }
 		}
 		//Return the materials
 		return materials;

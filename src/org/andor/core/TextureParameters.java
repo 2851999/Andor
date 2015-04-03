@@ -20,6 +20,9 @@ public class TextureParameters {
 	public static int DEFAULT_FILTER = GL11.GL_LINEAR;
 	public static boolean DEFAULT_CLAMP = false;
 	
+	/* The default instances of the texture parameters */
+	public static TextureParameters DEFAULT_NEAREST = new TextureParameters().setFilter(GL11.GL_NEAREST);
+	
 	/* The values */
 	public int target;
 	public int filter;
@@ -43,8 +46,14 @@ public class TextureParameters {
 	
 	/* The static method used to apply all the texture values to a texture */
 	public void apply(int texture) {
-		//Bind the texture
-		GLUtils.bindTexture(target, texture);
+		this.apply(texture, true);
+	}
+	
+	/* The static method used to apply all the texture values to a texture */
+	public void apply(int texture, boolean bind) {
+		if (bind)
+			//Bind the texture
+			GLUtils.bindTexture(target, texture);
 		//Apply the filter
 		GLUtils.texParameteri(target, GL11.GL_TEXTURE_MAG_FILTER, filter);
 		GLUtils.texParameteri(target, GL11.GL_TEXTURE_MIN_FILTER, filter);
@@ -70,6 +79,9 @@ public class TextureParameters {
 	}
 	
 	/* The getters and setters */
+	public int getTarget() { return this.target; }
+	public int getFilter() { return this.filter; }
+	public boolean getClamp() { return this.clamp; }
 	public TextureParameters setTarget(int target) { this.target = target; return this; }
 	public TextureParameters setFilter(int filter) { this.filter = filter; return this; }
 	public TextureParameters setClamp(boolean clamp) { this.clamp = clamp; return this; }
