@@ -18,11 +18,11 @@ public class Settings {
 	/* The static class containing all of the information about Andor */
 	public static class Information {
 		/* The version of Andor */
-		public static final String VERSION = "V1.0.3";
+		public static final String VERSION = "V1.0.4";
 		/* The build of Andor */
 		public static final String BUILD = "Experimental";
 		/* The date this build started development */
-		public static final String DATE = "02/04/2015";
+		public static final String DATE = "03/04/2015";
 	}
 	
 	/* The static class containing all of the settings required for the window */
@@ -112,6 +112,7 @@ public class Settings {
 			public static String FORWARD_SPOT_LIGHT = "/resources/andor/shaders/ForwardSpotLight";
 			public static String DEFERRED_GEOMETRY_PASS = "/resources/andor/shaders/StandardDeferredGeometryShader";
 			public static String DEFERRED_FINAL_PASS = "/resources/andor/shaders/StandardDeferredFinalShader";
+			public static String SHADOWMAP_GENERATOR = "/resources/andor/shaders/ShadowMapGenerator";
 		}
 		public static class Icons {
 			public static String ICON_16 = "/resources/andor/Icon16.png";

@@ -101,6 +101,15 @@ public class OpenGLUtils {
 		setupOrtho(Settings.Window.Width, Settings.Window.Height, znear, zfar);
 	}
 	
+	
+	/* The static method to setup an orthographic view given the left, right, top, bottom,
+	 * znear and zfar values */
+	public static void setupOrtho(float left, float right, float top, float bottom, float znear , float zfar) {
+		Matrix.loadIdentity(Matrix.modelMatrix);
+		Matrix.loadIdentity(Matrix.viewMatrix);
+		Matrix.projectionMatrix = Matrix.ortho(left, right, bottom, top, zfar, znear);
+	}
+	
 	/* The static method to setup an orthographic view given the width, height
 	 * znear and zfar values */
 	public static void setupOrtho(float width, float height, float znear , float zfar) {

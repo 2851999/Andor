@@ -1,0 +1,2 @@
+uniform sampler2D andor_shadowMap;
+varying vec4 frag_andor_shadowMapCoords;

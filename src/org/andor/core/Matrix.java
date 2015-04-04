@@ -16,6 +16,9 @@ public class Matrix {
 	public static Matrix4D projectionMatrix = new Matrix4D();
 	public static Matrix4D modelViewProjectionMatrix = new Matrix4D();
 	public static Matrix4D normalMatrix = new Matrix4D();
+	public static Matrix4D lightViewMatrix = new Matrix4D();
+	public static Matrix4D lightProjectionMatrix = new Matrix4D();
+	public static Matrix4D lightMatrix = new Matrix4D();
 	
 	/* The static method used to load an identity matrix */
 	public static void loadIdentity(Matrix4D matrix) {
@@ -36,6 +39,7 @@ public class Matrix {
 		modelViewProjectionMatrix = transpose(multiply(projectionViewMatrix, modelMatrix));
 		//Calculate and assign the normal matrix
 		normalMatrix = invert(transpose(modelMatrix));
+		Matrix.lightMatrix = Matrix.transpose(Matrix.multiply(Matrix.multiply(Matrix.lightProjectionMatrix,  Matrix.lightViewMatrix), Matrix.modelMatrix));
 	}
 	
 	/* The static method used to add two matrices together */
@@ -184,14 +188,20 @@ public class Matrix {
 	}
 	
 	/* The static method used to return an orthographic projection matrix */
-	public static Matrix4D ortho(float left, float right, float bottom, float top, float zFar, float zNear) {
+	public static Matrix4D ortho(float left, float right, float bottom, float top, float zNear, float zFar) {
 		//Calculate the width and height
-		float width = (float) ((right - left));
-		float height = (float) ((bottom - top));
+//		float width = (float) ((right - left));
+//		float height = (float) ((bottom - top));
+//		return new Matrix4D(new float[][] {
+//				new float[] { 2 / width, 0, 0, -1 },
+//				new float[] { 0, -2 / height, 0, 1 },
+//				new float[] { 0, 0, 2 / (zFar - zNear), (zNear + zFar) / (zNear - zFar) },
+//				new float[] { 0, 0, 0, 1 },
+//		});
 		return new Matrix4D(new float[][] {
-				new float[] { 2 / width, 0, 0, -1 },
-				new float[] { 0, -2 / height, 0, 1 },
-				new float[] { 0, 0, 2 / (zFar - zNear), (zNear + zFar) / (zNear - zFar) },
+				new float[] { (2 / (right - left)), 0, 0, - ((right + left) / (right - left)) },
+				new float[] { 0, 2 / (top - bottom), 0, - ((top + bottom) / (top - bottom)) },
+				new float[] { 0, 0, -2 / (zFar - zNear), -(zNear + zFar) / (zFar - zNear) },
 				new float[] { 0, 0, 0, 1 },
 		});
 	}

@@ -16,6 +16,7 @@ public class Lights {
 		DirectionalLight.setupShaders();
 		PointLight.setupShaders();
 		SpotLight.setupShaders();
+		ShadowData.setupShaders();
 	}
 	
 }

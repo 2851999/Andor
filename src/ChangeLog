@@ -1,4 +1,25 @@
 -------------------------------------------------------------
+Release 1 | Beta 0 | Development 4 | Experimental 1
+
+* Added ShadowData
+
+* Fixed bug: Matrix.ortho() was wrong
+
+-------------------------------------------------------------
+Release 1 | Beta 0 | Development 4 | Experimental 0
+
+* Added IndexedModel
+* Added ModelFace
+* Added ModelVertex
+* Added Texture
+* Added Textures
+* Added TextureParameters
+* Added FBO
+* Added RenderTexture
+
+* Removed Face
+
+-------------------------------------------------------------
 Release 1 | Beta 0 | Development 3 | Experimental 3
 
 * Added FBO

@@ -60,7 +60,7 @@ public class Material {
 		this.specularColour = null;
 		this.shininess = 0;
 		this.alphaColourValue = 0;
-		this.displacementMapScale = 0.02f;
+		this.displacementMapScale = 0.01f;
 		this.displacementMapBias = 0f;
 	}
 	
