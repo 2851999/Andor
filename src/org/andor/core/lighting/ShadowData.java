@@ -11,16 +11,10 @@ package org.andor.core.lighting;
 import org.andor.core.Matrix;
 import org.andor.core.Settings;
 import org.andor.core.Shader;
-import org.andor.core.TextureParameters;
 import org.andor.core.Vector3D;
-import org.andor.core.render.FBO;
 import org.andor.core.render.RenderPass;
-import org.andor.core.render.RenderTexture;
-import org.andor.core.render.Renderer;
 import org.andor.utils.shader.ShaderCode;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL14;
-import org.lwjgl.opengl.GL30;
+import org.andor.utils.shader.UniformVector2D;
 
 public class ShadowData {
 	
@@ -30,35 +24,43 @@ public class ShadowData {
 	/* The default shader */
 	public static Shader defaultShader;
 	
-	/* The FBO for this shadow map */
-	public FBO fbo;
+	/* The shader code for this kind of light */
+	public static ShaderCode filterShaderCode;
+	
+	/* The default shader */
+	public static Shader filterShader;
 	
 	/* The boolean value that determines whether shadows should be cast */
 	public boolean castShadows;
 	
 	/* The bias value (For shadow acne) */
-	public float bias;
+//	public float bias;
 	
 	/* The boolean that determines whether the faces will be flipped
 	 * when generating the shadow map */
 	public boolean flipFaces;
 	
+	/* The shadow map */
+	public ShadowMap shadowMap;
+	public float shadowSoftness;
+	public float shadowMinimumVariance;
+	public float shadowLightBleedReduction;
+	
 	/* The constructor */
 	public ShadowData() {
 		//Assign the variables
-		this.fbo = new FBO(GL30.GL_FRAMEBUFFER);
-		TextureParameters parameters = new TextureParameters().setFilter(GL11.GL_NEAREST).setClamp(true);
-		this.fbo.add(new RenderTexture(1024, 1024, GL14.GL_DEPTH_COMPONENT32, GL11.GL_DEPTH_COMPONENT, GL30.GL_DEPTH_ATTACHMENT, GL11.GL_FLOAT, parameters));
-		this.fbo.setup();
 		this.castShadows = true;
-		this.bias = 4.0f;
+//		this.bias = 0.0f;
 		this.flipFaces = true;
+		this.shadowSoftness = 1f;
+		this.shadowMinimumVariance = 0.2f;
+		this.shadowLightBleedReduction = 0.000002f;
 	}
 	
 	/* The method used to use this data (Setup the matrix) */
 	public void use(BaseLight light) {
 		//Setup the light matrix
-		Matrix.lightProjectionMatrix = Matrix.ortho(-20, 20, -20, 20, -20, 20); //Matrix.perspective(180, 1, 1, 100);
+		Matrix.lightProjectionMatrix = Matrix.ortho(-20, 20, -20, 20, -20, 20);
 		//Transform to the light's position
 		//Get the rotation
 		Vector3D r = light.getRotation();
@@ -77,22 +79,30 @@ public class ShadowData {
 	/* The method used to assign the needed values in the shaders */
 	public void assignValues(RenderPass pass, Shader shader) {
 		shader.setUniformMatrix("andor_lightMatrix", Matrix.lightMatrix);
-		shader.setUniformi("andor_shadowMap", pass.bindTexture(Renderer.light.shadowData.fbo.textures.get(0).getPointer()));
-		shader.setUniformf("andor_shadowMapTexelSize", new Vector3D(1.0f / 1024.0f, 1.0f / 1024f, 0.0f));
-		shader.setUniformf("andor_shadowBias", this.bias / 1024f);
+		if (this.shadowMap != null) {
+			shader.setUniformi("andor_shadowMap", pass.bindTexture(this.shadowMap.getShadowMap().getPointer()));
+			shader.setUniformf("andor_shadowVarianceMin", this.shadowMinimumVariance);
+			shader.setUniformf("andor_shadowVarianceLightBleedReduction", this.shadowLightBleedReduction);
+		}
+		//shader.setUniformf("andor_shadowMapTexelSize", new Vector3D(1.0f / 1024.0f, 1.0f / 1024f, 0.0f));
+		//shader.setUniformf("andor_shadowBias", this.bias / 1024f);
 	}
 	
 	/* The getter and setters */
 	public void setCastShadows(boolean castShadows) { this.castShadows = castShadows; }
-	public void setBias(float bias) { this.bias = bias; }
 	public void setFlipFaces(boolean flipFaces) { this.flipFaces = flipFaces; }
+	public void setShadowSoftness(float shadowSoftness) { this.shadowSoftness = shadowSoftness; }
+	public void setMinimumVariance(float shadowMinimumVariance) { this.shadowMinimumVariance = shadowMinimumVariance; }
+	public void setLightBleedReduction(float shadowLightBleedReduction) { this.shadowLightBleedReduction = shadowLightBleedReduction; }
 	public boolean shouldCastShadows() { return this.castShadows; }
-	public float getBias() { return this.bias; }
 	public boolean shouldFlipFaces() { return this.flipFaces; }
+	public float getShadowSoftness() { return this.shadowSoftness; }
+	public float getMinimumVariance() { return this.shadowMinimumVariance; }
+	public float getLightBleedReduction() { return this.shadowLightBleedReduction; }
 	
 	/* The static method used to setup the shaders necessary */
 	public static void setupShaders() {
-		//Check to see whether the shader needs to be setup
+		//Check to see whether the shaders need to be setup
 		if (shaderCode == null) {
 			//Create the shader code
 			shaderCode = new ShaderCode(Settings.Resources.Shaders.SHADOWMAP_GENERATOR);
@@ -100,6 +110,17 @@ public class ShadowData {
 		}
 		if (defaultShader == null)
 			defaultShader = shaderCode.createDefault();
+		
+		if (filterShaderCode == null) {
+			//Create the shader code
+			filterShaderCode = new ShaderCode(Settings.Resources.Shaders.SHADOWMAP_FILTER);
+			filterShaderCode.load();
+			
+			//Add the required uniforms
+			filterShaderCode.getUniforms().addUniform(new UniformVector2D("blurScale"));
+		}
+		if (filterShader == null)
+			filterShader = filterShaderCode.createDefault();
 	}
 	
 }

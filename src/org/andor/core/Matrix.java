@@ -8,6 +8,9 @@
 
 package org.andor.core;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Matrix {
 	
 	/* The different matrices */
@@ -19,6 +22,29 @@ public class Matrix {
 	public static Matrix4D lightViewMatrix = new Matrix4D();
 	public static Matrix4D lightProjectionMatrix = new Matrix4D();
 	public static Matrix4D lightMatrix = new Matrix4D();
+	
+	/* The matrix stack */
+	public static List<float[]> stack = new ArrayList<float[]>();
+	
+	/* The static methods used to push and pop matrices on and off the stack */
+	public static void push(float[] data) {
+		//Add the data to the stack
+		stack.add(data);
+	}
+	
+	public static float[] pop() {
+		float[] values = stack.get(stack.size() - 1);
+		stack.remove(stack.size() - 1);
+		return values;
+	}
+	
+	public static void push(Matrix4D matrix) {
+		push(matrix.getValues());
+	}
+	
+	public static void pop(Matrix4D matrix) {
+		matrix.setValues(pop());
+	}
 	
 	/* The static method used to load an identity matrix */
 	public static void loadIdentity(Matrix4D matrix) {
@@ -127,6 +153,13 @@ public class Matrix {
 		return new Matrix4D(newValues);
 	}
 	
+	/* The static method used to transform a matrix */
+	public static void transform(Matrix4D matrix, Vector3D translate, Vector3D rotate, Vector3D scale) {
+		matrix = scale(matrix, scale);
+		rotate(matrix, rotate);
+		matrix = translate(matrix, translate);
+	}
+	
 	/* The static method used to translate a matrix */
 	public static Matrix4D translate(Matrix4D matrix, Vector3D vector) {
 		//The transform matrix
@@ -138,6 +171,19 @@ public class Matrix {
 		});
 		//Add onto the matrix and return the result
 		return multiply(matrix, transform);
+	}
+	
+	/* The static method used to rotate a matrix */
+	public static void rotate(Matrix4D matrix, Vector2D angles) {
+		matrix = rotate(matrix, angles.getX(), 1, 0, 0);
+		matrix = rotate(matrix, angles.getY(), 0, 1, 0);
+	}
+	
+	/* The static method used to rotate a matrix */
+	public static void rotate(Matrix4D matrix, Vector3D angles) {
+		matrix = rotate(matrix, angles.getX(), 1, 0, 0);
+		matrix = rotate(matrix, angles.getY(), 0, 1, 0);
+		matrix = rotate(matrix, angles.getZ(), 0, 0, 1);
 	}
 	
 	/* The static method used to rotate a matrix */

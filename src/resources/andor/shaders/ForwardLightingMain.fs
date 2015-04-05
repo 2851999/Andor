@@ -2,7 +2,7 @@
 
 float calculateShadowAmount() {
 	vec3 shadowMapCoords = (frag_andor_shadowMapCoords.xyz / frag_andor_shadowMapCoords.w) * vec3(0.5) + vec3(0.5); //OpenGL usually does this between vertex and fragment shaders
-	return sampleShadowMapPCF(shadowMapCoords.xy, shadowMapCoords.z - andor_shadowBias, andor_shadowMapTexelSize.xy);
+	return sampleVarianceShadowMap(shadowMapCoords.xy, shadowMapCoords.z);
 }
 
 /* The main method */

@@ -72,10 +72,10 @@ public class Quad2DTest extends BaseGame {
 		OpenGLUtils.clearColourBuffer();
 		OpenGLUtils.setupRemoveAlpha();
 		OpenGLUtils.disableTexture2D();
-		this.circle.render();
 		OpenGLUtils.setupOrtho(-1, 1);
 		OpenGLUtils.enableTexture2D();
 		
+		this.circle.render();
 		this.quad.render();
 		
 		//Render the FPS

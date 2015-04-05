@@ -58,10 +58,9 @@ public class Matrix4D {
 			   "[ " + this.values[12] + " " + this.values[13] + " " + + this.values[14] + " " + + this.values[15] + " ]";
 	}
 	
-	/* The method used to get the values */
+	/* The getters and setters */
+	public void setValues(float[] values) { this.values = values; }
 	public float[] getValues() { return this.values; }
-	
-	/* The method used to get the values in a 2D array */
 	public float[][] getValues2DArray() {
 		//Return the array
 		return new float[][] {

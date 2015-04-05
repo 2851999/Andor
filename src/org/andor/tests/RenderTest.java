@@ -68,22 +68,24 @@ public class RenderTest extends BaseGame implements LitSceneInterface {
 		this.cube = OBJLoader.loadModel(PATH + "monkey2.obj", PATH, true);
 		this.cube.prepare();
 		this.cube.setScale(0.5f);
-		this.cube.setPosition(4, 1f, 0);
+		this.cube.setPosition(4, 0.5f, 0);
 		
 		this.scene = new LitScene(this);
 		
 		//this.scene.lights.add(new DirectionalLight(Colour.WHITE, 1f, new Vector3D(-1f, 0f, 0f)));
 		//this.scene.lights.add(new DirectionalLight(Colour.WHITE, 1f, new Vector3D(0f, 1f, 0f)));
 		//this.scene.lights.add(new DirectionalLight(Colour.WHITE, 0.8f, new Vector3D(-1f, 0f, 0f)));
+		
 		this.light1 = new DirectionalLight(Colour.WHITE, 1f, new Vector3D(0f, 1f, 0f));
-		this.light1.getRotation().setX(50);
-		this.light1.getRotation().setZ(50);
+		this.light1.getRotation().setX(45);
+		this.light1.getRotation().setZ(45);
+		
 		//this.light1.position = new Vector3D(0, 0, 0);
 		//this.light1 = new PointLight(Colour.LIGHT_BLUE, 1f, new Vector3D(0f, 0.4f, 0.2f));
 		//this.light1.setPosition(0, -2f, 0);
-		this.scene.lights.add(this.light1);
+		this.scene.add(this.light1);
 		
-		//this.plane.parts.get(0).setTexture(new Image(this.light1.getShadowData().fbo.getTexture(0).getPointer()));
+		//this.plane.parts.get(0).setTexture(new Image(scene.shadowMap.getShadowMap()));
 		//this.plane.parts.get(0).material.normalTextureMap = null;
 		//this.plane.parts.get(0).material.displacementTextureMap = null;
 		
@@ -93,7 +95,7 @@ public class RenderTest extends BaseGame implements LitSceneInterface {
 		
 		this.wireframe = false;
 		Renderer.camera = camera;
-		Renderer.ambientLight =  new Colour(0.2f, 0.2f, 0.2f);
+		Renderer.ambientLight =  new Colour(0.1f, 0.1f, 0.1f);
 		Mouse.lock();
 	}
 	

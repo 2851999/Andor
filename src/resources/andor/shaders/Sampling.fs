@@ -45,3 +45,20 @@ float sampleShadowMapPCF(vec2 coords, float compare, vec2 texelSize) {
 	}
 	return result / SAMPLES_SQUARED;
 }
+
+float linearStep(float low, float high, float v) {
+	return clamp((v - low) / (high - low), 0.0, 1.0);
+}
+
+float sampleVarianceShadowMap(vec2 coords, float compare) {
+	vec2 moments = texture2D(andor_shadowMap, coords.xy).xy;
+	float p = step(compare, moments.x);
+	float variance = max(moments.y - moments.x * moments.x, andor_shadowVarianceLightBleedReduction);
+	
+	float d = compare - moments.x;
+	float maxPercentage = linearStep(andor_shadowVarianceMin, 1.0, variance / (variance + d * d));
+	
+	return min(max(p, maxPercentage), 1.0);
+	
+	//return step(compare, texture2D(andor_shadowMap, coords.xy).r);
+}

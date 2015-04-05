@@ -1,2 +1,5 @@
 uniform sampler2D andor_shadowMap;
+uniform float andor_shadowVarianceMin;
+uniform float andor_shadowVarianceLightBleedReduction;
+
 varying vec4 frag_andor_shadowMapCoords;

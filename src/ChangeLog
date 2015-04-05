@@ -1,4 +1,15 @@
 -------------------------------------------------------------
+Release 1 | Beta 0 | Development 4 | Experimental 2
+
+* Added ShadowMap
+* Added Filter
+* Added Uniform
+* Added UniformFloat
+* Added Uniforms
+* Added UniformVector2D
+* Added UniformVector3D
+
+-------------------------------------------------------------
 Release 1 | Beta 0 | Development 4 | Experimental 1
 
 * Added ShadowData
