@@ -416,6 +416,13 @@ public class GLUtils {
 			GLES20.glCullFace(mode);
 	}
 	
+	public static void clearColor(float red, float green, float blue, float alpha) {
+		if (onPC())
+			GL11.glClearColor(red, green, blue, alpha);
+		else
+			GLES20.glClearColor(red, green, blue, alpha);
+	}
+	
 	/* The static method used to return whether android is enabled */
 	public static boolean onPC() { return ! Settings.AndroidMode; }
 	public static boolean onAndroid() { return Settings.AndroidMode; }

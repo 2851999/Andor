@@ -51,7 +51,7 @@ float linearStep(float low, float high, float v) {
 }
 
 float sampleVarianceShadowMap(vec2 coords, float compare) {
-	vec2 moments = texture2D(andor_shadowMap, coords.xy).xy;
+	vec2 moments = vec2(1.0) - texture2D(andor_shadowMap, coords.xy).xy;
 	float p = step(compare, moments.x);
 	float variance = max(moments.y - moments.x * moments.x, andor_shadowVarianceLightBleedReduction);
 	

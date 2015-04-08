@@ -256,7 +256,7 @@ public class Matrix {
 	public static Matrix4D perspective(float fov, float aspect, float zNear, float zFar) {
 		//Calculate the scale
 		float scale = (float) (Math.tan(fov / 2 * (Math.PI / 360)));
-		//Calaulate the right, left, top and bottom values
+		//Calculate the right, left, top and bottom values
 		float right = aspect * scale;
 		float left = -right;
 		float top = scale;

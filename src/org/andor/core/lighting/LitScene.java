@@ -33,7 +33,7 @@ public class LitScene {
 	/* The interface */
 	public LitSceneInterface scene;
 	
-	/* The shadow map */
+	/* The default shadow map */
 	public ShadowMap shadowMap;
 	
 	/* The constructor */
@@ -46,7 +46,6 @@ public class LitScene {
 	
 	/* The method used to add a light */
 	public void add(BaseLight light) {
-		light.shadowData.shadowMap = this.shadowMap;
 		this.lights.add(light);
 	}
 	
@@ -62,11 +61,11 @@ public class LitScene {
 			//Get the shadow data for the light
 			ShadowData shadowData = this.lights.get(a).getShadowData();
 			
-			//Bind the shadow map
-			this.shadowMap.bind();
-			
 			//Check to see whether the current light should cast shadows
-			if (shadowData.shouldCastShadows()) {
+			if (shadowData != null && shadowData.shouldCastShadows()) {
+				
+				//Bind the shadow map
+				shadowData.shadowMap.bind();
 				
 				//Save the current view matrix
 				Matrix.push(Matrix.viewMatrix);
@@ -95,12 +94,22 @@ public class LitScene {
 				//Restore the view matrix
 				Matrix.projectionMatrix.values = Matrix.pop();
 				Matrix.viewMatrix.values = Matrix.pop();
+				
+				//Unbind the shadow map
+				shadowData.shadowMap.unbind();
+				
+				shadowData.shadowMap.applyGaussianBlur(shadowData.getShadowSoftness());
+				
+				Shader shader = this.lights.get(a).shader;
+				shader.use();
+				shader.setUniformf("andor_useShadows", 1.0f);
+				shader.stopUsing();
+			} else {
+				Shader shader = this.lights.get(a).shader;
+				shader.use();
+				shader.setUniformf("andor_useShadows", 0.0f);
+				shader.stopUsing();
 			}
-			
-			//Unbind the shadow map
-			this.shadowMap.unbind();
-			
-			this.shadowMap.applyGaussianBlur(shadowData.getShadowSoftness());
 			
 			GLUtils.enable(GL11.GL_BLEND);
 			GLUtils.blendFunc(GL11.GL_ONE, GL11.GL_ONE);

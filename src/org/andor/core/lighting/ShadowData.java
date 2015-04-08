@@ -8,7 +8,10 @@
 
 package org.andor.core.lighting;
 
+import java.util.Arrays;
+
 import org.andor.core.Matrix;
+import org.andor.core.Matrix4D;
 import org.andor.core.Settings;
 import org.andor.core.Shader;
 import org.andor.core.Vector3D;
@@ -46,21 +49,27 @@ public class ShadowData {
 	public float shadowMinimumVariance;
 	public float shadowLightBleedReduction;
 	
+	/* The projection matrix */
+	public Matrix4D projectionMatrix;
+	
 	/* The constructor */
-	public ShadowData() {
+	public ShadowData(Matrix4D projectionMatrix, boolean flipFaces) {
 		//Assign the variables
 		this.castShadows = true;
 //		this.bias = 0.0f;
-		this.flipFaces = true;
-		this.shadowSoftness = 1f;
+		this.flipFaces = flipFaces;
+		this.shadowSoftness = 0.4f;
 		this.shadowMinimumVariance = 0.2f;
 		this.shadowLightBleedReduction = 0.000002f;
+		this.projectionMatrix = projectionMatrix;
+		//Create the shadow map
+		this.shadowMap = new ShadowMap(1024, 1024);
 	}
 	
 	/* The method used to use this data (Setup the matrix) */
 	public void use(BaseLight light) {
 		//Setup the light matrix
-		Matrix.lightProjectionMatrix = Matrix.ortho(-20, 20, -20, 20, -20, 20);
+		Matrix.lightProjectionMatrix.values = Arrays.copyOf(this.projectionMatrix.values, 16);
 		//Transform to the light's position
 		//Get the rotation
 		Vector3D r = light.getRotation();
@@ -69,11 +78,11 @@ public class ShadowData {
 		Matrix.loadIdentity(Matrix.lightViewMatrix);
 		Matrix.lightViewMatrix = Matrix.scale(Matrix.lightViewMatrix, s);
 		
-		Matrix.lightViewMatrix = Matrix.rotate(Matrix.lightViewMatrix, r.x + 90, 1, 0, 0);
+		Matrix.lightViewMatrix = Matrix.rotate(Matrix.lightViewMatrix, r.x, 1, 0, 0);
 		Matrix.lightViewMatrix = Matrix.rotate(Matrix.lightViewMatrix, r.y, 0, 1, 0);
 		Matrix.lightViewMatrix = Matrix.rotate(Matrix.lightViewMatrix, r.z, 0, 0, 1);
 		
-		Matrix.lightViewMatrix = Matrix.translate(Matrix.lightViewMatrix, p);
+		Matrix.lightViewMatrix = Matrix.translate(Matrix.lightViewMatrix, p.multiplyNew(new Vector3D(1f, 1f, 1f).addNew(new Vector3D(0, 0, 0))));
 	}
 	
 	/* The method used to assign the needed values in the shaders */
@@ -94,11 +103,13 @@ public class ShadowData {
 	public void setShadowSoftness(float shadowSoftness) { this.shadowSoftness = shadowSoftness; }
 	public void setMinimumVariance(float shadowMinimumVariance) { this.shadowMinimumVariance = shadowMinimumVariance; }
 	public void setLightBleedReduction(float shadowLightBleedReduction) { this.shadowLightBleedReduction = shadowLightBleedReduction; }
+	public void setShadowMap(ShadowMap shadowMap) { this.shadowMap = shadowMap; }
 	public boolean shouldCastShadows() { return this.castShadows; }
 	public boolean shouldFlipFaces() { return this.flipFaces; }
 	public float getShadowSoftness() { return this.shadowSoftness; }
 	public float getMinimumVariance() { return this.shadowMinimumVariance; }
 	public float getLightBleedReduction() { return this.shadowLightBleedReduction; }
+	public ShadowMap getShadowMap() { return this.shadowMap; }
 	
 	/* The static method used to setup the shaders necessary */
 	public static void setupShaders() {

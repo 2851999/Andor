@@ -43,7 +43,7 @@ public class ShadowMap {
 		//Create the FBO
 		this.fbo = new FBO(GL30.GL_FRAMEBUFFER);
 		//Add the depth texture
-		TextureParameters parameters = new TextureParameters().setFilter(GL11.GL_LINEAR_MIPMAP_LINEAR).setClamp(true);
+		TextureParameters parameters = new TextureParameters().setFilter(GL11.GL_LINEAR).setClamp(true);
 		this.fbo.add(new RenderTexture((int) width, (int) height, GL30.GL_RG32F, GL11.GL_RGBA, GL30.GL_COLOR_ATTACHMENT0, GL11.GL_FLOAT, parameters));
 		//Setup the FBO
 		this.fbo.setup();
@@ -62,6 +62,7 @@ public class ShadowMap {
 		this.fbo.bind();
 		
 		//Setup the buffers
+		GLUtils.clearColor(1.0f, 1.0f, 0.0f, 0.0f);
 		OpenGLUtils.clearDepthBuffer();
 		OpenGLUtils.clearColourBuffer();
 		OpenGLUtils.enableDepthTest();
@@ -77,16 +78,17 @@ public class ShadowMap {
 		//Unbind the FBO
 		this.fbo.unbind();
 		GLUtils.viewport(0, 0, (int) Settings.Window.Width, (int) Settings.Window.Height);
+		GLUtils.clearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	}
 	
 	/* The method used to apply the gaussian blur filter to this shadow map */
 	public void applyGaussianBlur(float blurAmount) {
 		//Apply the filter on the x axis
-		this.gaussianBlur.getShader().getUniforms().setUniform("blurScale", new Vector2D(1.0f / (this.width * blurAmount), 0));
+		this.gaussianBlur.getShader().getUniforms().setUniform("blurScale", new Vector2D(blurAmount / (this.width), 0));
 		this.gaussianBlur.apply(getShadowMap(), this.fboTemp);
 		
 		//Apply the filter on the y axis
-		this.gaussianBlur.getShader().getUniforms().setUniform("blurScale", new Vector2D(0, 1.0f / (this.height * blurAmount)));
+		this.gaussianBlur.getShader().getUniforms().setUniform("blurScale", new Vector2D(0, blurAmount / (this.height)));
 		this.gaussianBlur.apply(new Image(this.fboTemp.getTexture(0).getPointer()), this.fbo);
 	}
 	

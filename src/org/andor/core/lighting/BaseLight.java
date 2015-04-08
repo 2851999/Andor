@@ -33,8 +33,12 @@ public abstract class BaseLight extends Object3D {
 		this.colour = colour;
 		this.intensity = intensity;
 		this.shader = shader;
-		
-		this.shadowData = new ShadowData();
+	}
+	
+	/* The constructor */
+	public BaseLight(Colour colour, float intensity, Shader shader, ShadowData shadowData) {
+		this(colour, intensity, shader);
+		this.shadowData = shadowData;
 	}
 	
 	/* The method used to assign the uniforms for this in a shader */

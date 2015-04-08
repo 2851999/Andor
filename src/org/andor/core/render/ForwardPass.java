@@ -44,8 +44,9 @@ public class ForwardPass extends RenderPass {
 				currentShader.setUniformf("andor_eyePosition", Renderer.camera.getPosition());
 			//Apply the light
 			Renderer.light.applyUniforms(currentShader);
-			//Use the data from the shadows
-			Renderer.light.getShadowData().assignValues(this, currentShader);
+			if (Renderer.light.getShadowData() != null && Renderer.light.getShadowData().shouldCastShadows())
+				//Use the data from the shadows
+				Renderer.light.getShadowData().assignValues(this, currentShader);
 		} else if (Renderer.useAmbient) {
 			currentShader.setUniformf("andor_ambientLight", Renderer.ambientLight);
 		}

@@ -1,4 +1,11 @@
 -------------------------------------------------------------
+Release 1 | Beta 0 | Development 4 | Experimental 3
+
+* Added further shadow support
+
+* NOTE: PointLights currently do not support shadows
+
+-------------------------------------------------------------
 Release 1 | Beta 0 | Development 4 | Experimental 2
 
 * Added ShadowMap

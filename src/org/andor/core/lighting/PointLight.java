@@ -35,8 +35,24 @@ public class PointLight extends BaseLight {
 	}
 	
 	/* The constructor */
+	public PointLight(Colour colour, float intensity, Vector3D attenuation, ShadowData shadowData) {
+		super(colour, intensity, defaultShader, shadowData);
+		//Assign the variables
+		this.attenuation = attenuation;
+		this.range = 20f;
+	}
+	
+	/* The constructor */
 	public PointLight(Colour colour, float intensity, Vector3D attenuation, Shader shader) {
 		super(colour, intensity, shader);
+		//Assign the variables
+		this.attenuation = attenuation;
+		this.range = 20f;
+	}
+	
+	/* The constructor */
+	public PointLight(Colour colour, float intensity, Vector3D attenuation, Shader shader, ShadowData shadowData) {
+		super(colour, intensity, shader, shadowData);
 		//Assign the variables
 		this.attenuation = attenuation;
 		this.range = 20f;

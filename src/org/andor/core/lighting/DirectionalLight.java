@@ -9,6 +9,7 @@
 package org.andor.core.lighting;
 
 import org.andor.core.Colour;
+import org.andor.core.Matrix;
 import org.andor.core.Settings;
 import org.andor.core.Shader;
 import org.andor.core.Vector3D;
@@ -26,10 +27,17 @@ public class DirectionalLight extends BaseLight {
 	public Vector3D direction;
 	
 	/* The constructor */
-	public DirectionalLight(Colour colour, float intensity, Vector3D direction) {
+	public DirectionalLight(Colour colour, float intensity, Vector3D direction, float shadowArea) {
 		super(colour, intensity, defaultShader);
+		float halfArea = shadowArea / 2;
+		this.shadowData = new ShadowData(Matrix.ortho(-halfArea, halfArea, -halfArea, halfArea, -halfArea, halfArea), true);
 		//Assign the variables
 		this.direction = direction;
+	}
+	
+	/* The constructor */
+	public DirectionalLight(Colour colour, float intensity, Vector3D direction) {
+		this(colour, intensity, direction, 40);
 	}
 	
 	/* The method used to start using this light */

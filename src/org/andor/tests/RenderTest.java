@@ -24,6 +24,8 @@ import org.andor.core.lighting.BaseLight;
 import org.andor.core.lighting.DirectionalLight;
 import org.andor.core.lighting.LitScene;
 import org.andor.core.lighting.LitSceneInterface;
+import org.andor.core.lighting.PointLight;
+import org.andor.core.lighting.SpotLight;
 import org.andor.core.model.Model;
 import org.andor.core.model.OBJLoader;
 import org.andor.core.render.Renderer;
@@ -43,6 +45,7 @@ public class RenderTest extends BaseGame implements LitSceneInterface {
 	public LitScene scene;
 	
 	public BaseLight light1;
+	public BaseLight light2;
 	public float speed;
 	public boolean wireframe;
 	
@@ -65,10 +68,11 @@ public class RenderTest extends BaseGame implements LitSceneInterface {
 		this.plane.setPosition(0, 0.5f, 0);
 		this.plane.setRotation(0, 0, -30);
 		
-		this.cube = OBJLoader.loadModel(PATH + "monkey2.obj", PATH, true);
+		this.cube = OBJLoader.loadModel(PATH + "cube.obj", PATH, true);
 		this.cube.prepare();
-		this.cube.setScale(0.5f);
-		this.cube.setPosition(4, 0.5f, 0);
+		this.cube.setScale(0.25f);
+		this.cube.setPosition(4, 0.25f, 0);
+		this.cube.setRotation(0, 45, 0);
 		
 		this.scene = new LitScene(this);
 		
@@ -76,16 +80,28 @@ public class RenderTest extends BaseGame implements LitSceneInterface {
 		//this.scene.lights.add(new DirectionalLight(Colour.WHITE, 1f, new Vector3D(0f, 1f, 0f)));
 		//this.scene.lights.add(new DirectionalLight(Colour.WHITE, 0.8f, new Vector3D(-1f, 0f, 0f)));
 		
-		this.light1 = new DirectionalLight(Colour.WHITE, 1f, new Vector3D(0f, 1f, 0f));
-		this.light1.getRotation().setX(45);
-		this.light1.getRotation().setZ(45);
+		//this.light1 = new DirectionalLight(Colour.WHITE, 1f, new Vector3D(0f, 1f, 0f));
+		//this.light1.getRotation().setX(45);
+		//this.light1.getRotation().setZ(0);
+		
+		BaseLight light3 = new DirectionalLight(Colour.WHITE, 1f, new Vector3D(0f, 1f, 0f));
+		light3.getRotation().setX(90);
+		light3.getRotation().setZ(20);
+		
+		light2 = new SpotLight(Colour.BLUE, 0.9f, new Vector3D(0, 0, 0.2f), new Vector3D(0f, 0f, 1f), 70.0f);
+		light2.rotation.z = 0;
+		light2.rotation.y = 0;
+		light2.rotation.x = 45;
+		light2.position = new Vector3D(0, -0.5f, 0);
 		
 		//this.light1.position = new Vector3D(0, 0, 0);
-		//this.light1 = new PointLight(Colour.LIGHT_BLUE, 1f, new Vector3D(0f, 0.4f, 0.2f));
-		//this.light1.setPosition(0, -2f, 0);
+		this.light1 = new PointLight(Colour.LIGHT_BLUE, 1f, new Vector3D(0f, 0.4f, 0.2f));
+		this.light1.setPosition(0, 0.1f, 0);
 		this.scene.add(this.light1);
+		this.scene.add(light3);
+		//this.scene.add(light2);
 		
-		//this.plane.parts.get(0).setTexture(new Image(scene.shadowMap.getShadowMap()));
+		//this.plane.parts.get(0).setTexture(scene.shadowMap.getShadowMap());
 		//this.plane.parts.get(0).material.normalTextureMap = null;
 		//this.plane.parts.get(0).material.displacementTextureMap = null;
 		
@@ -116,7 +132,7 @@ public class RenderTest extends BaseGame implements LitSceneInterface {
 			requestClose();
 		this.camera.rotation.x = ClampUtils.clamp(this.camera.rotation.x, -80, 80);
 		
-		this.cube.getRotation().add(0.1f * getDelta());
+		//this.cube.getRotation().add(0.1f * getDelta());
 		
 		if (Keyboard.KEY_UP)
 			this.light1.position.x -= 0.005f * getDelta();
