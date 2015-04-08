@@ -395,6 +395,34 @@ public class GLUtils {
 			return -1;
 	}
 	
+	public static void viewport(int x, int y, int w, int h) {
+		if (onPC())
+			GL11.glViewport(x, y, w, h);
+		else
+			GLES20.glViewport(x, y, w, h);
+	}
+	
+	public static void frontFace(int dir) {
+		if (onPC())
+			GL11.glFrontFace(dir);
+		else
+			GLES20.glFrontFace(dir);
+	}
+	
+	public static void cullFace(int mode) {
+		if (onPC())
+			GL11.glCullFace(mode);
+		else
+			GLES20.glCullFace(mode);
+	}
+	
+	public static void clearColor(float red, float green, float blue, float alpha) {
+		if (onPC())
+			GL11.glClearColor(red, green, blue, alpha);
+		else
+			GLES20.glClearColor(red, green, blue, alpha);
+	}
+	
 	/* The static method used to return whether android is enabled */
 	public static boolean onPC() { return ! Settings.AndroidMode; }
 	public static boolean onAndroid() { return Settings.AndroidMode; }

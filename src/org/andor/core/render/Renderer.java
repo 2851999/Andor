@@ -279,7 +279,7 @@ public class Renderer {
 		if (this.drawOrderHandle == -2)
 			//Setup the handle
 			this.drawOrderHandle = GLUtils.genBuffers();
-		//Bind the texture coordinates buffer and give OpenGL the data
+		//Bind the draw order buffer and give OpenGL the data
 		GLUtils.bindBuffer(GL15.GL_ARRAY_BUFFER, this.drawOrderHandle);
 		GLUtils.bufferData(GL15.GL_ARRAY_BUFFER, this.drawOrderBuffer, this.usage);
 		GLUtils.bindBuffer(GL15.GL_ARRAY_BUFFER, 0);
@@ -289,13 +289,13 @@ public class Renderer {
 	public void updateTangents(float[] tangents) {
 		//Set the vertices data
 		this.tangents = tangents;
-		//Create the vertices buffer
+		//Create the tangents buffer
 		this.tangentsBuffer = BufferUtils.createFlippedBuffer(this.tangents);
 		//Check to see whether the handle has been setup
 		if (this.tangentsHandle == -2)
 			//Setup the handle
 			this.tangentsHandle = GLUtils.genBuffers();
-		//Bind the vertices buffer and give OpenGL the data
+		//Bind the tangents buffer and give OpenGL the data
 		GLUtils.bindBuffer(GL15.GL_ARRAY_BUFFER, this.tangentsHandle);
 		GLUtils.bufferData(GL15.GL_ARRAY_BUFFER, this.tangentsBuffer, this.usage);
 		GLUtils.bindBuffer(GL15.GL_ARRAY_BUFFER, 0);

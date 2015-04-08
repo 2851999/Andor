@@ -44,9 +44,9 @@ public class GeometryBuffer {
 	}
 	
 	/* The method used to bind this FBO ready to write to it */
-	public void bindWriting() {
+	public void bind() {
 		//Bind the FBO
-		this.fbo.bindWriting();
+		this.fbo.bind();
 	}
 	
 	/* The method used to unbind the FBO */

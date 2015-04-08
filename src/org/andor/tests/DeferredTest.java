@@ -56,7 +56,7 @@ public class DeferredTest extends BaseGame {
 		OpenGLUtils.disableTexture2D();
 		
 		OpenGLUtils.setupPerspective(70, 1f, 1000f);
-		Renderer.geometryBuffer.bindWriting();
+		Renderer.geometryBuffer.bind();
 		OpenGLUtils.clearColourBuffer();
 		OpenGLUtils.clearDepthBuffer();
 		camera.useView();

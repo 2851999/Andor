@@ -30,6 +30,7 @@ uniform mat4 andor_modelViewProjectionMatrix;
 uniform mat4 andor_modelMatrix;
 uniform mat4 andor_normalMatrix;
 uniform mat4 andor_viewMatrix;
+uniform mat4 andor_lightMatrix;
 
 /* The current material */
 uniform Andor_Material andor_material;

@@ -1,5 +1,6 @@
 /* DEFINE ALL OF THE DATA THAT IS NEEDED IN THE FORWARD LIGHTING FRAGMENT SHADERS HERE */
 
+#include "ForwardLightingData.glsl"
 #include "GlobalEngineData.fs"
 
 /*---------------------- STRUCTURES ----------------------*/
@@ -40,6 +41,8 @@ uniform float andor_specularIntensity;
 uniform float andor_specularPower;
 uniform vec3 andor_eyePosition;
 uniform float andor_lighting;
+uniform float andor_shadowBias;
+uniform vec3 andor_shadowMapTexelSize;
 
 /*---------------------- METHODS ----------------------*/
 

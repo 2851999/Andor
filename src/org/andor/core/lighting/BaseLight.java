@@ -24,12 +24,21 @@ public abstract class BaseLight extends Object3D {
 	/* The shader for this type of light */
 	public Shader shader;
 	
+	/* The shadow data */
+	public ShadowData shadowData;
+	
 	/* The constructor */
 	public BaseLight(Colour colour, float intensity, Shader shader) {
 		//Assign the variables
 		this.colour = colour;
 		this.intensity = intensity;
 		this.shader = shader;
+	}
+	
+	/* The constructor */
+	public BaseLight(Colour colour, float intensity, Shader shader, ShadowData shadowData) {
+		this(colour, intensity, shader);
+		this.shadowData = shadowData;
 	}
 	
 	/* The method used to assign the uniforms for this in a shader */
@@ -57,5 +66,13 @@ public abstract class BaseLight extends Object3D {
 		//Reset the custom shader
 		Renderer.getPass().customShader = null;
 	}
+	
+	/* The getter and setters */
+	public void setColour(Colour colour) { this.colour = colour; }
+	public void setIntensity(float intensity) { this.intensity = intensity; }
+	public void setShadowData(ShadowData shadowData) { this.shadowData = shadowData; }
+	public Colour getColour() { return this.colour; }
+	public float getIntensity() { return this.intensity; }
+	public ShadowData getShadowData() { return this.shadowData; }
 	
 }

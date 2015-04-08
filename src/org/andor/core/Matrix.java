@@ -8,6 +8,9 @@
 
 package org.andor.core;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Matrix {
 	
 	/* The different matrices */
@@ -16,6 +19,32 @@ public class Matrix {
 	public static Matrix4D projectionMatrix = new Matrix4D();
 	public static Matrix4D modelViewProjectionMatrix = new Matrix4D();
 	public static Matrix4D normalMatrix = new Matrix4D();
+	public static Matrix4D lightViewMatrix = new Matrix4D();
+	public static Matrix4D lightProjectionMatrix = new Matrix4D();
+	public static Matrix4D lightMatrix = new Matrix4D();
+	
+	/* The matrix stack */
+	public static List<float[]> stack = new ArrayList<float[]>();
+	
+	/* The static methods used to push and pop matrices on and off the stack */
+	public static void push(float[] data) {
+		//Add the data to the stack
+		stack.add(data);
+	}
+	
+	public static float[] pop() {
+		float[] values = stack.get(stack.size() - 1);
+		stack.remove(stack.size() - 1);
+		return values;
+	}
+	
+	public static void push(Matrix4D matrix) {
+		push(matrix.getValues());
+	}
+	
+	public static void pop(Matrix4D matrix) {
+		matrix.setValues(pop());
+	}
 	
 	/* The static method used to load an identity matrix */
 	public static void loadIdentity(Matrix4D matrix) {
@@ -36,6 +65,7 @@ public class Matrix {
 		modelViewProjectionMatrix = transpose(multiply(projectionViewMatrix, modelMatrix));
 		//Calculate and assign the normal matrix
 		normalMatrix = invert(transpose(modelMatrix));
+		Matrix.lightMatrix = Matrix.transpose(Matrix.multiply(Matrix.multiply(Matrix.lightProjectionMatrix,  Matrix.lightViewMatrix), Matrix.modelMatrix));
 	}
 	
 	/* The static method used to add two matrices together */
@@ -123,6 +153,13 @@ public class Matrix {
 		return new Matrix4D(newValues);
 	}
 	
+	/* The static method used to transform a matrix */
+	public static void transform(Matrix4D matrix, Vector3D translate, Vector3D rotate, Vector3D scale) {
+		matrix = scale(matrix, scale);
+		rotate(matrix, rotate);
+		matrix = translate(matrix, translate);
+	}
+	
 	/* The static method used to translate a matrix */
 	public static Matrix4D translate(Matrix4D matrix, Vector3D vector) {
 		//The transform matrix
@@ -134,6 +171,19 @@ public class Matrix {
 		});
 		//Add onto the matrix and return the result
 		return multiply(matrix, transform);
+	}
+	
+	/* The static method used to rotate a matrix */
+	public static void rotate(Matrix4D matrix, Vector2D angles) {
+		matrix = rotate(matrix, angles.getX(), 1, 0, 0);
+		matrix = rotate(matrix, angles.getY(), 0, 1, 0);
+	}
+	
+	/* The static method used to rotate a matrix */
+	public static void rotate(Matrix4D matrix, Vector3D angles) {
+		matrix = rotate(matrix, angles.getX(), 1, 0, 0);
+		matrix = rotate(matrix, angles.getY(), 0, 1, 0);
+		matrix = rotate(matrix, angles.getZ(), 0, 0, 1);
 	}
 	
 	/* The static method used to rotate a matrix */
@@ -184,14 +234,20 @@ public class Matrix {
 	}
 	
 	/* The static method used to return an orthographic projection matrix */
-	public static Matrix4D ortho(float left, float right, float bottom, float top, float zFar, float zNear) {
+	public static Matrix4D ortho(float left, float right, float bottom, float top, float zNear, float zFar) {
 		//Calculate the width and height
-		float width = (float) ((right - left));
-		float height = (float) ((bottom - top));
+//		float width = (float) ((right - left));
+//		float height = (float) ((bottom - top));
+//		return new Matrix4D(new float[][] {
+//				new float[] { 2 / width, 0, 0, -1 },
+//				new float[] { 0, -2 / height, 0, 1 },
+//				new float[] { 0, 0, 2 / (zFar - zNear), (zNear + zFar) / (zNear - zFar) },
+//				new float[] { 0, 0, 0, 1 },
+//		});
 		return new Matrix4D(new float[][] {
-				new float[] { 2 / width, 0, 0, -1 },
-				new float[] { 0, -2 / height, 0, 1 },
-				new float[] { 0, 0, 2 / (zFar - zNear), (zNear + zFar) / (zNear - zFar) },
+				new float[] { (2 / (right - left)), 0, 0, - ((right + left) / (right - left)) },
+				new float[] { 0, 2 / (top - bottom), 0, - ((top + bottom) / (top - bottom)) },
+				new float[] { 0, 0, -2 / (zFar - zNear), -(zNear + zFar) / (zFar - zNear) },
 				new float[] { 0, 0, 0, 1 },
 		});
 	}
@@ -200,7 +256,7 @@ public class Matrix {
 	public static Matrix4D perspective(float fov, float aspect, float zNear, float zFar) {
 		//Calculate the scale
 		float scale = (float) (Math.tan(fov / 2 * (Math.PI / 360)));
-		//Calaulate the right, left, top and bottom values
+		//Calculate the right, left, top and bottom values
 		float right = aspect * scale;
 		float left = -right;
 		float top = scale;

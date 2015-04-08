@@ -12,6 +12,7 @@ import org.andor.core.logger.Log;
 import org.andor.core.logger.Logger;
 import org.andor.utils.GLUtils;
 import org.andor.utils.shader.ShaderUtils;
+import org.andor.utils.shader.Uniforms;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 
@@ -33,6 +34,9 @@ public class Shader {
 	public int vertexShader;
 	public int fragmentShader;
 	
+	/* The uniforms */
+	public Uniforms uniforms;
+	
 	/* The constructor */
 	public Shader() {
 		
@@ -49,13 +53,29 @@ public class Shader {
 	
 	/* The method used to use this shader */
 	public void use() {
-		//Use the shader program
-		GLUtils.useProgram(this.program);
+		//Bind this shader
+		this.bind();
+		//Check to see whether the uniforms have been assigned
+		if (this.uniforms != null)
+			//Assign the uniforms
+			this.uniforms.assign(this);
 	}
 	
 	/* The method used to stop using this shader */
 	public void stopUsing() {
-		//Use the shader program
+		//Unbind this shader
+		this.unbind();
+	}
+	
+	/* The method used to bind this shader */
+	public void bind() {
+		//Bind this shader program
+		GLUtils.useProgram(this.program);
+	}
+	
+	/* The method used to unbind this shader */
+	public void unbind() {
+		//Bind nothing
 		GLUtils.useProgram(0);
 	}
 	
@@ -177,5 +197,9 @@ public class Shader {
 	public int getAttributeLocation(String name) {
 		return GLUtils.getAttributeLocation(this.program, name);
 	}
+	
+	/* The getters and setters */
+	public void setUniforms(Uniforms uniforms) { this.uniforms = uniforms; }
+	public Uniforms getUniforms() { return this.uniforms; }
 	
 }

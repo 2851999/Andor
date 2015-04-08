@@ -9,6 +9,7 @@
 package org.andor.core.lighting;
 
 import org.andor.core.Colour;
+import org.andor.core.Matrix;
 import org.andor.core.Settings;
 import org.andor.core.Shader;
 import org.andor.core.Vector3D;
@@ -27,11 +28,11 @@ public class SpotLight extends PointLight {
 	public float cutoff;
 	
 	/* The constructor */
-	public SpotLight(Colour colour, float intensity, Vector3D attenuation, Vector3D direction, float cutoff) {
-		super(colour, intensity, attenuation, defaultShader);
+	public SpotLight(Colour colour, float intensity, Vector3D attenuation, Vector3D direction, float viewAngle) {
+		super(colour, intensity, attenuation, defaultShader, new ShadowData(Matrix.perspective(viewAngle, 1.0f, 1f, 20f), false)); //20 = range
 		//Assign the variables
 		this.direction = direction;
-		this.cutoff = cutoff;
+		this.cutoff = (float) Math.cos(Math.toRadians(viewAngle) / 2);
 	}
 	
 	/* The method used to start using this light */

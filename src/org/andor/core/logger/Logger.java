@@ -48,6 +48,18 @@ public class Logger {
 		log(new Log("DEBUG MESSAGE", message));
 	}
 	
+	/* The static methods used to log a certain type message */
+	public static void error(String source, String message) {
+		//Log the log
+		log(new Log(source, message, Log.ERROR));
+	}
+	
+	/* The static methods used to log a certain type message */
+	public static void warning(String source, String message) {
+		//Log the log
+		log(new Log(source, message, Log.WARNING));
+	}
+	
 	/* The static method used to log a message
 	 * assumes the log is supposed to be a debug */
 	public static void log(String source, String message) {

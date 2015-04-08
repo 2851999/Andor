@@ -104,7 +104,7 @@ public class DeferredScene {
 		//Check to see whether deferred rendering is enabled and that this is not on Android
 		if (! Settings.AndroidMode && Settings.Video.DeferredRendering)
 			//Bind the geometry buffer
-			Renderer.geometryBuffer.bindWriting();
+			Renderer.geometryBuffer.bind();
 	}
 	
 	/* The method used to stop rendering */

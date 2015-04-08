@@ -39,6 +39,9 @@ public class ShaderCode {
 	public String vertexExtension;
 	public String fragmentExtension;
 	
+	/* The uniforms instance */
+	public Uniforms uniforms;
+	
 	/* The default constructor */
 	public ShaderCode() {
 		//Assign the default extensions
@@ -46,6 +49,8 @@ public class ShaderCode {
 		this.fragmentExtension = DEFAULT_FRAGMENT_EXTENSION;
 		//Assign the default external value
 		this.external = false;
+		//Create the uniforms
+		this.uniforms = new Uniforms();
 	}
 	
 	/* The constructor with the path given */
@@ -100,19 +105,28 @@ public class ShaderCode {
 	/* The method used to create a default shader (No external code - use the default) */
 	public Shader createDefault() {
 		//Create the default shader and return it
-		return ShaderUtils.createShader(this.vertexCode, ArrayUtils.toStringList(ANDOR_MAIN), this.fragmentCode, ArrayUtils.toStringList(ANDOR_MAIN));
+		Shader shader = ShaderUtils.createShader(this.vertexCode, ArrayUtils.toStringList(ANDOR_MAIN), this.fragmentCode, ArrayUtils.toStringList(ANDOR_MAIN));
+		shader.setUniforms(this.uniforms);
+		return shader;
 	}
 	
 	/* The method used to create a shader given other shader code */
 	public Shader createShader(List<String> vertex, List<String> fragment) {
 		//Create the shader and return it
-		return ShaderUtils.createShader(this.vertexCode, vertex, this.fragmentCode, fragment);
+		Shader shader = ShaderUtils.createShader(this.vertexCode, vertex, this.fragmentCode, fragment);
+		shader.setUniforms(this.uniforms);
+		return shader;
 	}
 	
 	/* The method used to create a shader given other shader code */
 	public Shader createShader(String path, boolean external) {
 		//Create the shader and return it
-		return ShaderUtils.createShader(this.vertexCode, FileUtils.read(path + this.vertexExtension, external), this.fragmentCode, FileUtils.read(path + this.fragmentExtension, external));
+		Shader shader = ShaderUtils.createShader(this.vertexCode, FileUtils.read(path + this.vertexExtension, external), this.fragmentCode, FileUtils.read(path + this.fragmentExtension, external));
+		shader.setUniforms(this.uniforms);
+		return shader;
 	}
+	
+	/* The getters and setters */
+	public Uniforms getUniforms() { return this.uniforms; }
 	
 }

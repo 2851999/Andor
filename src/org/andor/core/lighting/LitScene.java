@@ -11,6 +11,7 @@ package org.andor.core.lighting;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.andor.core.Matrix;
 import org.andor.core.Settings;
 import org.andor.core.Shader;
 import org.andor.core.render.Renderer;
@@ -32,15 +33,21 @@ public class LitScene {
 	/* The interface */
 	public LitSceneInterface scene;
 	
+	/* The default shadow map */
+	public ShadowMap shadowMap;
+	
 	/* The constructor */
 	public LitScene(LitSceneInterface scene) {
 		//Assign the variables
 		this.scene = scene;
 		this.lights = new ArrayList<BaseLight>();
+		this.shadowMap = new ShadowMap(1024, 1024);
 	}
 	
 	/* The method used to add a light */
-	public void add(BaseLight light) { this.lights.add(light); }
+	public void add(BaseLight light) {
+		this.lights.add(light);
+	}
 	
 	/* The method used to render this scene */
 	public void render() {
@@ -49,24 +56,77 @@ public class LitScene {
 		Renderer.useAmbient = true;
 		scene.renderObjects();
 		Renderer.useAmbient = false;
-		GLUtils.enable(GL11.GL_BLEND);
-		GLUtils.blendFunc(GL11.GL_ONE, GL11.GL_ONE);
-		GLUtils.depthMask(false);
-		GLUtils.depthFunc(GL11.GL_EQUAL);
 		//Go through the light objects
 		for (int a = 0; a < this.lights.size(); a++) {
+			//Get the shadow data for the light
+			ShadowData shadowData = this.lights.get(a).getShadowData();
+			
+			//Check to see whether the current light should cast shadows
+			if (shadowData != null && shadowData.shouldCastShadows()) {
+				
+				//Bind the shadow map
+				shadowData.shadowMap.bind();
+				
+				//Save the current view matrix
+				Matrix.push(Matrix.viewMatrix);
+				Matrix.push(Matrix.projectionMatrix);
+				
+				//Use the shadow data
+				shadowData.use(lights.get(a));
+				
+				//Assign the matrix
+				Matrix.viewMatrix.values = Matrix.lightViewMatrix.getValues();
+				Matrix.projectionMatrix.values = Matrix.lightProjectionMatrix.getValues();
+				
+				//Replace the shader in the render pass
+				Renderer.getPass().customShader = ShadowData.defaultShader;
+				
+				if (shadowData.shouldFlipFaces()) GLUtils.frontFace(GL11.GL_FRONT);
+				
+				//Render the scene
+				this.scene.renderObjects();
+								
+				if (shadowData.shouldFlipFaces()) GLUtils.frontFace(GL11.GL_BACK);
+				
+				//Reset the custom shader
+				Renderer.getPass().customShader = null;
+				
+				//Restore the view matrix
+				Matrix.projectionMatrix.values = Matrix.pop();
+				Matrix.viewMatrix.values = Matrix.pop();
+				
+				//Unbind the shadow map
+				shadowData.shadowMap.unbind();
+				
+				shadowData.shadowMap.applyGaussianBlur(shadowData.getShadowSoftness());
+				
+				Shader shader = this.lights.get(a).shader;
+				shader.use();
+				shader.setUniformf("andor_useShadows", 1.0f);
+				shader.stopUsing();
+			} else {
+				Shader shader = this.lights.get(a).shader;
+				shader.use();
+				shader.setUniformf("andor_useShadows", 0.0f);
+				shader.stopUsing();
+			}
+			
+			GLUtils.enable(GL11.GL_BLEND);
+			GLUtils.blendFunc(GL11.GL_ONE, GL11.GL_ONE);
+			GLUtils.depthMask(false);
+			GLUtils.depthFunc(GL11.GL_EQUAL);
 			//Use the current light
 			this.lights.get(a).use();
 			//Render the scene
 			scene.renderObjects();
+			//Stop using lighting
+			Renderer.light = null;
+			GLUtils.depthFunc(GL11.GL_LESS);
+			GLUtils.depthMask(true);
+			GLUtils.disable(GL11.GL_BLEND);
 		}
-		//Stop using lighting
-		Renderer.light = null;
 		//Reset the custom shader
 		Renderer.getPass().customShader = null;
-		GLUtils.depthFunc(GL11.GL_LESS);
-		GLUtils.depthMask(true);
-		GLUtils.disable(GL11.GL_BLEND);
 	}
 	
 	/* The static method used to setup the shaders necessary */

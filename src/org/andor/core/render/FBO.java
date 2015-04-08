@@ -54,12 +54,12 @@ public class FBO {
 		int status = GLUtils.checkFramebufferStatus(this.target);
 		//Check for any errors
 		if(status != GL30.GL_FRAMEBUFFER_COMPLETE)
-			Logger.log("GeometryBuffer", "Can't initialise the GeometryBuffer's FBO", Log.ERROR);
+			Logger.log("FBO", "Can't initialise the FBO", Log.ERROR);
 		this.unbind();
 	}
 	
 	/* The method used to bind this FBO ready to write to it */
-	public void bindWriting() {
+	public void bind() {
 		//Bind the FBO
 		GLUtils.bindFramebuffer(this.target, this.pointer);
 		//The buffers

@@ -39,9 +39,18 @@ public class Image extends Texture {
 	/* The bitmap (Android) */
 	public Bitmap bitmap;
 	
+	/* The constructor */
+	public Image() {
+		//Assign the variables
+		this.top = 0f;
+		this.bottom = 1f;
+		this.left = 0f;
+		this.right = 1f;
+	}
+	
 	/* The constructor with the pointer given */
 	public Image(int pointer) {
-		//Assign the pointer
+		//Assign the variables
 		this.pointer = pointer;
 		this.top = 0f;
 		this.bottom = 1f;

@@ -1,4 +1,45 @@
 -------------------------------------------------------------
+Release 1 | Beta 0 | Development 5 | Experimental 0
+
+* Added ShadowData
+* Added ShadowMap
+* Added Filter
+* Added Uniform
+* Added UniformFloat
+* Added Uniforms
+* Added UniformVector2D
+* Added UniformVector3D
+
+* Fixed bug: Matrix.ortho() was wrong
+
+* NOTE: PointLights currently do not support shadows
+
+-------------------------------------------------------------
+Release 1 | Beta 0 | Development 4 | Experimental 3
+
+* Added further shadow support
+
+* NOTE: PointLights currently do not support shadows
+
+-------------------------------------------------------------
+Release 1 | Beta 0 | Development 4 | Experimental 2
+
+* Added ShadowMap
+* Added Filter
+* Added Uniform
+* Added UniformFloat
+* Added Uniforms
+* Added UniformVector2D
+* Added UniformVector3D
+
+-------------------------------------------------------------
+Release 1 | Beta 0 | Development 4 | Experimental 1
+
+* Added ShadowData
+
+* Fixed bug: Matrix.ortho() was wrong
+
+-------------------------------------------------------------
 Release 1 | Beta 0 | Development 4 | Experimental 0
 
 * Added IndexedModel
