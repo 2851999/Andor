@@ -1,4 +1,31 @@
 -------------------------------------------------------------
+Release 1 | Beta 0 | Development 5 | Experimental 1
+
+* Added DebugCamera3D
+* Added RenderablePhysicsObject2D
+* Added MSAA support
+
+* Created the package org.andor.game
+
+* Changed org.andor.core.networking to org.andor.networking
+
+-------------------------------------------------------------
+Release 1 | Beta 0 | Development 5 | Experimental 0
+
+* Added ShadowData
+* Added ShadowMap
+* Added Filter
+* Added Uniform
+* Added UniformFloat
+* Added Uniforms
+* Added UniformVector2D
+* Added UniformVector3D
+
+* Fixed bug: Matrix.ortho() was wrong
+
+* NOTE: PointLights currently do not support shadows
+
+-------------------------------------------------------------
 Release 1 | Beta 0 | Development 4 | Experimental 3
 
 * Added further shadow support

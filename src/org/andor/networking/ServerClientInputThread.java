@@ -6,25 +6,23 @@
  * COPYRIGHT @ 2014-2015
  **********************************************/
 
-package org.andor.core.networking;
+package org.andor.networking;
 
 import java.io.IOException;
 
-import org.andor.core.logger.Log;
-import org.andor.core.logger.Logger;
-
-public class ClientInputThread extends Thread {
+public class ServerClientInputThread extends Thread {
 	
 	/* The client */
-	public Client client;
+	public ServerClient client;
 	
 	/* The boolean that states whether this is closing */
 	public boolean closing;
 	
 	/* The constructor */
-	public ClientInputThread(Client client) {
+	public ServerClientInputThread(ServerClient client) {
 		//Assign the variables
 		this.client = client;
+		this.closing = false;
 	}
 	
 	/* The method called to run this thread */
@@ -35,16 +33,17 @@ public class ClientInputThread extends Thread {
 			while (this.isAlive() && ! this.closing) {
 				//Get any input from the client
 				String input = this.client.in.readUTF();
-				//Call messageReceived() in the listeners
-				this.client.callMessageRecieved(input);
+				//Call messageRecieved() in the listeners
+				this.client.server.callMessageRecieved(this.client, input);
 			}
 		} catch (IOException e) {
-			//Make sure this error isn't caused just because the server is closing
-			if (! this.closing) {
-				//Log an error
-				Logger.log("Andor - ClientInputThread", "Failed to recieve input from the server", Log.ERROR);
-				e.printStackTrace();
-			}
+			//There was an error receiving input from the client, so assume they lost connection /
+			//disconnected from the server
+			
+			//Call clientDisconnecting() in the listeners
+			this.client.server.callClientDisconnected(this.client);
+			//Disconnect this client
+			this.client.disconnect();
 		}
 	}
 	

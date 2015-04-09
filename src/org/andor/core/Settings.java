@@ -18,11 +18,11 @@ public class Settings {
 	/* The static class containing all of the information about Andor */
 	public static class Information {
 		/* The version of Andor */
-		public static final String VERSION = "V1.0.4";
+		public static final String VERSION = "V1.0.5";
 		/* The build of Andor */
 		public static final String BUILD = "Experimental";
 		/* The date this build started development */
-		public static final String DATE = "05/04/2015";
+		public static final String DATE = "08/04/2015";
 	}
 	
 	/* The static class containing all of the settings required for the window */
@@ -74,6 +74,8 @@ public class Settings {
 		public static boolean DeferredRendering = false;
 		/* The maximum number of samples to do using anisotropic filtering */
 		public static int MaxAnisotropicSamples = 16;
+		/* The MSAA samples 0 if not used */
+		public static int Samples = 0;
 	}
 	
 	/* The static class containing all of the physics settings */

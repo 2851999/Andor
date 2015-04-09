@@ -6,7 +6,7 @@
  * COPYRIGHT @ 2014-2015
  **********************************************/
 
-package org.andor.core.networking;
+package org.andor.networking;
 
 public interface ClientListener {
 	

@@ -69,7 +69,9 @@ public class PhysicsObject2D extends Object2D {
 	public void setVelocity(float x, float y) { this.velocity = new Vector2D(x, y); }
 	public void setAcceleration(Vector2D acceleration) { this.acceleration = acceleration; }
 	public void setAcceleration(float x, float y) { this.acceleration = new Vector2D(x, y); }
+	public void setMass(float mass) { this.mass = mass; }
 	public Vector2D getVelocity() { return this.velocity; }
 	public Vector2D getAcceleration() { return this.acceleration; }
+	public float getMass() { return this.mass; }
 	
 }

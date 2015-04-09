@@ -66,10 +66,11 @@ public class Window {
 		} else if (Settings.Window.Fullscreen) {
 			Settings.Window.setSize(Settings.Video.Resolution);
 		}
+		if (Settings.Video.Samples != 0)
+			GLFW.glfwWindowHint(GLFW.GLFW_SAMPLES, Settings.Video.Samples);
 		GLFW.glfwWindowHint(GLFW.GLFW_REFRESH_RATE, 60);
 		//Set the instance
 		instance = GLFW.glfwCreateWindow((int) Settings.Window.Width, (int) Settings.Window.Height, Settings.Window.Title, monitor, 0L);
-		System.out.println();
 		//Move to centre
 		centre();
 		

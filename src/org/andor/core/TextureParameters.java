@@ -18,7 +18,8 @@ public class TextureParameters {
 	/* The default values */
 	public static int DEFAULT_TARGET = GL11.GL_TEXTURE_2D;
 	public static int DEFAULT_FILTER = GL11.GL_LINEAR;
-	public static boolean DEFAULT_CLAMP = false;
+	public static int DEFAULT_CLAMP = GL12.GL_CLAMP_TO_EDGE;
+	public static boolean DEFAULT_SHOULD_CLAMP = false;
 	
 	/* The default instances of the texture parameters */
 	public static TextureParameters DEFAULT_NEAREST = new TextureParameters().setFilter(GL11.GL_NEAREST);
@@ -26,21 +27,33 @@ public class TextureParameters {
 	/* The values */
 	public int target;
 	public int filter;
-	public boolean clamp;
+	public boolean shouldClamp;
+	public int clamp;
 	
 	/* The constructor */
 	public TextureParameters() {
 		//Assign the default values
 		this.target = DEFAULT_TARGET;
 		this.filter = DEFAULT_FILTER;
+		this.shouldClamp = DEFAULT_SHOULD_CLAMP;
 		this.clamp = DEFAULT_CLAMP;
 	}
 	
 	/* The constructor with the parameters given */
-	public TextureParameters(int target, int filter, boolean clamp) {
+	public TextureParameters(int target, int filter, boolean shouldClamp) {
 		//Assign the default values
 		this.target = target;
 		this.filter = filter;
+		this.shouldClamp = shouldClamp;
+		this.clamp = DEFAULT_CLAMP;
+	}
+	
+	/* The constructor with the parameters given */
+	public TextureParameters(int target, int filter, int clamp) {
+		//Assign the default values
+		this.target = target;
+		this.filter = filter;
+		this.shouldClamp = true;
 		this.clamp = clamp;
 	}
 	
@@ -58,9 +71,9 @@ public class TextureParameters {
 		GLUtils.texParameteri(target, GL11.GL_TEXTURE_MAG_FILTER, filter);
 		GLUtils.texParameteri(target, GL11.GL_TEXTURE_MIN_FILTER, filter);
 		//Apply clamping if necessary
-		if (clamp) {
-			GLUtils.texParameterf(target, GL11.GL_TEXTURE_WRAP_S, GL11.GL_CLAMP);
-			GLUtils.texParameterf(target, GL11.GL_TEXTURE_WRAP_T, GL11.GL_CLAMP);
+		if (this.shouldClamp) {
+			GLUtils.texParameterf(target, GL11.GL_TEXTURE_WRAP_S, this.clamp);
+			GLUtils.texParameterf(target, GL11.GL_TEXTURE_WRAP_T, this.clamp);
 		}
 		if (! Settings.AndroidMode) {
 			//Check for mipmapping
@@ -81,9 +94,11 @@ public class TextureParameters {
 	/* The getters and setters */
 	public int getTarget() { return this.target; }
 	public int getFilter() { return this.filter; }
-	public boolean getClamp() { return this.clamp; }
+	public int getClamp() { return this.clamp; }
+	public boolean shouldClamp() { return this.shouldClamp; }
 	public TextureParameters setTarget(int target) { this.target = target; return this; }
 	public TextureParameters setFilter(int filter) { this.filter = filter; return this; }
-	public TextureParameters setClamp(boolean clamp) { this.clamp = clamp; return this; }
+	public TextureParameters setClamp(int clamp) { this.clamp = clamp; return this; }
+	public TextureParameters setShouldClamp(boolean shouldClamp) { this.shouldClamp = shouldClamp; return this; }
 	
 }

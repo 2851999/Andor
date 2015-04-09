@@ -8,14 +8,17 @@
 
 package org.andor.physics;
 
-import org.andor.core.Object2D;
 import org.andor.core.Vector2D;
 
-public class GravitySource2D extends PhysicsObject2D {
+public class GravitySource2D {
+	
+	/* The object this is connected to */
+	public PhysicsObject2D object;
 	
 	/* The constructor */
-	public GravitySource2D(Object2D object) {
-		super(object);
+	public GravitySource2D(PhysicsObject2D object) {
+		//Assign the variables
+		this.object = object;
 	}
 
 	/* The method gravity to an object */
@@ -23,12 +26,12 @@ public class GravitySource2D extends PhysicsObject2D {
 		//How many pixels in a meter
 		float pixelsInMeter = 200;
 		//First step is to calculate then difference between the positions
-		float dx = object.getPosition().x - this.getPosition().x;
-		float dy = object.getPosition().y - this.getPosition().y;
+		float dx = object.getPosition().x - this.object.getPosition().x;
+		float dy = object.getPosition().y - this.object.getPosition().y;
 		//Calculate the distance between the two masses
 		float r = (float) Math.sqrt((dx * dx) + (dy * dy)) / pixelsInMeter;
 		//Calculate the force of gravity
-		float f = (float) (Physics.Constants.GRAVITATIONAL_CONSTANT * (float) ((long) (this.mass * object.mass) / (float) (r * r)));
+		float f = (float) (Physics.Constants.GRAVITATIONAL_CONSTANT * (float) ((long) (this.object.getMass() * object.getMass()) / (float) (r * r)));
 		
 		//Calculate the acceleration
 		float a = f / object.mass;
