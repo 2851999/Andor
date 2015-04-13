@@ -83,6 +83,7 @@ public class GUIComponentRenderer {
 				if (this.shouldUseImages()) {
 					//Setup the textures
 					this.entity.renderer.updateTextures(Object2DBuilder.createQuadT(this.images[this.componentIndex]));
+					this.entity.setTexture(this.images[this.componentIndex]);
 					//Enable textures
 					OpenGLUtils.enableTexture2D();
 					//Bind the correct image

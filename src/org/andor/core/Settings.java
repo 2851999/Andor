@@ -22,7 +22,7 @@ public class Settings {
 		/* The build of Andor */
 		public static final String BUILD = "Experimental";
 		/* The date this build started development */
-		public static final String DATE = "08/04/2015";
+		public static final String DATE = "09/04/2015";
 	}
 	
 	/* The static class containing all of the settings required for the window */
@@ -64,8 +64,6 @@ public class Settings {
 	public static class Video {
 		/* The boolean that states whether VSync should be enabled */
 		public static boolean VSync = false;
-		/* The boolean that states whether anti aliasing should be used */
-		public static boolean AntiAliasing = false;
 		/* The maximum FPS */
 		public static int MaxFPS = 60;
 		/* The preferred resolution (Fullscreen only) */

@@ -143,4 +143,18 @@ public class Colour {
 	public float getB() { return this.b; }
 	public float getA() { return this.a; }
 	
+	public String toString() {
+		return "(" + r + "," + g + "," + b + "," + a + ")";
+	}
+	
+	/* The method used to create a colour from integer values (0 - 255) */
+	public static Colour create(int r, int g, int b) {
+		return new Colour(((float) r) / 255f, ((float) g) / 255f, ((float) b) / 255f);
+	}
+	
+	/* The method used to create a colour from integer values (0 - 255) */
+	public static Colour create(int r, int g, int b, int a) {
+		return new Colour(((float) r) / 255f, ((float) g) / 255f, ((float) b) / 255f, ((float) a) / 255f);
+	}
+	
 }

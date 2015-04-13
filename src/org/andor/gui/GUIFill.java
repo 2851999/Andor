@@ -65,6 +65,14 @@ public class GUIFill extends Object2D {
 		this.colour = Colour.WHITE;
 	}
 	
+	/* The method used to assign the image */
+	public void setImage(Image image) {
+		//Check to see whether one has already been set
+		if (this.image == null)
+			this.renderer = new GUIComponentRenderer(Object2DBuilder.createQuad(image, this.component.width, this.component.height, Colour.WHITE));
+		this.image = image;
+	}
+	
 	/* The method used to update this fill */
 	public void update() {
 		

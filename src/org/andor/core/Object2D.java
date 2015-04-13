@@ -145,17 +145,17 @@ public class Object2D {
 	}
 	
 	public float getWidth() {
-		return this.width;
+		return this.width * scale.x;
 	}
 	
 	public float getHeight() {
-		return this.height;
+		return this.height * scale.y;
 	}
 	
 	public Rectangle getBounds() {
 		//Get the position
 		Vector2D p = this.getPosition();
-		return new Rectangle(p.x, p.y, this.width, this.height);
+		return new Rectangle(p.x + ((this.width * (1 - scale.x)) / 2), p.y + ((this.height * (1 - scale.y)) / 2), this.getWidth(), this.getHeight());
 	}
 	
 	public boolean isLinked() { return this.parent != null; }

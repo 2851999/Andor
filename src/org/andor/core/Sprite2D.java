@@ -28,9 +28,9 @@ public class Sprite2D extends ImageEntity2D {
 	public List<Animation2D> currentAnimations;
 	
 	/* The constructor */
-	public Sprite2D(Image image) {
+	public Sprite2D(Image image, Colour colour, float width, float height) {
 		//Call the super constructor
-		super(image);
+		super(image, colour, width, height);
 		//Assign the variables
 		this.animations = new ArrayList<Animation2D>();
 		this.animationNames = new ArrayList<String>();
@@ -38,8 +38,24 @@ public class Sprite2D extends ImageEntity2D {
 		this.currentAnimations = new ArrayList<Animation2D>();
 	}
 	
+	/* The constructor */
+	public Sprite2D(Image image, Colour colour) {
+		this(image, colour, image.getWidth(), image.getHeight());
+	}
+	
+	/* The constructor */
+	public Sprite2D(Image image) {
+		this(image, Colour.WHITE);
+	}
+	
+	/* The constructor */
+	public Sprite2D(Image image, float width, float height) {
+		this(image, Colour.WHITE, width, height);
+	}
+	
 	/* The method used to update this sprite */
 	public void update() {
+		super.update();
 		//Go through each animation
 		for (int a = 0; a < this.currentAnimations.size(); a++)
 			//Update the current animation
