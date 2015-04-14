@@ -1,4 +1,11 @@
 -------------------------------------------------------------
+Release 1 | Beta 0 | Development 5 | Experimental 3
+
+* Added PhysicsObject3D
+* Added RenderablePhysicsObject3D
+* Added PhysicsTest3D
+
+-------------------------------------------------------------
 Release 1 | Beta 0 | Development 5 | Experimental 2
 
 * Fixed bug: GUIComponentRenderer didn't use images properly

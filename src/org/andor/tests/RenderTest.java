@@ -67,10 +67,10 @@ public class RenderTest extends BaseGame implements LitSceneInterface {
 		this.plane.setPosition(0, 0.5f, 0);
 		this.plane.setRotation(0, 0, -30);
 		
-		this.cube = OBJLoader.loadModel(PATH + "cube.obj", PATH, true);
+		this.cube = OBJLoader.loadModel(PATH + "car.obj", PATH, true);
 		this.cube.prepare();
-		this.cube.setScale(0.25f);
-		this.cube.setPosition(4, 0.25f, 0);
+		this.cube.setScale(1f);
+		this.cube.setPosition(4, 1f, 0);
 		this.cube.setRotation(0, 45, 0);
 		
 		this.scene = new LitScene(this);
@@ -87,10 +87,10 @@ public class RenderTest extends BaseGame implements LitSceneInterface {
 		light3.getRotation().setX(90);
 		light3.getRotation().setZ(20);
 		
-		light2 = new SpotLight(Colour.BLUE, 0.9f, new Vector3D(0, 0, 0.2f), new Vector3D(0f, 0f, 1f), 70.0f);
+		light2 = new SpotLight(Colour.BLUE, 0.9f, new Vector3D(0, 0, 0.2f), new Vector3D(0f, 1f, 0f), 70.0f);
 		light2.rotation.z = 0;
 		light2.rotation.y = 0;
-		light2.rotation.x = 45;
+		light2.rotation.x = 90;
 		light2.position = new Vector3D(0, -0.5f, 0);
 		
 		//this.light1.position = new Vector3D(0, 0, 0);

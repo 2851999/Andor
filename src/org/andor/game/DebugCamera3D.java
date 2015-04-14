@@ -20,6 +20,7 @@ import org.andor.core.input.Mouse;
 import org.andor.core.input.MouseEvent;
 import org.andor.core.input.MouseMotionEvent;
 import org.andor.core.input.ScrollEvent;
+import org.andor.utils.ClampUtils;
 
 public class DebugCamera3D extends Camera3D implements InputListenerInterface {
 	
@@ -35,6 +36,10 @@ public class DebugCamera3D extends Camera3D implements InputListenerInterface {
 	public float fasterSpeed;
 	public float mouseSensitivity;
 	
+	/* Maximum and minium x rotation values */
+	public float minXRotation;
+	public float maxXRotation;
+	
 	/* The boolean that states whether the mouse should be locked */
 	public boolean lockMouse;
 	
@@ -46,6 +51,8 @@ public class DebugCamera3D extends Camera3D implements InputListenerInterface {
 		this.speed = 0.01f;
 		this.fasterSpeed = 0.05f;
 		this.mouseSensitivity = 0.5f;
+		this.minXRotation = -80;
+		this.maxXRotation = 80;
 		this.lockMouse = true;
 		
 		//Lock the mouse
@@ -54,6 +61,8 @@ public class DebugCamera3D extends Camera3D implements InputListenerInterface {
 	
 	/* The update method */
 	public void update(long delta) {
+		//Clamp the rotation
+		this.rotation.x = ClampUtils.clamp(this.rotation.x, this.minXRotation, this.maxXRotation);
 		//The speed
 		float s = this.speed;
 		//Check the input
