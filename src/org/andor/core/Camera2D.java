@@ -43,18 +43,8 @@ public class Camera2D extends Object2D {
 	
 	/* The method used to use this camera's view */
 	public void useView() {
-		//Get the rotation
-		float r = this.getRotation();
-		//Get the position
-		Vector2D p = this.getPosition();
-		//Get the scale
-		Vector2D s = this.getScale();
-		//Rotate by the specified amount
-		Matrix.viewMatrix = Matrix.rotate(Matrix.viewMatrix, r, 0, 0, 1);
-		//Move to the correct position
-		Matrix.viewMatrix = Matrix.translate(Matrix.viewMatrix, new Vector3D(p.x, p.y, 0));
-		//Scale by the correct amount
-		Matrix.viewMatrix = Matrix.scale(Matrix.viewMatrix, new Vector3D(s.x, s.y, 0));
+		//Apply this cameras transform
+		Matrix.viewMatrix = Matrix.transformR(Matrix.viewMatrix, this.getPosition(), this.getRotation(), this.getScale());
 	}
 	
 }

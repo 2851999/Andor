@@ -154,10 +154,35 @@ public class Matrix {
 	}
 	
 	/* The static method used to transform a matrix */
-	public static void transform(Matrix4D matrix, Vector3D translate, Vector3D rotate, Vector3D scale) {
-		matrix = scale(matrix, scale);
-		rotate(matrix, rotate);
+	public static Matrix4D transform(Matrix4D matrix, Vector2D translate, float rotate, Vector2D scale) {
+		matrix = translate(matrix, new Vector3D(translate, 0));
+		matrix = rotate(matrix, rotate);
+		matrix = scale(matrix,  new Vector3D(scale, 0));
+		return matrix;
+	}
+	
+	/* The static method used to transform a matrix (Does this in the reverse order) */
+	public static Matrix4D transformR(Matrix4D matrix, Vector2D translate, float rotate, Vector2D scale) {
+		matrix = scale(matrix, new Vector3D(scale, 0));
+		matrix = rotate(matrix, rotate);
+		matrix = translate(matrix, new Vector3D(translate, 0));
+		return matrix;
+	}
+	
+	/* The static method used to transform a matrix */
+	public static Matrix4D transform(Matrix4D matrix, Vector3D translate, Vector3D rotate, Vector3D scale) {
 		matrix = translate(matrix, translate);
+		matrix = rotate(matrix, rotate);
+		matrix = scale(matrix, scale);
+		return matrix;
+	}
+	
+	/* The static method used to transform a matrix (Does this in the reverse order) */
+	public static Matrix4D transformR(Matrix4D matrix, Vector3D translate, Vector3D rotate, Vector3D scale) {
+		matrix = scale(matrix, scale);
+		matrix = rotate(matrix, rotate);
+		matrix = translate(matrix, translate);
+		return matrix;
 	}
 	
 	/* The static method used to translate a matrix */
@@ -174,16 +199,24 @@ public class Matrix {
 	}
 	
 	/* The static method used to rotate a matrix */
-	public static void rotate(Matrix4D matrix, Vector2D angles) {
-		matrix = rotate(matrix, angles.getX(), 1, 0, 0);
-		matrix = rotate(matrix, angles.getY(), 0, 1, 0);
+	public static Matrix4D rotate(Matrix4D matrix, float angle) {
+		matrix = rotate(matrix, angle, 1, 0, 0);
+		return matrix;
 	}
 	
 	/* The static method used to rotate a matrix */
-	public static void rotate(Matrix4D matrix, Vector3D angles) {
+	public static Matrix4D rotate(Matrix4D matrix, Vector2D angles) {
+		matrix = rotate(matrix, angles.getX(), 1, 0, 0);
+		matrix = rotate(matrix, angles.getY(), 0, 1, 0);
+		return matrix;
+	}
+	
+	/* The static method used to rotate a matrix */
+	public static Matrix4D rotate(Matrix4D matrix, Vector3D angles) {
 		matrix = rotate(matrix, angles.getX(), 1, 0, 0);
 		matrix = rotate(matrix, angles.getY(), 0, 1, 0);
 		matrix = rotate(matrix, angles.getZ(), 0, 0, 1);
+		return matrix;
 	}
 	
 	/* The static method used to rotate a matrix */

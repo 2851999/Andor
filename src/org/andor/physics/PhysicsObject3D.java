@@ -8,22 +8,18 @@
 
 package org.andor.physics;
 
-import org.andor.core.Object2D;
-import org.andor.core.Vector2D;
+import org.andor.core.Object3D;
+import org.andor.core.Vector3D;
 
-public class PhysicsObject2D extends Object2D {
-	
-	/*
-	 * NOTE: Currently each pixel of the screen represents 1 meter (2D)
-	 */
+public class PhysicsObject3D extends Object3D {
 	
 	/* The velocity of this object (M/S) */
-	public Vector2D velocity;
-	public float angularVelocity;
+	public Vector3D velocity;
+	public Vector3D angularVelocity;
 	
 	/* The acceleration of this object (M/S^2) */
-	public Vector2D acceleration;
-	public float angularAcceleration;
+	public Vector3D acceleration;
+	public Vector3D angularAcceleration;
 	
 	/* The mass of this object */
 	public float mass;
@@ -35,33 +31,26 @@ public class PhysicsObject2D extends Object2D {
 	public boolean useAccelerationY;
 	
 	/* The constructor */
-	public PhysicsObject2D() {
+	public PhysicsObject3D() {
 		
 	}
 	
 	/* The constructor */
-	public PhysicsObject2D(Object2D object) {
+	public PhysicsObject3D(Object3D object) {
 		//Setup this object
 		this.setup(object);
 	}
 	
 	/* The method used to setup this object */
-	public void setup(Object2D object) {
+	public void setup(Object3D object) {
 		//Attach the object to this
 		this.link(object);
-		/*
-		 * NOTE
-		 * 
-		 * Currently, unless this is directly implemented into Andor
-		 * the physics object and render object will have to be kept
-		 * separate, where you will link the render object to the
-		 * physics object above but change scale, rotation or
-		 * position in the physics object
-		 */
 		
 		//Assign the variables
-		this.velocity = new Vector2D();
-		this.acceleration = new Vector2D();
+		this.velocity = new Vector3D();
+		this.acceleration = new Vector3D();
+		this.angularVelocity = new Vector3D();
+		this.angularAcceleration = new Vector3D();
 		this.mass = 1;
 		this.useVelocityX = true;
 		this.useVelocityY = true;
@@ -72,8 +61,8 @@ public class PhysicsObject2D extends Object2D {
 	/* The method used to update this physics object given the delta */
 	public void update() {
 		//Assign the values
-		Vector2D a = this.acceleration.multiplyNew(Physics.deltaSeconds);
-		Vector2D v = this.velocity.multiplyNew(Physics.deltaSeconds);
+		Vector3D a = this.acceleration.multiplyNew(Physics.deltaSeconds);
+		Vector3D v = this.velocity.multiplyNew(Physics.deltaSeconds);
 		
 		//Apply any changes needed
 		if (! this.useAccelerationX)
@@ -87,38 +76,37 @@ public class PhysicsObject2D extends Object2D {
 		
 		//Apply the current acceleration
 		this.velocity.add(a);
-		this.angularVelocity += this.angularAcceleration * Physics.deltaSeconds;
+		this.angularVelocity.add(this.angularAcceleration.multiplyNew(Physics.deltaSeconds));
 		//Apply the current velocity
 		this.position.add(v);
-		this.rotation += this.angularVelocity * Physics.deltaSeconds;
+		this.rotation.add(this.angularVelocity.multiplyNew(Physics.deltaSeconds));
 	}
 	
 	/* The method used to apply a force on this object */
-	public void applyForce(Vector2D force) {
-		//F = MA, therefore A = F / M
+	public void applyForce(Vector3D force) {
 		//Make sure the mass isn't 0
 		if (this.mass != 0)
-			//Calculate the acceleration due to the force and add it (Sudden impulse, ignore time
-			//so just add to velocity instead of acceleration)
 			this.velocity.add(force.divideNew(this.mass));
 	}
 	
 	/* The 'set' and 'get' methods */
-	public void setVelocity(Vector2D velocity) { this.velocity = velocity; }
-	public void setVelocity(float x, float y) { this.velocity = new Vector2D(x, y); }
-	public void setAngularVelocity(float angularVelocity) { this.angularVelocity = angularVelocity; }
-	public void setAcceleration(Vector2D acceleration) { this.acceleration = acceleration; }
-	public void setAcceleration(float x, float y) { this.acceleration = new Vector2D(x, y); }
-	public void setAngularAcceleration(float angularAcceleration) { this.angularAcceleration = angularAcceleration; }
+	public void setVelocity(Vector3D velocity) { this.velocity = velocity; }
+	public void setVelocity(float x, float y, float z) { this.velocity = new Vector3D(x, y, z); }
+	public void setAngularVelocity(Vector3D angularVelocity) { this.angularVelocity = angularVelocity; }
+	public void setAngularVelocity(float x, float y, float z) { this.angularVelocity = new Vector3D(x, y, z); }
+	public void setAcceleration(Vector3D acceleration) { this.acceleration = acceleration; }
+	public void setAcceleration(float x, float y, float z) { this.acceleration = new Vector3D(x, y, z); }
+	public void setAngularAcceleration(Vector3D angularAcceleration) { this.angularAcceleration = angularAcceleration; }
+	public void setAngularAcceleration(float x, float y, float z) { this.angularAcceleration = new Vector3D(x, y, z); }
 	public void setMass(float mass) { this.mass = mass; }
 	public void useVelocityX(boolean useVelocityX) { this.useVelocityX = useVelocityX; }
 	public void useVelocityY(boolean useVelocityY) { this.useVelocityY = useVelocityY; }
 	public void useAccelerationX(boolean useAccelerationX) { this.useAccelerationX = useAccelerationX; }
 	public void useAccelerationY(boolean useAccelerationY) { this.useAccelerationY = useAccelerationY; }
-	public Vector2D getVelocity() { return this.velocity; }
-	public float getAngularVelocity() { return this.angularVelocity; }
-	public Vector2D getAcceleration() { return this.acceleration; }
-	public float getAngularAcceleration() { return this.angularAcceleration; }
+	public Vector3D getVelocity() { return this.velocity; }
+	public Vector3D getAngularVelocity() { return this.angularVelocity; }
+	public Vector3D getAcceleration() { return this.acceleration; }
+	public Vector3D getAngularAcceleration() { return this.angularAcceleration; }
 	public float getMass() { return this.mass; }
 	public boolean shouldUseVelocityX() { return this.useVelocityX; }
 	public boolean shouldUseVelocityY() { return this.useVelocityY; }

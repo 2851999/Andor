@@ -70,4 +70,8 @@ public class Audio {
 			allAudio.get(a).release();
 	}
 	
+	/* The getters and setters */
+	public void setLooping(boolean looping) { this.looping = looping; }
+	public boolean getLooping() { return this.looping; }
+	
 }

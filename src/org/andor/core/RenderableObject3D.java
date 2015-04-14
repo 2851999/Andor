@@ -94,22 +94,10 @@ public class RenderableObject3D extends Object3D {
 	
 	/* The method used to update the current view matrix */
 	public void updateViewMatrix() {
-		//Get the position
-		Vector3D p = this.getPosition();
-		//Get the rotation
-		Vector3D r = this.getRotation();
-		//Get the scale
-		Vector3D s = this.getScale();
 		//Save the current matrix
 		clone = Arrays.copyOf(Matrix.modelMatrix.getValues(), 16);
-		//Move to the correct position
-		Matrix.modelMatrix = Matrix.translate(Matrix.modelMatrix, p);
-		//Rotate by the specified amount
-		Matrix.modelMatrix = Matrix.rotate(Matrix.modelMatrix, r.x, 1, 0, 0);
-		Matrix.modelMatrix = Matrix.rotate(Matrix.modelMatrix, r.y, 0, 1, 0);
-		Matrix.modelMatrix = Matrix.rotate(Matrix.modelMatrix, r.z, 0, 0, 1);
-		//Scale by the specified amount
-		Matrix.modelMatrix = Matrix.scale(Matrix.modelMatrix, s);
+		//Apply this models transform
+		Matrix.modelMatrix = Matrix.transform(Matrix.modelMatrix, this.getPosition(), this.getRotation(), this.getScale());
 	}
 	
 	/* The method used to restore the current view matrix */

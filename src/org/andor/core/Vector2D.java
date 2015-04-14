@@ -145,7 +145,12 @@ public class Vector2D {
 	
 	/* The method used to return a string representation of this object */
 	public String toString() {
-		return "(" + this.x + ", " + this.y + ")";
+		return "(" + this.x + "," + this.y + ")";
+	}
+	
+	public static Vector2D fromString(String string) {
+		String[] values = string.substring(1, string.length() - 2).split(",");
+		return new Vector2D(Float.parseFloat(values[0]), Float.parseFloat(values[1]));
 	}
 	
 	/* The method used to set and get the different values */

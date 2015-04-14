@@ -67,23 +67,8 @@ public class Camera3D extends Object3D {
 	
 	/* The method used to use this camera's view */
 	public void useView() {
-		//Get the rotation
-		Vector3D r = this.getRotation();
-		//Get the position
-		Vector3D p = this.getPosition();
-		//Get the scale
-		Vector3D s = this.getScale();
-		
-		//Scale by the correct amount
-		Matrix.viewMatrix = Matrix.scale(Matrix.viewMatrix, s);
-		
-		//Rotate by the specified amount
-		Matrix.viewMatrix = Matrix.rotate(Matrix.viewMatrix, r.x, 1, 0, 0);
-		Matrix.viewMatrix = Matrix.rotate(Matrix.viewMatrix, r.y, 0, 1, 0);
-		Matrix.viewMatrix = Matrix.rotate(Matrix.viewMatrix, r.z, 0, 0, 1);
-		
-		//Move to the correct position
-		Matrix.viewMatrix = Matrix.translate(Matrix.viewMatrix, p);
+		//Apply this cameras transform
+		Matrix.viewMatrix = Matrix.transformR(Matrix.viewMatrix, this.getPosition(), this.getRotation(), this.getScale());
 		
 		//Check to see whether the skybox should be used
 		if (this.skyBox != null && this.useSkyBoxIfAvailable) {

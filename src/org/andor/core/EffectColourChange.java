@@ -9,6 +9,7 @@
 package org.andor.core;
 
 import org.andor.core.render.Renderer;
+import org.andor.utils.ClampUtils;
 
 public class EffectColourChange extends Effect {
 	
@@ -44,9 +45,9 @@ public class EffectColourChange extends Effect {
 		//Calculate the value
 		float value = (float) delta / (float) time;
 		//Multiply by the proportion of the time that has elapsed
-		difference = difference.multiplyRGB(value);
+		difference = difference.multiplyRGBA(value);
 		//Assign the current colour
-		current = current.addRGBA(difference);
+		current = ClampUtils.clamp(current.addRGBA(difference));
 		//Update the colour
 		this.getRenderer().updateColour(current);
 	}

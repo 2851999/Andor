@@ -144,15 +144,15 @@ public class Object3D {
 	}
 	
 	public float getWidth() {
-		return this.width;
+		return this.width * scale.x;
 	}
 	
 	public float getHeight() {
-		return this.height;
+		return this.height * scale.y;
 	}
 	
 	public float getDepth() {
-		return this.depth;
+		return this.depth * scale.z;
 	}
 	
 	public boolean isLinked() { return this.parent != null; }

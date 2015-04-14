@@ -177,7 +177,7 @@ public class Vector3D {
 	
 	/* The method used to return a string representation of this object */
 	public String toString() {
-		return "(" + this.x + ", " + this.y + ", " + this.z + ")";
+		return "(" + this.x + "," + this.y + "," + this.z + ")";
 	}
 	
 	/* The method used to set and get the different values */

@@ -11,11 +11,11 @@ package org.andor.tests;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.andor.core.networking.Client;
-import org.andor.core.networking.ClientListener;
-import org.andor.core.networking.Server;
-import org.andor.core.networking.ServerClient;
-import org.andor.core.networking.ServerListener;
+import org.andor.networking.Client;
+import org.andor.networking.ClientListener;
+import org.andor.networking.Server;
+import org.andor.networking.ServerClient;
+import org.andor.networking.ServerListener;
 import org.andor.utils.Console;
 
 public class NetworkingTest implements ClientListener, ServerListener {

@@ -29,7 +29,7 @@ public class GeometryBuffer {
 	public GeometryBuffer() {
 		//Assign the values
 		this.fbo = new FBO(GL30.GL_FRAMEBUFFER);
-		TextureParameters parameters = new TextureParameters().setFilter(GL11.GL_NEAREST).setClamp(true);
+		TextureParameters parameters = new TextureParameters().setFilter(GL11.GL_NEAREST).setShouldClamp(true);
 		this.fbo.add(new RenderTexture((int) Settings.Window.Width, (int) Settings.Window.Height, GL30.GL_RGBA16F, GL11.GL_RGBA, GL30.GL_COLOR_ATTACHMENT0, GL11.GL_FLOAT, parameters));
 		this.fbo.add(new RenderTexture((int) Settings.Window.Width, (int) Settings.Window.Height, GL30.GL_RGBA16F, GL11.GL_RGBA, GL30.GL_COLOR_ATTACHMENT1, GL11.GL_FLOAT, parameters));
 		this.fbo.add(new RenderTexture((int) Settings.Window.Width, (int) Settings.Window.Height, GL30.GL_RGBA16F, GL11.GL_RGBA, GL30.GL_COLOR_ATTACHMENT2, GL11.GL_FLOAT, parameters));

@@ -147,6 +147,8 @@ public class OpenGLUtils {
 		//Clear the screen
 		clearColourBuffer();
 		clearDepthBuffer();
+		//Enable depth testing
+		enableDepthTest();
 		//Setup the perspective
 		setupPerspective(70, 1f, 100f);
 		//Allow alpha blending

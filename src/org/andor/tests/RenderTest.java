@@ -1,5 +1,5 @@
 /* *********************************************
- * ANDORf
+ * ANDOR
  * 
  * USE - EDUCATIONAL PURPOSES ONLY
  *
@@ -9,7 +9,6 @@
 package org.andor.tests;
 
 import org.andor.core.BaseGame;
-import org.andor.core.Camera3D;
 import org.andor.core.Colour;
 import org.andor.core.ImageLoader;
 import org.andor.core.Settings;
@@ -19,7 +18,6 @@ import org.andor.core.Vector3D;
 import org.andor.core.input.Keyboard;
 import org.andor.core.input.KeyboardEvent;
 import org.andor.core.input.Mouse;
-import org.andor.core.input.MouseMotionEvent;
 import org.andor.core.lighting.BaseLight;
 import org.andor.core.lighting.DirectionalLight;
 import org.andor.core.lighting.LitScene;
@@ -29,6 +27,7 @@ import org.andor.core.lighting.SpotLight;
 import org.andor.core.model.Model;
 import org.andor.core.model.OBJLoader;
 import org.andor.core.render.Renderer;
+import org.andor.game.DebugCamera3D;
 import org.andor.utils.ClampUtils;
 import org.andor.utils.OpenGLUtils;
 import org.andor.utils.ScreenResolution;
@@ -38,7 +37,7 @@ public class RenderTest extends BaseGame implements LitSceneInterface {
 	
 	public static final String PATH = "H:/Andor/Tests/Render/";
 	
-	public Camera3D camera;
+	public DebugCamera3D camera;
 	public Model model;
 	public Model plane;
 	public Model cube;
@@ -50,16 +49,16 @@ public class RenderTest extends BaseGame implements LitSceneInterface {
 	public boolean wireframe;
 	
 	public void create() {
-		this.camera = new Camera3D();
+		this.camera = new DebugCamera3D();
 		this.camera.setRotation(20f, 0, 0);
 		this.camera.setPosition(0, -1, -3);
 		this.camera.setSkyBox(new SkyBox(ImageLoader.loadImage(PATH + "skybox4.png", true, new TextureParameters().setFilter(GL11.GL_NEAREST)), 200));
 		this.camera.flying = true;
 		
-		//this.model = OBJLoader.loadModel(PATH + "crytek-sponza/sponza.obj", PATH + "crytek-sponza/", true);
-		this.model = OBJLoader.loadModel(PATH + "plane.obj", PATH + "", true);
+		this.model = OBJLoader.loadModel(PATH + "crytek-sponza/sponza.obj", PATH + "crytek-sponza/", true);
+		//this.model = OBJLoader.loadModel(PATH + "plane.obj", PATH + "", true);
 		this.model.prepare(true);
-		this.model.setScale(4f);
+		this.model.setScale(0.1f);
 		this.model.setPosition(0, 0, 0f);
 		
 		this.plane = OBJLoader.loadModel(PATH + "plane2.obj", PATH, true);
@@ -68,10 +67,10 @@ public class RenderTest extends BaseGame implements LitSceneInterface {
 		this.plane.setPosition(0, 0.5f, 0);
 		this.plane.setRotation(0, 0, -30);
 		
-		this.cube = OBJLoader.loadModel(PATH + "cube.obj", PATH, true);
+		this.cube = OBJLoader.loadModel(PATH + "car.obj", PATH, true);
 		this.cube.prepare();
-		this.cube.setScale(0.25f);
-		this.cube.setPosition(4, 0.25f, 0);
+		this.cube.setScale(1f);
+		this.cube.setPosition(4, 1f, 0);
 		this.cube.setRotation(0, 45, 0);
 		
 		this.scene = new LitScene(this);
@@ -88,15 +87,15 @@ public class RenderTest extends BaseGame implements LitSceneInterface {
 		light3.getRotation().setX(90);
 		light3.getRotation().setZ(20);
 		
-		light2 = new SpotLight(Colour.BLUE, 0.9f, new Vector3D(0, 0, 0.2f), new Vector3D(0f, 0f, 1f), 70.0f);
+		light2 = new SpotLight(Colour.BLUE, 0.9f, new Vector3D(0, 0, 0.2f), new Vector3D(0f, 1f, 0f), 70.0f);
 		light2.rotation.z = 0;
 		light2.rotation.y = 0;
-		light2.rotation.x = 45;
+		light2.rotation.x = 90;
 		light2.position = new Vector3D(0, -0.5f, 0);
 		
 		//this.light1.position = new Vector3D(0, 0, 0);
 		this.light1 = new PointLight(Colour.LIGHT_BLUE, 1f, new Vector3D(0f, 0.4f, 0.2f));
-		this.light1.setPosition(0, 0.1f, 0);
+		this.light1.setPosition(0, 0.5f, 0);
 		this.scene.add(this.light1);
 		this.scene.add(light3);
 		//this.scene.add(light2);
@@ -116,18 +115,7 @@ public class RenderTest extends BaseGame implements LitSceneInterface {
 	}
 	
 	public void update() {
-		if (Keyboard.KEY_LSHIFT)
-			speed = 0.02f;
-		else
-			speed = 0.005f;
-		if (Keyboard.KEY_W)
-			camera.moveForward(speed * this.getDelta());
-		if (Keyboard.KEY_S)
-			camera.moveBackward(speed * this.getDelta());
-		if (Keyboard.KEY_A)
-			camera.moveLeft(speed * this.getDelta());
-		if (Keyboard.KEY_D)
-			camera.moveRight(speed * this.getDelta());
+		this.camera.update(this.getDelta());
 		if (Keyboard.KEY_ESCAPE)
 			requestClose();
 		this.camera.rotation.x = ClampUtils.clamp(this.camera.rotation.x, -80, 80);
@@ -157,12 +145,7 @@ public class RenderTest extends BaseGame implements LitSceneInterface {
 		this.camera.useView();
 		//Matrix.viewMatrix = Matrix.lightViewMatrix;
 		
-		//GL11.glEnable(GL11.GL_CULL_FACE);
-		//GL11.glCullFace(GL11.GL_CW);
-		
 		this.scene.render();
-		
-		//GL11.glDisable(GL11.GL_CULL_FACE);
 	}
 	
 	public void renderObjects() {
@@ -192,11 +175,6 @@ public class RenderTest extends BaseGame implements LitSceneInterface {
 			this.camera.setSkyBox(new SkyBox(ImageLoader.loadImage(PATH + "skybox5.png", true, new TextureParameters().setFilter(GL11.GL_NEAREST)), 100));
 		else if (e.getCode() == Keyboard.KEY_6_CODE)
 			this.camera.setSkyBox(new SkyBox(ImageLoader.loadImage(PATH + "skybox6.jpg", true, new TextureParameters().setFilter(GL11.GL_NEAREST)), 100));
-	}
-	
-	public void onMouseMoved(MouseMotionEvent e) {
-		if (Mouse.isLocked())
-			camera.rotation.add(new Vector3D(e.dy * 0.5f, e.dx * 0.5f, 0));
 	}
 	
 	public static void main(String[] args) {

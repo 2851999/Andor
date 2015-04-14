@@ -43,7 +43,7 @@ public class ShadowMap {
 		//Create the FBO
 		this.fbo = new FBO(GL30.GL_FRAMEBUFFER);
 		//Add the depth texture
-		TextureParameters parameters = new TextureParameters().setFilter(GL11.GL_LINEAR).setClamp(true);
+		TextureParameters parameters = new TextureParameters().setFilter(GL11.GL_LINEAR).setShouldClamp(true);
 		this.fbo.add(new RenderTexture((int) width, (int) height, GL30.GL_RG32F, GL11.GL_RGBA, GL30.GL_COLOR_ATTACHMENT0, GL11.GL_FLOAT, parameters));
 		//Setup the FBO
 		this.fbo.setup();
