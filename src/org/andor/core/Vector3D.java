@@ -8,6 +8,8 @@
 
 package org.andor.core;
 
+import org.andor.utils.MathUtils;
+
 public class Vector3D {
 	
 	/* The different values (x, y, z) */
@@ -167,6 +169,26 @@ public class Vector3D {
 			z * vector.x - x * vector.z,
 			x * vector.y - y * vector.x
 		);
+	}
+	
+	/* The method used to get the minimum value of this vector */
+	public float min() {
+		return MathUtils.min(MathUtils.min(this.x, this.y), this.z);
+	}
+	
+	/* The method used to get the maximum value of this vector */
+	public float max() {
+		return MathUtils.max(MathUtils.max(this.x, this.y), this.z);
+	}
+	
+	/* The method used to get the minimum value out of this and another given vector */
+	public Vector3D min(Vector3D other) {
+		return new Vector3D(MathUtils.min(this.x, other.x), MathUtils.min(this.y, other.y), MathUtils.min(this.z, other.z));
+	}
+	
+	/* The method used to get the maximum value out of this and another given vector */
+	public Vector3D max(Vector3D other) {
+		return new Vector3D(MathUtils.max(this.x, other.x), MathUtils.max(this.y, other.y), MathUtils.max(this.z, other.z));
 	}
 	
 	/* The method used to create a new vector with the same values as

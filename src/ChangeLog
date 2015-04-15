@@ -1,4 +1,39 @@
 -------------------------------------------------------------
+Release 1 | Beta 0 | Development 6 | Experimental 1
+
+* Added AABB2D
+* Added AABBCollider2D
+* Added Circle
+* Added CircleCollider
+* Added Collider2D
+* Added CollisionData
+* Added Plane2D
+* Added PlaneCollider2D
+
+* Renamed ClampUtils to MathUtils
+
+-------------------------------------------------------------
+Release 1 | Beta 0 | Development 6 | Experimental 0
+
+* Added DebugCamera3D
+* Added RenderablePhysicsObject2D
+* Added PhysicsObject3D
+* Added RenderablePhysicsObject3D
+* Added PhysicsTest3D
+* Added MSAA support
+
+* Created the package org.andor.game
+
+* Changed org.andor.core.networking to org.andor.networking
+
+* Fixed bug: GUIComponentRenderer didn't use images properly
+* Fixed bug: Objects didn't take scale into account when
+			 returning their size
+* Fixed bug: EffectColourChange didn't change alpha values
+* Fixed bug: EffectColourChange could set the colour to
+			 negative values
+
+-------------------------------------------------------------
 Release 1 | Beta 0 | Development 5 | Experimental 3
 
 * Added PhysicsObject3D

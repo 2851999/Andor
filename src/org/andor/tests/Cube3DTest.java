@@ -42,10 +42,10 @@ import org.andor.core.input.MouseMotionEvent;
 import org.andor.core.model.Model;
 import org.andor.core.model.OBJLoader;
 import org.andor.core.render.DeferredScene;
-import org.andor.utils.ClampUtils;
 import org.andor.utils.ControlBindingUtils;
 import org.andor.utils.ControllerUtils;
 import org.andor.utils.FontUtils;
+import org.andor.utils.MathUtils;
 import org.andor.utils.OpenGLUtils;
 import org.andor.utils.ScreenResolution;
 import org.lwjgl.opengl.GL11;
@@ -174,7 +174,7 @@ public class Cube3DTest extends BaseGame implements ControlInputListener {
 		camera.rotation.y += this.bindings.get("LookX").bindingAxis.currentValue / 3 * getDelta();
 		camera.rotation.x += this.bindings.get("LookY").bindingAxis.currentValue / 3 * getDelta();
 		
-		this.camera.rotation.x = ClampUtils.clamp(this.camera.rotation.x, -80, 80);
+		this.camera.rotation.x = MathUtils.clamp(this.camera.rotation.x, -80, 80);
 		                                                                                                                                   
 		this.audio.listenerPosition = this.camera.position.clone();
 		this.audio.listenerPosition.multiply(new Vector3D(-1, 1, 1));

@@ -152,6 +152,10 @@ public class Object2D {
 		return this.height * scale.y;
 	}
 	
+	public Vector2D getSize() {
+		return new Vector2D(getWidth(), getHeight());
+	}
+	
 	public Rectangle getBounds() {
 		//Get the position
 		Vector2D p = this.getPosition();

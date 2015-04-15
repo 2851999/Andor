@@ -155,6 +155,10 @@ public class Object3D {
 		return this.depth * scale.z;
 	}
 	
+	public Vector3D getSize() {
+		return new Vector3D(getWidth(), getHeight(), getDepth());
+	}
+	
 	public boolean isLinked() { return this.parent != null; }
 	
 }

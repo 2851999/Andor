@@ -23,7 +23,7 @@ import org.andor.core.Vector3D;
 import org.andor.core.input.Keyboard;
 import org.andor.core.input.Mouse;
 import org.andor.core.input.MouseMotionEvent;
-import org.andor.utils.ClampUtils;
+import org.andor.utils.MathUtils;
 import org.andor.utils.OpenGLUtils;
 
 /*
@@ -122,7 +122,7 @@ public class InputExample extends BaseGame {
 			//Leaving the code as it is will allow the camera to flip completely upside down, so
 			//to fix this, we clamp the values so they never go below -80, or more than 80 degrees
 			//on the x axis
-			this.camera.rotation.x = ClampUtils.clamp(this.camera.rotation.x, -80, 80);
+			this.camera.rotation.x = MathUtils.clamp(this.camera.rotation.x, -80, 80);
 		}
 	}
 	

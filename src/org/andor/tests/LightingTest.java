@@ -25,7 +25,7 @@ import org.andor.core.lighting.PointLight;
 import org.andor.core.model.Model;
 import org.andor.core.model.OBJLoader;
 import org.andor.core.render.Renderer;
-import org.andor.utils.ClampUtils;
+import org.andor.utils.MathUtils;
 import org.andor.utils.OpenGLUtils;
 
 public class LightingTest extends BaseGame implements LitSceneInterface {
@@ -95,7 +95,7 @@ public class LightingTest extends BaseGame implements LitSceneInterface {
 	public void onMouseMoved(MouseMotionEvent e) {
 		if (Mouse.isLocked())
 			camera.rotation.add(new Vector3D(e.dy * 0.5f, e.dx * 0.5f, 0));
-		camera.rotation.x = ClampUtils.clamp(camera.rotation.x, -80, 80);
+		camera.rotation.x = MathUtils.clamp(camera.rotation.x, -80, 80);
 	}
 	
 	public void onKeyTyped(KeyboardEvent e) {

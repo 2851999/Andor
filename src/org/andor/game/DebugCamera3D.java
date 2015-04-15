@@ -20,7 +20,7 @@ import org.andor.core.input.Mouse;
 import org.andor.core.input.MouseEvent;
 import org.andor.core.input.MouseMotionEvent;
 import org.andor.core.input.ScrollEvent;
-import org.andor.utils.ClampUtils;
+import org.andor.utils.MathUtils;
 
 public class DebugCamera3D extends Camera3D implements InputListenerInterface {
 	
@@ -62,7 +62,7 @@ public class DebugCamera3D extends Camera3D implements InputListenerInterface {
 	/* The update method */
 	public void update(long delta) {
 		//Clamp the rotation
-		this.rotation.x = ClampUtils.clamp(this.rotation.x, this.minXRotation, this.maxXRotation);
+		this.rotation.x = MathUtils.clamp(this.rotation.x, this.minXRotation, this.maxXRotation);
 		//The speed
 		float s = this.speed;
 		//Check the input

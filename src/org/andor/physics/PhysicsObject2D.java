@@ -34,6 +34,9 @@ public class PhysicsObject2D extends Object2D {
 	public boolean useAccelerationX;
 	public boolean useAccelerationY;
 	
+	/* The collider instance for this object */
+	public Collider2D collider;
+	
 	/* The constructor */
 	public PhysicsObject2D() {
 		
@@ -62,6 +65,8 @@ public class PhysicsObject2D extends Object2D {
 		//Assign the variables
 		this.velocity = new Vector2D();
 		this.acceleration = new Vector2D();
+		this.width = object.width;
+		this.height = object.height;
 		this.mass = 1;
 		this.useVelocityX = true;
 		this.useVelocityY = true;
@@ -103,6 +108,16 @@ public class PhysicsObject2D extends Object2D {
 			this.velocity.add(force.divideNew(this.mass));
 	}
 	
+	/* The method used to get the circle representation of this object */
+	public Circle getCircleBounds() {
+		return new Circle(getPosition(), getSize().max() / 2);
+	}
+	
+	/* The method used to get the AABB representation of this object */
+	public AABB2D getAABBBounds() {
+		return new AABB2D(getPosition(), getSize());
+	}
+	
 	/* The 'set' and 'get' methods */
 	public void setVelocity(Vector2D velocity) { this.velocity = velocity; }
 	public void setVelocity(float x, float y) { this.velocity = new Vector2D(x, y); }
@@ -111,6 +126,7 @@ public class PhysicsObject2D extends Object2D {
 	public void setAcceleration(float x, float y) { this.acceleration = new Vector2D(x, y); }
 	public void setAngularAcceleration(float angularAcceleration) { this.angularAcceleration = angularAcceleration; }
 	public void setMass(float mass) { this.mass = mass; }
+	public void setCollider(Collider2D collider) { this.collider = collider; }
 	public void useVelocityX(boolean useVelocityX) { this.useVelocityX = useVelocityX; }
 	public void useVelocityY(boolean useVelocityY) { this.useVelocityY = useVelocityY; }
 	public void useAccelerationX(boolean useAccelerationX) { this.useAccelerationX = useAccelerationX; }
@@ -120,6 +136,7 @@ public class PhysicsObject2D extends Object2D {
 	public Vector2D getAcceleration() { return this.acceleration; }
 	public float getAngularAcceleration() { return this.angularAcceleration; }
 	public float getMass() { return this.mass; }
+	public Collider2D getCollider() { return this.collider; }
 	public boolean shouldUseVelocityX() { return this.useVelocityX; }
 	public boolean shouldUseVelocityY() { return this.useVelocityY; }
 	public boolean shouldUseAccelerationX() { return this.useAccelerationX; }

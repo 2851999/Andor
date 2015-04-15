@@ -51,6 +51,9 @@ public class PhysicsObject3D extends Object3D {
 		this.acceleration = new Vector3D();
 		this.angularVelocity = new Vector3D();
 		this.angularAcceleration = new Vector3D();
+		this.width = object.width;
+		this.height = object.height;
+		this.depth = object.depth;
 		this.mass = 1;
 		this.useVelocityX = true;
 		this.useVelocityY = true;

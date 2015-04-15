@@ -28,7 +28,7 @@ import org.andor.core.model.Model;
 import org.andor.core.model.OBJLoader;
 import org.andor.core.render.Renderer;
 import org.andor.game.DebugCamera3D;
-import org.andor.utils.ClampUtils;
+import org.andor.utils.MathUtils;
 import org.andor.utils.OpenGLUtils;
 import org.andor.utils.ScreenResolution;
 import org.lwjgl.opengl.GL11;
@@ -118,7 +118,7 @@ public class RenderTest extends BaseGame implements LitSceneInterface {
 		this.camera.update(this.getDelta());
 		if (Keyboard.KEY_ESCAPE)
 			requestClose();
-		this.camera.rotation.x = ClampUtils.clamp(this.camera.rotation.x, -80, 80);
+		this.camera.rotation.x = MathUtils.clamp(this.camera.rotation.x, -80, 80);
 		
 		//this.cube.getRotation().add(0.1f * getDelta());
 		

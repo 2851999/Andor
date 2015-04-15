@@ -9,7 +9,7 @@
 package org.andor.core;
 
 import org.andor.core.render.Renderer;
-import org.andor.utils.ClampUtils;
+import org.andor.utils.MathUtils;
 
 public class EffectColourChange extends Effect {
 	
@@ -47,7 +47,7 @@ public class EffectColourChange extends Effect {
 		//Multiply by the proportion of the time that has elapsed
 		difference = difference.multiplyRGBA(value);
 		//Assign the current colour
-		current = ClampUtils.clamp(current.addRGBA(difference));
+		current = MathUtils.clamp(current.addRGBA(difference));
 		//Update the colour
 		this.getRenderer().updateColour(current);
 	}

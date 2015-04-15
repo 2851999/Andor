@@ -8,6 +8,8 @@
 
 package org.andor.core;
 
+import org.andor.utils.MathUtils;
+
 public class Vector2D {
 	
 	/* The different values (x, y) */
@@ -135,6 +137,26 @@ public class Vector2D {
 		float length = this.getLength();
 		//Return the new vector
 		return new Vector2D(this.x / length, this.y / length);
+	}
+	
+	/* The method used to get the minimum value of this vector */
+	public float min() {
+		return MathUtils.min(this.x, this.y);
+	}
+	
+	/* The method used to get the maximum value of this vector */
+	public float max() {
+		return MathUtils.max(this.x, this.y);
+	}
+	
+	/* The method used to get the minimum value out of this and another given vector */
+	public Vector2D min(Vector2D other) {
+		return new Vector2D(MathUtils.min(this.x, other.x), MathUtils.min(this.y, other.y));
+	}
+	
+	/* The method used to get the maximum value out of this and another given vector */
+	public Vector2D max(Vector2D other) {
+		return new Vector2D(MathUtils.max(this.x, other.x), MathUtils.max(this.y, other.y));
 	}
 	
 	/* The method used to create a new vector with the same values as
