@@ -30,6 +30,12 @@ public class PhysicsObject3D extends Object3D {
 	public boolean useAccelerationX;
 	public boolean useAccelerationY;
 	
+	/* The restitution ( 0.0 - 1.0) */
+	public float restitution;
+	
+	/* The collider instance for this object */
+	public Collider3D collider;
+	
 	/* The constructor */
 	public PhysicsObject3D() {
 		
@@ -55,6 +61,7 @@ public class PhysicsObject3D extends Object3D {
 		this.height = object.height;
 		this.depth = object.depth;
 		this.mass = 1;
+		this.restitution = 0;
 		this.useVelocityX = true;
 		this.useVelocityY = true;
 		this.useAccelerationX = true;
@@ -92,6 +99,16 @@ public class PhysicsObject3D extends Object3D {
 			this.velocity.add(force.divideNew(this.mass));
 	}
 	
+	/* The method used to get the circle representation of this object */
+	public Sphere getSphereBounds() {
+		return new Sphere(getPosition(), getSize().max() / 2);
+	}
+	
+	/* The method used to get the AABB representation of this object */
+	public AABB3D getAABBBounds() {
+		return new AABB3D(getPosition(), getPosition().addNew(getSize()));
+	}
+	
 	/* The 'set' and 'get' methods */
 	public void setVelocity(Vector3D velocity) { this.velocity = velocity; }
 	public void setVelocity(float x, float y, float z) { this.velocity = new Vector3D(x, y, z); }
@@ -102,6 +119,8 @@ public class PhysicsObject3D extends Object3D {
 	public void setAngularAcceleration(Vector3D angularAcceleration) { this.angularAcceleration = angularAcceleration; }
 	public void setAngularAcceleration(float x, float y, float z) { this.angularAcceleration = new Vector3D(x, y, z); }
 	public void setMass(float mass) { this.mass = mass; }
+	public void setRestitution(float restitution) { this.restitution = restitution; }
+	public void setCollider(Collider3D collider) { this.collider = collider; }
 	public void useVelocityX(boolean useVelocityX) { this.useVelocityX = useVelocityX; }
 	public void useVelocityY(boolean useVelocityY) { this.useVelocityY = useVelocityY; }
 	public void useAccelerationX(boolean useAccelerationX) { this.useAccelerationX = useAccelerationX; }
@@ -111,6 +130,14 @@ public class PhysicsObject3D extends Object3D {
 	public Vector3D getAcceleration() { return this.acceleration; }
 	public Vector3D getAngularAcceleration() { return this.angularAcceleration; }
 	public float getMass() { return this.mass; }
+	public float getInverseMass() {
+		if (this.mass != 0)
+			return 1 / this.mass;
+		else
+			return 0;
+	}
+	public float getRestitution() { return this.restitution; }
+	public Collider3D getCollider() { return this.collider; }
 	public boolean shouldUseVelocityX() { return this.useVelocityX; }
 	public boolean shouldUseVelocityY() { return this.useVelocityY; }
 	public boolean shouldUseAccelerationX() { return this.useAccelerationX; }

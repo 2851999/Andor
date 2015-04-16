@@ -28,6 +28,9 @@ public class PhysicsObject2D extends Object2D {
 	/* The mass of this object */
 	public float mass;
 	
+	/* The restitution ( 0.0 - 1.0) */
+	public float restitution;
+	
 	/* The values that determine whether certain values are used */
 	public boolean useVelocityX;
 	public boolean useVelocityY;
@@ -68,6 +71,7 @@ public class PhysicsObject2D extends Object2D {
 		this.width = object.width;
 		this.height = object.height;
 		this.mass = 1;
+		this.restitution = 0;
 		this.useVelocityX = true;
 		this.useVelocityY = true;
 		this.useAccelerationX = true;
@@ -115,7 +119,7 @@ public class PhysicsObject2D extends Object2D {
 	
 	/* The method used to get the AABB representation of this object */
 	public AABB2D getAABBBounds() {
-		return new AABB2D(getPosition(), getSize());
+		return new AABB2D(getPosition(), getPosition().addNew(getSize()));
 	}
 	
 	/* The 'set' and 'get' methods */
@@ -126,6 +130,7 @@ public class PhysicsObject2D extends Object2D {
 	public void setAcceleration(float x, float y) { this.acceleration = new Vector2D(x, y); }
 	public void setAngularAcceleration(float angularAcceleration) { this.angularAcceleration = angularAcceleration; }
 	public void setMass(float mass) { this.mass = mass; }
+	public void setRestitution(float restitution) { this.restitution = restitution; }
 	public void setCollider(Collider2D collider) { this.collider = collider; }
 	public void useVelocityX(boolean useVelocityX) { this.useVelocityX = useVelocityX; }
 	public void useVelocityY(boolean useVelocityY) { this.useVelocityY = useVelocityY; }
@@ -136,6 +141,13 @@ public class PhysicsObject2D extends Object2D {
 	public Vector2D getAcceleration() { return this.acceleration; }
 	public float getAngularAcceleration() { return this.angularAcceleration; }
 	public float getMass() { return this.mass; }
+	public float getInverseMass() {
+		if (this.mass != 0)
+			return 1 / this.mass;
+		else
+			return 0;
+	}
+	public float getRestitution() { return this.restitution; }
 	public Collider2D getCollider() { return this.collider; }
 	public boolean shouldUseVelocityX() { return this.useVelocityX; }
 	public boolean shouldUseVelocityY() { return this.useVelocityY; }

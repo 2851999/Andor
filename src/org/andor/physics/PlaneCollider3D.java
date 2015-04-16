@@ -11,40 +11,40 @@ package org.andor.physics;
 import org.andor.utils.MathUtils;
 
 
-public class PlaneCollider2D extends Collider2D {
+public class PlaneCollider3D extends Collider3D {
 	
 	/* The plane */
-	private Plane2D plane;
+	private Plane3D plane;
 
 	/* The constructor */
-	public PlaneCollider2D(PhysicsObject2D object, Plane2D plane) {
+	public PlaneCollider3D(PhysicsObject3D object, Plane3D plane) {
 		super(object);
 		//Assign the variables
 		this.plane = plane;
 	}
 	
 	/* The method used to check for a collision between two objects */
-	public CollisionData2D checkCollision(Collider2D other) {
-		if (other instanceof CircleCollider)
-			return checkCollision((CircleCollider) other);
+	public CollisionData3D checkCollision(Collider3D other) {
+		if (other instanceof SphereCollider)
+			return checkCollision((SphereCollider) other);
 		else
 			return null;
 	}
 	
 	/* The method used to check for a collision between two objects */
-	public CollisionData2D checkCollision(CircleCollider collider) {
+	public CollisionData3D checkCollision(SphereCollider collider) {
 		//Get the other circle
-		Circle other = collider.getBounds();
+		Sphere other = collider.getBounds();
 		
 		float distanceFromCircleCentre = MathUtils.abs(plane.getNormal().dot(other.getCentre()) + plane.getDistance());
 		float distanceFromSphere = distanceFromCircleCentre - other.getRadius();
 		
 		//Return the data
-		return new CollisionData2D(distanceFromSphere < 0, plane.getNormal().multiplyNew(distanceFromSphere));
+		return new CollisionData3D(distanceFromSphere < 0, plane.getNormal().multiplyNew(distanceFromSphere));
 	}
 	
 	/* The getters and setters */
-	public void setBounds(Plane2D plane) { this.plane = plane; }
-	public Plane2D getBounds() { return this.plane; }
+	public void setBounds(Plane3D plane) { this.plane = plane; }
+	public Plane3D getBounds() { return this.plane; }
 	
 }

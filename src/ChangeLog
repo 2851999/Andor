@@ -1,4 +1,18 @@
 -------------------------------------------------------------
+Release 1 | Beta 0 | Development 6 | Experimental 2
+
+* Added AABB3D
+* Added AABBCollider3D
+* Added Collider3D
+* Added CollisionData3D
+* Added PhysicsScene2D
+* Added PhysicsScene3D
+* Added Plane3D
+* Added PlaneCollider3D
+* Added Sphere
+* Added SphereCollider
+
+-------------------------------------------------------------
 Release 1 | Beta 0 | Development 6 | Experimental 1
 
 * Added AABB2D

@@ -23,6 +23,13 @@ public class Vector2D {
 		this.y = 0;
 	}
 	
+	/* The constructor with a value given */
+	public Vector2D(float value) {
+		//Assign the variables
+		this.x = value;
+		this.y = value;
+	}
+	
 	/* The constructor with the values given */
 	public Vector2D(float x, float y) {
 		//Assign the variables
@@ -157,6 +164,11 @@ public class Vector2D {
 	/* The method used to get the maximum value out of this and another given vector */
 	public Vector2D max(Vector2D other) {
 		return new Vector2D(MathUtils.max(this.x, other.x), MathUtils.max(this.y, other.y));
+	}
+	
+	/* The method used to reflect this value given the normal */
+	public Vector2D reflect(Vector2D normal) {
+		return this.subtractNew(normal.multiplyNew(this.dot(normal) * 2));
 	}
 	
 	/* The method used to create a new vector with the same values as

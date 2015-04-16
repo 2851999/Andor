@@ -25,6 +25,14 @@ public class Vector3D {
 		this.z = 0;
 	}
 	
+	/* The constructor with a value given */
+	public Vector3D(float value) {
+		//Assign the variables
+		this.x = value;
+		this.y = value;
+		this.z = value;
+	}
+	
 	/* The constructor with the values given */
 	public Vector3D(float x, float y, float z) {
 		//Assign the variables

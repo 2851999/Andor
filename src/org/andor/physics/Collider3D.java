@@ -8,18 +8,18 @@
 
 package org.andor.physics;
 
-public abstract class Collider2D {
+public abstract class Collider3D {
 	
 	/* The object this is attached to */
-	private PhysicsObject2D object;
+	private PhysicsObject3D object;
 	
 	/* The constructor */
-	public Collider2D(PhysicsObject2D object) { this.object = object; }
+	public Collider3D(PhysicsObject3D object) { this.object = object; }
 	
 	/* The method used to check for a collision between two objects */
-	public abstract CollisionData2D checkCollision(Collider2D other);
+	public abstract CollisionData3D checkCollision(Collider3D other);
 	
 	/* The getters and setters */
-	public PhysicsObject2D getObject() { return this.object; }
+	public PhysicsObject3D getObject() { return this.object; }
 	
 }
