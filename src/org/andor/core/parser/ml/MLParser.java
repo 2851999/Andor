@@ -11,8 +11,8 @@ package org.andor.core.parser.ml;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.andor.core.parser.utils.ParserUtils;
 import org.andor.utils.ArrayUtils;
+import org.andor.utils.ParserUtils;
 
 public class MLParser {
 	

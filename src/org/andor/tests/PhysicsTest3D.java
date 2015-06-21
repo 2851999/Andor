@@ -30,11 +30,15 @@ public class PhysicsTest3D extends BaseGame {
 		sphere1.setPosition(0, 0, -1);
 		sphere1.setCollider(new SphereCollider(sphere1));
 		sphere1.setWidth(2);
+		sphere1.setHeight(2);
+		sphere1.setDepth(2);
 		
 		sphere2 = new RenderablePhysicsObject3D(s2);
-		sphere2.setPosition(0, 0, -5);
+		sphere2.setPosition(0, 0, -8);
 		sphere2.setCollider(new SphereCollider(sphere2));
 		sphere2.setWidth(2);
+		sphere2.setHeight(2);
+		sphere2.setDepth(2);
 		
 		scene = new PhysicsScene3D();
 		scene.add(sphere1);

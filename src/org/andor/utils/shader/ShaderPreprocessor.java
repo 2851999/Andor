@@ -13,7 +13,7 @@ import java.util.List;
 
 import org.andor.core.logger.Log;
 import org.andor.core.logger.Logger;
-import org.andor.core.parser.utils.ParserUtils;
+import org.andor.utils.ParserUtils;
 
 public class ShaderPreprocessor {
 	

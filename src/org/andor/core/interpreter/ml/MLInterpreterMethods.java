@@ -9,7 +9,7 @@
 package org.andor.core.interpreter.ml;
 
 import org.andor.core.interpreter.ml.methods.IntMethod_RGB;
-import org.andor.core.parser.utils.ParserUtils;
+import org.andor.utils.ParserUtils;
 
 public abstract class MLInterpreterMethods {
 	

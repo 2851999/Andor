@@ -10,8 +10,8 @@ package org.andor.utils.shader;
 
 import java.util.List;
 
-import org.andor.core.parser.utils.ParserUtils;
 import org.andor.utils.FileUtils;
+import org.andor.utils.ParserUtils;
 
 public class IncludeDirective extends ShaderPreprocessorDirective {
 	

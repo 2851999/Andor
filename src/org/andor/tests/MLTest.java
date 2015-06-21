@@ -14,11 +14,11 @@ import org.andor.core.Vector2D;
 import org.andor.core.interpreter.gui.GUIInterpreter;
 import org.andor.core.parser.ml.MLParser;
 import org.andor.core.parser.ml.MLTree;
-import org.andor.core.parser.utils.ParserUtils;
 import org.andor.gui.GUIPanel;
 import org.andor.utils.ArrayUtils;
 import org.andor.utils.FileUtils;
 import org.andor.utils.OpenGLUtils;
+import org.andor.utils.ParserUtils;
 
 public class MLTest extends BaseGame {
 	

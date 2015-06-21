@@ -23,6 +23,7 @@ import org.andor.core.input.ScrollEvent;
 import org.andor.utils.OpenGLUtils;
 import org.andor.utils.ScreenUtils;
 import org.lwjgl.glfw.GLFW;
+import org.lwjgl.glfw.GLFWCursorEnterCallback;
 import org.lwjgl.glfw.GLFWCursorPosCallback;
 import org.lwjgl.glfw.GLFWKeyCallback;
 import org.lwjgl.glfw.GLFWMouseButtonCallback;
@@ -45,6 +46,7 @@ public class Window {
 	private static GLFWCursorPosCallback mousePosCallback;
 	private static GLFWScrollCallback scrollCallback;
 	private static GLFWWindowSizeCallback windowSizeCallback;
+	private static GLFWCursorEnterCallback cursorEnterCallback;
 	
 	/* The static method used to create the window */
 	public static void create() {
@@ -196,6 +198,15 @@ public class Window {
 			}
 		});
 		
+		GLFW.glfwSetCursorEnterCallback(instance, cursorEnterCallback = new GLFWCursorEnterCallback() {
+			public void invoke(long instance, int entered) {
+				if (entered == GL11.GL_TRUE)
+					callOnCursorEnter();
+				else
+					callOnCursorExit();
+			}
+		});
+		
 		//Set the correct display mode
 		setDisplayMode();
 		//Make the OpenGL context current
@@ -329,6 +340,7 @@ public class Window {
 		mousePosCallback.release();
 		scrollCallback.release();
 		windowSizeCallback.release();
+		cursorEnterCallback.release();
 		//Destroy the window
 		GLFW.glfwDestroyWindow(instance);
 	}
@@ -339,6 +351,22 @@ public class Window {
 		for (int a = 0; a < eventListeners.size(); a++)
 			//Call the event in the current listener
 			eventListeners.get(a).onWindowResized(e);
+	}
+	
+	/* The static method used to call a cursor entered event */
+	public static void callOnCursorEnter() {
+		//Go through the listeners
+		for (int a = 0; a < eventListeners.size(); a++)
+			//Call the event in the current listener
+			eventListeners.get(a).onCursorEnter();
+	}
+	
+	/* The static method used to call a cursor exited event */
+	public static void callOnCursorExit() {
+		//Go through the listeners
+		for (int a = 0; a < eventListeners.size(); a++)
+			//Call the event in the current listener
+			eventListeners.get(a).onCursorExit();
 	}
 	
 	/* The static method used to add a window event listener */

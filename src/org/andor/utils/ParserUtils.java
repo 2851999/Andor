@@ -6,11 +6,9 @@
  * COPYRIGHT @ 2014-2015
  **********************************************/
 
-package org.andor.core.parser.utils;
+package org.andor.utils;
 
 import java.util.List;
-
-import org.andor.utils.ArrayUtils;
 
 public class ParserUtils {
 	
