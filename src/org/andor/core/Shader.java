@@ -175,7 +175,7 @@ public class Shader {
 	/* The method used to set a specific value in this shader */
 	public void setUniformi(String variableName, int[] arrayValues) {
 		//Set the value in the shader
-		GLUtils.uniform1(this.getUniformLocation(variableName), arrayValues);
+		GLUtils.uniform1iv(this.getUniformLocation(variableName), arrayValues);
 	}
 
 	/* The method used to set a specific value in this shader */
@@ -187,13 +187,13 @@ public class Shader {
 	/* The method used to set a specific value in this shader */
 	public void setUniformMatrix(String variableName, Matrix4D matrix) {
 		//Set the value in the shader
-		GLUtils.uniformMatrix4(this.getUniformLocation(variableName), false, matrix.getValues());
+		GLUtils.uniformMatrix4fv(this.getUniformLocation(variableName), false, matrix.getValues());
 	}
 	
 	/* The method used to set a specific value in this shader */
 	public void setUniformMatrix(String variableName, FloatBuffer matrix) {
 		//Set the value in the shader
-		GLUtils.uniformMatrix4(this.getUniformLocation(variableName), false, matrix);
+		GLUtils.uniformMatrix4fv(this.getUniformLocation(variableName), false, matrix);
 	}
 	
 	/* The method used to get the location of a uniform variable */

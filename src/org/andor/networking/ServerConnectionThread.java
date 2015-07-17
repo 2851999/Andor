@@ -38,6 +38,7 @@ public class ServerConnectionThread extends Thread {
 			//Keep going until this thread stops running
 			while (this.isAlive() && ! this.closing) {
 				//Accept any sockets
+				@SuppressWarnings("resource")
 				Socket socket = this.server.socket.accept();
 				//Create the client instance
 				ServerClient client = new ServerClient(this.server, socket);

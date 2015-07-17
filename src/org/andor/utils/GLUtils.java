@@ -98,7 +98,7 @@ public class GLUtils {
 	
 	public static void uniform1(int location, float[] values) {
 		if (onPC())
-			GL20.glUniform1(location, BufferUtils.createFlippedBuffer(values));
+			GL20.glUniform1fv(location, BufferUtils.createFlippedBuffer(values));
 		else
 			//Might not need to be flipped
 			GLES20.glUniform1fv(location, 1, BufferUtils.createFlippedBuffer(values));
@@ -132,24 +132,24 @@ public class GLUtils {
 			GLES20.glUniform4i(location, v1, v2, v3, v4);
 	}
 	
-	public static void uniform1(int location, int[] values) {
+	public static void uniform1iv(int location, int[] values) {
 		if (onPC())
-			GL20.glUniform1(location, BufferUtils.createFlippedBuffer(values));
+			GL20.glUniform1iv(location, BufferUtils.createFlippedBuffer(values));
 		else
 			//Might not need to be flipped
 			GLES20.glUniform1iv(location, 1, BufferUtils.createFlippedBuffer(values));
 	}
 	
-	public static void uniformMatrix4(int location, boolean transpose, float[] values) {
+	public static void uniformMatrix4fv(int location, boolean transpose, float[] values) {
 		if (onPC())
-			GL20.glUniformMatrix4(location, transpose, BufferUtils.createFlippedBuffer(values));
+			GL20.glUniformMatrix4fv(location, transpose, BufferUtils.createFlippedBuffer(values));
 		else
 			GLES20.glUniformMatrix4fv(location, 1, transpose, values, 0);
 	}
 	
-	public static void uniformMatrix4(int location, boolean transpose, FloatBuffer values) {
+	public static void uniformMatrix4fv(int location, boolean transpose, FloatBuffer values) {
 		if (onPC())
-			GL20.glUniformMatrix4(location, transpose, values);
+			GL20.glUniformMatrix4fv(location, transpose, values);
 	}
 	
 	public static int getUniformLocation(int program, String name) {

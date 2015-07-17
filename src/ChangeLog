@@ -1,4 +1,14 @@
 -------------------------------------------------------------
+Release 1 | Beta 0 | Development 6 | Experimental 5
+
+* Updated LWGJL 3 to latest nightly
+
+* It has been a while since any updates have occurred and
+  it will be a while until the next one is ready as it
+  will probably change the way the whole engine runs in
+  order to try and optimise it and increase its performance
+
+-------------------------------------------------------------
 Release 1 | Beta 0 | Development 6 | Experimental 4
 
 * Decreased memory usage slightly (Unfinished)

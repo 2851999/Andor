@@ -77,7 +77,7 @@ public class AudioPC extends Audio {
 		//Calculate the correct direction for the listener
         float xDirection = -1f * (float) Math.sin(Math.toRadians(this.listenerRotation.y));
         float zDirection = -1f * (float) Math.cos(Math.toRadians(this.listenerRotation.y));
-		AL10.alListener(AL10.AL_ORIENTATION, BufferUtils.createFlippedBuffer(new float[] { xDirection, 0, zDirection, 0, 1f, 0 }));
+		AL10.alListenerfv(AL10.AL_ORIENTATION, BufferUtils.createFlippedBuffer(new float[] { xDirection, 0, zDirection, 0, 1f, 0 }));
 		//Update the sources values
 		AL10.alSource3f(this.sourceHandle, AL10.AL_POSITION, this.sourcePosition.x, this.sourcePosition.y, this.sourcePosition.z);
 		AL10.alSource3f(this.sourceHandle, AL10.AL_VELOCITY, this.sourceVelocity.x, this.sourceVelocity.y, this.sourceVelocity.z);
