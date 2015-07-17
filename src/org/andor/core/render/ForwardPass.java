@@ -29,8 +29,6 @@ public class ForwardPass extends RenderPass {
 	
 	/* The method called to do this render pass */
 	public void renderPass(Renderer renderer) {
-		//Calculate the matrices for rendering
-		Matrix.calculateRenderMatrices();
 		//Use the shader
 		this.useShader();
 		
@@ -60,7 +58,11 @@ public class ForwardPass extends RenderPass {
 		
 		//Give the shader the matrices
 		currentShader.setUniformMatrix(RenderUtils.UNIFORM_MODEL_VIEW_PROJECTION_MATRIX, Matrix.modelViewProjectionMatrix);
-		currentShader.setUniformMatrix(RenderUtils.UNIFORM_MODEL_MATRIX, Matrix.modelMatrix);
+		if (GLUtils.onPC()) {
+			if (renderer.modelMatrixBuffer != null) {
+				currentShader.setUniformMatrix(RenderUtils.UNIFORM_MODEL_MATRIX, renderer.modelMatrixBuffer);}
+		} else
+			currentShader.setUniformMatrix(RenderUtils.UNIFORM_MODEL_MATRIX, renderer.modelMatrix);
 		currentShader.setUniformMatrix(RenderUtils.UNIFORM_NORMAL_MATRIX, Matrix.normalMatrix);
 		
 		if (renderer.vertices != null)

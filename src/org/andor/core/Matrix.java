@@ -14,7 +14,6 @@ import java.util.List;
 public class Matrix {
 	
 	/* The different matrices */
-	public static Matrix4D modelMatrix = new Matrix4D();
 	public static Matrix4D viewMatrix = new Matrix4D();
 	public static Matrix4D projectionMatrix = new Matrix4D();
 	public static Matrix4D modelViewProjectionMatrix = new Matrix4D();
@@ -58,14 +57,14 @@ public class Matrix {
 	}
 	
 	/* The static method used to calculate the matrices at render time */
-	public static void calculateRenderMatrices() {
+	public static void calculateRenderMatrices(Matrix4D modelMatrix) {
 		//Multiply the projection and view matrices together
 		Matrix4D projectionViewMatrix = multiply(projectionMatrix, viewMatrix);
 		//Multiply the projection view and model matrices together then transpose the result to get the model view projection matrix
 		modelViewProjectionMatrix = transpose(multiply(projectionViewMatrix, modelMatrix));
 		//Calculate and assign the normal matrix
 		normalMatrix = invert(transpose(modelMatrix));
-		Matrix.lightMatrix = Matrix.transpose(Matrix.multiply(Matrix.multiply(Matrix.lightProjectionMatrix,  Matrix.lightViewMatrix), Matrix.modelMatrix));
+		Matrix.lightMatrix = Matrix.transpose(Matrix.multiply(Matrix.multiply(Matrix.lightProjectionMatrix,  Matrix.lightViewMatrix), modelMatrix));
 	}
 	
 	/* The static method used to add two matrices together */

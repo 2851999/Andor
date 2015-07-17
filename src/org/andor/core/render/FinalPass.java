@@ -30,7 +30,7 @@ public class FinalPass extends RenderPass {
 	/* The method called to do this render pass */
 	public void renderPass(Renderer renderer) {
 		//Calculate the matrices for rendering
-		Matrix.calculateRenderMatrices();
+		Matrix.calculateRenderMatrices(renderer.modelMatrix);
 		//Use the shader
 		this.useShader();
 		
@@ -42,7 +42,7 @@ public class FinalPass extends RenderPass {
 		
 		//Give the shader the matrices
 		currentShader.setUniformMatrix(RenderUtils.UNIFORM_MODEL_VIEW_PROJECTION_MATRIX, Matrix.modelViewProjectionMatrix);
-		currentShader.setUniformMatrix(RenderUtils.UNIFORM_MODEL_MATRIX, Matrix.modelMatrix);
+		currentShader.setUniformMatrix(RenderUtils.UNIFORM_MODEL_MATRIX, renderer.modelMatrix);
 		currentShader.setUniformMatrix(RenderUtils.UNIFORM_NORMAL_MATRIX, Matrix.normalMatrix);
 		
 		if (renderer.vertices != null)

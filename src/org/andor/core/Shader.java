@@ -8,6 +8,8 @@
 
 package org.andor.core;
 
+import java.nio.FloatBuffer;
+
 import org.andor.core.logger.Log;
 import org.andor.core.logger.Logger;
 import org.andor.utils.GLUtils;
@@ -186,6 +188,12 @@ public class Shader {
 	public void setUniformMatrix(String variableName, Matrix4D matrix) {
 		//Set the value in the shader
 		GLUtils.uniformMatrix4(this.getUniformLocation(variableName), false, matrix.getValues());
+	}
+	
+	/* The method used to set a specific value in this shader */
+	public void setUniformMatrix(String variableName, FloatBuffer matrix) {
+		//Set the value in the shader
+		GLUtils.uniformMatrix4(this.getUniformLocation(variableName), false, matrix);
 	}
 	
 	/* The method used to get the location of a uniform variable */

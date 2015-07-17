@@ -147,6 +147,11 @@ public class GLUtils {
 			GLES20.glUniformMatrix4fv(location, 1, transpose, values, 0);
 	}
 	
+	public static void uniformMatrix4(int location, boolean transpose, FloatBuffer values) {
+		if (onPC())
+			GL20.glUniformMatrix4(location, transpose, values);
+	}
+	
 	public static int getUniformLocation(int program, String name) {
 		if (onPC())
 			return GL20.glGetUniformLocation(program, name);

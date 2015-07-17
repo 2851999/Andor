@@ -88,34 +88,23 @@ public class RenderableObject2D extends Object2D {
 		if (this.renderer != null)
 			//Render the object using the renderer
 			this.renderer.render();
-		//Restore the view matrix
-		this.restoreViewMatrix();
 	}
 	
 	/* The method used to update the current view matrix */
 	public void updateViewMatrix() {
-		//Get the position
-		Vector2D p = this.getPosition();
-		//Get the rotation
-		float r = this.getRotation();
-		//Get the scale
-		Vector2D s = this.getScale();
-		//Save the current matrix
-		clone = Arrays.copyOf(Matrix.modelMatrix.getValues(), 16);
-		//Move to the correct position
-		Matrix.modelMatrix = Matrix.translate(Matrix.modelMatrix, new Vector3D(p.x + this.width / 2, p.y + this.height / 2, 0));
-		//Rotate by the specified amount
-		Matrix.modelMatrix = Matrix.rotate(Matrix.modelMatrix, r, 0, 0, 1);
-		//Scale by the specified amount
-		Matrix.modelMatrix = Matrix.scale(Matrix.modelMatrix, new Vector3D(s.x, s.y, 0));
-		//Move to the correct position (For rendering)
-		Matrix.modelMatrix = Matrix.translate(Matrix.modelMatrix, new Vector3D(-this.width / 2, -this.height / 2, 0));
-	}
-	
-	/* The method used to restore the current view matrix */
-	public void restoreViewMatrix() {
-		//Restore the current matrix
-		Matrix.modelMatrix.values = clone;
+		//Apply this models transform
+		if (renderer != null) {
+			Matrix4D matrix = new Matrix4D();
+			Matrix.loadIdentity(matrix);
+			matrix = Matrix.transform(matrix, this.getPosition(), this.getRotation(), this.getScale());
+			
+			if (! Arrays.equals(renderer.modelMatrix.getValues(), matrix.getValues())) {
+				renderer.modelMatrix = matrix;
+				renderer.updateModelMatrix();
+			}
+			//Calculate the matrices for rendering
+			Matrix.calculateRenderMatrices(renderer.modelMatrix);
+		}
 	}
 	
 	/* The method used to setup this object given the render mode

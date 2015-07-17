@@ -105,7 +105,7 @@ public class OpenGLUtils {
 	/* The static method to setup an orthographic view given the left, right, top, bottom,
 	 * znear and zfar values */
 	public static void setupOrtho(float left, float right, float top, float bottom, float znear , float zfar) {
-		Matrix.loadIdentity(Matrix.modelMatrix);
+		//Matrix.loadIdentity(Matrix.modelMatrix);
 		Matrix.loadIdentity(Matrix.viewMatrix);
 		Matrix.projectionMatrix = Matrix.ortho(left, right, bottom, top, zfar, znear);
 	}
@@ -113,7 +113,7 @@ public class OpenGLUtils {
 	/* The static method to setup an orthographic view given the width, height
 	 * znear and zfar values */
 	public static void setupOrtho(float width, float height, float znear , float zfar) {
-		Matrix.loadIdentity(Matrix.modelMatrix);
+		//Matrix.loadIdentity(Matrix.modelMatrix);
 		Matrix.loadIdentity(Matrix.viewMatrix);
 		Matrix.projectionMatrix = Matrix.ortho(0, width, height, 0, znear, zfar);
 	}
@@ -127,7 +127,7 @@ public class OpenGLUtils {
 	/* The static method used to setup a perspective view given the
 	 * fov, aspect ratio, z near and z far values */
 	public static void setupPerspective(float fov, float aspect, float zNear, float zFar) {
-		Matrix.loadIdentity(Matrix.modelMatrix);
+		//Matrix.loadIdentity(Matrix.modelMatrix);
 		Matrix.loadIdentity(Matrix.viewMatrix);
 		Matrix.projectionMatrix = Matrix.perspective(fov, aspect, zNear, zFar);
 	}

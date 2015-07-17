@@ -1,4 +1,9 @@
 -------------------------------------------------------------
+Release 1 | Beta 0 | Development 6 | Experimental 4
+
+* Decreased memory usage slightly (Unfinished)
+
+-------------------------------------------------------------
 Release 1 | Beta 0 | Development 6 | Experimental 3
 
 * Added cursor entered/exited events to the window

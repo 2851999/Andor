@@ -48,11 +48,12 @@ public class Model extends RenderableObject3D {
 		//Update the view matrix
 		this.updateViewMatrix();
 		//Go through each part
-		for (int a = 0; a < this.parts.size(); a++)
+		for (int a = 0; a < this.parts.size(); a++) {
+			this.parts.get(a).modelMatrix = this.renderer.modelMatrix;
+			this.parts.get(a).modelMatrixBuffer = this.renderer.modelMatrixBuffer;
 			//Render the current part
 			this.parts.get(a).render();
-		//Restore the view matrix
-		this.restoreViewMatrix();
+		}
 	}
 	
 	/* The setters and getters */

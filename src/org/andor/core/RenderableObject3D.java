@@ -23,7 +23,7 @@ public class RenderableObject3D extends Object3D {
 	
 	/* The default constructor */
 	public RenderableObject3D() {
-		
+		renderer = new Renderer();
 	}
 	
 	/* The constructor with the render mode,
@@ -88,22 +88,23 @@ public class RenderableObject3D extends Object3D {
 		if (this.renderer != null)
 			//Render the object using the renderer
 			this.renderer.render();
-		//Restore the view matrix
-		this.restoreViewMatrix();
 	}
 	
 	/* The method used to update the current view matrix */
 	public void updateViewMatrix() {
-		//Save the current matrix
-		clone = Arrays.copyOf(Matrix.modelMatrix.getValues(), 16);
 		//Apply this models transform
-		Matrix.modelMatrix = Matrix.transform(Matrix.modelMatrix, this.getPosition(), this.getRotation(), this.getScale());
-	}
-	
-	/* The method used to restore the current view matrix */
-	public void restoreViewMatrix() {
-		//Restore the current matrix
-		Matrix.modelMatrix.values = clone;
+		if (renderer != null) {
+			Matrix4D matrix = new Matrix4D();
+			Matrix.loadIdentity(matrix);
+			matrix = Matrix.transform(matrix, this.getPosition(), this.getRotation(), this.getScale());
+			
+			if (! Arrays.equals(renderer.modelMatrix.getValues(), matrix.getValues())) {
+				renderer.modelMatrix = matrix;
+				renderer.updateModelMatrix();
+			}
+			//Calculate the matrices for rendering
+			Matrix.calculateRenderMatrices(renderer.modelMatrix);
+		}
 	}
 	
 	/* The method used to setup this object given the render mode

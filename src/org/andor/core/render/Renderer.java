@@ -16,6 +16,8 @@ import java.util.List;
 import org.andor.core.Camera3D;
 import org.andor.core.Colour;
 import org.andor.core.Image;
+import org.andor.core.Matrix;
+import org.andor.core.Matrix4D;
 import org.andor.core.Settings;
 import org.andor.core.Shader;
 import org.andor.core.lighting.BaseLight;
@@ -70,6 +72,10 @@ public class Renderer {
 	public ShortBuffer drawOrderBuffer;
 	public FloatBuffer tangentsBuffer;
 	
+	/* The model matrix */
+	public Matrix4D modelMatrix;
+	public FloatBuffer modelMatrixBuffer;
+	
 	/* The usage of the VBO */
 	public int usage;
 	
@@ -105,6 +111,13 @@ public class Renderer {
 	/* The current material (If any) */
 	public Material material;
 	
+	/* The default constructor */
+	public Renderer() {
+		//Create the model matrix
+		this.modelMatrix = new Matrix4D();
+		Matrix.loadIdentity(modelMatrix);
+	}
+	
 	/* The constructor */
 	public Renderer(int renderMode, int vertexValuesCount) {
 		//Assign the values
@@ -129,6 +142,20 @@ public class Renderer {
 		this.material = new Material("Default");
 		//Add this renderer to the list
 		allRenderers.add(this);
+		//Create the model matrix
+		this.modelMatrix = new Matrix4D();
+		Matrix.loadIdentity(modelMatrix);
+	}
+	
+	/* The method used to update the model matrix */
+	public void updateModelMatrix() {
+		if (modelMatrixBuffer == null && GLUtils.onPC())
+			this.modelMatrixBuffer = BufferUtils.createFlippedBuffer(this.modelMatrix.getValues());
+		else if (GLUtils.onPC()) {
+			this.modelMatrixBuffer.position(0);
+			this.modelMatrixBuffer.put(this.modelMatrix.getValues());
+			this.modelMatrixBuffer.flip();
+		}
 	}
 	
 	/* The method used to setup the buffers */
